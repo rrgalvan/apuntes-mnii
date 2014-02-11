@@ -4,6 +4,31 @@
 \usepackage[spanish]{babel}
 
 \usepackage{apuntes-MNII}
+\usepackage{tikz-pictures}
+
+% ------- Formato del documento ----
+\usepackage[hmargin={2.50cm,4cm}, vmargin={4cm,3cm}]{geometry}
+
+\RequirePackage{fancyheadings}
+\setlength{\headheight}{15pt} %Required by fancyhdr
+\renewcommand{\headrulewidth}{0.05pt} % Top horizontal line 
+\renewcommand{\footrulewidth}{0pt} % Bottom horizontal line 
+\fancyheadoffset[RO,LE]{2.5cm} % Make header wider than body text
+\pagestyle{fancy}
+
+\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
+\renewcommand{\chaptermark}[1]{\markright{\thechapter.\ #1}}
+
+% Colored rule in fancyhdr
+% \makeatletter
+% \def\headrule{%{\color{gray60}
+% \if@fancyplain\let\headrulewidth\plainheadrulewidth\fi
+% \hrule\@height\headrulewidth\@width\headwidth
+% \vskip-\headrulewidth}%}
+% \def\footrule{{\color{gray80}\if@fancyplain\let\headrulewidth\plainheadrulewidth\fi
+% \hrule\@height\headrulewidth\@width\headwidth
+% \vskip-\headrulewidth}}
+% \makeatother
 
 \begin{document}
 

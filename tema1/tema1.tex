@@ -2,30 +2,27 @@
 \chapter{Ecuaciones de una variable}
 \label{cha:ecuaciones-una-variable}
 
-\newcommand{\cero}{\alpha}
-
 En disciplinas relacionadas con el cálculo científico y las
 matemáticas aparece con frecuencia el problema de hallar los
 \textit{ceros de una función}.
-\begin{graficaTikz}
-  \begin{axis}[
-    \axisXYmiddle,
-    xtick=\empty, ytick=\empty, 
-    legend pos = south east ]
-    % Draw a curve
-    \addplot[domain=-1:3, blue, ultra thick] {-(x+3)*(x-1)*(x-5)};
-    % Plot a label at curve root
-    \node[coordinate, medium dot, pin=-30:{$\cero$}] at (axis cs:1,0)
-    {};
-    % Draw the name of curve
-    \legend {$f$};
-  \end{axis}
-\end{graficaTikz}
+\begin{center}
+  \begin{tikzpicture}
+    \begin{axis}[ \axisXYmiddle, xtick=\empty, ytick=\empty, legend
+      pos = south east ]
+      % Draw a curve
+      \addplot[domain=-1:3, blue, ultra thick] {-(x+3)*(x-1)*(x-5)};
+      % Plot a label at curve root
+      \node[coordinate, medium dot, pin=-30:{$\cero$}] at (axis
+      cs:1,0) {};
+      % Draw the name of curve
+      \legend {$f$};
+    \end{axis}
+  \end{tikzpicture}
+\end{center}
 
-Recordemos que un \textit{cero} de una función
-real de una variable real, $f$, con dominio $I\subset\Rset$, o una
-\textit{raíz} de la ecuación $f(x)=0$, es una solución del siguiente
-problema:
+Recordemos que un \textit{cero} de una función real de una variable
+real, $f$, con dominio $I\subset\Rset$, o una \textit{raíz} de la
+ecuación $f(x)=0$, es una solución del siguiente problema:
 \begin{equation}
 \label{eq:cero}
 \text{Hallar $\cero\in I$ tal que} \quad f(\cero)=0.
@@ -38,12 +35,10 @@ Este no es un problema sencillo y, salvo en algunos casos concretos no
 disponemos de algoritmos que nos permitan obtener raíces de una
 ecuación en un número finito de pasos. Por ejemplo, no existen
 fórmulas explícitas para hallar ceros de funciones polinómicas
-arbitrarias de grado $n\ge 5$ y el problema es aún más difícil si
-$f$ no es polinómica. En general, no podemos plantearnos el
-hallar las raíces exactas de una ecuación. Más aún cuando, en
-problemas reales, los coeficientes son conocidos sólo de forma
-aproximada.
-
+arbitrarias de grado $n\ge 5$ y el problema es aún más difícil si $f$
+no es polinómica. En general, no podemos plantearnos el hallar las
+raíces exactas de una ecuación. Más aún cuando en <<problemas
+reales>>, los coeficientes son conocidos sólo de forma aproximada.
 
 Nuestro objetivo es estudiar algoritmos eficientes
 que nos permitan determinar de forma aproximada los ceros de una
@@ -58,24 +53,23 @@ $$
 x_k \to \cero,
 $$
 done $\cero$ es una raíz de $f$. La idea es elegir $N\in\Nset$
-``suficientemente grande'' de forma que $x_N$ sea ``una buena
-aproximación'' de $\cero$, escribiremos
+<<suficientemente grande>> de forma que $x_N$ sea <<una buena
+aproximación>> de $\cero$; escribiremos
 $$
 \cero\simeq x_N.
 $$
 
 El resto de este capítulo se estructura de la siguiente forma: En una
-primera sección, repasamos algunos resultados teóricos que nos
-resultarán de utilidad para asegurar la existencia y unicidad de
-solución, $\cero$, de~(\ref{eq:cero}). En el resto de las secciones
-se estudian distintos métodos iterativos para el cálculo de ceros de
-funciones de una variable, partiendo del que es, conceptualmente, más
-sencillo (el método de Bisección) y llegando hasta el método de Newton
-y algunas de sus variantes. Muy brevemente, la última sección ofrece
-algunas indicaciones sobre la resolución de sistemas de ecuaciones no
-lineales.
+primera sección, repasamos algunos resultados teóricos para asegurar
+la existencia y unicidad de solución de~(\ref{eq:cero}). En el resto
+de las secciones se estudian distintos métodos iterativos para el
+cálculo de ceros de funciones de una variable, partiendo del que es,
+conceptualmente, más sencillo (el método de Bisección) y llegando
+hasta el método de Newton y algunas de sus variantes.  La última
+sección ofrece algunas indicaciones sobre la generalización de estos
+métodos para resolver sistemas de ecuaciones no lineales.
 
-\section{Existencia y unicidad de solución: algunos resultados teóricos}
+\section{Existencia y unicidad de solución. Separación de ceros}
 \label{sec:tema1:exist-y-unic}
 
 Antes abordar la resolución numérica de cualquier problema es
@@ -98,7 +92,7 @@ para ello.
 
 También nos resultará de utilidad, como primera aproximación, la
 representación gráfica de la función, aunque \textit{en ningún caso
-  debemos confiar exclusivamente en las usuales gráficas generadas por
+  debemos confiar exclusivamente en las gráficas generadas por
   programas informáticos}: éstas deben estar respaldadas por un
 análisis numérico que garantice la existencia y unicidad de solución.
 
@@ -118,14 +112,14 @@ análisis numérico que garantice la existencia y unicidad de solución.
 
 % \begin{remark}[Sobre unicidad en los teoremas de Bolzano y Rolle]
 %   \label{rk:tema1:unicidad-bolzano-rolle}
-El teorema de Bolzano es un resultado (bien conocido en el ámbito del
-análisis matemático, así como el teorema de Rolle) que implica
+El teorema de Bolzano es un resultado bien conocido en el ámbito del
+análisis matemático (como el teorema de Rolle) que proporciona
 existencia pero no unicidad de solución. En efecto, una función
 continua con distinto signo en $a$ y en $b$ podría tener muchos ceros
 $c\in (a,b)$. Con respecto al teorema de Rolle, aunque tampoco implica
 unicidad, su recíproco puede ser una herramienta muy útil en este
-sentido. Este hecho se remarca en el
-corolario~\ref{cor:tema1:exist+unic}.
+sentido. Este hecho se remarca en el siguiente
+corolario.
 
 % \end{remark}
 
@@ -144,7 +138,7 @@ corolario~\ref{cor:tema1:exist+unic}.
   de~\eqref{eq:cero}, $\cero_1$ y $\cero_2$, tendríamos que
   $0=f(\cero_1)=f(\cero_2)$.  Puesto que $f$ se encuentra en las
   hipótesis del teorema de Rolle en el subintervalo
-  $[\cero_1,\cero_2]$ (suponiendo por ejemplo $\cero_1<\cero_2$), esto
+  $[\cero_1,\cero_2]$ (y suponiendo por ejemplo $\cero_1<\cero_2$), esto
   implicaría que existe $c$ entre $\cero_1$ y $\cero_2$ en el que
   $f'(c)=0$, lo que contradice las hipótesis del
   corolario~\ref{cor:tema1:exist+unic}.
@@ -160,17 +154,14 @@ corolario~\ref{cor:tema1:exist+unic}.
   $[\cero_1,\cero_2]$.
 \end{remark}
 
-A continuación se presenta un algoritmo para la separación de
-soluciones de~\eqref{eq:cero} que será utilizado en los próximos
-ejemplos.
-
 \begin{remark}[Separación de ceros]
   \label{rk:tema1:separac-ceros}
-  Además de la continuidad y derivabilidad de $f$, supongamos que la
-  derivada, $f'$, \emph{es continua en $(a,b)$}. En este caso podemos
-  sistematizar un proceso para la separación de las raíces de $f(x)=0$
-  (que resultará útil siempre y cuando sea fácil calcular las raíces
-  de la ecuación $f'(x)=0$):
+  % algoritmo para la separación de
+  % soluciones de~\eqref{eq:cero} que será utilizado en los próximos
+  % ejemplos.
+  Si además de la continuidad y derivabilidad de $f$, suponemos que la
+  derivada, $f'$, \emph{es continua en $(a,b)$}, podemos
+  enunciar un algoritmo para la separación de las raíces de $f(x)=0$:
   \begin{enumerate}
   \item Hallar todas las raíces de $f'(x)=0$, a las que llamaremos $\beta_1<\dots<\beta_n$.
   \item Considerar los intervalos $(a,\beta_1)$, $(\beta_1,\beta_2)$,
@@ -182,23 +173,20 @@ ejemplos.
     estos intervalos existe realmente una raíz de $f(x)=0$.
   \end{enumerate}
   El proceso anterior es válido incluso si $a=-\infty$ o $b=+\infty$,
-  según la observación~\ref{rk:tema1:exist+unic}.
+  según la observación~\ref{rk:tema1:exist+unic}.  Sin embargo, aunque
+  útil desde el punto de vista teórico, presenta un importante
+  inconveniente en la práctica: no es fácil calcular las raíces de la
+  ecuación $f'(x)=0$.  En realidad, estamos convirtiendo el problema
+  del cálculo de ceros de $f$ en otro similar, el cálculo de ceros de
+  $f'$, que podría tan complicado como el anterior (o más aún).
 \end{remark}
+Con frecuencia, se utilizan otros razonamientos para determinar
+todos los intervalos, $(\beta_i,\beta_{i+1})$ en los que
+$f(\beta_i)\cdot f(\beta_{i+1})<0$. Por ejemplo, procedimientos de
+tipo bisección (que analizaremos en la próxima sección).
 
-El algoritmo de separación de ceros descrito en la
-observación~\ref{rk:tema1:separac-ceros} solamente será útil en
-aquellos casos en los que sea fácil determinar las raíces de la
-ecuación $f'(x)=0$. En realidad, estamos convirtiendo el problema del
-cálculo de ceros de $f$ en otro similar, el cálculo de ceros de $f'$,
-que podría tan complicado como el anterior (o más aún). En este caso,
-el algoritmo anterior no será valido y deberemos utilizar algún
-razonamiento diferente para determinar todos los intervalos,
-$(\beta_i,\beta_{i+1})$ en los que $f(\beta_i)\cdot
-f(\beta_{i+1})<0$. Por ejemplo, puede ser eficiente el utilizar
-procesos de tipo bisección (que analizaremos en la próxima sección).
-
-A continuación, veremos algunos ejemplos en los que se aplican los
-resultados anteriores:
+% A continuación, veremos algunos ejemplos en los que se aplican los
+% resultados anteriores:
 
 \begin{example}
   \label{ex:tema1:separ-soluc-1} 
@@ -222,7 +210,7 @@ resultados anteriores:
   Solamente resta utilizar el teorema de Bolzano para detectar en
   cuáles de estos intervalos existe una raíz de
   $f(x)=0$. Como apoyo, podemos utilizar un entorno informático
-  para representar la gráfica (figura~\ref{fig:tema1:separ-soluc-1}),
+  para representar la gráfica (figura~\ref{fig:tema1:ejemplo-separ-soluc-1}),
   que en este caso nos sugiere que, concretamente, las raíces pueden
   ser localizadas en los intervalos $[-4,-3]\subset (-\infty,-\sqrt
   3)$, $[0,1]\subset (-\sqrt 3, +\sqrt 3)$ y $[2,3]\subset (+\sqrt 3,
@@ -232,14 +220,14 @@ resultados anteriores:
     \begin{graficaTikz}[width=23em, height=15em]
       \begin{axis}[\axisXYmiddle]
         % Draw a curve
-        \addplot[domain=-4:4, blue, ultra thick, samples=40]
+        \addplot[domain=-4.0:4.0, blue, ultra thick, samples=40]
         {x^3-9*x+3};
         % Plot a label at curve root
-        \node[coordinate, medium dot, pin=93:{$\cero_1$}] at 
+        \node[coordinate, medium dot, pin=95:{$\cero_1$}] at 
         (axis cs:-3.15,0) {};
-        \node[coordinate, medium dot, pin=87:{$\cero_2$}] at 
+        \node[coordinate, medium dot, pin=85:{$\cero_2$}] at 
         (axis cs:0.33,0) {};
-        \node[coordinate, medium dot, pin=93:{$\cero_3$}] at 
+        \node[coordinate, medium dot, pin=95:{ $\cero_3$}] at 
         (axis cs:2.81,0) {};
       \end{axis}
     \end{graficaTikz}
@@ -257,11 +245,10 @@ resultados anteriores:
 \end{example}
 
 \begin{example}
-  Trataremos de determinar el número de valores $x\in\Rset$ tales que
-  $2x=cos(x)$
-  y localizarlos en intervalos (lo que, en las próximas
-  secciones, se usará para aplicar métodos numéricos para aproximar
-  las soluciones).
+  Determinaremos el número de valores $x\in\Rset$ tales que
+  $2x=cos(x)$ y localizaremos estos valores en intervalos (lo que, en
+  las próximas secciones, se usará para aplicar métodos numéricos para
+  aproximar las soluciones).
 
   Para ello, planteamos el problema~\eqref{eq:cero} para la función
   continua y derivable
@@ -304,7 +291,7 @@ resultados anteriores:
 
 Comenzamos presentando el método más sencillo, basado en el teorema de
 Bolzano. Para ello, supongamos que $f$ es una función continua en
-$[a,b]$ tal que $f(a)f(b)<0$, por lo que sabemos que existe algún cero
+$[a,b]$ tal que $f(a)f(b)<0$, por tanto existe algún cero
 de $f$ en $(a,b)$, al que llamaremos $\alpha$.
 
 Por simplicidad, supondremos que $\alpha$ es el único cero de $f$ en
@@ -313,10 +300,10 @@ véase la sección~\ref{sec:tema1:exist-y-unic}. Aunque veremos que este
 método sigue siendo válido aunque no haya unicidad de solución
 (observación~\ref{rk:tema1:unicidad-bisecc}).
 
-La idea del método de bisección es dividir por la mitad el intervalo
-para, de los dos subintervalos resultantes, seleccionar aquél en el
-que $f$ cambia de signo (y que contiene a la raíz, según el teorema de
-Bolzano).
+La idea del método de bisección es dividir por la mitad el intervalo y
+considerar los dos subintervalos resultantes, para seleccionar aquél
+en el que $f$ cambia de signo (y que contiene a la raíz, según el
+teorema de Bolzano).
 
 Con más detalle: el método consiste en construir una sucesión de
 intervalos,
@@ -349,8 +336,8 @@ definida a partir de sus puntos medios, $c_n=(a_n+b_n)/2$, tal y como sigue:
 \begin{example}
   Aplicaremos el método de bisección a la función $f(x)=x^3-9x+3$ en el intervalo
   $[0,1]$, donde sabemos que existe un único cero (según vimos en el
-  ejemplo~\ref{ex:tema1:separ-soluc-1}). Ver
-  Tabla~\ref{tab:tema1:bisecc}.
+  ejemplo~\ref{ex:tema1:separ-soluc-1}). El método consiste en los
+  siguientes pasos (resumidos en el cuadro~\ref{tab:tema1:bisecc}):
 
   \begin{itemize}
   \item Empezamos seleccionando $[a_0,b_0]=[0,1]$ y definiendo
@@ -369,7 +356,7 @@ definida a partir de sus puntos medios, $c_n=(a_n+b_n)/2$, tal y como sigue:
   \begin{equation*}
     \begin{array}{l<{\quad}rrrrr}%{>{$}r<{$}>{$}r<{$}>{$}r<{$}>{$}r<{$}>{$}r<{$}}    
      k &  [a_k,b_k] & c_k & f(a_k) & f(b_k) & f(c_k) 
-      \\ \toprule\mbox{}% \mbox{} for avoiding bug with "["
+      \\ \toprule%\mbox{}% \mbox{} for avoiding bug with "["
      0 & [0,1]  &  0.5 
       & 3 & -5 & -1.375
       \\ \noalign{\smallskip}
@@ -392,7 +379,7 @@ definida a partir de sus puntos medios, $c_n=(a_n+b_n)/2$, tal y como sigue:
 \end{table}
 
 Como se puede observar en el ejemplo anterior, el método de bisección
-genera una sucesión de intervalos $[a_n,b_n]$, todos los cuales
+genera una sucesión de intervalos $[a_n,b_n]$ que
 contienen la solución de~\eqref{eq:cero} (pues, por construcción,
 $f(a_n)f(b_n)<0$). Además, el tamaño $b_n-a_n$ converge a cero (puesto
 que, en cada paso, el tamaño se divide por dos), de hecho:
@@ -401,7 +388,7 @@ que, en cada paso, el tamaño se divide por dos), de hecho:
   b_n-a_n = \frac{b-a}{2^n} \quad \forall n=0,1,2,...
 \end{equation}
 
-Así, no es difícil demostrar el siguiente resultado:
+Así, se tiene el siguiente resultado:
 \begin{theorem}
   \label{thm:tema1:bisecc}
   Sea $f$ una función continua en $[a,b]$ tal que $f(a)f(b)<0$.
@@ -448,9 +435,10 @@ Así, no es difícil demostrar el siguiente resultado:
   La desigualdad~\eqref{eq:tema1:bisecc:2} nos garantiza que, para $n$
   suficiente grande, podemos aproximar un cero de $f$ con un error tan
   pequeño como deseemos. Y, de hecho, dada una tolerancia $\epsilon$,
-  para que $|c_n-\alpha|<\epsilon$ podemos realizar el mínimo número de
-  iteraciones tal que que $(b-a)/2^n < \epsilon$. Despejando $n$
-  en~\eqref{eq:tema1:bisecc:2}:
+  para que $|c_n-\alpha|<\epsilon$ podemos calcular el mínimo número
+  de iteraciones tal que que $(b-a)/2^n < \epsilon$. Efectivamente,
+  despejando $n$ en~\eqref{eq:tema1:bisecc:2}, se trata del menor
+  entero positivo $n_{\text{mín}}$ tal que:
   \begin{equation*}
     n_{\text{mín}}>\log_2\left(\frac{b-a}{\epsilon}\right).
   \end{equation*}
@@ -460,5 +448,5 @@ Así, no es difícil demostrar el siguiente resultado:
 
 %%% Local Variables: 
 %%% mode: latex
-%%% TeX-master: "apuntes-MNII.tex"
+%%% TeX-master: "../apuntes-MNII.tex"
 %%% End: 

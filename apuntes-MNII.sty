@@ -1,9 +1,9 @@
 \spanishdecimal{.}
 
-\usepackage{palatino}
-\usepackage[sc]{mathpazo}
-\linespread{1.05}         % Palatino needs more leading (space between lines)
-\usepackage[T1]{fontenc}
+% \usepackage{palatino}
+% \usepackage[sc]{mathpazo}
+% \linespread{1.05}         % Palatino needs more leading (space between lines)
+% \usepackage[T1]{fontenc}
 
 \usepackage{booktabs} % Pretty tables
 
@@ -37,47 +37,28 @@
 \theoremstyle{definition}
 \theoremstyle{proof}
 
-% ------- Formato del documento ----
-\usepackage[hmargin={2.50cm,4cm}, vmargin={4cm,3cm}]{geometry}
+% Tema 1 -----------
+\newcommand{\cero}{\alpha}
 
-\RequirePackage{fancyheadings}
-\setlength{\headheight}{15pt} %Required by fancyhdr
-\renewcommand{\headrulewidth}{0.05pt} % Top horizontal line 
-\renewcommand{\footrulewidth}{0pt} % Bottom horizontal line 
-\fancyheadoffset[RO,LE]{2.5cm} % Make header wider than body text
-\pagestyle{fancy}
-\renewcommand{\sectionmark}[1]{\markright{\thesection.\ #1}}
-\renewcommand{\chaptermark}[1]{\markright{\thechapter.\ #1}}
-% Colored rule in fancyhdr
-% \makeatletter
-% \def\headrule{%{\color{gray60}
-% \if@fancyplain\let\headrulewidth\plainheadrulewidth\fi
-% \hrule\@height\headrulewidth\@width\headwidth
-% \vskip-\headrulewidth}%}
-% \def\footrule{{\color{gray80}\if@fancyplain\let\headrulewidth\plainheadrulewidth\fi
-% \hrule\@height\headrulewidth\@width\headwidth
-% \vskip-\headrulewidth}}
-\makeatother
+% % ------- Tikz -------
+% \usepackage{tikz}
+% \usepackage{pgfplots}
 
-% ------- Tikz -------
-\usepackage{tikz}
-\usepackage{pgfplots}
+% % Crear entorno "tikzpicture" personalizado
+% \newenvironment{graficaTikz}[1][width=15em]{
+% \begin{center}
+%   \pgfplotsset{compat=1.8, small, #1}
+%   \begin{tikzpicture}
+%     \tikzset{
+%       every pin/.style={fill=yellow!50!white,rectangle,rounded corners=3pt},
+% %      small dot/.style={fill=black,circle,scale=0.3},
+%       medium dot/.style={fill=black,circle,scale=0.5}
+%     }
+% }
+% {\end{tikzpicture}\end{center}}
 
-% Crear entorno "tikzpicture" personalizado
-\newenvironment{graficaTikz}[1][width=15em]{
-\begin{center}
-  \pgfplotsset{compat=1.8, small, #1}
-  \begin{tikzpicture}
-    \tikzset{
-      every pin/.style={fill=yellow!50!white,rectangle,rounded corners=3pt},
-%      small dot/.style={fill=black,circle,scale=0.3},
-      medium dot/.style={fill=black,circle,scale=0.5}
-    }
-}
-{\end{tikzpicture}\end{center}}
-
-% Adaptar los ejes X e Y
-\newcommand{\axisXYmiddle}{%
-  axis x line = middle, 
-  axis y line = middle, 
-  ylabel=$y$, xlabel=$x$}
+% % Adaptar los ejes X e Y
+% \newcommand{\axisXYmiddle}{%
+%   axis x line = middle, 
+%   axis y line = middle, 
+%   ylabel=$y$, xlabel=$x$}

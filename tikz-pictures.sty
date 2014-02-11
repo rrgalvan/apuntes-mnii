@@ -1,0 +1,35 @@
+
+% ------- Tikz -------
+\usepackage{tikz} 
+\usepackage{pgfplots}
+
+% Crear entorno "tikzpicture" personalizado
+\newenvironment{graficaTikz}[1][width=15em]{ % #1=args to pgfplotset,
+                                % e.g. width
+  \begin{center}
+    \begin{tikzpicture}
+      \pgfplotsset{#1} 
+      % \tikzset{ every
+      %   pin/.style={fill=yellow!50!white,rectangle,rounded
+      %     corners=3pt},
+      %   % small dot/.style={fill=black,circle,scale=0.3},
+      %   medium dot/.style={fill=black,circle,scale=0.5} }
+    }
+    {
+    \end{tikzpicture}
+\end{center}
+}
+
+% Adaptar los ejes X e Y
+\newcommand{\axisXYmiddle}{%
+  axis x line = middle, axis y line = middle, ylabel=$y$, xlabel=$x$}
+
+% Define pgfplot settings
+\pgfplotsset{compat=1.8, small}
+
+% Default graphics style definitions
+\tikzset{ 
+  every pin/.style={fill=yellow!50!white,rectangle,rounded corners=3pt},
+  medium dot/.style={fill=black,circle,scale=0.5}
+  xtick/.style={\empty}, ytick/.style={\empty}
+}

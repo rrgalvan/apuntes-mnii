@@ -1,10 +1,14 @@
 
-\chapter{Ecuaciones de una variable}
+\chapter[Ecuaciones de una variable]{Raíces de ecuaciones de una variable%
+  \footnote{\licenseInfo}}
 \label{cha:ecuaciones-una-variable}
 
-En disciplinas relacionadas con el cálculo científico y las
-matemáticas aparece con frecuencia el problema de hallar los
-\textit{ceros de una función}.
+\section{Introducción. Orden de convergencia}
+\label{sec:intro-orden-convergencia}
+
+En matemáticas y en disciplinas relacionadas con el cálculo científico
+aparece con frecuencia el problema de hallar los \textit{ceros de una
+  función}.
 \begin{center}
   \begin{tikzpicture}
     \begin{axis}[ \axisXYmiddle, xtick=\empty, ytick=\empty, legend
@@ -20,11 +24,12 @@ matemáticas aparece con frecuencia el problema de hallar los
   \end{tikzpicture}
 \end{center}
 
-Recordemos que un \textit{cero} de una función real de una variable
-real, $f$, con dominio $I\subset\Rset$, o una \textit{raíz} de la
-ecuación $f(x)=0$, es una solución del siguiente problema:
+Recordemos que, dada una función real de una variable real, $f$, con
+dominio $I\subset\Rset$, una \textit{raíz} (o
+un \textit{cero}) de $f$ es una solución del siguiente problema:
 \begin{equation}
-\label{eq:cero}
+\label{eq:raiz}
+\tag{P}
 \text{Hallar $\cero\in I$ tal que} \quad f(\cero)=0.
 \end{equation}
 
@@ -40,14 +45,9 @@ no es polinómica. En general, no podemos plantearnos el hallar las
 raíces exactas de una ecuación. Más aún cuando en <<problemas
 reales>>, los coeficientes son conocidos sólo de forma aproximada.
 
-Nuestro objetivo es estudiar algoritmos eficientes
-que nos permitan determinar de forma aproximada los ceros de una
-función $f$ en un intervalo $I$, de tal forma que el error que con
-respecto a la solución exacta sea tan pequeña como deseemos.
-
-Para ello, recurriremos a métodos numéricos que, usualmente, vendrán
-dados en forma de \textit{algoritmos iterativos}, es decir, partiendo
-de uno o más datos iniciales, intentaremos construir una sucesión
+Recurriremos a métodos numéricos que, usualmente, vendrán dados en
+forma de \textit{algoritmos iterativos}, es decir, partiendo de uno o
+más datos iniciales, intentaremos construir una sucesión
 $\{x_k\}_{k=0}^{\infty}$ tal que
 $$
 x_k \to \cero,
@@ -56,12 +56,60 @@ done $\cero$ es una raíz de $f$. La idea es elegir $N\in\Nset$
 <<suficientemente grande>> de forma que $x_N$ sea <<una buena
 aproximación>> de $\cero$; escribiremos
 $$
-\cero\simeq x_N.
+\cero\approx x_N.
 $$
+
+Nuestro objetivo es estudiar algoritmos eficientes que nos permitan
+determinar de forma aproximada los ceros de una función $f$ en un
+intervalo $I$, de tal forma que el error respecto a la solución exacta
+sea tan pequeño como deseemos. Como veremos, no existe <<\textit{el
+  mejor método}>> para el cálculo de ceros de funciones: algunos son
+más rápidos, otros requieren una buena estimación inicial de la raíz,
+o regularidad en la función... En general, un buen método será muy
+general (es decir, podrá utilizarse para un rango de funciones muy
+amplio) y a la vez poco costoso (exigirá pocos recursos de ordenador
+hacer pequeño el error con la solución exacta). En el caso de
+funciones de una variable, la memoria consumida en el ordenador será
+pequeña y los recursos empleados se pueden identificar con el tiempo de
+cálculo. Habitualmente, puesto que la naturaleza de la función $f$ se
+escapa de nuestro ámbito,  no podremos estimar con exactitud el
+tiempo de cálculo (tampoco la memoria consumida). Por ello,
+estimaremos el coste del algoritmo, más que en función del
+número de operaciones en coma flotante, en términos del número de
+evaluaciones de $f$.
+
+En general, un método iterativo converge más rápidamente cuanto mayor
+es su orden de convergencia:
+
+\begin{definition}
+  \label{def:orden-convergencia}  
+  Diremos que un método iterativo tiene \textit{orden de convergencia}
+  $p\ge 1$ si existe una constante $C>0$ tal que
+  \begin{equation}
+    \label{eq:orden-convergencia}
+    \lim_{n\to\infty} \frac{|x_{n+1}-\alpha|}{|x_n-\alpha|^p} = \lambda.
+  \end{equation}
+\end{definition}
+A $\lambda$ se le llama constante asintótica de error. En el caso
+$p=1$, decimos que la convergencia es \textit{lineal}. Los casos $p>1$
+se llaman de convergencia \textit{superlineal} (cuadrática para $p=2$,
+supercuadrática si $p>2$, cúbica para $p=3$, etc.).
+
+Obsérvese que~\eqref{eq:orden-convergencia} implica que, cuando $x_k$
+esté suficientemente cerca de $\alpha$,
+\begin{equation*}
+   |x_{k+1}-\alpha| \approx \lambda |x_{k}-\alpha|^p,
+\end{equation*}
+en el sentido de que para todo $\varepsilon>0$ existe $k_0\in\Nset$ tal que
+  \begin{equation*}
+%    \label{eq:orden-convergencia-2}
+    (\lambda-\varepsilon) |x_{k}-\alpha|^p < |x_{k+1}-\alpha| < 
+    (\lambda+\varepsilon)  |x_{k}-\alpha|^p, \quad \forall k \ge k_0.
+  \end{equation*}
 
 El resto de este capítulo se estructura de la siguiente forma: En una
 primera sección, repasamos algunos resultados teóricos para asegurar
-la existencia y unicidad de solución de~(\ref{eq:cero}). En el resto
+la existencia y unicidad de solución de~(\ref{eq:raiz}). En el resto
 de las secciones se estudian distintos métodos iterativos para el
 cálculo de ceros de funciones de una variable, partiendo del que es,
 conceptualmente, más sencillo (el método de Bisección) y llegando
@@ -130,12 +178,12 @@ corolario.
   \label{cor:tema1:exist+unic}
   Sea $f(x)$ continua en $[a, b]$ y derivable en $(a, b)$. Si
   $f'(x)\ne 0$, para todo $x\in (a, b)$, entonces existe a lo sumo una
-  solución de~\eqref{eq:cero} en el intervalo $I=[a,b]$.
+  solución de~\eqref{eq:raiz} en el intervalo $I=[a,b]$.
 \end{corollary}
 
 \begin{proof}
   Por reducción al absurdo, si existieran dos soluciones
-  de~\eqref{eq:cero}, $\cero_1$ y $\cero_2$, tendríamos que
+  de~\eqref{eq:raiz}, $\cero_1$ y $\cero_2$, tendríamos que
   $0=f(\cero_1)=f(\cero_2)$.  Puesto que $f$ se encuentra en las
   hipótesis del teorema de Rolle en el subintervalo
   $[\cero_1,\cero_2]$ (y suponiendo por ejemplo $\cero_1<\cero_2$), esto
@@ -157,7 +205,7 @@ corolario.
 \begin{remark}[Separación de ceros]
   \label{rk:tema1:separac-ceros}
   % algoritmo para la separación de
-  % soluciones de~\eqref{eq:cero} que será utilizado en los próximos
+  % soluciones de~\eqref{eq:raiz} que será utilizado en los próximos
   % ejemplos.
   Si además de la continuidad y derivabilidad de $f$, suponemos que la
   derivada, $f'$, \emph{es continua en $(a,b)$}, podemos
@@ -166,7 +214,7 @@ corolario.
   \item Hallar todas las raíces de $f'(x)=0$, a las que llamaremos $\beta_1<\dots<\beta_n$.
   \item Considerar los intervalos $(a,\beta_1)$, $(\beta_1,\beta_2)$,
     $(\beta_2,\beta_3)$, \dots,$(\beta_n,b)$. Puesto que, dentro de
-    ellos, $f'(x)\neq 0$, sabemos (según el Corolario~\eqref{eq:cero})
+    ellos, $f'(x)\neq 0$, sabemos (según el Corolario~\eqref{eq:raiz})
     que existe, a lo sumo, un cero de $f$ en cada uno de estos
     intervalos.
   \item Utilizar el teorema de Bolzano para detectar en cuales de
@@ -250,7 +298,7 @@ tipo bisección (que analizaremos en la próxima sección).
   las próximas secciones, se usará para aplicar métodos numéricos para
   aproximar las soluciones).
 
-  Para ello, planteamos el problema~\eqref{eq:cero} para la función
+  Para ello, planteamos el problema~\eqref{eq:raiz} para la función
   continua y derivable
   $$
   f(x)=2x-\cos(x)
@@ -380,7 +428,7 @@ definida a partir de sus puntos medios, $c_n=(a_n+b_n)/2$, tal y como sigue:
 
 Como se puede observar en el ejemplo anterior, el método de bisección
 genera una sucesión de intervalos $[a_n,b_n]$ que
-contienen la solución de~\eqref{eq:cero} (pues, por construcción,
+contienen la solución de~\eqref{eq:raiz} (pues, por construcción,
 $f(a_n)f(b_n)<0$). Además, el tamaño $b_n-a_n$ converge a cero (puesto
 que, en cada paso, el tamaño se divide por dos), de hecho:
 \begin{equation}
@@ -417,34 +465,86 @@ Así, se tiene el siguiente resultado:
   \eqref{eq:tema1:bisecc:2} implica que $c_n$ converge a $\cero$.
 \end{proof}
 
-\begin{remark}
-  \label{rk:tema1:unicidad-bisecc}
-  El teorema~\ref{thm:tema1:bisecc} es válido incluso si existen
-  varios ceros de $f$ en $[a,b]$. Por lo tanto, el método de bisección
-  tiene la importante propiedad de que siempre converge hacia una
-  solución, independientemente de que ésta sea única. Por ello, aunque
-  su velocidad de convergencia es lenta (para que el error
-  $|c_n-\cero|$ sea pequeño necesita muchas más iteraciones que otros
-  métodos que veremos más tarde), es muy útil como ``método de
-  arranque'', con el que realizar iteraciones previas antes de pasar a
-  otros métodos más eficientes.
-\end{remark}
+% \begin{remark}
+%   \label{rk:tema1:unicidad-bisecc}
+El teorema~\ref{thm:tema1:bisecc} es válido incluso si $f$ tiene
+varios ceros en $[a,b]$, es decir el método de bisección tiene la
+importante propiedad de que siempre converge hacia una solución,
+independientemente de que ésta sea única.
+  
+Sin embargo, tiene el inconveniente de que su velocidad de
+convergencia es lenta, es decir, para que el error $|c_n-\cero|$ sea
+pequeño necesita muchas más iteraciones que otros métodos que veremos
+más tarde. De hecho, el método no garantiza que el error se reduzca en
+cada iteración: solamente que el intervalo se reduce a la mitad. Por
+otro lado, el método no utiliza ningún tipo de información acerca de
+la función $f$ y de hecho no podemos esperar convergencia en una sola
+iteración, ni siquiera en el caso en el que $f$ sea lineal.
+
+De cualquier forma, el algoritmo de bisección es un método sencillo y
+muy útil como ``método de arranque'', con el que realizar iteraciones
+previas antes de pasar a otros métodos más eficientes.
+% \end{remark}
 
 \begin{remark}
   \label{rk:tema1:bisecc:iteraciones}
   La desigualdad~\eqref{eq:tema1:bisecc:2} nos garantiza que, para $n$
   suficiente grande, podemos aproximar un cero de $f$ con un error tan
-  pequeño como deseemos. Y, de hecho, dada una tolerancia $\epsilon$,
-  para que $|c_n-\alpha|<\epsilon$ podemos calcular el mínimo número
-  de iteraciones tal que que $(b-a)/2^n < \epsilon$. Efectivamente,
+  pequeño como deseemos. Y, de hecho, dada una tolerancia $\varepsilon$,
+  para que $|c_n-\alpha|<\varepsilon$ podemos calcular el mínimo número
+  de iteraciones tal que que $(b-a)/2^n < \varepsilon$. Efectivamente,
   despejando $n$ en~\eqref{eq:tema1:bisecc:2}, se trata del menor
   entero positivo $n_{\text{mín}}$ tal que:
   \begin{equation*}
-    n_{\text{mín}}>\log_2\left(\frac{b-a}{\epsilon}\right).
+    n_{\text{mín}}>\log_2\left(\frac{b-a}{\varepsilon}\right).
   \end{equation*}
 \end{remark}
 
 
+\begin{test}[Función ``bisección'']
+  El programa~\ref{pro:metodo-biseccion} muestra un ejemplo de
+  implementación del método de bisección, utilizando el lenguaje de
+  programación \textit{Python}. Concretamente, la función
+  \pythoninline{biseccion(f, a, b)} calcula una solución
+  de~\eqref{eq:raiz} en un intervalo $(a,b)$. A través de parámetros
+  opcionales se puede determinar una tolerancia, $\varepsilon$, de
+  forma que el ciclo de iteraciones de detenga cuando
+  $b_k-a_k<\varepsilon$. Adicionalmente, la función permite fijar el
+  número máximo de iteraciones permitidas y seleccionar si, se actuará
+  de forma silenciosa o bien con verbosidad, al mostrar los resultados.
+
+  Por ejemplo, el siguiente código \textit{Python} aproxima un cero de
+  la función $f(x)$ introducida en el
+  ejemplo~\ref{ex:tema1:separ-soluc-1} 
+  con tolerancia $10^{-2}$:
+  \pythonexternal{tema1/src/biseccion-test1.py}
+  \begin{pythonoutput}
+    \pythonexternal[backgroundcolor=\color{white},title={Resultado}]{tema1/src/biseccion-test1.out}
+  \end{pythonoutput}
+\end{test}
+
+
+\begin{program}
+  \widepythonexternal{tema1/src/biseccion.py}
+  \label{pro:metodo-biseccion}
+  \caption{Método de bisección}
+\end{program}
+
+
+\section{Métodos de punto fijo}
+\label{sec:metodos-de-punto-fijo}
+
+Llamamos \textit{punto fijo} de una función
+$g:I\subset\Rset\to\Rset$ a una solución del siguiente  problema:
+\begin{equation}
+\label{eq:punto-fijo}
+\tag{PF}
+\text{Hallar $\cero\in I$ tal que} \quad x=g(\cero).
+\end{equation}
+
+
+\section{El método de ``Regula Falsi''}
+\label{sec:regula-falsi}
 
 %%% Local Variables: 
 %%% mode: latex

@@ -1,13 +1,14 @@
+\usepackage{palatino}
+\usepackage[sc]{mathpazo}
+\linespread{1.05}         % Palatino needs more leading (space between lines)
+\usepackage[T1]{fontenc}
 \spanishdecimal{.}
 
-% \usepackage{palatino}
-% \usepackage[sc]{mathpazo}
-% \linespread{1.05}         % Palatino needs more leading (space between lines)
-% \usepackage[T1]{fontenc}
-
-\usepackage{booktabs} % Pretty tables
-
-\usepackage{ctable} % \toprule, \bottomrule, etc.
+% Tables, etc
+\RequirePackage{booktabs} % Pretty tables
+\RequirePackage{ctable} % \toprule, \bottomrule, etc.
+\RequirePackage{graphicx}
+\RequirePackage{fancybox}
 
 % ------- Mathematics ---------
 \RequirePackage{amsmath}
@@ -32,33 +33,276 @@
 \newtheorem{lemma}[theorem]{Lema}
 \newtheorem{corollary}[theorem]{Corolario}
 \newtheorem{remark}[theorem]{Observación}
-\newtheorem{definition}{Definición}
 \newtheorem{example}{Ejemplo}
 \theoremstyle{definition}
+\newtheorem{definition}{Definición}
+\newtheorem{test}{Test}
 \theoremstyle{proof}
+
 
 % Tema 1 -----------
 \newcommand{\cero}{\alpha}
 
-% % ------- Tikz -------
-% \usepackage{tikz}
-% \usepackage{pgfplots}
+% \hypersetup{colorlinks,linkcolor=,urlcolor=links}
+\usepackage[
+pdftex,
+plainpages=false % To avoid bug with \frontmatter et al
+]
+{hyperref}
+\definecolor{gray75}{gray}{0.75}
+\definecolor{darkblue}{rgb}{0.05,0.1,0.32}
+\definecolor{darkgreen}{rgb}{0.0,0.32,0.15}
+\definecolor{darkred}{rgb}{0.3,0.1,0.0}
+% \def\refColor{darkgreen}
+\def\refColor{black}
+\hypersetup{%
+  colorlinks,
+  linkcolor=\refColor,
+  urlcolor=\refColor,
+  anchorcolor=\refColor,
+  citecolor=\refColor
+}
 
-% % Crear entorno "tikzpicture" personalizado
-% \newenvironment{graficaTikz}[1][width=15em]{
-% \begin{center}
-%   \pgfplotsset{compat=1.8, small, #1}
-%   \begin{tikzpicture}
-%     \tikzset{
-%       every pin/.style={fill=yellow!50!white,rectangle,rounded corners=3pt},
-% %      small dot/.style={fill=black,circle,scale=0.3},
-%       medium dot/.style={fill=black,circle,scale=0.5}
-%     }
+\newcommand{\licenseInfo}{(c) J. Rafael Rodríguez Galván, \today.
+  Este documento es libre. Se otorga permiso para copiarlo,
+  distribuirlo y/o modificarlo bajo los términos de la
+  \href{http://creativecommons.org/licenses/by-sa/3.0/es/}{licencia
+    Creative Commons Reconocimiento-Compartir Igual}.  \vspace{-1ex}
+    \begin{center}
+      \href{http://creativecommons.org/licenses/by-sa/3.0/es/}{\includegraphics[width=5em]{cc-by-sa}}
+      \\
+      Fuentes \LaTeX:
+      \url{https://bitbucket.org/rrgalvan/apuntes-mnii}
+    \end{center}
+  }
+
+% %------------------------------------------------------------
+% \RequirePackage{xcolor}
+% \RequirePackage{framed}
+
+\RequirePackage{lmodern}  % Font with bold tt
+\RequirePackage{listings}
+\lstset{ %To handle UTF-8 en español
+  inputencoding=utf8,
+  extendedchars=true,
+  literate=%
+  {á}{{\'{a}}}1
+  {é}{{\'{e}}}1
+  {í}{{\'{i}}}1
+  {ó}{{\'{o}}}1
+  {ú}{{\'{u}}}1
+  {ü}{{\"{u}}}1
+  {ñ}{{\~{n}}}1
+  {Á}{{\'{A}}}1
+  {É}{{\'{E}}}1
+  {Í}{{\'{I}}}1
+  {Ó}{{\'{O}}}1
+  {Ú}{{\'{U}}}1
+  {Ü}{{\"{U}}}1
+  {Ñ}{{\~{N}}}1
+}
+
+% \lstset{ 
+%      % frame=Ltb,
+%      % framerule=0pt,
+%      aboveskip=0.5cm,
+%      framextopmargin=3pt,
+%      framexbottommargin=3pt,
+%      framexleftmargin=0.5em,
+%      framesep=0pt,
+%      rulesep=.4pt,
 % }
-% {\end{tikzpicture}\end{center}}
+%      backgroundcolor=\color{red!10!gray!40!yellow!10!white},
+%      rulesepcolor=\color{black},
+%      %
+%      % stringstyle=\ttfamily,
+%      showstringspaces = false,
+%      basicstyle=\ttfamily\small,
+% %     commentstyle=\color{gray40},
+%      % keywordstyle=\bfseries,%\color{gray!150},
+%      % identifierstyle=\itshape\bfseries%\color{gray25},
+%      %
+%      % numbers=left,
+%      % numbersep=15pt,
+%      % numberstyle=\tiny,
+%      % numberfirstline = false,
+%      % breaklines=true,
+%    }
 
-% % Adaptar los ejes X e Y
-% \newcommand{\axisXYmiddle}{%
-%   axis x line = middle, 
-%   axis y line = middle, 
-%   ylabel=$y$, xlabel=$x$}
+\lstdefinelanguage{Maxima}{
+keywords={addrow,addcol,zeromatrix,ident,augcoefmatrix,ratsubst,diff,ev,tex,%
+with_stdout,nouns,express,depends,load,submatrix,div,grad,curl,%
+rootscontract,solve,part,assume,sqrt,integrate,abs,inf,exp},
+sensitive=true
+comment=[n][\itshape]{/*}{*/}
+}
+\lstdefinelanguage{pseudocodigo}{
+keywords={Para, para, fin_para, sumatorio, funcion, fin_funcion, devolver},
+sensitive=false,
+comment=[n][\itshape]{\%}{},
+basicstyle=\ttfamily
+}
+
+\lstnewenvironment{algoritmo}[1][]
+    {\lstset{language=pseudocodigo,#1}}
+    {}
+\lstnewenvironment{octave}[1][]
+    {\lstset{language=Octave,#1}}
+    {}
+\lstnewenvironment{mathematica}[1][]
+    {\lstset{language=Mathematica,#1}}
+    {}
+% \lstnewenvironment{c}[1][]
+%     {\lstset{language=c,#1}}
+%     {}
+\lstnewenvironment{C++}[1][]
+    {\lstset{language=c++,#1}}
+    {}
+
+% % Python style for highlighting...
+
+% % Default fixed font does not support bold face
+% \DeclareFixedFont{\ttb}{T1}{txtt}{bx}{n}{12} % for bold
+% \DeclareFixedFont{\ttm}{T1}{txtt}{m}{n}{12}  % for normal
+
+% % Custom colors
+% \usepackage{color}
+% \definecolor{deepblue}{rgb}{0,0,0.5}
+% \definecolor{deepred}{rgb}{0.6,0,0}
+% \definecolor{deepgreen}{rgb}{0,0.5,0}
+
+% \newcommand\pythonstyle{\lstset{
+% language=Python,
+% %basicstyle=\ttm,
+% otherkeywords={self},             % Add keywords here
+% %keywordstyle=\ttb\color{deepblue},
+% keywordstyle=\bfseries\color{deepblue},
+% emph={MyClass,__init__},          % Custom highlighting
+% %emphstyle=\ttb\color{deepred},    % Custom highlighting style
+% emphstyle=\color{deepred},    % Custom highlighting style
+% commentstyle=\color{deepred},
+% stringstyle=\color{deepgreen},
+% %identifierstyle=\color{deepred},
+% frame=tb,                         % Any extra options here
+% showstringspaces=false            % 
+% }}
+
+% % \lstnewenvironment{python}[1][]
+% %     {\pythonstyle\lstset{language=Python,#1}}
+% %     {}
+% % Python environment
+% \lstnewenvironment{python}[1][]
+% {
+% \pythonstyle
+% \lstset{#1}
+% }
+% {}
+
+\lstset{
+basicstyle=\ttfamily
+}
+
+\usepackage{setspace}
+
+\definecolor{Code}{rgb}{0,0,0}
+\definecolor{Decorators}{rgb}{0.5,0.5,0.5}
+\definecolor{Numbers}{rgb}{0.5,0,0}
+\definecolor{MatchingBrackets}{rgb}{0.25,0.5,0.5}
+\definecolor{Keywords}{rgb}{0,0.45,0.05}
+\definecolor{self}{rgb}{0,0,0}
+\definecolor{Strings}{rgb}{0.8,0.05,0.1}
+\definecolor{Comments}{rgb}{0,0.2,0.45}
+\definecolor{Backquotes}{rgb}{0,0,0}
+\definecolor{Classname}{rgb}{0,0,0}
+\definecolor{FunctionName}{rgb}{1,0,0}
+\definecolor{Operators}{rgb}{0,0,0}
+\definecolor{Background}{rgb}{0.99,0.987,0.966}
+\definecolor{Numbers}{gray}{0.7}
+
+\newcommand{\pythonstyle}{\lstset{
+%numbers=left,
+numberstyle=\color{Numbers}\footnotesize\sffamily,
+numbersep=1em,
+xleftmargin=1em,
+framextopmargin=2em,
+framexbottommargin=2em,
+showspaces=false,
+showtabs=false,
+showstringspaces=false,
+frame=l,
+tabsize=4,
+% Basic
+basicstyle=\ttfamily\small\setstretch{1},
+backgroundcolor=\color{Background},
+language=Python,
+% Comments
+commentstyle=\color{Comments}\slshape,
+% Strings
+stringstyle=\color{Strings},
+morecomment=[s][\color{Strings}]{"""}{"""},
+morecomment=[s][\color{Strings}]{'''}{'''},
+% keywords
+morekeywords={import,from,class,def,for,while,if,is,in,elif,else,not,and,or,print,break,continue,return,True,False,None,access,as,,del,except,exec,finally,global,import,lambda,pass,print,raise,try,assert},
+keywordstyle={\color{Keywords}\bfseries},
+% additional keywords
+morekeywords={[2]@invariant},
+keywordstyle={[2]\color{Decorators}\slshape},
+emph={self},
+emphstyle={\color{self}\slshape},
+%
+}}
+
+% Python environment
+\lstnewenvironment{python}[1][]
+{
+\pythonstyle
+\lstset{#1}
+}
+{}
+
+
+% Python for inline
+\newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
+
+%%,--------------------------------
+%%| Python for input external files
+%%`--------------------------------
+
+% Test if material (even floas) is odd page. Needs two compiler runs
+\RequirePackage{ifoddpage}
+
+% 1. To extend text width (including marings)
+\newcommand{\widelstinputlisting}[2][]{%
+  \checkoddpage
+  \ifoddpage
+   \lstset{xleftmargin=0pt,xrightmargin=-\fancyHDRextendedwidth}
+   \lstinputlisting[#1]{#2}
+   \else
+   \lstset{xleftmargin=-\fancyHDRextendedwidth,xrightmargin=0pt}
+   \lstinputlisting[#1]{#2}
+   \fi}
+
+% 2. Define command for including external files
+\newcommand\widepythonexternal[2][]{{
+\pythonstyle
+\widelstinputlisting[#1]{#2}}}
+
+% 2. Define command for including external files
+\newcommand\pythonexternal[2][]{{
+\pythonstyle
+\lstinputlisting[#1]{#2}}}
+
+% program (new figure-like environment)...
+\RequirePackage{float}
+\newfloat{Programa}{tbp}{lop}
+
+\newenvironment{program}{%
+  \begin{Programa}\lstset{numbers=left}}{%
+    \end{Programa}}
+
+\newenvironment{pythoninput}{%
+}{}
+
+\newenvironment{pythonoutput}{%
+  \definecolor{Background}{rgb}{0.99,0.987,1}
+}{}

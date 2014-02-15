@@ -1,0 +1,40 @@
+\documentclass[11pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+
+% ------- Formato del documento ----
+\usepackage[hmargin={2.50cm,2.5cm}, vmargin={3cm,2.5cm}]{geometry}
+
+% ------ Cargar estilo de los apuntes 
+\usepackage{apuntes-MNII}
+
+
+% ==============
+\begin{document}
+% ==============
+
+\begin{enumerate}
+\item Demostrar que en un método iterativo de orden $p$, el número de
+  cifras exactas obtenidas en cada iteración (con respecto a la
+  solución exacta, $\alpha$), se multiplica por $p$ en cada iteración.
+  \begin{flushright}
+    \scriptsize \textit{Indicación}: demostrar que si
+    $d_k=-\log_{10}|x_k-\alpha|$, entonces $d_{n+1}=p d_n + r$, con
+    $r=-\log_{10}\lambda$, siendo $\lambda$ la constante asintótica de error.
+  \end{flushright}
+  Para un método de orden uno y $\lambda=0.999$, ¿cuántas iteraciones
+  serán necesarias para obtener una nueva cifra exacta? Para orden
+  $p=1.01$, ¿cada cuántas iteraciones se dobla el número de cifras
+  exactas? ¿Y para $p=1.1$? Demostrar que la sucesión $x_k=2^{-k}$
+  proporciona una aproximación de orden $1$ de $\alpha=0$ y determinar
+  $\lambda$. Comprobar numéricamente que $d_{n+1}=p\, d_n + r$, para
+  distintos valores de $n$.
+\end{enumerate}
+\end{document}
+
+%===============
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

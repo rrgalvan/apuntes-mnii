@@ -25,8 +25,8 @@ aparece con frecuencia el problema de hallar los \textit{ceros de una
 \end{center}
 
 Recordemos que, dada una función real de una variable real, $f$, con
-dominio $I\subset\Rset$, una \textit{raíz} (o
-un \textit{cero}) de $f$ es una solución del siguiente problema:
+dominio $I\subset\Rset$, una \textit{raíz} (o un \textit{cero}) de $f$
+es una solución del siguiente problema:
 \begin{equation}
 \label{eq:raiz}
 \tag{P}
@@ -61,51 +61,105 @@ $$
 
 Nuestro objetivo es estudiar algoritmos eficientes que nos permitan
 determinar de forma aproximada los ceros de una función $f$ en un
-intervalo $I$, de tal forma que el error respecto a la solución exacta
-sea tan pequeño como deseemos. Como veremos, no existe <<\textit{el
-  mejor método}>> para el cálculo de ceros de funciones: algunos son
-más rápidos, otros requieren una buena estimación inicial de la raíz,
-o regularidad en la función... En general, un buen método será muy
-general (es decir, podrá utilizarse para un rango de funciones muy
-amplio) y a la vez poco costoso (exigirá pocos recursos de ordenador
-hacer pequeño el error con la solución exacta). En el caso de
-funciones de una variable, la memoria consumida en el ordenador será
-pequeña y los recursos empleados se pueden identificar con el tiempo de
-cálculo. Habitualmente, puesto que la naturaleza de la función $f$ se
-escapa de nuestro ámbito,  no podremos estimar con exactitud el
-tiempo de cálculo (tampoco la memoria consumida). Por ello,
-estimaremos el coste del algoritmo, más que en función del
+intervalo $I=[a,b]$, de tal forma que el error respecto a la solución
+exacta sea tan pequeño como deseemos. Como veremos, no existe
+<<\textit{el mejor método}>> para el cálculo de ceros de funciones:
+algunos son más rápidos, otros requieren una buena estimación inicial
+de la raíz, o regularidad en la función... En general, un buen método
+será muy general (es decir, podrá utilizarse para un rango de
+funciones muy amplio) y a la vez poco costoso (exigirá pocos recursos
+de ordenador hacer pequeño el error con la solución exacta). En el
+caso de funciones de una variable, la memoria consumida en el
+ordenador será pequeña y los recursos empleados se pueden identificar
+con el tiempo de cálculo. Habitualmente, puesto que la naturaleza de
+la función $f$ se escapa de nuestro ámbito, no podremos estimar con
+exactitud el tiempo de cálculo (tampoco la memoria consumida). Por
+ello, estimaremos el coste del algoritmo, más que en función del
 número de operaciones en coma flotante, en términos del número de
-evaluaciones de $f$.
+evaluaciones de $f$. En todo caso, el precio de un aumento de los
+recursos empleados por un algoritmo nos puede compensar si, a cambio,
+aumenta el orden de convergencia.
+
+\subsection*{Orden de convergencia}
 
 En general, un método iterativo converge más rápidamente cuanto mayor
 es su orden de convergencia:
 
 \begin{definition}
   \label{def:orden-convergencia}  
-  Diremos que un método iterativo tiene \textit{orden de convergencia}
-  $p\ge 1$ si existe una constante $C>0$ tal que
+  Diremos que un método iterativo, definido por la sucesión $\{x_k\}$
+  tal que $\lim x_k=\alpha$, tiene \textit{orden de convergencia
+    (exactamente)} $p\ge 1$ si existe una constante $C>0$ (y $C<1$ si
+  $p=1$) tal que
   \begin{equation}
     \label{eq:orden-convergencia}
-    \lim_{n\to\infty} \frac{|x_{n+1}-\alpha|}{|x_n-\alpha|^p} = \lambda.
+    \lim_{k\to+\infty} \frac{|x_{k+1}-\alpha|}{|x_k-\alpha|^p} = C.
   \end{equation}
 \end{definition}
-A $\lambda$ se le llama constante asintótica de error. En el caso
-$p=1$, decimos que la convergencia es \textit{lineal}. Los casos $p>1$
-se llaman de convergencia \textit{superlineal} (cuadrática para $p=2$,
+A $C$ se le llama constante asintótica de error. En el caso $p=1$ 
+decimos que la convergencia es \textit{lineal}. Los casos $p>1$ se
+llaman de convergencia \textit{superlineal} (cuadrática para $p=2$,
 supercuadrática si $p>2$, cúbica para $p=3$, etc.).
 
 Obsérvese que~\eqref{eq:orden-convergencia} implica que, cuando $x_k$
 esté suficientemente cerca de $\alpha$,
-\begin{equation*}
-   |x_{k+1}-\alpha| \approx \lambda |x_{k}-\alpha|^p,
-\end{equation*}
+\begin{equation}
+  \label{eq:orden-convergencia-aprox}
+   |x_{k+1}-\alpha| \approx C |x_{k}-\alpha|^p,
+\end{equation}
 en el sentido de que para todo $\varepsilon>0$ existe $k_0\in\Nset$ tal que
+\begin{equation*}
+   \label{eq:orden-convergencia-2}
+  (C-\varepsilon) |x_{k}-\alpha|^p < |x_{k+1}-\alpha| < 
+  (C+\varepsilon)  |x_{k}-\alpha|^p, \quad \forall k \ge k_0.
+\end{equation*}
+
+\begin{remark}
+\label{rk:interpretacion-orden-convergencia}
+  La expresión~(\ref{eq:orden-convergencia-aprox}) puede interpretarse
+  en el siguiente sentido: puesto que $\lim x_k=\alpha$, para $k$
+  suficientemente grande tendremos que el error $|x_k-\alpha|$ es
+  menor que uno. Si $p>1$, el método hace decrecer el error en
+  términos de esta potencia (multiplicado por la constante asintótica
+  de error, $C$, que tiene menos importancia). Si $p=1$ debemos exigir
+  $C=1$ para garantizar el descenso del error.\label{rk:1}
+\end{remark}
+% el que exige $C<1$ para garantizar la disminución del error)
+% Con frecuencia, no será necesario precisar exactamente el orden de
+% convergencia de un método numérico y bastará determinar el orden en el
+% siguiente sentido:
+
+\begin{definition}
+  Diremos que un método iterativo, definido por la sucesión $\{x_k\}$ tal
+  que $\lim x_k=\alpha$, tiene \textit{orden de convergencia al menos}
+  $p\ge 1$ si existen una constante $C>0$ y un número entero $k_0>0$
+  tal que
+  \begin{equation}
+    \label{eq:orden-convergencia-al-menos-p}
+    |x_{k+1}-\alpha| \le C |x_k-\alpha|^p \quad \forall k\ge k_0.
+  \end{equation}
+\end{definition}
+
+%\begin{remark}
+  % La desigualdad~(\ref{eq:orden-convergencia-2}) significa que todo
+  % método iterativo con orden de convergencia (exactamente) $p$ tiene
+  % orden de convergencia al menos $p$ para una constante ligeramente
+  % mayor, $C+\epsilon$.
+  Nótese que no todo método iterativo que sea de orden al menos $p$ es
+  un método de orden $p$. De hecho aunque la sucesión $x_k$ verifique
+  la desigualdad~(\ref{eq:orden-convergencia-al-menos-p}), no tiene
+  por qué existir el límite~(\ref{eq:orden-convergencia}). En concreto
+  de~(\ref{eq:orden-convergencia-al-menos-p}) sólo podemos concluir
+  que
   \begin{equation*}
-%    \label{eq:orden-convergencia-2}
-    (\lambda-\varepsilon) |x_{k}-\alpha|^p < |x_{k+1}-\alpha| < 
-    (\lambda+\varepsilon)  |x_{k}-\alpha|^p, \quad \forall k \ge k_0.
+   \limsup_{k\to+\infty} \frac{|x_{k+1}-\alpha|}{|x_k-\alpha|^p} < +\infty
   \end{equation*}
+  De hecho, no es difícil comprobar que la sucesión $x_{k}$ tiene
+  orden al menos $p$ si y solo si se verifica lo anterior.
+%\end{remark}
+  Por otro lado, la
+  observación~\ref{rk:interpretacion-orden-convergencia} sigue siendo
+  válida cuando el orden es al menos $p$.
 
 El resto de este capítulo se estructura de la siguiente forma: En una
 primera sección, repasamos algunos resultados teóricos para asegurar
@@ -145,14 +199,14 @@ representación gráfica de la función, aunque \textit{en ningún caso
 análisis numérico que garantice la existencia y unicidad de solución.
 
 \begin{theorem}[Bolzano]
-  \label{thm:rolle}
+  \label{thm:bolzano}
   Sea $f(x)$ una función continua en un intervalo $[a, b]$ y
   supongamos que $f (a)\cdot f (b) < 0$.  Entonces, existe
   $c\in(a, b)$ tal que $f (c) = 0$.
 \end{theorem}
 
 \begin{theorem}[Rolle]
-  \label{thm:bolzano}
+  \label{thm:rolle}
   Sea $f(x)$ una función continua en $[a, b]$ y derivable en
   $(a, b)$ tal que $f(a) = f(b)$.
   Entonces existe al menos un valor $c \in (a, b)$ tal que $f'(c) = 0$.
@@ -470,16 +524,17 @@ Así, se tiene el siguiente resultado:
 El teorema~\ref{thm:tema1:bisecc} es válido incluso si $f$ tiene
 varios ceros en $[a,b]$, es decir el método de bisección tiene la
 importante propiedad de que siempre converge hacia una solución,
-independientemente de que ésta sea única.
-  
+independientemente de que ésta sea única y sin más hipótesis sobre $f$
+que su continuidad.
+
 Sin embargo, tiene el inconveniente de que su velocidad de
-convergencia es lenta, es decir, para que el error $|c_n-\cero|$ sea
-pequeño necesita muchas más iteraciones que otros métodos que veremos
-más tarde. De hecho, el método no garantiza que el error se reduzca en
-cada iteración: solamente que el intervalo se reduce a la mitad. Por
-otro lado, el método no utiliza ningún tipo de información acerca de
-la función $f$ y de hecho no podemos esperar convergencia en una sola
-iteración, ni siquiera en el caso en el que $f$ sea lineal.
+convergencia es lenta, necesitando muchas más iteraciones que otros
+métodos que veremos más tarde. De hecho, el método no garantiza que el
+error se reduzca en cada iteración: solamente que el intervalo se
+reduce a la mitad. Por otro lado, el método no utiliza ningún tipo de
+información acerca de la función $f$ (salvo su signo) y de hecho no
+podemos esperar convergencia en una sola iteración, ni siquiera en el
+caso en el que $f$ sea lineal.
 
 De cualquier forma, el algoritmo de bisección es un método sencillo y
 muy útil como ``método de arranque'', con el que realizar iteraciones
@@ -531,17 +586,245 @@ previas antes de pasar a otros métodos más eficientes.
 \end{program}
 
 
-\section{Métodos de punto fijo}
+\section{Los métodos de punto fijo}
 \label{sec:metodos-de-punto-fijo}
 
-Llamamos \textit{punto fijo} de una función
+En este capítulo definimos un tipo de métodos que se definen a partir
+de una reformulación de~(\ref{eq:raiz}) y son conocidos como métodos
+de punto fijo o de aproximaciones sucesivas.
+
+Llamamos \textit{punto fijo} de una función continua
 $g:I\subset\Rset\to\Rset$ a una solución del siguiente  problema:
 \begin{equation}
+\tag{$P_{\text{PF}}$}
+\text{Hallar $\cero\in I$ tal que} \quad \cero=g(\cero).
 \label{eq:punto-fijo}
-\tag{PF}
-\text{Hallar $\cero\in I$ tal que} \quad x=g(\cero).
 \end{equation}
 
+Geométricamente, una solución de la ecuación $x=g(x)$ se corresponde
+con la abscisa correspondiente a un punto de corte entre la gráfica de
+la función $y=g(x)$ y la recta $y=x$ (ver
+figura~\ref{fig:ejemplo-punto-fijo-1}).
+
+\begin{example}
+  La función $g(x)=2-x^2$ tiene puntos dos puntos fijos en $x=1$ y
+  $x=-2$, pues $g(1)=2-1=1$ y $g(-2)=2-4=-2$. No tiene más puntos
+  fijos en $\Rset$, pues éstos son raíces de $g(x)-x$, que en este
+  caso es un polinomio de grado dos. En la
+  figura~\ref{fig:ejemplo-punto-fijo-1} se representan geométricamente
+  la función y sus dos puntos fijos.
+\end{example}
+
+\begin{figure}
+  \begin{graficaTikz}[width=18em, height=15em]
+    \begin{axis}[\axisXYmiddle, 
+      % legend style = {anchor=north west, pos = north east}]
+      legend pos = outer north east, legend cell align=left]
+      % Draw a curve
+      \addplot[domain=-2.4:2.4, blue, ultra thick, samples=40] {2-x^2};
+      \addplot[domain=-2.5:2.5, gray, ultra thick, samples=40] {x};
+      % Plot a label at curve root
+      \node[coordinate, medium dot, pin=0:{\scriptsize$(1,1)$}] 
+      at (axis cs:1,1) {};
+      \node[coordinate, medium dot, pin=-45:{\scriptsize$(-2,-2)$}] 
+      at (axis cs:-2,-2) {};
+      \legend {$y=g(x)$,$y=x$};
+    \end{axis}
+  \end{graficaTikz}
+  \caption{Puntos fijos de $g(x)=2-x^2$}
+  \label{fig:ejemplo-punto-fijo-1}
+\end{figure}
+
+Si $\cero$ es una solución de un problema de punto fijo, entonces
+$\cero$ es solución de un problema de cálculo de raíces del
+tipo~(\ref{eq:raiz}) para $f(x)=x-g(x)$. Recíprocamente un problema de
+cálculo de raíces puede ser transformado en un problema del
+tipo~(\ref{eq:punto-fijo}) de numerosas formas, por ejemplo
+escribiendo $g(x)=x-f(x)$ o empleando otro tipo de manipulaciones
+algebraicas. Algunas de estas transformaciones en ecuaciones de tipo
+punto fijo pueden dar lugar a potentes técnicas iterativas.
+
+A continuación, estudiamos resultados de existencia y unicidad de
+punto fijo.
+
+\begin{proposition}[Existencia de solución de~(\ref{eq:punto-fijo})]
+  \label{pro:existencia-punto-fijo}
+  Sea $g:[a,b]\to\Rset$ una función continua en $[a,b]$ y supongamos
+  que
+  \begin{equation}
+  g([a,b])\subset [a,b].
+  \label{eq:g[a,b].subset.[a,b]}  
+\end{equation}
+  Entonces existe al menos un punto fijo de $g$ en $[a,b]$.
+\end{proposition}
+
+\begin{proof}
+  Debido a la hipótesis~(\ref{eq:g[a,b].subset.[a,b]}), $g(a)\ge a$ y
+  $g(b)\le b$, por lo tanto podemos aplicar el teorema de Bolzano
+  (teorema~\ref{thm:bolzano}) a la función $f(x)=x-g(x)$, que también
+  es continua en $[a,b]$.
+\end{proof}
+
+\begin{remark}
+  Como se puede apreciar en la demostración anterior, la
+  hipótesis~(\ref{eq:g[a,b].subset.[a,b]}) se puede debilitar, en
+  concreto es suficiente que la función $g(x)$ verifique
+  $(g(a)-a)(g(b)-b)\le 0$.
+\end{remark}
+
+Para estudiar la unicidad de solución de~(\ref{eq:punto-fijo}),
+introduciremos la siguiente definición:
+
+\begin{definition}
+  Una función $g$ continua en $[a,b]$ se dice \textit{contractiva} en
+  $[a,b]$ si existe $\cteContract\in[0,1)$ tal que
+  \begin{equation*}
+    |g(x)-g(y)| \le \cteContract |x-y|, \quad \forall x,y \in [a,b].
+  \end{equation*}
+  A $\cteContract$ se le llama constante de contractividad de $g$ en $[a,b]$.
+  \label{def:funcion.contractiva}
+\end{definition}
+
+\begin{example}
+La función $g(x)=(x^2-1)/3$ es contractiva en $[-1,1]$, pues
+$$
+|g(x)-g(y)|=\left|\frac{x^2-y^2}{3}\right| = \frac{|x+y|}{3}|x-y| \le
+\cteContract |x-y|,
+$$
+para $\cteContract=\max_{[-1,1]}\frac{|x+y|}{3}=\frac23 <1$.
+\end{example}
+
+\begin{remark}~
+  \begin{itemize}
+  \item Puesto que $\cteContract<1$, toda función contractiva, $g$, <<contrae las
+    distancias>> en el sentido de que $|g(x)-g(y)|<|x-y|$ para todo
+    $x,y\in [a,b]$.
+  \item En particular, toda función contractiva en $[a,b]$
+    uniformemente continua en ese mismo intervalo (es decir, para
+    todo $\varepsilon>0$ existe $\delta>0$ tal que $|x-y|<\delta
+    \Rightarrow |f(x)-f(y)|<\varepsilon$).
+  \end{itemize}
+\end{remark}
+x-k
+Es sencillo demostrar que las funciones contractivas no pueden tener
+más de un punto fijo:
+
+\begin{proposition}[Unicidad de solución de~(\ref{eq:punto-fijo})]
+  \label{pro:unicidad-punto-fijo}
+  Sea $g:[a,b]\to\Rset$ una función \emph{contractiva} en
+  $[a,b]$. Entonces $g$ posee, a lo sumo, un punto fijo en $[a,b]$.
+\end{proposition}
+
+\begin{proof}
+  Si suponemos que $g$ tiene dos puntos fijos, $\cero_1$ y
+  $\cero_2$, llegamos inmediatamente a una contradicción:
+  $$
+  |\cero_1-\cero_2| = |g(\cero_1)-g(\cero_2)| \le \cteContract |\cero_1 -
+  \cero_2| < |\cero_1-\cero_2|,$$
+  donde $\cteContract$ es la constante de contractividad de $g$.
+\end{proof}
+
+Los problemas de punto fijo~(\ref{eq:punto-fijo}) dan lugar al
+siguiente tipo de esquemas recursivos, conocidos como métodos de punto
+fijo o de aproximaciones sucesivas:
+\begin{equation}
+  \tag{MAS}
+  \text{Partiendo de } x_0\in [a,b], \text{ calcular } x_{k+1}=g(x_k).
+  \label{eq:MAS}
+\end{equation}
+Véase que para que el método esté bien definido es necesario
+que $x_k$ se encuentre en el dominio de $g$ para todo $k$.
+
+El siguiente teorema resume los resultados de existencia y unicidad
+enunciados en las Proposiciones~\ref{pro:existencia-punto-fijo}
+y~\ref{pro:unicidad-punto-fijo}, a la vez que garantiza el buen
+planteamiento y la convergencia de~(\ref{eq:MAS}) bajo las hipótesis
+de estas proposiciones.
+
+\begin{theorem}
+  \label{thm:punto-fijo-Banach}
+  Sea $g:[a,b]\to\Rset$ tal que $g([a,b]) \subset [a,b]$ y supongamos
+  que $g$ es contractiva en $[a,b]$ con constante de contractividad
+  $\cteContract\in [0,1)$. Entonces:
+  \begin{enumerate}
+  \item 
+    \label{item:punto-fijo-Banach:1}
+    La función $g$ tiene un \textsf{único punto fijo}, $\cero$, en
+    $[a,b]$.
+  \item 
+    \label{item:punto-fijo-Banach:2}
+    Para todo $x_0\in [a,b]$, el método~(\ref{eq:MAS}) está bien
+    definido y es \textsf{convergente} hacia $\alpha$.
+  \item En cada etapa de~(\ref{eq:MAS}) se tienen las siguientes
+    \textsf{estimaciones} del error absoluto:
+    \label{item:punto-fijo-Banach:3}
+    \begin{align}
+      \label{eq:pto-fijo:cota-a-priori}
+      |x_k-\cero| \le \cteContract^k &|x_0-\cero|,
+      \\
+      \label{eq:pto-fijo:cota-a-posteriori}
+      |x_k-\cero| \le \frac{\cteContract^k}{1-\cteContract}
+      &|x_1-x_0|.
+    \end{align}
+  \end{enumerate}
+\end{theorem}
+
+La acotación~(\ref{eq:pto-fijo:cota-a-priori}) llama
+\textit{estimación a priori}, mientras que
+a~(\ref{eq:pto-fijo:cota-a-posteriori}) se la conoce como
+\textit{estimación a posteriori} del error.
+
+\begin{proof}~\par
+  El punto~\ref{item:punto-fijo-Banach:1} no es más que una
+  reiteración de las Proposiciones~\ref{pro:existencia-punto-fijo}
+  y~\ref{pro:unicidad-punto-fijo}.  Respecto al
+  punto~\ref{item:punto-fijo-Banach:2}, para cualquier $x_0\in [a,b]$,
+  el método iterativo está bien definido, ya que para $k>1$,
+  $x_{k}=g(x_{k-1})$ y $g([a,b])\subset [a,b]$.
+  Acerca de la convergencia, dado $x_0\in
+  [a,b]$ podemos aplicar repetidamente la función $g$ obteniendo:
+  \begin{align*}
+    |x_k-\cero| = &|g(x_{k-1})-g(\cero)| \le \cteContract
+    |x_{k-1}-\cero| = \\
+    = \cteContract &|g(x_{k-2})-g(\cero)| \le \cteContract^2 
+    |x_{k-2}-\cero| \le \cdots \le \cteContract^k |x_0-\cero|.
+  \end{align*}
+  Así se tiene la estimación a
+  priori~(\ref{eq:pto-fijo:cota-a-priori}) y, como
+  $L<1$, podemos concluir que $x_k\to\cero$.
+
+  Para demostrar la estimación~(\ref{eq:pto-fijo:cota-a-posteriori})
+  en el punto~\ref{item:punto-fijo-Banach:3}, comenzamos con un
+  razonamiento análogo al de la acotación anterior. Utilizando que $g$
+  es contractiva (y que $x_k\in [a,b]$ para todo $k\ge 0$) tenemos que
+  para todo $n \ge 0$:
+  \begin{equation*}
+    |x_{n+1}-x_{n}| =
+    |g(x_{n})-g(x_{n-1})|\le\cteContract|x_{n}-x_{n-1}| \le \cdots \le \cteContract^n|x_1-x_0|.
+  \end{equation*}
+  Sean ahora $k,n\in\Nset$ y supongamos $n>k$. Aplicando la
+  desigualdad triangular junto a la desigualdad anterior obtenemos:
+  \begin{align*}
+     |x_n-x_k| &\le |x_n-x_{n-1}| + |x_{n-1}-x_{n-2}| + \cdots +
+     |x_{k+2}-x_{k+1}| + |x_{k+1}-x_{k}|
+     \\
+     &\le \left(\cteContract^{n-1} + \cteContract^{n-2} +\cdots+
+       \cteContract^{k+1} + \cteContract^{k} \right) |x_1-x_0|
+     \\
+     &=\left(\frac{\cteContract^k-\cteContract^n}{1-\cteContract}\right)
+     |x_1-x_0|
+     \le \frac{L^k}{1-L} |x_1-x_0|.
+  \end{align*}
+  Y por último, como sabemos que $x_n\to\cero$,
+  podemos llegar a~(\ref{eq:pto-fijo:cota-a-posteriori}).
+\end{proof}
+
+El siguiente corolario es inmediato a partir de la estimación a
+priori~(\ref{eq:pto-fijo:cota-a-priori}).
+\begin{corollary}
+  El método~(\ref{eq:MAS}) tiene orden de convergencia mayor o igual a
+  uno.
+\end{corollary}
 
 \section{El método de ``Regula Falsi''}
 \label{sec:regula-falsi}

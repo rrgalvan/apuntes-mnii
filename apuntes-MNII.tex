@@ -6,7 +6,17 @@
 
 
 % ------- Formato del documento ----
-\usepackage[hmargin={2.6cm,4cm}, vmargin={4cm,3cm}]{geometry}
+\RequirePackage{marginnote}
+\usepackage[hmargin={2.1cm,3.9cm}, vmargin={3.6cm,3cm}, 
+  marginparwidth=3.5cm]{geometry}
+
+% Environmet "extension" as margin notes
+\RequirePackage{environ} % To send environment to a \macro
+\NewEnviron{extension}{\marginnote{%
+    \tiny%
+    \setlength{\belowdisplayskip}{0.33em}\setlength{\belowdisplayshortskip}{0pt}%
+    \setlength{\abovedisplayskip}{0.33em}\setlength{\abovedisplayshortskip}{0pt}%
+    \textit{\BODY}}}
 
 \RequirePackage{fancyhdr}
 \setlength{\headheight}{15pt} %Required by fancyhdr
@@ -25,6 +35,18 @@
 \fancyhead[LO]{\sffamily\rightmark}
 \fancyhead[RE]{\sffamily\leftmark}
 
+\newcommand{\licenseInfo}{(c) J. Rafael Rodríguez Galván, \today.
+  Este documento es libre. Se otorga permiso para copiarlo,
+  distribuirlo y/o modificarlo bajo los términos de la
+  \href{http://creativecommons.org/licenses/by-sa/3.0/es/}{licencia
+    Creative Commons Reconocimiento-Compartir Igual}.  \vspace{-1ex}
+    \begin{center}
+      \href{http://creativecommons.org/licenses/by-sa/3.0/es/}{\includegraphics[width=5em]{cc-by-sa}}
+      \\
+      Fuentes \LaTeX:
+      \url{https://bitbucket.org/rrgalvan/apuntes-mnii}
+    \end{center}
+  }
 
 % ------ Cargar estilo de los apuntes 
 \usepackage{apuntes-MNII}
@@ -51,8 +73,8 @@
 \begin{document}
 %===============
 
-\maketitle
-\tableofcontents
+%\maketitle
+%\tableofcontents
 
 \include{tema1/tema1}
 

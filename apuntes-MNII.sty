@@ -10,8 +10,12 @@
 \RequirePackage{graphicx}
 \RequirePackage{fancybox}
 \RequirePackage{enumitem}
+\RequirePackage{marginnote}
 
-% ------- Mathematics ---------
+%%,------------------------------
+%%| ------- Mathematics ---------
+%%`------------------------------
+
 \RequirePackage{amsmath}
 \RequirePackage{amssymb}
 \def\Cset{{\mathbb C}}  
@@ -24,22 +28,35 @@
 
 \def\eps{\varepsilon}
 \newcommand{\st}{\ensuremath{\ / \ }}
-\newcommand{\rg}[1]{\ensuremath{\mathop{\mbox{rg}}#1}}
-\newcommand{\rank}{\ensuremath{\mathop{\mbox{rank}}}}
-\newcommand{\img}{\operatorname{Img}}
+\DeclareMathOperator{\sen}{sen}
+\DeclareMathOperator{\rg}{rg}
+\DeclareMathOperator{\img}{Img}
 
 \RequirePackage{amsthm}
+\theoremstyle{plain}
 \newtheorem{theorem}{Teorema}
 \newtheorem{proposition}[theorem]{Proposición}
 \newtheorem{lemma}[theorem]{Lema}
 \newtheorem{corollary}[theorem]{Corolario}
-\newtheorem{remark}[theorem]{Observación}
-\newtheorem{example}{Ejemplo}
+
+%\newcounter{example}
+%\newtheorem{example}{Ejemplo}
 \theoremstyle{definition}
 \newtheorem{definition}{Definición}
 \newtheorem{test}{Test}
-\theoremstyle{proof}
 
+% Define remarks so that they are finished with a \qued symbol
+\newtheorem{RemarkWithQed}{Observación}
+\newenvironment{remark}
+  {\RemarkWithQed}
+  {\qed\endRemarkWithQed}
+% And also examples
+\newtheorem{ExampleWithQed}{Ejemplo} % Default: append \qed
+\newenvironment{example}
+  {\ExampleWithQed}
+  {\qed\endExampleWithQed}
+
+\newcommand{\resaltar}[1]{\textbf{#1}}
 
 % Tema 1 -----------
 \newcommand{\cero}{\alpha}
@@ -63,19 +80,6 @@ plainpages=false % To avoid bug with \frontmatter et al
   anchorcolor=\refColor,
   citecolor=\refColor
 }
-
-\newcommand{\licenseInfo}{(c) J. Rafael Rodríguez Galván, \today.
-  Este documento es libre. Se otorga permiso para copiarlo,
-  distribuirlo y/o modificarlo bajo los términos de la
-  \href{http://creativecommons.org/licenses/by-sa/3.0/es/}{licencia
-    Creative Commons Reconocimiento-Compartir Igual}.  \vspace{-1ex}
-    \begin{center}
-      \href{http://creativecommons.org/licenses/by-sa/3.0/es/}{\includegraphics[width=5em]{cc-by-sa}}
-      \\
-      Fuentes \LaTeX:
-      \url{https://bitbucket.org/rrgalvan/apuntes-mnii}
-    \end{center}
-  }
 
 % %------------------------------------------------------------
 % \RequirePackage{xcolor}
@@ -293,6 +297,7 @@ emphstyle={\color{self}\slshape},
 \pythonstyle
 \lstinputlisting[#1]{#2}}}
 
+
 % program (new figure-like environment)...
 \RequirePackage{float}
 \newfloat{Programa}{tbp}{lop}
@@ -301,12 +306,20 @@ emphstyle={\color{self}\slshape},
   \begin{Programa}\lstset{numbers=left}}{%
     \end{Programa}}
 
+% Python input
 \newenvironment{pythoninput}{%
-}{}
+\begin{python}
+}{\end{python}}
 
 \newenvironment{pythonoutput}{%
   \definecolor{Background}{rgb}{0.99,0.987,1}
 }{}
+
+% Algoritmo
+\newfloat{Algoritmo}{abp}{lop}
+\newenvironment{algorithm}{%
+  \begin{Algoritmo}}{%
+  \end{Algoritmo}}
 
 %--- Constantes y otras definiciones
 \newcommand{\cteContract}{\lambda}

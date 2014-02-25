@@ -1,5 +1,5 @@
 
-\chapter[Ecuaciones de una variable]{Raíces de ecuaciones de una variable%
+\chapter[Raíces de funciones de una variable]{Raíces de funciones de una variable%
   \footnote{\licenseInfo}}
 \label{cha:ecuaciones-una-variable}
 
@@ -42,7 +42,7 @@ ecuación en un número finito de pasos. Por ejemplo, no existen
 fórmulas explícitas para hallar ceros de funciones polinómicas
 arbitrarias de grado $n\ge 5$ y el problema es aún más difícil si $f$
 no es polinómica. En general, no podemos plantearnos el hallar las
-raíces exactas de una ecuación. Más aún cuando en <<problemas
+raíces exactas de una ecuación. Más aún cuando en numerosos <<problemas
 reales>>, los coeficientes son conocidos sólo de forma aproximada.
 
 Recurriremos a métodos numéricos que, usualmente, vendrán dados en
@@ -87,8 +87,8 @@ es su orden de convergencia:
 
 \begin{definition}
   \label{def:orden-convergencia}  
-  Diremos que un método iterativo, definido por la sucesión $\{x_k\}$
-  tal que $\lim x_k=\alpha$, tiene \textit{orden de convergencia
+  Diremos que un método iterativo (definido por una sucesión $\{x_k\}$
+  tal que $\lim x_k=\alpha$) tiene \resaltar{orden de convergencia
     (exactamente)} $p\ge 1$ si existe una constante $C>0$ (y $C<1$ si
   $p=1$) tal que
   \begin{equation}
@@ -121,17 +121,17 @@ en el sentido de que para todo $\varepsilon>0$ existe $k_0\in\Nset$ tal que
   suficientemente grande tendremos que el error $|x_k-\alpha|$ es
   menor que uno. Si $p>1$, el método hace decrecer el error en
   términos de esta potencia (multiplicado por la constante asintótica
-  de error, $C$, que tiene menos importancia). Si $p=1$ debemos exigir
-  $C=1$ para garantizar el descenso del error.\label{rk:1}
+  de error, $C$). Si $p=1$ debemos exigir
+  $C<1$ para garantizar el descenso del error.\label{rk:1}
 \end{remark}
 % el que exige $C<1$ para garantizar la disminución del error)
-% Con frecuencia, no será necesario precisar exactamente el orden de
-% convergencia de un método numérico y bastará determinar el orden en el
-% siguiente sentido:
+En la mayor parte de los casos no será necesario precisar exactamente
+el orden de convergencia de un método numérico y bastará determinar el
+orden en el siguiente sentido:
 
 \begin{definition}
-  Diremos que un método iterativo, definido por la sucesión $\{x_k\}$ tal
-  que $\lim x_k=\alpha$, tiene \textit{orden de convergencia al menos}
+  Diremos que un método iterativo (definido por una sucesión $\{x_k\}$ tal
+  que $\lim x_k=\alpha$) tiene \resaltar{orden de convergencia al menos}
   $p\ge 1$ si existen una constante $C>0$ y un número entero $k_0>0$
   tal que
   \begin{equation}
@@ -145,21 +145,40 @@ en el sentido de que para todo $\varepsilon>0$ existe $k_0\in\Nset$ tal que
   % método iterativo con orden de convergencia (exactamente) $p$ tiene
   % orden de convergencia al menos $p$ para una constante ligeramente
   % mayor, $C+\epsilon$.
-  Nótese que no todo método iterativo que sea de orden al menos $p$ es
-  un método de orden $p$. De hecho aunque la sucesión $x_k$ verifique
-  la desigualdad~(\ref{eq:orden-convergencia-al-menos-p}), no tiene
-  por qué existir el límite~(\ref{eq:orden-convergencia}). En concreto
-  de~(\ref{eq:orden-convergencia-al-menos-p}) sólo podemos concluir
-  que
+Algunos comentarios:
+\begin{itemize}
+\item Un método iterativo de orden al menos $p$ podría tener,
+  exactamente, un orden mayor que $p$. Visto de otra forma, un método
+  iterativo de orden $p$ es de orden al menos $q$, para todo $1\le q <
+  p$ ($C<1$ si $q=1$).
+  \begin{flushright}
+    \vspace{-0.75em}
+    \scriptsize \em La demostración de lo anterior se deja como ejercicio.
+    \vspace{-0.75em}
+  \end{flushright}
+\item En relación con lo anterior, aunque la sucesión $x_k$
+  verifique la desigualdad~(\ref{eq:orden-convergencia-al-menos-p}),
+  no tiene por qué existir el límite~(\ref{eq:orden-convergencia}). En
+  concreto de~(\ref{eq:orden-convergencia-al-menos-p}) sólo podemos
+  concluir que
   \begin{equation*}
-   \limsup_{k\to+\infty} \frac{|x_{k+1}-\alpha|}{|x_k-\alpha|^p} < +\infty
+    \limsup_{k\to+\infty} \frac{|x_{k+1}-\alpha|}{|x_k-\alpha|^p} < +\infty.
   \end{equation*}
-  De hecho, no es difícil comprobar que la sucesión $x_{k}$ tiene
-  orden al menos $p$ si y solo si se verifica lo anterior.
-%\end{remark}
-  Por otro lado, la
-  observación~\ref{rk:interpretacion-orden-convergencia} sigue siendo
-  válida cuando el orden es al menos $p$.
+  De hecho, no es difícil comprobar que la condición anterior es no
+  solo necesaria, sino suficiente para que la sucesión $x_{k}$ tenga
+  orden al menos $p$.
+\item Análogamente a la
+  observación~\ref{rk:interpretacion-orden-convergencia}, la
+  desigualdad~(\ref{eq:orden-convergencia-al-menos-p}) garantiza que
+  en un esquema de orden al menos $p$ tiene lugar el decrecimiento del
+  error absoluto en términos de su potencia $p$ (o del factor
+  $C<1$ si $p=1$).
+\end{itemize}
+
+\begin{example}
+  \label{rk:2}
+  La sucesión $x_k=2^{-k}$ converge a cero con orden de convergencia $p=1$.
+\end{example}
 
 El resto de este capítulo se estructura de la siguiente forma: En una
 primera sección, repasamos algunos resultados teóricos para asegurar
@@ -214,14 +233,12 @@ análisis numérico que garantice la existencia y unicidad de solución.
 
 % \begin{remark}[Sobre unicidad en los teoremas de Bolzano y Rolle]
 %   \label{rk:tema1:unicidad-bolzano-rolle}
-El teorema de Bolzano es un resultado bien conocido en el ámbito del
-análisis matemático (como el teorema de Rolle) que proporciona
-existencia pero no unicidad de solución. En efecto, una función
-continua con distinto signo en $a$ y en $b$ podría tener muchos ceros
-$c\in (a,b)$. Con respecto al teorema de Rolle, aunque tampoco implica
-unicidad, su recíproco puede ser una herramienta muy útil en este
-sentido. Este hecho se remarca en el siguiente
-corolario.
+Estos teoremas son bien conocidos en el ámbito del análisis
+matemático. El teorema de Bolzano proporciona existencia de solución,
+pero unicidad (es decir, una función continua con distinto signo en
+$a$ y en $b$ podría tener muchos ceros en $(a,b)$). <El teorema de
+Rolle puede ser utilizado para obtener el siguiente resultado de
+unicidad:
 
 % \end{remark}
 
@@ -242,8 +259,7 @@ corolario.
   hipótesis del teorema de Rolle en el subintervalo
   $[\cero_1,\cero_2]$ (y suponiendo por ejemplo $\cero_1<\cero_2$), esto
   implicaría que existe $c$ entre $\cero_1$ y $\cero_2$ en el que
-  $f'(c)=0$, lo que contradice las hipótesis del
-  corolario~\ref{cor:tema1:exist+unic}.
+  $f'(c)=0$, lo que contradice las hipótesis.
 \end{proof}
 
 \begin{remark}
@@ -261,11 +277,14 @@ corolario.
   % algoritmo para la separación de
   % soluciones de~\eqref{eq:raiz} que será utilizado en los próximos
   % ejemplos.
-  Si además de la continuidad y derivabilidad de $f$, suponemos que la
-  derivada, $f'$, \emph{es continua en $(a,b)$}, podemos
-  enunciar un algoritmo para la separación de las raíces de $f(x)=0$:
+  Suponiendo la continuidad y derivabilidad de $f$ necesaria (para
+  aplicar el Corolario~\ref{cor:tema1:exist+unic}), % suponemos que la
+  % derivada, $f'$, \emph{es continua en $(a,b)$},
+  podemos enunciar un algoritmo para la separación de las raíces de
+  $f(x)=0$:
   \begin{enumerate}
-  \item Hallar todas las raíces de $f'(x)=0$, a las que llamaremos $\beta_1<\dots<\beta_n$.
+  \item Hallar todas las raíces de $f'(x)=0$, a las que llamaremos
+    $\beta_1<\dots<\beta_n$.
   \item Considerar los intervalos $(a,\beta_1)$, $(\beta_1,\beta_2)$,
     $(\beta_2,\beta_3)$, \dots,$(\beta_n,b)$. Puesto que, dentro de
     ellos, $f'(x)\neq 0$, sabemos (según el Corolario~\eqref{eq:raiz})
@@ -275,12 +294,13 @@ corolario.
     estos intervalos existe realmente una raíz de $f(x)=0$.
   \end{enumerate}
   El proceso anterior es válido incluso si $a=-\infty$ o $b=+\infty$,
-  según la observación~\ref{rk:tema1:exist+unic}.  Sin embargo, aunque
-  útil desde el punto de vista teórico, presenta un importante
-  inconveniente en la práctica: no es fácil calcular las raíces de la
-  ecuación $f'(x)=0$.  En realidad, estamos convirtiendo el problema
-  del cálculo de ceros de $f$ en otro similar, el cálculo de ceros de
-  $f'$, que podría tan complicado como el anterior (o más aún).
+  según la observación~\ref{rk:tema1:exist+unic}.  Sin embargo, aunque es
+  útil desde el punto de vista teórico y en algunos casos
+  particulares, presenta un importante inconveniente en la práctica:
+  la necesidad de determinar las raíces de  $f'$.  En
+  realidad, estamos convirtiendo el problema del cálculo de ceros de
+  $f$ en otro similar, el cálculo de ceros de $f'$, que podría tan
+  complicado como el anterior (o más aún).
 \end{remark}
 Con frecuencia, se utilizan otros razonamientos para determinar
 todos los intervalos, $(\beta_i,\beta_{i+1})$ en los que
@@ -301,7 +321,7 @@ tipo bisección (que analizaremos en la próxima sección).
   $$
   f'(x)=3x^2-9,
   $$
-  que es continua en todo $\Rset$ y sólo se anula en $x=-\sqrt 3,
+  que sólo se anula en $x=-\sqrt 3,
   x=+\sqrt 3$. Por lo tanto existen, a lo sumo, tres ceros de $f$ que
   están localizados en
   $$
@@ -405,10 +425,8 @@ método sigue siendo válido aunque no haya unicidad de solución
 La idea del método de bisección es dividir por la mitad el intervalo y
 considerar los dos subintervalos resultantes, para seleccionar aquél
 en el que $f$ cambia de signo (y que contiene a la raíz, según el
-teorema de Bolzano).
-
-Con más detalle: el método consiste en construir una sucesión de
-intervalos,
+teorema de Bolzano). Con más detalle: el método consiste en construir
+una sucesión de intervalos,
 \begin{equation}
 \label{eq:tema1:bisecc:0}
 [a,b]=[a_0,b_0] \supset [a_1,b_1] \supset [a_2,b_2] \cdots \supset
@@ -421,19 +439,45 @@ definida a partir de sus puntos medios, $c_n=(a_n+b_n)/2$, tal y como sigue:
 \item En cada etapa $k\ge 1$, construimos un intervalo $[a_k,b_k]$ a
   partir del anterior, $[a_{k-1}, b_{k-1}]$, de la siguiente forma:
   \begin{enumerate}
-  \item Dado el punto medio del intervalo anterior,
-    $c_{k-1}=(a_{k-1}+b_{k-1})/2$, si $f(c_{k-1})=0$ hemos terminado
-    (pues $c_{k-1}$ es el cero de $f$).
+  \item Calculamos el punto medio del intervalo anterior,
+    $c_{k-1}=(a_{k-1}+b_{k-1})/2$. Si $f(c_{k-1})=0$ hemos terminado
+    ($c_{k-1}$ es el cero de $f$).
   \item En otro caso definimos $a_k$ y $b_k$ de forma que $f$ cambie de
     signo en $[a_k,b_k]$:
     \begin{enumerate}
     \item Si $f(a_{k-1})f(c_{k-1})<0$, elegimos $[a_k,b_k]=[a_{k-1}, c_{k-1}]$.
     \item Si $f(c_{k-1})f(b_{k-1})<0$, elegimos $[a_k,b_k]=[c_{k-1}, b_{k-1}]$.
     \end{enumerate}
-  \item A continuación, definimos $c_k=(a_k+b_k)/2$ y pasamos a la
-    siguiente etapa (incrementamos $k$).
+  \item A continuación, pasamos a la siguiente etapa (incrementamos
+    $k$).
   \end{enumerate}
 \end{itemize}
+
+En la práctica, es muy improbable que $f(c_k)=0$ y deben establecerse
+condiciones para evitar bucles infinitos. Puede verse una
+implementación del método de bisección en forma de
+pseudocódigo%
+\footnote{En realidad, el pseudocódigo que se utilizará en
+  este manual constituirá código conforme a Python 2.x} en el
+Algoritmo~\ref{alg:metodo-biseccion}.
+\begin{algorithm}  \begin{python}
+def biseccion(f, a, b, tol, maxIters):
+  iter = 0
+  while b-a >= tol and iter < maxIters:
+      c = (a+b)/2.0
+      if f(c)==0:   
+          return c
+      else:
+          if f(a)*f(c) < 0:
+              b=c
+          else:
+              a=c
+      iter = iter + 1
+  return c    
+\end{python}
+\caption{Método de bisección}
+\label{alg:metodo-biseccion}
+\end{algorithm}
 
 \begin{example}
   Aplicaremos el método de bisección a la función $f(x)=x^3-9x+3$ en el intervalo
@@ -442,9 +486,9 @@ definida a partir de sus puntos medios, $c_n=(a_n+b_n)/2$, tal y como sigue:
   siguientes pasos (resumidos en el cuadro~\ref{tab:tema1:bisecc}):
 
   \begin{itemize}
-  \item Empezamos seleccionando $[a_0,b_0]=[0,1]$ y definiendo
-    $c_0=(1-0)/2=0.5$.
-  \item En la primera etapa, $k=1$, calculamos
+  \item Empezamos seleccionando $[a_0,b_0]=[0,1]$.
+  \item En la primera etapa, $k=1$, calculamos 
+    $c_0=(1-0)/2=0.5$  y 
     $f(c_0)=f(1/2)=-11/8=-1.375$. Como $f(a_0)=f(0)=3$, elegimos
     $[a_1,b_1]=[a_0,c_0]=[0,0.5]$.
   \item Repetimos el proceso para $k=2,3,...$, obteniendo los resultados que se
@@ -481,13 +525,13 @@ definida a partir de sus puntos medios, $c_n=(a_n+b_n)/2$, tal y como sigue:
 \end{table}
 
 Como se puede observar en el ejemplo anterior, el método de bisección
-genera una sucesión de intervalos $[a_n,b_n]$ que
+genera una sucesión de intervalos $[a_k,b_k]$ que
 contienen la solución de~\eqref{eq:raiz} (pues, por construcción,
-$f(a_n)f(b_n)<0$). Además, el tamaño $b_n-a_n$ converge a cero (puesto
+$f(a_k)f(b_k)<0$). Además, el tamaño $b_k-a_k$ converge a cero (puesto
 que, en cada paso, el tamaño se divide por dos), de hecho:
 \begin{equation}
   \label{eq:tema1:bisec:1}
-  b_n-a_n = \frac{b-a}{2^n} \quad \forall n=0,1,2,...
+  b_k-a_k = \frac{b-a}{2^k} \quad \forall k=0,1,2,...
 \end{equation}
 
 Así, se tiene el siguiente resultado:
@@ -495,59 +539,59 @@ Así, se tiene el siguiente resultado:
   \label{thm:tema1:bisecc}
   Sea $f$ una función continua en $[a,b]$ tal que $f(a)f(b)<0$.
   \begin{enumerate}
-  \item La sucesión $\{c_n\}_{n=0}^\infty$ (definida por los puntos
+  \item La sucesión $\{c_k\}_{k=0}^\infty$ (definida por los puntos
     medios de los intervalos en el método de bisección) es convergente
     y su límite, $\cero$, es un cero de $f$ en $(a,b)$.
   \item De hecho, se verifica la siguiente cota del error:
     \begin{equation}
       \label{eq:tema1:bisecc:2}
-      |c_n-\cero| \le \frac{b-a}{2^n}.
+      |c_k-\cero| \le \frac{b-a}{2^k}.
     \end{equation}
   \end{enumerate}
 \end{theorem}
 
 \begin{proof}
-  Los intervalos $[a_n,b_n]$ generados por el método de bisección
-  verifican~\eqref{eq:tema1:bisecc:0} y $f(a_n)f(b_n)<0$, por lo tanto
+  Los intervalos $[a_k,b_k]$ generados por el método de bisección
+  verifican~\eqref{eq:tema1:bisecc:0} y $f(a_k)f(b_k)<0$, por lo tanto
   todos ellos contienen un cero, $\cero\in (a,b)$. Además, como
-  $\cero\in [a_n,b_n]$ (y también $c_n$),
+  $\cero\in [a_k,b_k]$ (y también $c_k$),
   $$
-  |c_n - \cero| < b_n - a_n.
+  |c_k - \cero| < b_k - a_k.
   $$
-  Esto, teniendo en cuenta~\eqref{eq:tema1:bisec:1},
+  Lo anterior junto a~\eqref{eq:tema1:bisec:1},
   implica~\eqref{eq:tema1:bisecc:2}. Y, a su vez,
-  \eqref{eq:tema1:bisecc:2} implica que $c_n$ converge a $\cero$.
+  \eqref{eq:tema1:bisecc:2} implica que $c_k$ converge a $\cero$.
 \end{proof}
 
-% \begin{remark}
-%   \label{rk:tema1:unicidad-bisecc}
-El teorema~\ref{thm:tema1:bisecc} es válido incluso si $f$ tiene
-varios ceros en $[a,b]$, es decir el método de bisección tiene la
-importante propiedad de que siempre converge hacia una solución,
-independientemente de que ésta sea única y sin más hipótesis sobre $f$
-que su continuidad.
+\begin{remark}[Ventajas e inconvenientes del método de bisección]
+  \label{rk:tema1:unicidad-bisecc}
+  El teorema~\ref{thm:tema1:bisecc} es válido incluso si $f$ tiene
+  varios ceros en $[a,b]$, es decir el método de bisección tiene la
+  importante propiedad de que siempre converge hacia una solución,
+  independientemente de que ésta sea única, y sin más hipótesis sobre
+  $f$ que su continuidad.
 
 Sin embargo, tiene el inconveniente de que su velocidad de
-convergencia es lenta, necesitando muchas más iteraciones que otros
-métodos que veremos más tarde. De hecho, el método no garantiza que el
-error se reduzca en cada iteración: solamente que el intervalo se
-reduce a la mitad. Por otro lado, el método no utiliza ningún tipo de
-información acerca de la función $f$ (salvo su signo) y de hecho no
-podemos esperar convergencia en una sola iteración, ni siquiera en el
-caso en el que $f$ sea lineal.
+convergencia es lenta (no alcanzando siquiera orden $1$), necesitando
+muchas más iteraciones que otros métodos que veremos más tarde. De
+hecho, el método no garantiza que el error se reduzca en cada
+iteración: solamente que el intervalo se reduce a la mitad. Véase que,
+el método no utiliza ningún tipo de información acerca de la función
+$f$ (salvo su signo) y de hecho no podemos esperar convergencia en una
+sola iteración, ni siquiera en el caso en el que $f$ sea lineal.
 
 De cualquier forma, el algoritmo de bisección es un método sencillo y
 muy útil como ``método de arranque'', con el que realizar iteraciones
 previas antes de pasar a otros métodos más eficientes.
-% \end{remark}
+ \end{remark}
 
 \begin{remark}
   \label{rk:tema1:bisecc:iteraciones}
   La desigualdad~\eqref{eq:tema1:bisecc:2} nos garantiza que, para $n$
   suficiente grande, podemos aproximar un cero de $f$ con un error tan
   pequeño como deseemos. Y, de hecho, dada una tolerancia $\varepsilon$,
-  para que $|c_n-\alpha|<\varepsilon$ podemos calcular el mínimo número
-  de iteraciones tal que que $(b-a)/2^n < \varepsilon$. Efectivamente,
+  para que $|c_k-\alpha|<\varepsilon$ podemos calcular el mínimo número
+  de iteraciones tal que que $(b-a)/2^k < \varepsilon$. Efectivamente,
   despejando $n$ en~\eqref{eq:tema1:bisecc:2}, se trata del menor
   entero positivo $n_{\text{mín}}$ tal que:
   \begin{equation*}
@@ -557,16 +601,22 @@ previas antes de pasar a otros métodos más eficientes.
 
 
 \begin{test}[Función ``bisección'']
-  El programa~\ref{pro:metodo-biseccion} muestra un ejemplo de
-  implementación del método de bisección, utilizando el lenguaje de
-  programación \textit{Python}. Concretamente, la función
+  El programa~\ref{pro:metodo-biseccion} muestra una implementación
+  del método de bisección, utilizando el lenguaje de programación
+  \textit{Python}, en la que se mejora el
+  Algoritmo~\ref{alg:metodo-biseccion} (minimizando el número de
+  llamadas a $f$). Concretamente, la función
   \pythoninline{biseccion(f, a, b)} calcula una solución
   de~\eqref{eq:raiz} en un intervalo $(a,b)$. A través de parámetros
   opcionales se puede determinar una tolerancia, $\varepsilon$, de
   forma que el ciclo de iteraciones de detenga cuando
-  $b_k-a_k<\varepsilon$. Adicionalmente, la función permite fijar el
-  número máximo de iteraciones permitidas y seleccionar si, se actuará
-  de forma silenciosa o bien con verbosidad, al mostrar los resultados.
+  $b_k-a_k<\varepsilon$. La igualdad~(\ref{eq:tema1:bisec:1})
+  garantiza que así sera para $k$ suficientemente grande (dado
+  concretamente en la
+  observación~\ref{rk:tema1:bisecc:iteraciones}). Adicionalmente, la
+  función permite fijar el número máximo de iteraciones permitidas y
+  seleccionar si se actuará de forma silenciosa o bien con
+  verbosidad al mostrar los resultados.
 
   Por ejemplo, el siguiente código \textit{Python} aproxima un cero de
   la función $f(x)$ introducida en el
@@ -582,18 +632,17 @@ previas antes de pasar a otros métodos más eficientes.
 \begin{program}
   \widepythonexternal{tema1/src/biseccion.py}
   \label{pro:metodo-biseccion}
-  \caption{Método de bisección}
+  \caption{Una implementación del método de bisección}
 \end{program}
 
 
 \section{Los métodos de punto fijo}
 \label{sec:metodos-de-punto-fijo}
 
-En este capítulo definimos un tipo de métodos que se definen a partir
-de una reformulación de~(\ref{eq:raiz}) y son conocidos como métodos
-de punto fijo o de aproximaciones sucesivas.
-
-Llamamos \textit{punto fijo} de una función continua
+En este capítulo introducimos un tipo de métodos que son definidos a
+partir de una reformulación de~(\ref{eq:raiz}). Se trata de los
+métodos de punto fijo o de aproximaciones sucesivas.
+Llamamos \resaltar{punto fijo} de una función continua
 $g:I\subset\Rset\to\Rset$ a una solución del siguiente  problema:
 \begin{equation}
 \tag{$P_{\text{PF}}$}
@@ -612,7 +661,7 @@ figura~\ref{fig:ejemplo-punto-fijo-1}).
   fijos en $\Rset$, pues éstos son raíces de $g(x)-x$, que en este
   caso es un polinomio de grado dos. En la
   figura~\ref{fig:ejemplo-punto-fijo-1} se representan geométricamente
-  la función y sus dos puntos fijos.
+  esta función y sus dos puntos fijos.
 \end{example}
 
 \begin{figure}
@@ -641,8 +690,9 @@ tipo~(\ref{eq:raiz}) para $f(x)=x-g(x)$. Recíprocamente un problema de
 cálculo de raíces puede ser transformado en un problema del
 tipo~(\ref{eq:punto-fijo}) de numerosas formas, por ejemplo
 escribiendo $g(x)=x-f(x)$ o empleando otro tipo de manipulaciones
-algebraicas. Algunas de estas transformaciones en ecuaciones de tipo
-punto fijo pueden dar lugar a potentes técnicas iterativas.
+algebraicas (véase el ejemplo~\ref{ex:punto-fijo-1}). Algunas de estas
+transformaciones en ecuaciones de tipo punto fijo pueden dar lugar a
+potentes técnicas iterativas.
 
 A continuación, estudiamos resultados de existencia y unicidad de
 punto fijo.
@@ -652,34 +702,34 @@ punto fijo.
   Sea $g:[a,b]\to\Rset$ una función continua en $[a,b]$ y supongamos
   que
   \begin{equation}
-  g([a,b])\subset [a,b].
+    g([a,b])\subset [a,b].
   \label{eq:g[a,b].subset.[a,b]}  
 \end{equation}
   Entonces existe al menos un punto fijo de $g$ en $[a,b]$.
 \end{proposition}
-
 \begin{proof}
-  Debido a la hipótesis~(\ref{eq:g[a,b].subset.[a,b]}), $g(a)\ge a$ y
+  Debido a la hipótesis~(\ref{eq:g[a,b].subset.[a,b]}),
+  \begin{extension}
+    La hipótesis~(\ref{eq:g[a,b].subset.[a,b]}) se puede debilitar, en
+    concreto es suficiente que $g(x)$ verifique
+    $$(g(a)-a)(g(b)-b)\le 0$$.
+  \end{extension}
+  $g(a)\ge a$ y
   $g(b)\le b$, por lo tanto podemos aplicar el teorema de Bolzano
-  (teorema~\ref{thm:bolzano}) a la función $f(x)=x-g(x)$, que también
-  es continua en $[a,b]$.
+  (teorema~\ref{thm:bolzano}) a la función $f(x)=x-g(x)$ en $[a,b]$.
 \end{proof}
 
-\begin{remark}
-  Como se puede apreciar en la demostración anterior, la
-  hipótesis~(\ref{eq:g[a,b].subset.[a,b]}) se puede debilitar, en
-  concreto es suficiente que la función $g(x)$ verifique
-  $(g(a)-a)(g(b)-b)\le 0$.
-\end{remark}
+\subsection*{Funciones contractivas}
 
 Para estudiar la unicidad de solución de~(\ref{eq:punto-fijo}),
 introduciremos la siguiente definición:
 
 \begin{definition}
-  Una función $g$ continua en $[a,b]$ se dice \textit{contractiva} en
+  Una función $g$ continua en $[a,b]$ se dice \resaltar{contractiva} en
   $[a,b]$ si existe $\cteContract\in[0,1)$ tal que
   \begin{equation*}
     |g(x)-g(y)| \le \cteContract |x-y|, \quad \forall x,y \in [a,b].
+    \label{eq:contractividad}
   \end{equation*}
   A $\cteContract$ se le llama constante de contractividad de $g$ en $[a,b]$.
   \label{def:funcion.contractiva}
@@ -691,21 +741,48 @@ $$
 |g(x)-g(y)|=\left|\frac{x^2-y^2}{3}\right| = \frac{|x+y|}{3}|x-y| \le
 \cteContract |x-y|,
 $$
-para $\cteContract=\max_{[-1,1]}\frac{|x+y|}{3}=\frac23 <1$.
+para $\cteContract=\max \big\{ \frac{|x+y|}{3}\ /\ x,y\in [-1,1]
+\big\} =\frac23 <1$.
 \end{example}
 
-\begin{remark}~
+\begin{remark}[Algunas propiedades de las funciones contractivas]~
   \begin{itemize}
   \item Puesto que $\cteContract<1$, toda función contractiva, $g$, <<contrae las
     distancias>> en el sentido de que $|g(x)-g(y)|<|x-y|$ para todo
     $x,y\in [a,b]$.
-  \item En particular, toda función contractiva en $[a,b]$
+  \item Toda función contractiva en $[a,b]$ es
     uniformemente continua en ese mismo intervalo (es decir, para
     todo $\varepsilon>0$ existe $\delta>0$ tal que $|x-y|<\delta
     \Rightarrow |f(x)-f(y)|<\varepsilon$).
-  \end{itemize}
+\end{itemize}
 \end{remark}
-x-k
+
+\begin{proposition}[Condición suficiente de contractividad]
+  \label{pro:1}
+  Supongamos que $g\in C([a,b])$ y derivable en $(a,b)$, tal que
+  \begin{equation}
+    \cteContract=\sup_{x\in(a,b)} |g'(x)|<1.
+    \label{eq:L=sup|g'|<1}
+  \end{equation}
+  Entonces $g$ es contractiva en $[a,b]$ y $\cteContract$ es una
+  constante de contractividad para $g$.
+\end{proposition}
+\begin{proof}
+  Sean $x,y\in [a,b]$, por ejemplo $x<y$. Aplicando el teorema del
+  valor medio en $[x,y]$, deducimos que existe $c\in (x,y)$ tal que
+  \begin{equation*}
+    |g(x)-g(y)|=|g'(c)(x-y)| \le \cteContract |x-y|,
+  \end{equation*}
+  donde $\cteContract$ viene dada por~(\ref{eq:L=sup|g'|<1}).
+\end{proof}
+
+\begin{remark}
+  Si $g'$ es continua en $[a,b]$, es suficiente
+  para~(\ref{eq:L=sup|g'|<1}) que $g'(x)<1$ para todo $x\in[a,b]$. 
+  La demostración: $\sup_{x\in(a,b)}|g'(x)| \le \sup_{x\in[a,b]}
+  |g'(x)|$ y, debido al teorema de Weierstrass, $g'$ alcanza su máximo
+  en algún punto $c\in [a,b]$.
+\end{remark}
 Es sencillo demostrar que las funciones contractivas no pueden tener
 más de un punto fijo:
 
@@ -721,27 +798,34 @@ más de un punto fijo:
   $$
   |\cero_1-\cero_2| = |g(\cero_1)-g(\cero_2)| \le \cteContract |\cero_1 -
   \cero_2| < |\cero_1-\cero_2|,$$
-  donde $\cteContract$ es la constante de contractividad de $g$.
+  donde $\cteContract<1$ es la constante de contractividad de $g$.
 \end{proof}
 
+\subsection*{Métodos de punto fijo}
+
 Los problemas de punto fijo~(\ref{eq:punto-fijo}) dan lugar al
-siguiente tipo de esquemas recursivos, conocidos como métodos de punto
-fijo o de aproximaciones sucesivas:
+siguiente tipo de esquemas recursivos, conocidos como métodos de
+aproximaciones sucesivas (o simplemente, \resaltar{métodos de punto
+  fijo}):
 \begin{equation}
-  \tag{MAS}
-  \text{Partiendo de } x_0\in [a,b], \text{ calcular } x_{k+1}=g(x_k).
+  \tag{$M_{\text{AS}}$}
+  \left\{
+    \begin{array}{l}
+      \text{Dado } x_0\in [a,b], \\
+      \text{calcular } x_{k+1}=g(x_k), \quad \forall k\ge 0.
+    \end{array}
+    \right.
   \label{eq:MAS}
 \end{equation}
-Véase que para que el método esté bien definido es necesario
+Véase que para que el método esté \textit{bien definido} es necesario
 que $x_k$ se encuentre en el dominio de $g$ para todo $k$.
-
 El siguiente teorema resume los resultados de existencia y unicidad
 enunciados en las Proposiciones~\ref{pro:existencia-punto-fijo}
 y~\ref{pro:unicidad-punto-fijo}, a la vez que garantiza el buen
 planteamiento y la convergencia de~(\ref{eq:MAS}) bajo las hipótesis
-de estas proposiciones.
+de aquellas proposiciones.
 
-\begin{theorem}
+\begin{theorem}[Teorema del punto fijo]
   \label{thm:punto-fijo-Banach}
   Sea $g:[a,b]\to\Rset$ tal que $g([a,b]) \subset [a,b]$ y supongamos
   que $g$ es contractiva en $[a,b]$ con constante de contractividad
@@ -783,21 +867,22 @@ a~(\ref{eq:pto-fijo:cota-a-posteriori}) se la conoce como
   $x_{k}=g(x_{k-1})$ y $g([a,b])\subset [a,b]$.
   Acerca de la convergencia, dado $x_0\in
   [a,b]$ podemos aplicar repetidamente la función $g$ obteniendo:
-  \begin{align*}
+  \begin{equation}
+  \begin{aligned}
     |x_k-\cero| = &|g(x_{k-1})-g(\cero)| \le \cteContract
     |x_{k-1}-\cero| = \\
     = \cteContract &|g(x_{k-2})-g(\cero)| \le \cteContract^2 
     |x_{k-2}-\cero| \le \cdots \le \cteContract^k |x_0-\cero|.
-  \end{align*}
+  \end{aligned}\label{eq:1}  
+\end{equation}
   Así se tiene la estimación a
   priori~(\ref{eq:pto-fijo:cota-a-priori}) y, como
   $L<1$, podemos concluir que $x_k\to\cero$.
 
   Para demostrar la estimación~(\ref{eq:pto-fijo:cota-a-posteriori})
-  en el punto~\ref{item:punto-fijo-Banach:3}, comenzamos con un
-  razonamiento análogo al de la acotación anterior. Utilizando que $g$
-  es contractiva (y que $x_k\in [a,b]$ para todo $k\ge 0$) tenemos que
-  para todo $n \ge 0$:
+  comenzamos con un razonamiento análogo al anterior. Utilizando que
+  $g$ es contractiva (y que $x_k\in [a,b]$ para todo $k\ge 0$) tenemos
+  que para todo $n \ge 0$:
   \begin{equation*}
     |x_{n+1}-x_{n}| =
     |g(x_{n})-g(x_{n-1})|\le\cteContract|x_{n}-x_{n-1}| \le \cdots \le \cteContract^n|x_1-x_0|.
@@ -812,24 +897,171 @@ a~(\ref{eq:pto-fijo:cota-a-posteriori}) se la conoce como
        \cteContract^{k+1} + \cteContract^{k} \right) |x_1-x_0|
      \\
      &=\left(\frac{\cteContract^k-\cteContract^n}{1-\cteContract}\right)
-     |x_1-x_0|
+     |x_1-x_0| 
      \le \frac{L^k}{1-L} |x_1-x_0|.
   \end{align*}
   Y por último, como sabemos que $x_n\to\cero$,
   podemos llegar a~(\ref{eq:pto-fijo:cota-a-posteriori}).
 \end{proof}
 
-El siguiente corolario es inmediato a partir de la estimación a
-priori~(\ref{eq:pto-fijo:cota-a-priori}).
-\begin{corollary}
-  El método~(\ref{eq:MAS}) tiene orden de convergencia mayor o igual a
-  uno.
-\end{corollary}
+\begin{algorithm}  \begin{python}
+def punto_fijo(g, x0, tol=1e-10, maxIters=100):
+    iter = 0
+    while iter < maxIters:
+        x1 = g(x0)
+        if abs(x1-x0) < tol: 
+            return x1
+        else:
+            x0 = x1
+            iter = iter + 1        
+    print "Fallo de convergencia en el método de punto fijo"
+\end{python}
+\caption{Método de punto fijo (o aproximaciones sucesivas)}
+\label{alg:metodo-punto_fijo}
+\end{algorithm}
+El método de punto fijo o de aproximaciones sucesivas se ha enunciado
+en el algoritmo~\ref{alg:metodo-punto_fijo}.  Dada una tolerancia
+$\epsilon$, el algoritmo realiza iteraciones hasta que se verifica el
+test de parada $|x_{k+1}-x_k|<\epsilon$. Si $g$ es coerciva, este test
+de parada está bien formulado, pues implica $|\cero-x_k|<\epsilon$
+(ejercicio: demostrar lo anterior, usando la desigualdad triangular y
+la coercividad de $g$).% En efecto, usando la
+% desigualdad triangular,
+% \begin{align*}
+%   |\cero-x_k| \le |\cero-x_{k+1}|+|x_{k+1}-x_k|
+%   = |g(\cero)-g(x_k)| + |x_{k+1}-x_k|
+%   \le \lambda|\cero-x_k| + |x_{k+1}-x_k|
+% \end{align*}
 
-\section{El método de ``Regula Falsi''}
+\begin{remark}[Orden de~(\ref{eq:MAS})]~
+  \begin{enumerate}
+  \item En las hipótesis del Teorema~\ref{thm:punto-fijo-Banach} los
+    métodos de punto fijo tienen \resaltar{orden de convergencia al
+      menos uno}.  En efecto, si $g$ verifica estas hipótesis,
+    siguiendo la demostración anterior tenemos la cadena de)
+    desigualdades~(\ref{eq:1}). Si nos fijamos en la primera
+    desigualdad,
+    $$
+    |x_k-\cero|\le\cteContract |x_{k+1}-\cero|,
+    $$
+    por tanto se verifica la condición
+    (\ref{eq:orden-convergencia-al-menos-p}) para orden $p=1$ (con
+    constante $C=\lambda<1$).
+    
+  \item Para hipótesis más restrictivas sobre $g$ se puede llegar a
+    \resaltar{orden mayor que uno}. En concreto, se puede demostrar
+    que si~(\ref{eq:MAS}) converge a un punto fijo, $\cero$, y si $g\in
+    C^p([a,b])$ siendo $p \ge 1$ un entero, con
+    \begin{extension}
+      (En el caso $p=1$ es necesario exigir $g'(\cero)<1$).
+    \end{extension}
+    \begin{equation*}
+      g'(\cero)=g''(\cero)=\cdots=g^{p-1)}(\cero)=0, \quad
+      g^p)(\cero)\neq 0,
+    \end{equation*}
+    entonces~(\ref{eq:MAS}) tiene orden exactamente $p$. 
+    \begin{extension}
+      (Siempre que no ocurra que $x_k=\alpha\ \forall k\ge k_0$).
+    \end{extension}
+    La demostración se basa en un desarrollo de Taylor de $g$ hasta
+    orden $p$.
+  \end{enumerate}
+\end{remark}
+
+%\subsection{Ejemplos}
+
+\begin{example}
+  Nos proponemos el formular en términos de problemas de punto fijo el
+  cálculo de todos los ceros de $f(x)=\sen(x)-x^2+1$. Como
+  \textbf{primera etapa}, determinemos cuántos ceros son y en qué
+  intervalos se encuentran, utilizando el algoritmo de separación de
+  ceros enunciado en la observación~\ref{rk:tema1:separac-ceros}
+  (gracias a que $f$ es continua y derivable en todo $\Rset$).
+  \begin{enumerate}
+  \item Debemos primero localizar los ceros de la primera
+    derivada, planteando $f'(x)=\cos(x)-2x=0$, problema cuya solución
+    no es inmediata.
+  \item Aun así, aprovecharemos que $f'(x)$ es a su vez continua y
+    derivable, con $f''(x)=-\sin(x)-2$. Como $f''(x)<0$ para todo
+    $x\in\Rset$, el corolario~\ref{cor:tema1:exist+unic} (aplicado a
+    $f'$) implica que $f'$ tiene un único cero en $\Rset$.
+  \item Usando de nuevo el
+    corolario~\ref{cor:tema1:exist+unic}, aplicado en esta ocasión a
+    $f$, concluimos que $f$ tiene exactamente dos ceros en $\Rset$
+    (separados por el cero de
+  \item Por último, el teorema de Bolzano nos permitirá determinar dos
+    intervalos $[a_1,b_1]$ y $[a_2,b_2]$ que contengan estos dos
+    ceros. Podemos proceder mediante prueba y error, o bien utilizar
+    un programa de ordenador para representar la gráfica como
+    ayuda. Así, una elección válida es, por ejemplo,
+    \begin{itemize}
+    \item $[a_1,b_1]=[-1, 0]$, pues $f(-1)= -0.841<0$ y $f(0)=1>0$,
+    \item $[a_2,b_2]=[1, 2]$, pues $f(1)= +0.841>0$ y $f(2)= -2.090<0$
+    \end{itemize}
+  \end{enumerate}
+  En una \textbf{segunda etapa}, intentamos reescribir, en cada uno de
+  estos intervalos, el problema en términos de un esquema de punto en
+  las hipótesis del teorema~\ref{thm:punto-fijo-Banach}. La
+  posibilidad más sencilla a partir de $\sen(x)-x^2+1=0$ es despejar
+  $x=\pm\sqrt{\sen(x)+1}$.
+  \begin{itemize}
+  \item En $[a_1,b_1]=[-1, 0]$, como $x<0$, definiremos el
+    problema de punto fijo
+  $$
+  x=g_1(x)=-\sqrt{\sen(x)+1}.
+  $$
+  La función $g_1$ está bien definida (pues $1+\sen(x)\ge 0$) y es
+  continua en todo $\Rset$. Veamos que está en las hipótesis del
+  teorema de punto fijo. En primer lugar,
+  $$
+  g_1'(x)=\frac{-\cos(x)}{\sqrt{\sen(x)+1}},
+  $$
+  que está bien definida para todo $x\in[-1, 0]$ (ya que  $-\pi/2 <-1
+  \le x \le 0$ y entonces  $\sen(x)+1>0$). Es más:
+  \begin{enumerate}
+  \item $g_1([a_1,b_1])\subset [a_1,b_1]$: En efecto, $g_1$ es
+    decreciente en $[-1,0]$ (pues si $x\in [-1, 0]$, $\cos(x)\ge 0$ y
+    por tanto $g_1'(x)\le 0$). Por tanto, como $g_1(-1)=-0.398$ y
+    $g_1(0)=-1.0$, se tiene que $g([-1,0])\subset [-1.0,-0.398]
+    \subset [-1,0]$.
+  \item Veamos que $g_1$ es contractiva en $[a_1,b_1]$. Como $\sen(x)$
+    es creciente en $[-\pi/2,0]$ (y en particular en $[-1,0]$), para
+    todo $x\in[-1,0]$ se tiene que
+    $\sqrt{\sen(x)+1}\ge\sqrt{\sen(-1)+1}>1$, así
+    $$
+    \left|g'(x)\right| = \frac{|\cos{x}|}{\sqrt{\sen(x)+1}} \le
+    \frac{1}{\sqrt{\sen(-1)+1}} =: L < 1,
+    $$
+    es decir $\sup_{x\in(-1,0)} |g'(x)| = \lambda \le L < 1$. Gracias a la
+    proposición~\ref{pro:1}, concluimos que $g_1$ es contractiva.
+  \end{enumerate}
+\item En $[a_2,b_2]=[1,2]$ podemos proceder de forma similar para
+  $g_2(x)=+\sqrt{\sen(x)+1}$ (se deja como ejercicio), obteniendo que
+  $g_2([1,2])\subset[1,2]$ y $g_2$ es contractiva.
+  \end{itemize}
+  La última etapa consistiría en aplicar~(\ref{eq:MAS}) para aproximar
+  las soluciones en cada uno de los dos intervalos. Por ejemplo, para
+  la implementación mostrada en el programa~\ref{pro:metodo-puntofijo}
+  del Algoritmo~\ref{alg:metodo-punto_fijo} aplicada a $g_2$ se
+  obtiene, partiendo de $x_0=1$, el siguiente resultado:
+  \pythonexternal{tema1/src/puntofijo-test1.py}
+  \begin{pythonoutput}
+    \pythonexternal[backgroundcolor=\color{white},title={Resultado}]{tema1/src/puntofijo-test1.out}
+  \end{pythonoutput}    
+  \label{ex:punto-fijo-1}
+  \begin{program}
+    \widepythonexternal{tema1/src/puntofijo.py}
+    \label{pro:metodo-puntofijo}
+    \caption{Una implementación en lenguaje Python del método de
+      aproximaciones sucesivas para calcular un punto fijo $x=g(x)$}
+  \end{program}
+\end{example}
+
+
+
+% \section{El método de ``Regula Falsi''}
 \label{sec:regula-falsi}
-
-%%% Local Variables: 
+%%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../apuntes-MNII.tex"
 %%% End: 

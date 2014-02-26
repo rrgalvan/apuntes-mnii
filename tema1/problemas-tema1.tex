@@ -14,6 +14,14 @@
 % ==============
 
 \begin{enumerate}
+\item Consideremos la sucesión:
+  \begin{align*}
+    a_{n+1}&=(a_{n}+b_{n})/2 , &\quad
+    t_{n+1}&=t_n - p_n(x_n -x_{n+1})^2, \\
+    b_{n+1} &=\sqrt{a_{n}\*b_{n}}, 
+    &\quad p_{n+1}&=2p_n,
+  \end{align*}
+con $a_0=1$, $b_0=1/\sqrt 2$, $t_0=1/4$, $p_0=1$.
 \item Demostrar que en un método iterativo de orden $p$, el número de
   cifras exactas obtenidas en cada iteración (con respecto a la
   solución exacta, $\alpha$), se multiplica por $p$ en cada iteración.

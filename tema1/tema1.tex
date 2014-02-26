@@ -782,6 +782,7 @@ para $\cteContract=\max \big\{ \frac{|x+y|}{3}\ /\ x,y\in [-1,1]
   La demostración: $\sup_{x\in(a,b)}|g'(x)| \le \sup_{x\in[a,b]}
   |g'(x)|$ y, debido al teorema de Weierstrass, $g'$ alcanza su máximo
   en algún punto $c\in [a,b]$.
+  \label{rk:3}
 \end{remark}
 Es sencillo demostrar que las funciones contractivas no pueden tener
 más de un punto fijo:
@@ -900,7 +901,7 @@ a~(\ref{eq:pto-fijo:cota-a-posteriori}) se la conoce como
      |x_1-x_0| 
      \le \frac{L^k}{1-L} |x_1-x_0|.
   \end{align*}
-  Y por último, como sabemos que $x_n\to\cero$,
+  Y por último, usando que $x_n\to\cero$,
   podemos llegar a~(\ref{eq:pto-fijo:cota-a-posteriori}).
 \end{proof}
 
@@ -942,7 +943,7 @@ la coercividad de $g$).% En efecto, usando la
     desigualdades~(\ref{eq:1}). Si nos fijamos en la primera
     desigualdad,
     $$
-    |x_k-\cero|\le\cteContract |x_{k+1}-\cero|,
+    |x_k-\cero|\le\cteContract |x_{k-1}-\cero|,
     $$
     por tanto se verifica la condición
     (\ref{eq:orden-convergencia-al-menos-p}) para orden $p=1$ (con
@@ -1057,7 +1058,53 @@ la coercividad de $g$).% En efecto, usando la
   \end{program}
 \end{example}
 
+Para terminar, mostramos un resultado que garantiza la convergencia
+de~(\ref{eq:MAS}) hacia un punto fijo conocido, sin utilizar hipótesis
+globales sobre el intervalo. En concreto, en el siguiente teorema
+solamente se utilizan hipótesis locales sobre la derivada de $g$.
 
+\begin{theorem}[Convergencia local de los métodos de punto fijo]
+  \label{thm:punto-fijo-convergencia-local}
+  Sea $\cero$ un punto fijo de una función $g$. Supongamos que existe
+  $\delta>0$ tal que $g\in C^1(\cero-\delta,\cero+\delta)$ y que
+  $|g'(\cero)|<1$. Entonces:
+  \begin{enumerate}
+  \item Existe $\rho\in (0,\delta)$ tal que método de punto
+    fijo~(\ref{eq:MAS}) está bien definido y converge hacia $\cero$
+    (para cualquier inicialización $x_0 \in [x_0-\rho,x_0+\rho]$).
+  \item Existe una constante de contractividad $\lambda\in [0,1)$ (que
+    depende de $\rho$ y $|g'(\cero)|$) para la que se verifican las
+    estimaciones a priori~(\ref{eq:pto-fijo:cota-a-priori}) y a
+    posterior~(\ref{eq:pto-fijo:cota-a-posteriori}) en
+    $[x_0-\rho,x_0+\rho]$.
+  \end{enumerate}
+  \begin{proof}
+    Simplemente tenemos que aplicar el
+    teorema~\ref{thm:punto-fijo-Banach} (Teorema del punto fijo) en un
+    intervalo adecuado $[x_0-\rho,x_0+\rho]$. En concreto, como
+    $g'(\cero)<1$ y $g \in C^1(\cero-\delta,\cero+\delta)$, podemos
+    asegurar que para algún $\rho\in(0,\delta)$,
+    $$
+    |g'(x)|<1 \quad \forall x\in [\cero-\rho, \cero+\rho],
+    $$
+    luego $g$ es contractiva en $[\cero-\rho, \cero+\rho]$ (debido a
+    la proposición~\ref{pro:1} y a la observación~\ref{rk:3}), con
+    constante $\lambda<1$.
+
+    Además es fácil ver que $g([\cero-\rho, \cero+\rho]) \subset
+    [\cero-\rho, \cero+\rho]$, pues si $x\in[\cero-\rho, \cero+\rho]$
+    se tiene $ |x-\cero|<\rho$ y por tanto
+    $$ 
+    |g(x)-\cero| = |g(x)-g(\cero)| \le \lambda |x-\cero|< \rho
+    \Rightarrow g(x)\in [\cero-\rho, \cero+\rho].
+    $$    
+  \end{proof}
+\end{theorem}
+
+\begin{example}
+  \label{sec:metodos-de-punto}
+  Demostrar que el método~(\ref{eq:MAS}) converge para $g(x)=$
+\end{example}
 
 % \section{El método de ``Regula Falsi''}
 \label{sec:regula-falsi}

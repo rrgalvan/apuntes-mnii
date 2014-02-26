@@ -33,19 +33,17 @@
 \DeclareMathOperator{\img}{Img}
 
 \RequirePackage{amsthm}
-\theoremstyle{plain}
-\newtheorem{theorem}{Teorema}
+\theoremstyle{plain} % italic, extra space above and below
+\newtheorem{theorem}{Teorema} 
 \newtheorem{proposition}[theorem]{Proposición}
 \newtheorem{lemma}[theorem]{Lema}
 \newtheorem{corollary}[theorem]{Corolario}
 
-%\newcounter{example}
-%\newtheorem{example}{Ejemplo}
-\theoremstyle{definition}
-\newtheorem{definition}{Definición}
+\theoremstyle{definition} % roman, extra space above and below
+\newtheorem{definition}{Definición} 
 \newtheorem{test}{Test}
 
-% Define remarks so that they are finished with a \qued symbol
+\theoremstyle{remark}   % roman, no extra space above and below
 \newtheorem{RemarkWithQed}{Observación}
 \newenvironment{remark}
   {\RemarkWithQed}

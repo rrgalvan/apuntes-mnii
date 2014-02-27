@@ -277,7 +277,7 @@ unicidad:
   % algoritmo para la separación de
   % soluciones de~\eqref{eq:raiz} que será utilizado en los próximos
   % ejemplos.
-  Suponiendo la continuidad y derivabilidad de $f$ necesaria (para
+  Suponiendo continuidad y derivabilidad de $f$ (para
   aplicar el Corolario~\ref{cor:tema1:exist+unic}), % suponemos que la
   % derivada, $f'$, \emph{es continua en $(a,b)$},
   podemos enunciar un algoritmo para la separación de las raíces de
@@ -934,9 +934,8 @@ la coercividad de $g$).% En efecto, usando la
 %   \le \lambda|\cero-x_k| + |x_{k+1}-x_k|
 % \end{align*}
 
-\begin{remark}[Orden de~(\ref{eq:MAS})]~
-  \begin{enumerate}
-  \item En las hipótesis del Teorema~\ref{thm:punto-fijo-Banach} los
+\begin{remark}[Orden uno de~(\ref{eq:MAS})]
+   En las hipótesis del Teorema~\ref{thm:punto-fijo-Banach} los
     métodos de punto fijo tienen \resaltar{orden de convergencia al
       menos uno}.  En efecto, si $g$ verifica estas hipótesis,
     siguiendo la demostración anterior tenemos la cadena de)
@@ -948,11 +947,12 @@ la coercividad de $g$).% En efecto, usando la
     por tanto se verifica la condición
     (\ref{eq:orden-convergencia-al-menos-p}) para orden $p=1$ (con
     constante $C=\lambda<1$).
-    
-  \item Para hipótesis más restrictivas sobre $g$ se puede llegar a
+  \end{remark}    
+  \begin{remark}[Orden $p$ de~(\ref{eq:MAS})]
+    Para hipótesis más restrictivas sobre $g$ se puede llegar a
     \resaltar{orden mayor que uno}. En concreto, se puede demostrar
-    que si~(\ref{eq:MAS}) converge a un punto fijo, $\cero$, y si $g\in
-    C^p([a,b])$ siendo $p \ge 1$ un entero, con
+    que si~(\ref{eq:MAS}) converge a un punto fijo, $\cero$, y si
+    $g\in C^p([a,b])$ siendo $p \ge 1$ un entero, con
     \begin{extension}
       (En el caso $p=1$ es necesario exigir $g'(\cero)<1$).
     \end{extension}
@@ -960,15 +960,14 @@ la coercividad de $g$).% En efecto, usando la
       g'(\cero)=g''(\cero)=\cdots=g^{p-1)}(\cero)=0, \quad
       g^p)(\cero)\neq 0,
     \end{equation*}
-    entonces~(\ref{eq:MAS}) tiene orden exactamente $p$. 
+    entonces~(\ref{eq:MAS}) tiene orden exactamente $p$.
     \begin{extension}
       (Siempre que no ocurra que $x_k=\alpha\ \forall k\ge k_0$).
     \end{extension}
     La demostración se basa en un desarrollo de Taylor de $g$ hasta
     orden $p$.
-  \end{enumerate}
-\end{remark}
-
+    \label{rk:MAS.orden.p}
+  \end{remark}
 %\subsection{Ejemplos}
 
 \begin{example}
@@ -989,20 +988,24 @@ la coercividad de $g$).% En efecto, usando la
   \item Usando de nuevo el
     corolario~\ref{cor:tema1:exist+unic}, aplicado en esta ocasión a
     $f$, concluimos que $f$ tiene exactamente dos ceros en $\Rset$
-    (separados por el cero de
+    (separados por el cero de $f'$).
   \item Por último, el teorema de Bolzano nos permitirá determinar dos
     intervalos $[a_1,b_1]$ y $[a_2,b_2]$ que contengan estos dos
-    ceros. Podemos proceder mediante prueba y error, o bien utilizar
-    un programa de ordenador para representar la gráfica como
-    ayuda. Así, una elección válida es, por ejemplo,
+    ceros. Podemos proceder al análisis de las regiones donde $f$ es
+    positiva y negativa, o bien utilizar un programa de ordenador para
+    representar la gráfica como ayuda. En cualquier caso, tendremos
+    que probar con distintas intervalos hasta encontrar aquellos en
+    los que se verifique el Teorema de Bolzano (y más adelante, las
+    hipótesis del Teorema de punto fijo). En este caso, una elección
+    válida para el Teorema de Bolzano es:
     \begin{itemize}
     \item $[a_1,b_1]=[-1, 0]$, pues $f(-1)= -0.841<0$ y $f(0)=1>0$,
     \item $[a_2,b_2]=[1, 2]$, pues $f(1)= +0.841>0$ y $f(2)= -2.090<0$
     \end{itemize}
   \end{enumerate}
   En una \textbf{segunda etapa}, intentamos reescribir, en cada uno de
-  estos intervalos, el problema en términos de un esquema de punto en
-  las hipótesis del teorema~\ref{thm:punto-fijo-Banach}. La
+  estos intervalos, el problema en términos de un esquema de punto
+  fijo que esté en las hipótesis del teorema~\ref{thm:punto-fijo-Banach}. La
   posibilidad más sencilla a partir de $\sen(x)-x^2+1=0$ es despejar
   $x=\pm\sqrt{\sen(x)+1}$.
   \begin{itemize}
@@ -1015,26 +1018,33 @@ la coercividad de $g$).% En efecto, usando la
   continua en todo $\Rset$. Veamos que está en las hipótesis del
   teorema de punto fijo. En primer lugar,
   $$
-  g_1'(x)=\frac{-\cos(x)}{\sqrt{\sen(x)+1}},
+  g_1'(x)=\frac{-\cos(x)}{2\sqrt{\sen(x)+1}},
   $$
-  que está bien definida para todo $x\in[-1, 0]$ (ya que  $-\pi/2 <-1
-  \le x \le 0$ y entonces  $\sen(x)+1>0$). Es más:
+  que está bien definida para todo $x\in[-1, 0]$, ya que $\sen(x)>-1$
+  en $[-1,0]$. Es más:
   \begin{enumerate}
   \item $g_1([a_1,b_1])\subset [a_1,b_1]$: En efecto, $g_1$ es
     decreciente en $[-1,0]$ (pues si $x\in [-1, 0]$, $\cos(x)\ge 0$ y
-    por tanto $g_1'(x)\le 0$). Por tanto, como $g_1(-1)=-0.398$ y
-    $g_1(0)=-1.0$, se tiene que $g([-1,0])\subset [-1.0,-0.398]
-    \subset [-1,0]$.
-  \item Veamos que $g_1$ es contractiva en $[a_1,b_1]$. Como $\sen(x)$
-    es creciente en $[-\pi/2,0]$ (y en particular en $[-1,0]$), para
-    todo $x\in[-1,0]$ se tiene que
-    $\sqrt{\sen(x)+1}\ge\sqrt{\sen(-1)+1}>1$, así
+    por tanto $g_1'(x)\le 0$). Por tanto, como $g_1(0)=-1.0\in [-1,0]$
+    y $g_1(-1)=-0.398 \in [-1,0]$, se tiene que $g([-1,0])\subset
+    [-1.0,-0.398] \subset [-1,0]$.
+  \item Veamos que $g_1$ es contractiva en $[a_1,b_1]$, para lo que es
+    suficiente que $|g'(x)|<1$ en $[a_1,b_1]=[-1,0]$.
+    \begin{enumerate}
+    \item Como $\cos(x)$ es creciente en $[-\pi/2,0]$ (en particular
+      en $[-1,0]$),  para todo $x\in[-1,0]$ se tiene que
+      $|\cos(x)| \le \cos(0)=1$.
+    \item Como $\sen(x)$ es creciente en $[-\pi/2,0]$ (en particular
+      en $[-1,0]$), para todo $x\in[-1,0]$ se tiene que
+      $\sqrt{\sen(x)+1}\ge \sqrt{\sen(-1)+1}>1$
+    \end{enumerate}
+, así
     $$
-    \left|g'(x)\right| = \frac{|\cos{x}|}{\sqrt{\sen(x)+1}} \le
-    \frac{1}{\sqrt{\sen(-1)+1}} =: L < 1,
+    \left|g'(x)\right| = \frac{|\cos{x}|}{2\sqrt{\sen(x)+1}} \le
+    \frac{1}{2\sqrt{\sen(-1)+1}} < 1,
     $$
-    es decir $\sup_{x\in(-1,0)} |g'(x)| = \lambda \le L < 1$. Gracias a la
-    proposición~\ref{pro:1}, concluimos que $g_1$ es contractiva.
+    Gracias a la proposición~\ref{pro:1} (y a la
+    observación~\ref{rk:3}), concluimos que $g_1$ es contractiva.
   \end{enumerate}
 \item En $[a_2,b_2]=[1,2]$ podemos proceder de forma similar para
   $g_2(x)=+\sqrt{\sen(x)+1}$ (se deja como ejercicio), obteniendo que
@@ -1101,13 +1111,177 @@ solamente se utilizan hipótesis locales sobre la derivada de $g$.
   \end{proof}
 \end{theorem}
 
-\begin{example}
-  \label{sec:metodos-de-punto}
-  Demostrar que el método~(\ref{eq:MAS}) converge para $g(x)=$
-\end{example}
+\section{El método de Newton}
+\label{sec:metodo-de-newton}
+\begin{figure}
+  % Código Python para calcular los datos de las rectas tangentes
+  % f = lambda x: x+x**2+x**5
+  % df = lambda x: 1+2*x+5*x**4
+  % x0=0.85; y0=f(x0); r0 = lambda x: y0+(x-x0)*df(x0)
+  % print "Punto 0:", (x0, y0, df(x0))
+  % x1=x0-y0/df(x0); y1=f(x1); r1 = lambda x: y1+(x-x1)*df(x1)
+  % print "Punto 1:", (x1, y1, df(x1))
+  % x2=x1-y1/df(x1); y2=f(x2); r2 = lambda x: y2+(x-x2)*df(x2)
+  % print "Punto 2:", x2
+  \begin{graficaTikz}[width=25em, height=17em]
+    \def\Ax{0.85} \def\Ay{ 2.0162053125} \def\mA{5.31003125}
+    \def\Bx{0.47030255236256846} \def\By{0.7144954568706967} \def\mB{2.185217999486167}
+    \def\Cx{0.143334965129}
+    \begin{axis}[\axisXYmiddle, 
+      restrict y to domain=-1:3.5,
+      legend pos = outer north east, legend cell align=left,
+      ticks=none]
+      % Draw a curve
+      \addplot[domain=-0.2:1.1, blue, ultra thick, samples=40]
+      {x+x^2+x^4};
+      % Tangent 1
+      \addplot[domain=-0.2:1.1, gray, thick, samples=40]
+      {\Ay+(x-\Ax)*\mA};
+      \node[coordinate, medium dot]  at (axis cs:\Ax,\Ay) {};
+      \addplot[dashed] coordinates {(\Ax,0) (\Ax,\Ay)};
+      \node[coordinate, medium dot, pin=-45:{$x_0$}]
+      at (axis cs:\Ax,0) {};
+      % Tangent 2
+      \addplot[domain=-0.2:1.1, darkgreen, thick, samples=40]
+      {\By+(x-\Bx)*\mB};
+      \node[coordinate, medium dot]  at (axis cs:\Bx,\By) {};
+      \addplot[dashed] coordinates {(\Bx,0) (\Bx,\By)};
+      \node[coordinate, medium dot, pin=-45:{$x_1$}] 
+      at (axis cs:\Bx,0) {};
+      \legend {$y=f(x)$};
+      % Point 3
+      \node[coordinate, medium dot, <-, pin=-45:{$x_2$}] 
+      at (axis cs:\Cx,0) {};
+    \end{axis}
+  \end{graficaTikz}
+  \caption{Interpretación geométrica del método de Newton}
+  \label{fig:newton-interpretacion-geometrica}
+\end{figure}
+El método de Newton (también conocido como método de Newton-Raphson o
+de la tangente) es uno de los métodos numéricos más conocidos y más
+eficientes para el cálculo de raíces, si bien las condiciones para la
+convergencia son más restrictivas que en métodos anteriores. 
+
+El método fue deducido históricamente a partir de la siguiente
+construcción geométrica
+(figura~\ref{fig:newton-interpretacion-geometrica}): Dada
+$f:[a,b]\to\Rset$ continua en $[a,b]$ y derivable en $(a,b)$ y dado
+$x_0\in [a,b]$, para cada $k\ge 0$ calculamos $x_{k+1}$ como la
+abscisa de la intersección del eje $y=0$ con la recta tangente a $f$
+en $(x_k,f(x_k))$. Como esta recta tangente viene dada por
+$y-f(x_k) = f'(x_k)(x-x_k)$, el \resaltar{método de
+  Newton} se formula de la siguiente forma:
+\begin{equation}
+  \tag{$M_{\text{N}}$}
+  \left\{
+    \begin{array}{l}
+      \text{Dado } x_0\in [a,b], \\
+      \text{calcular } x_{k+1} = x_k - \dfrac{f(x_k)}{f'(x_k)} , \quad \forall k\ge 0.
+    \end{array}
+  \right.
+  \label{eq:MetNewton}
+\end{equation}
+Obsérvese que para que el método de Newton esté bien definido se debe
+imponer la siguiente restricción: $f'(x)\neq 0$ para todo $x\in
+[a,b]$.
+Además de su interpretación geométrica, existen otras formas de
+introducir el método de Newton:
+\begin{itemize}
+\item Mediante el \textbf{desarrollo de Taylor} de $f$: dado $x_n\in [a,b]$,
+  \begin{align*}
+    f(x)&=f(x_n) + f'(x_n)(x-x_n) + \frac 12 f''(\xi_n)(x-x_n)^2, \quad
+    \text{con $\xi_n$ entre $x$ y $x_n$}.
+    \\
+    \intertext{En particular, para $x=\cero$ se tiene $f(\cero)=0$,
+      luego}
+    0=f(\cero)&=f(x_n) + f'(x_n)(\cero-x_n) + \frac 12 f''(\xi_n)(\cero-x_n)^2.
+  \end{align*}
+  Suponiendo que $x_n$ sea ``una buena aproximación'' de $\cero$ el
+  término $|\cero-x_n|$ es ``pequeño'', luego $(\cero-x_n)^2$ es
+  ``mucho más pequeño'' y puede eliminarse el último sumando de la
+  ecuación anterior, de donde
+  \begin{equation*}
+        0 \approx f(x_n) + f'(x_n)(\cero-x_n), \quad \text{es decir} \quad
+        \cero \approx x_n - \frac{f(x_n)}{f'(x_n)},
+  \end{equation*}
+  lo cual justifica que la elección de $x_{n+1}$ como
+  en~(\ref{eq:MetNewton}) es una aproximación de $\cero$.
+\item Como una técnica de \textbf{punto fijo} en la que se impone
+  orden al menos cuadrático. % La idea es reescribir~(\ref{eq:raiz})
+  % en la forma~(\ref{eq:punto-fijo}).
+  Para ello, observamos dada $h:[a,b]\to\Rset$ tal que $h(x)\neq 0$
+  para toda $x\in[a,b]$,
+  \begin{align*}
+    x \text{ es solución de~(\ref{eq:raiz})} \ \Leftrightarrow\ & h(x)f(x)=0 
+    \ \Leftrightarrow\ x-h(x)f(x)=x \\
+    \ \Leftrightarrow\ & x \text{ es solución de~(\ref{eq:punto-fijo}) para }
+    g(x)=x-h(x)f(x).
+  \end{align*}
+  La idea del método de Newton consiste en elegir $h$ de forma que
+  $g'(\cero)=0$, lo que implica que el método de punto
+  fijo~(\ref{eq:MAS}) para $g$ tiene orden (al menos) dos (véase la
+  observación~\ref{rk:MAS.orden.p}). Por definición de $g$,
+  $$
+  0 = g'(\cero) = 1-h'(\cero)f(\cero)-h(\cero)f'(\cero)
+  $$
+  y como $f(\cero)=0$ nos queda 
+  $$
+  0 = 1-h(\cero)f'(\cero).
+  $$
+  Es decir, la mejor elección es $h(x)=1/f'(x)$, con lo que
+  $g(x)=x-f(x)/f'(x)$. El método de Newton no es más
+  que un método de punto fijo~(\ref{eq:MAS}) aplicado a esta función.
+\end{itemize}
+
+Esta última justificación de~(\ref{eq:MetNewton}) en términos de un
+método de punto fijo es la más rigurosa y de hecho nos permite aplicar
+toda la artillería desarrollada en la
+sección~\ref{sec:metodos-de-punto-fijo}. El inconveniente es que, de
+cara a la existencia y unicidad de solución, el
+teorema~\ref{thm:punto-fijo-Banach} (Teorema de punto fijo) impone
+condiciones que no son fáciles de verificar.  El siguiente resultado
+ofrece una condiciones suficientes más apropiadas, de tipo global (en
+todo el intervalo).
+
+\begin{theorem}[Convergencia global del método de Newton]
+  Sea $f\in C^2([a,b])$ y supongamos que se verifican las siguientes
+  hipótesis:
+  \begin{enumerate}[label=($H_{\arabic*}$)]
+  \item $f(a)f(b)<0$.
+    \label{item:Newton.H1}
+  \item  $f'(x)\neq 0$, para todo $x \in [a,b]$.
+    \label{item:Newton.H2}    
+  \item 
+    El signo de $f''$ no cambia en $[a,b]$ (o sea,
+      $f''(x)\ge 0 \ \forall x\in [a,b]$ o $f''(x)\le 0 \ \forall x\in [a,b]$).
+    \label{item:Newton.H3}
+  \item
+    $\max\left\{ \dfrac{|f(a)|}{|f'(a)|}, \dfrac{|f(b)|}{|f'(b)|}
+    \right\} \le b-a.$
+    \label{item:Newton:H4}
+  \end{enumerate}
+  Entonces:
+  \begin{enumerate}
+  \item $f$ tiene una única raíz, $\alpha$, en $[a,b]$.
+  \item (\ref{eq:MetNewton}) está bien definido (es decir, para todo
+    $x_0\in [a,b]$ se tiene que $\{x_k\} \subset [a,b]$).
+  \item (\ref{eq:MetNewton}) es convergente (para todo $x_0\in [a,b]$)
+    y $\lim x_k = \cero$.
+  \item El orden de (\ref{eq:MetNewton}) es, al menos, cuadrático. En
+    concreto, para todo $k\ge 0$,
+    $$
+    |x_{x+1} - \cero| \le \frac {M''}{2m'} |x_k-\alpha|^2, 
+    $$
+    donde $m'=\min_{x\in[a,b]} |f'(x)|$ y $M''=\max_{x\in[a,b]}|f''(x)|$.
+  \end{enumerate}
+  \label{thm:Newton.convergencia.global}  
+\end{theorem}
+
+\ref{item:Newton:H4}
+
 
 % \section{El método de ``Regula Falsi''}
-\label{sec:regula-falsi}
+%\label{sec:regula-falsi}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../apuntes-MNII.tex"

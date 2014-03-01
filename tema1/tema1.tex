@@ -972,17 +972,19 @@ la coercividad de $g$).% En efecto, usando la
 
 \begin{example}
   Nos proponemos el formular en términos de problemas de punto fijo el
-  cálculo de todos los ceros de $f(x)=\sen(x)-x^2+1$. Como
-  \textbf{primera etapa}, determinemos cuántos ceros son y en qué
-  intervalos se encuentran, utilizando el algoritmo de separación de
-  ceros enunciado en la observación~\ref{rk:tema1:separac-ceros}
-  (gracias a que $f$ es continua y derivable en todo $\Rset$).
+  cálculo de todos los ceros de $f(x)=\sen(x)-4x^2+1$. 
+
+  
+  \textbf{Primera etapa:} Determinar cuántos ceros son y en qué
+  intervalos se encuentran. Como $f$ es continua y derivable en todo
+  $\Rset$, utilizaremos el algoritmo de separación de ceros enunciado
+  en la observación~\ref{rk:tema1:separac-ceros}.
   \begin{enumerate}
   \item Debemos primero localizar los ceros de la primera
-    derivada, planteando $f'(x)=\cos(x)-2x=0$, problema cuya solución
+    derivada, planteando $f'(x)=\cos(x)-8x=0$, problema cuya solución
     no es inmediata.
   \item Aun así, aprovecharemos que $f'(x)$ es a su vez continua y
-    derivable, con $f''(x)=-\sin(x)-2$. Como $f''(x)<0$ para todo
+    derivable, con $f''(x)=-\sin(x)-8$. Como $f''(x)<0$ para todo
     $x\in\Rset$, el corolario~\ref{cor:tema1:exist+unic} (aplicado a
     $f'$) implica que $f'$ tiene un único cero en $\Rset$.
   \item Usando de nuevo el
@@ -994,67 +996,82 @@ la coercividad de $g$).% En efecto, usando la
     ceros. Podemos proceder al análisis de las regiones donde $f$ es
     positiva y negativa, o bien utilizar un programa de ordenador para
     representar la gráfica como ayuda. En cualquier caso, tendremos
-    que probar con distintas intervalos hasta encontrar aquellos en
+    que probar con distintos intervalos hasta encontrar aquellos en
     los que se verifique el Teorema de Bolzano (y más adelante, las
-    hipótesis del Teorema de punto fijo). En este caso, una elección
-    válida para el Teorema de Bolzano es:
+    hipótesis del Teorema de punto fijo). En este caso, una primera
+    elección, válida para el Teorema de Bolzano es:
     \begin{itemize}
-    \item $[a_1,b_1]=[-1, 0]$, pues $f(-1)= -0.841<0$ y $f(0)=1>0$,
-    \item $[a_2,b_2]=[1, 2]$, pues $f(1)= +0.841>0$ y $f(2)= -2.090<0$
+    \item $[a_1,b_1]=[-\pi/2, 0]$, pues $f(-\pi/2)=-1-\pi^2+1<0$ y
+      $f(0)=1>0$,
+    \item $[a_2,b_2]=[0, \pi/2]$, pues $f(0)=1>0$ y $f(\pi/2)= 1-\pi^2+1<0$
+    \end{itemize}
+    El problema es que la función de punto fijo $g_1$ que definiremos
+    más abajo no es derivable en $x=-\pi/2$. Por ello, restringiremos
+    este intervalo, definiéndolo tal y como sigue:
+    \begin{itemize}
+    \item $[a_1,b_1]=[-\pi/4, 0]$. Seguimos estando en las hipótesis
+      del Teorema de Bolzano, pues $f(-\pi/4)=
+      -\sqrt{2}/2-\pi^2/4+1=-2.174...<0$ y $f(0)=1>0$,
     \end{itemize}
   \end{enumerate}
-  En una \textbf{segunda etapa}, intentamos reescribir, en cada uno de
+
+  \textbf{Segunda etapa}: intentamos reescribir, en cada uno de
   estos intervalos, el problema en términos de un esquema de punto
   fijo que esté en las hipótesis del teorema~\ref{thm:punto-fijo-Banach}. La
-  posibilidad más sencilla a partir de $\sen(x)-x^2+1=0$ es despejar
-  $x=\pm\sqrt{\sen(x)+1}$.
+  posibilidad más sencilla a partir de $\sen(x)-4x^2+1=0$ es despejar
+  $x=\pm \frac 12 \sqrt{1+\sen(x)}$.
   \begin{itemize}
-  \item En $[a_1,b_1]=[-1, 0]$, como $x<0$, definiremos el
+  \item En $[a_1,b_1]=[-\pi/4, 0]$, como $x<0$, definiremos el
     problema de punto fijo
   $$
-  x=g_1(x)=-\sqrt{\sen(x)+1}.
+  x=g_1(x)=-\dfrac 12 \sqrt{1+\sen(x)}.
   $$
   La función $g_1$ está bien definida (pues $1+\sen(x)\ge 0$) y es
   continua en todo $\Rset$. Veamos que está en las hipótesis del
   teorema de punto fijo. En primer lugar,
   $$
-  g_1'(x)=\frac{-\cos(x)}{2\sqrt{\sen(x)+1}},
+  g_1'(x)=\frac{-\cos(x)}{4\sqrt{1+\sen(x)}},
   $$
-  que está bien definida para todo $x\in[-1, 0]$, ya que $\sen(x)>-1$
-  en $[-1,0]$. Es más:
+  que está bien definida para todo $x\in[-\pi/4, 0]$, ya que
+  $\sen(x)>-1$ en este intervalo. Además:
   \begin{enumerate}
   \item $g_1([a_1,b_1])\subset [a_1,b_1]$: En efecto, $g_1$ es
-    decreciente en $[-1,0]$ (pues si $x\in [-1, 0]$, $\cos(x)\ge 0$ y
-    por tanto $g_1'(x)\le 0$). Por tanto, como $g_1(0)=-1.0\in [-1,0]$
-    y $g_1(-1)=-0.398 \in [-1,0]$, se tiene que $g([-1,0])\subset
-    [-1.0,-0.398] \subset [-1,0]$.
+    decreciente en $[-\pi/4,0]$ (pues $\cos(x)\ge 0$ si $x\in
+    [-\pi/4, 0]$ y por tanto $g_1'(x)\le 0$ en este intervalo). 
+    Como
+    \begin{align*}
+      g_1(-\pi/4)&= -\frac12 \sqrt{1+\sen(-\pi/4)}=-0.270...\in
+      [-\pi/4,0]=[-0.785...,0],
+      \\
+      g_1(0)&=-1/2 \in [-\pi/4,0], 
+    \end{align*}
+    se tiene que $g([-\pi/4,0])\subset
+    [g(0),g(-\pi/4)] \subset [-\pi/4,0]$.
   \item Veamos que $g_1$ es contractiva en $[a_1,b_1]$, para lo que es
-    suficiente que $|g'(x)|<1$ en $[a_1,b_1]=[-1,0]$.
-    \begin{enumerate}
-    \item Como $\cos(x)$ es creciente en $[-\pi/2,0]$ (en particular
-      en $[-1,0]$),  para todo $x\in[-1,0]$ se tiene que
-      $|\cos(x)| \le \cos(0)=1$.
-    \item Como $\sen(x)$ es creciente en $[-\pi/2,0]$ (en particular
-      en $[-1,0]$), para todo $x\in[-1,0]$ se tiene que
-      $\sqrt{\sen(x)+1}\ge \sqrt{\sen(-1)+1}>1$
-    \end{enumerate}
-, así
+    suficiente que $|g'(x)|<1$ en $[a_1,b_1]=[-\pi/4,0]$ (según la
+    proposición~\ref{pro:1} y a la observación~\ref{rk:3}).  Como
+    $\sen(x)$ es creciente en $[-\pi/4,0]$, en este intervalo se
+    verifica que
+    $$4\sqrt{1+\sen(x)}\ge 4\sqrt{1+\sen(-\pi/4)}=2.164... >1,$$ 
+    así
     $$
-    \left|g'(x)\right| = \frac{|\cos{x}|}{2\sqrt{\sen(x)+1}} \le
-    \frac{1}{2\sqrt{\sen(-1)+1}} < 1,
+    \left|g'(x)\right| = \frac{|\cos{x}|}{4\sqrt{1+\sen(x)}} \le
+    \frac{1}{4\sqrt{\sen(x)+1}} < 1.
     $$
-    Gracias a la proposición~\ref{pro:1} (y a la
-    observación~\ref{rk:3}), concluimos que $g_1$ es contractiva.
   \end{enumerate}
-\item En $[a_2,b_2]=[1,2]$ podemos proceder de forma similar para
-  $g_2(x)=+\sqrt{\sen(x)+1}$ (se deja como ejercicio), obteniendo que
-  $g_2([1,2])\subset[1,2]$ y $g_2$ es contractiva.
+\item En $[a_2,b_2]=[0,\pi/2]$ podemos proceder de forma similar para
+  $g_2(x)=+\frac 12 \sqrt{1+\sen(x)}$, obteniendo que
+  $g_2([0,\pi/2])\subset[0,\pi/2]$ y $g_2$ es contractiva, por lo que
+  $g_2$ está en las hipótesis del Teorema del punto fijo en
+  $[a_2,b_2]$. El desarrollo de este apartado se deja como ejercicio
+  al lector.
   \end{itemize}
-  La última etapa consistiría en aplicar~(\ref{eq:MAS}) para aproximar
-  las soluciones en cada uno de los dos intervalos. Por ejemplo, para
-  la implementación mostrada en el programa~\ref{pro:metodo-puntofijo}
-  del Algoritmo~\ref{alg:metodo-punto_fijo} aplicada a $g_2$ se
-  obtiene, partiendo de $x_0=1$, el siguiente resultado:
+  La \textbf{tercera y última etapa} consistiría en
+  aplicar~(\ref{eq:MAS}) para aproximar las soluciones en cada uno de
+  los dos intervalos. Por ejemplo, para la implementación mostrada en
+  el programa~\ref{pro:metodo-puntofijo} del
+  Algoritmo~\ref{alg:metodo-punto_fijo} aplicada a $g_2$ se obtiene,
+  partiendo de $x_0=1$, el siguiente resultado:
   \pythonexternal{tema1/src/puntofijo-test1.py}
   \begin{pythonoutput}
     \pythonexternal[backgroundcolor=\color{white},title={Resultado}]{tema1/src/puntofijo-test1.out}
@@ -1150,7 +1167,7 @@ solamente se utilizan hipótesis locales sobre la derivada de $g$.
       at (axis cs:\Bx,0) {};
       \legend {$y=f(x)$};
       % Point 3
-      \node[coordinate, medium dot, <-, pin=-45:{$x_2$}] 
+      \node[coordinate, medium dot, pin=-45:{$x_2$}] 
       at (axis cs:\Cx,0) {};
     \end{axis}
   \end{graficaTikz}
@@ -1186,7 +1203,7 @@ imponer la siguiente restricción: $f'(x)\neq 0$ para todo $x\in
 [a,b]$.
 Además de su interpretación geométrica, existen otras formas de
 introducir el método de Newton:
-\begin{itemize}
+\begin{enumerate}
 \item Mediante el \textbf{desarrollo de Taylor} de $f$: dado $x_n\in [a,b]$,
   \begin{align*}
     f(x)&=f(x_n) + f'(x_n)(x-x_n) + \frac 12 f''(\xi_n)(x-x_n)^2, \quad
@@ -1204,7 +1221,7 @@ introducir el método de Newton:
         0 \approx f(x_n) + f'(x_n)(\cero-x_n), \quad \text{es decir} \quad
         \cero \approx x_n - \frac{f(x_n)}{f'(x_n)},
   \end{equation*}
-  lo cual justifica que la elección de $x_{n+1}$ como
+  lo cual justifica que la elección de $x_{n+1}$ dada
   en~(\ref{eq:MetNewton}) es una aproximación de $\cero$.
 \item Como una técnica de \textbf{punto fijo} en la que se impone
   orden al menos cuadrático. % La idea es reescribir~(\ref{eq:raiz})
@@ -1231,7 +1248,7 @@ introducir el método de Newton:
   Es decir, la mejor elección es $h(x)=1/f'(x)$, con lo que
   $g(x)=x-f(x)/f'(x)$. El método de Newton no es más
   que un método de punto fijo~(\ref{eq:MAS}) aplicado a esta función.
-\end{itemize}
+\end{enumerate}
 
 Esta última justificación de~(\ref{eq:MetNewton}) en términos de un
 método de punto fijo es la más rigurosa y de hecho nos permite aplicar
@@ -1244,9 +1261,9 @@ ofrece una condiciones suficientes más apropiadas, de tipo global (en
 todo el intervalo).
 
 \begin{theorem}[Convergencia global del método de Newton]
-  Sea $f\in C^2([a,b])$ y supongamos que se verifican las siguientes
+  Sea $f\in C^2([a,b])$ para la que se verifican las siguientes
   hipótesis:
-  \begin{enumerate}[label=($H_{\arabic*}$)]
+  \begin{enumerate}[label=($N_{\arabic*}$)]
   \item $f(a)f(b)<0$.
     \label{item:Newton.H1}
   \item  $f'(x)\neq 0$, para todo $x \in [a,b]$.
@@ -1269,15 +1286,160 @@ todo el intervalo).
     y $\lim x_k = \cero$.
   \item El orden de (\ref{eq:MetNewton}) es, al menos, cuadrático. En
     concreto, para todo $k\ge 0$,
-    $$
-    |x_{x+1} - \cero| \le \frac {M''}{2m'} |x_k-\alpha|^2, 
-    $$
+    \begin{equation}
+      |x_{x+1} - \cero| \le \frac {M''}{2m'} |x_k-\alpha|^2, 
+      \label{eq:Newton.orden.2}    
+    \end{equation}
     donde $m'=\min_{x\in[a,b]} |f'(x)|$ y $M''=\max_{x\in[a,b]}|f''(x)|$.
   \end{enumerate}
   \label{thm:Newton.convergencia.global}  
 \end{theorem}
 
-\ref{item:Newton:H4}
+\begin{proof}
+  Como $f'$ es continua y la hipótesis~\ref{item:Newton.H2} especifica
+  que $f'(x) \neq 0$, tendremos que $f'(x)>0$ o $f'(x)<0$ en $[a,b]$.
+  Además, según la hipótesis~\ref{item:Newton.H3}, $f''(x)\ge 0$ o
+  $f''(x)\le 0$ en $[a,b]$. En esta demostración supondremos que
+  \begin{equation}
+    f'(x)>0 \quad \text{y}\quad f''(x)\le 0
+    \label{eq:f'>0.f''<=0}
+  \end{equation}
+  (es decir, $f$ es creciente y convexa, como en la
+  figura~\ref{fig:newton-interpretacion-geometrica}). Para las otras
+  tres combinaciones posibles, la demostración es similar a la actual.
+  Más aún, en este caso el hecho de que $f$ sea creciente implica que
+  \begin{equation*}
+    f(a)<0 \quad\text{y}\quad f(b)>0.
+  \end{equation*}
+  Y como $f$ es creciente y $f'$ es decreciente (pues $f''<0$), la
+  hipótesis~\ref{item:Newton:H4} se puede escribir de forma más
+  sencilla:
+  \begin{equation}
+    \frac{f(b)}{f'(b)} < b-a.
+    \label{eq:Newton:H4.simplificada}
+  \end{equation}
+  A continuación, probaremos consecutivamente los cuatro puntos del
+  teorema.
+
+  \punto{1} % --------------------------------------------------
+  Es evidente que existe al menos una raíz, $\cero$, pues la
+  hipótesis~\ref{item:Newton.H1} implica que podemos aplicar el
+  Teorema de Bolzano en $[a,b]$. Más aún, como $f'(x)>0$, la raíz es única (véase el
+  Corolario~\ref{cor:tema1:exist+unic}).
+
+  \punto{2} % --------------------------------------------------
+  El método de Newton no es más que un
+  método~(\ref{eq:MAS}), $x_{k+1}=g(x_k)$, para la siguiente función:
+  \begin{equation*}
+    g(x)=x-\frac{f(x)}{f'(x)}.
+  \end{equation*}
+  Para que un método de punto fijo esté bien definido (o sea
+  $\{x_k\}\subset [a,b]$) es suficiente que $g([a,b])\subset [a,b]$,
+  lo que demostraremos a continuación.
+
+  Como $f\in C^2([a,b])$ y $f'(x)\neq 0$ en
+  $[a,b]$, deducimos que $g\in C^1([a,b])$ y
+  \begin{equation}
+    g'(x)
+    = 1-\frac{\left(f'(x)\right)^2-f(x)f''(x)}{\left(f'(x)\right)^2}
+    = \frac{f(x)f''(x)}{\left(f'(x)\right)^2}.
+    \label{eq:Newton.g'(x)}    
+  \end{equation}
+  Debido a que $f''(x)\le 0$, el signo de $g'(x)$ depende sólo del
+  signo de $f(x)$. Así
+  \begin{enumerate}%[label=\emph{\roman*)}]
+  \item Si $x\in [a,\cero]$, $g'(x)\ge 0$, es decir $g$ es creciente en
+    $[a,\cero]$. Por tanto:
+    \begin{equation}
+     g(a)\le g(x) \le g(\cero) = \cero \quad \forall x\in [a,\cero].
+      \label{eq:4}
+    \end{equation}
+    \label{item:1}
+  \item Si $x\in [\cero,b]$, $g'(x)\le 0$, esto es, $g$ es decreciente
+    en $[\cero,b]$. Por tanto:
+    \begin{equation}
+      g(b)\le g(x) \le g(\cero) = \cero \quad \forall x\in [\cero,b].
+      \label{eq:5}
+    \end{equation}
+    \label{item:2}
+  \end{enumerate}
+
+  Para terminar, probaremos que:
+  \begin{itemize}
+  \item $a\le g(a)$ (luego $a\le g(x)
+    \le \alpha$ para todo $x\in [a,\alpha]$, debido a~(\ref{eq:4})),
+  \item $a\le g(b)$ % (luego~(\ref{eq:5}) implica que también $a\le g(x)
+    % \le \alpha$ cuando $x\in [\alpha,b]).$
+    (luego $a\le g(x)
+    \le \alpha$ para todo $x\in [\alpha, b]$, debido a~(\ref{eq:5})),
+  \end{itemize}
+  y así podremos concluir:
+  \begin{equation}
+    g([a,b])\subset [a,\cero] \subset [a,b].
+    \label{eq:g[a,b].subset.[a,alpha]}
+  \end{equation}
+
+
+  Es fácil ver que $a < g(a)$: por definición de $g$ y debido a que
+  $f(a)<0$ y $f'(a)>0$, $g(a) = a-f(a)/f'(a) > a$. Para demostrar que $a
+  \le g(b)$, debemos usar la hipótesis~\ref{item:Newton:H4} que, como
+  vimos, se escribe como~(\ref{eq:Newton:H4.simplificada}), de donde
+  $g(b)=b-f(b)/f'(b) \ge b-(b-a)=a$.
+
+  \punto{3} % --------------------------------------------------
+  Veremos que la sucesión $\{x_k\}$ es convergente y su límite es
+  $\alpha$ a través del siguiente razonamiento: \textit{(a)} $\{x_k\}$
+  está acotada superiormente, \textit{(b)} $\{x_k\}$ es creciente (a
+  partir del segundo término), luego existe $\lim x_k=\overline\cero$
+  y \textit{(c)} $\overline\cero$ coincide con $\cero$.
+  \begin{enumerate}[label=\emph{(\alph*)}]
+  \item Para cualquier $x_0\in[a,b]$, consideremos la sucesión
+    $\{x_k\}$ definida por~\eqref{eq:MetNewton}. Para cualquier $k\ge
+    0$, $x_{k+1}=g(x_{k})$ y como $g([a,b])\subset [a,\cero]$
+    (según vimos en~\eqref{eq:g[a,b].subset.[a,alpha]}) tenemos que
+    $x_{k+1}\in [a,\alpha]$.
+  \item Para ver que la sucesión es creciente a partir del segundo
+    término basta darse cuenta de que $f(x_k)\le 0$ para todo $k\ge 1$
+    (no necesariamente para $k=0$), pues $x_k=g(x_{k-1})\in
+    [a,\alpha]$. Por tanto
+    $$
+    x_{k+1}=g(x_k)=x_k - \frac{f(x_k)}{f'(x_k)} \ge x_k.
+    $$
+  \item Sea entonces $\overline\alpha = \lim x_k$. Tomando límite en cada
+    término de la igualdad
+    \begin{equation*}
+      x_{k+1}=x_k- \frac{f(x_k)}{f'(x_k)}
+%    \end{equation*}
+    \quad\text{ llegamos a }\quad
+%    \begin{equation*}
+      \overline\cero = \overline\cero -
+      \frac{f(\overline\cero)}{f'(\overline\cero)},
+    \end{equation*}
+    por lo que $f(\overline\cero)=0$. Luego $\overline\cero=\cero$ (la
+    raíz de $f$ es única).
+  \end{enumerate}
+
+  \punto{4} % --------------------------------------------------
+  Para estudiar el orden de convergencia, aunque $g'(\cero)=0$ (debido
+  a~\eqref{eq:Newton.g'(x)}), no podemos aplicar la
+  observación~\ref{rk:MAS.orden.p} debido a que, en principio,
+  $g\not\in C^2([a,b])$. Pero sí podemos contar con $f\in C^2([a,b])$,
+  por lo que tenemos siguiente desarrollo de Taylor:
+  \begin{equation*}
+    0 = f(\cero)=f(x_k)+f'(x_k)(\cero-x_k)+\frac12 f''(\theta_k)(\cero-x_k)^2,
+    \quad\forall k\ge 0.
+  \end{equation*}
+  Por otra parte, por construcción de $x_{k+1}$ en~\eqref{eq:MetNewton},
+  \begin{equation*}
+    0=f(x_k)+f'(x_k)(x_{k+1}-x_k).
+  \end{equation*}
+  Restando ambas expresiones,
+  \begin{equation*}
+    f'(x_k)(\cero-x_{k+1}) + \frac12 f''(\theta_k)(\cero-x_k)^2 = 0.
+  \end{equation*}
+  Y despejando $\cero-x_{k+1}$ y tomando valor absoluto
+  deducimos~\eqref{eq:Newton.orden.2}, lo que finaliza la demostración.
+\end{proof}
 
 
 % \section{El método de ``Regula Falsi''}

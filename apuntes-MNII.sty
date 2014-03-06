@@ -32,18 +32,41 @@
 \DeclareMathOperator{\rg}{rg}
 \DeclareMathOperator{\img}{Img}
 
+% %------------------------------------------------------------
+% \RequirePackage{xcolor}
+% \RequirePackage{framed}
+\RequirePackage{mdframed}
+\mdfdefinestyle{theoremstyle}{%
+  linecolor=blue!40!black,
+  backgroundcolor = blue!30!green!3!white,
+  roundcorner = 10}
+\mdfdefinestyle{propositionstyle}{%
+  linecolor=gray,
+  backgroundcolor = blue!2!white}
+
 \RequirePackage{amsthm}
 \theoremstyle{plain} % italic, extra space above and below
-\newtheorem{theorem}{Teorema}[chapter]
-\newtheorem{proposition}[theorem]{Proposición}
-\newtheorem{lemma}[theorem]{Lema}
-\newtheorem{corollary}[theorem]{Corolario}
-
-\theoremstyle{definition} % roman, extra space above and below
+\newmdtheoremenv[style=theoremstyle]{theorem}{Teorema}[chapter]
+\newmdtheoremenv[style=propositionstyle]{proposition}[theorem]{Proposición}
+\newmdtheoremenv[style=propositionstyle]{lemma}[theorem]{Lema}
+\newmdtheoremenv[style=propositionstyle]{corollary}[theorem]{Corolario}
+% \newtheorem{proposition}[theorem]{Proposición}
+% \newtheorem{lemma}[theorem]{Lema}
+% \newtheorem{corollary}[theorem]{Corolario}
+%\theoremstyle{definition} % roman, extra space above and below
+\newtheoremstyle{mytheorem}% <name>
+  {3pt}% <Space above>
+  {3pt}% <Space below>
+  {}% <Body font>
+  {}% <Indent amount>
+  {\itshape\bfseries}% <Theorem head font>
+  {.}% <Punctuation after theorem head>
+  {.5em}% <Space after theorem heading>
+  {}
 \newtheorem{definition}[theorem]{Definición} 
 \newtheorem{test}[theorem]{Test}
 
-\theoremstyle{remark}   % roman, no extra space above and below
+%\theoremstyle{remark}   % roman, no extra space above and below
 \newtheorem{RemarkWithQed}[theorem]{Observación}
 \newenvironment{remark}
   {\RemarkWithQed}
@@ -79,9 +102,7 @@ plainpages=false % To avoid bug with \frontmatter et al
   citecolor=\refColor
 }
 
-% %------------------------------------------------------------
-% \RequirePackage{xcolor}
-% \RequirePackage{framed}
+% ----------------------------------------------------------------------
 
 \RequirePackage{lmodern}  % Font with bold tt
 \RequirePackage{listings}
@@ -323,3 +344,9 @@ emphstyle={\color{self}\slshape},
 %--- Constantes y otras definiciones
 \newcommand{\cteContract}{\lambda} % constante de contractividad
 \newcommand{\punto}[1]{\par\medskip\noindent\fbox{\emph{Punto #1}.}} % apartados en una demostración
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "./apuntes-MNII.tex"
+%%% End: 

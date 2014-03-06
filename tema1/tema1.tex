@@ -516,7 +516,8 @@ def biseccion(f, a, b, tol, max_iters):
       & 0.76 & -0.32 & 0.21
       \\
       \hfill \vdots \hfill~ & \hfill \vdots \hfill~ & 
-      \hfill \vdots \hfill~ & \hfill \vdots \hfill~ & \hfill \vdots \hfill~
+      \hfill \vdots \hfill~ & \hfill \vdots \hfill~ & 
+      \hfill \vdots \hfill~ & \hfill \vdots \hfill~
     \end{array}
   \end{equation*}
   \rule{0.99\linewidth}{1.5pt}
@@ -975,7 +976,7 @@ la coercividad de $g$).% En efecto, usando la
   cálculo de todos los ceros de $f(x)=\sen(x)-4x^2+1$. 
 
   
-  \textbf{Primera etapa:} Determinar cuántos ceros son y en qué
+  \textsf{Primera etapa:} Determinar cuántos ceros son y en qué
   intervalos se encuentran. Como $f$ es continua y derivable en todo
   $\Rset$, utilizaremos el algoritmo de separación de ceros enunciado
   en la observación~\ref{rk:tema1:separac-ceros}.
@@ -1015,7 +1016,7 @@ la coercividad de $g$).% En efecto, usando la
     \end{itemize}
   \end{enumerate}
 
-  \textbf{Segunda etapa}: intentamos reescribir, en cada uno de
+  \textsf{Segunda etapa}: intentamos reescribir, en cada uno de
   estos intervalos, el problema en términos de un esquema de punto
   fijo que esté en las hipótesis del teorema~\ref{thm:punto-fijo-Banach}. La
   posibilidad más sencilla a partir de $\sen(x)-4x^2+1=0$ es despejar
@@ -1066,7 +1067,7 @@ la coercividad de $g$).% En efecto, usando la
   $[a_2,b_2]$. El desarrollo de este apartado se deja como ejercicio
   al lector.
   \end{itemize}
-  La \textbf{tercera y última etapa} consistiría en
+  La \textsf{tercera y última etapa} consistiría en
   aplicar~(\ref{eq:MAS}) para aproximar las soluciones en cada uno de
   los dos intervalos. Por ejemplo, para la implementación mostrada en
   el programa~\ref{pro:metodo-puntofijo} del
@@ -1105,6 +1106,7 @@ solamente se utilizan hipótesis locales sobre la derivada de $g$.
     posterior~(\ref{eq:pto-fijo:cota-a-posteriori}) en
     $[x_0-\rho,x_0+\rho]$.
   \end{enumerate}
+\end{theorem}
   \begin{proof}
     Simplemente tenemos que aplicar el
     teorema~\ref{thm:punto-fijo-Banach} (Teorema del punto fijo) en un
@@ -1126,7 +1128,6 @@ solamente se utilizan hipótesis locales sobre la derivada de $g$.
     \Rightarrow g(x)\in [\cero-\rho, \cero+\rho].
     $$    
   \end{proof}
-\end{theorem}
 
 \section{El método de Newton}
 \label{sec:metodo-de-newton}

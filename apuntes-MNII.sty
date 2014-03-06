@@ -34,22 +34,22 @@
 
 \RequirePackage{amsthm}
 \theoremstyle{plain} % italic, extra space above and below
-\newtheorem{theorem}{Teorema} 
+\newtheorem{theorem}{Teorema}[chapter]
 \newtheorem{proposition}[theorem]{Proposición}
 \newtheorem{lemma}[theorem]{Lema}
 \newtheorem{corollary}[theorem]{Corolario}
 
 \theoremstyle{definition} % roman, extra space above and below
-\newtheorem{definition}{Definición} 
-\newtheorem{test}{Test}
+\newtheorem{definition}[theorem]{Definición} 
+\newtheorem{test}[theorem]{Test}
 
 \theoremstyle{remark}   % roman, no extra space above and below
-\newtheorem{RemarkWithQed}{Observación}
+\newtheorem{RemarkWithQed}[theorem]{Observación}
 \newenvironment{remark}
   {\RemarkWithQed}
   {\qed\endRemarkWithQed}
 % And also examples
-\newtheorem{ExampleWithQed}{Ejemplo} % Default: append \qed
+\newtheorem{ExampleWithQed}[theorem]{Ejemplo} % Default: append \qed
 \newenvironment{example}
   {\ExampleWithQed}
   {\qed\endExampleWithQed}
@@ -219,7 +219,8 @@ basicstyle=\ttfamily
 \definecolor{Classname}{rgb}{0,0,0}
 \definecolor{FunctionName}{rgb}{1,0,0}
 \definecolor{Operators}{rgb}{0,0,0}
-\definecolor{Background}{rgb}{0.99,0.987,0.966}
+%\definecolor{Background}{rgb}{0.99,0.987,0.966}
+\definecolor{Background}{rgb}{0.99,0.99,0.93}
 \definecolor{Numbers}{gray}{0.7}
 
 \newcommand{\pythonstyle}{\lstset{
@@ -298,7 +299,7 @@ emphstyle={\color{self}\slshape},
 
 % program (new figure-like environment)...
 \RequirePackage{float}
-\newfloat{Programa}{tbp}{lop}
+\newfloat{Programa}{p}{lop}[chapter]
 
 \newenvironment{program}{%
   \begin{Programa}\lstset{numbers=left}}{%
@@ -314,7 +315,7 @@ emphstyle={\color{self}\slshape},
 }{}
 
 % Algoritmo
-\newfloat{Algoritmo}{abp}{lop}
+\newfloat{Algoritmo}{h}{loa}[chapter]
 \newenvironment{algorithm}{%
   \begin{Algoritmo}}{%
   \end{Algoritmo}}

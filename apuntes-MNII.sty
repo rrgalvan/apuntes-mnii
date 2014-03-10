@@ -1,8 +1,39 @@
+\usepackage{common}
+
 \usepackage{palatino}
 \usepackage[sc]{mathpazo}
 \linespread{1.05}         % Palatino needs more leading (space between lines)
 \usepackage[T1]{fontenc}
-\spanishdecimal{.}
+
+% ------- Formato del documento ----
+\RequirePackage{marginnote}
+\usepackage[hmargin={2.1cm,3.9cm}, vmargin={3.6cm,3cm}, 
+  marginparwidth=3.5cm]{geometry}
+
+% Environmet "extension" as margin notes
+\RequirePackage{environ} % To send environment to a \macro
+\NewEnviron{extension}{\marginnote{%
+    \tiny%
+    \setlength{\belowdisplayskip}{0.33em}\setlength{\belowdisplayshortskip}{0pt}%
+    \setlength{\abovedisplayskip}{0.33em}\setlength{\abovedisplayshortskip}{0pt}%
+    \textit{\BODY}}}
+
+\RequirePackage{fancyhdr}
+\setlength{\headheight}{15pt} %Required by fancyhdr
+\renewcommand{\headrulewidth}{0.05pt} % Top horizontal line 
+\renewcommand{\footrulewidth}{0pt} % Bottom horizontal line
+\newcommand{\fancyHDRextendedwidth}{2.5cm}
+\fancyheadoffset[RO,LE]{\fancyHDRextendedwidth} % Make header wider than body text
+\pagestyle{fancy}
+\renewcommand{\chaptermark}[1]{%
+  \markboth{\textit{\thetitle}.\quad \chaptername\ \thechapter.\ #1}{}}
+%  \markright{\chaptername\ \thechapter.\ #1}{}}
+\renewcommand{\sectionmark}[1]{%
+  \markright{\thesection.\ #1}{}}
+\fancyhf{}
+\fancyhead[LE,RO]{\sffamily\thepage}
+\fancyhead[LO]{\sffamily\rightmark}
+\fancyhead[RE]{\sffamily\leftmark}
 
 % Tables, etc
 \RequirePackage{booktabs} % Pretty tables
@@ -11,26 +42,6 @@
 \RequirePackage{fancybox}
 \RequirePackage{enumitem}
 \RequirePackage{marginnote}
-
-%%,------------------------------
-%%| ------- Mathematics ---------
-%%`------------------------------
-
-\RequirePackage{amsmath}
-\RequirePackage{amssymb}
-\def\Cset{{\mathbb C}}  
-\def\Qset{{\mathbb Q}}
-\def\Zset{{\mathbb Z}}  
-\def\Rset{{\mathbb R}}
-\def\Nset{{\mathbb N}}
-
-%\RequirePackage{xspace}
-
-\def\eps{\varepsilon}
-\newcommand{\st}{\ensuremath{\ / \ }}
-\DeclareMathOperator{\sen}{sen}
-\DeclareMathOperator{\rg}{rg}
-\DeclareMathOperator{\img}{Img}
 
 % %------------------------------------------------------------
 % \RequirePackage{xcolor}
@@ -79,8 +90,6 @@
 
 \newcommand{\resaltar}[1]{\textbf{#1}}
 
-% Tema 1 -----------
-\newcommand{\cero}{\alpha}
 
 % \hypersetup{colorlinks,linkcolor=,urlcolor=links}
 \usepackage[
@@ -340,10 +349,6 @@ emphstyle={\color{self}\slshape},
 \newenvironment{algorithm}{%
   \begin{Algoritmo}}{%
   \end{Algoritmo}}
-
-%--- Constantes y otras definiciones
-\newcommand{\cteContract}{\lambda} % constante de contractividad
-\newcommand{\punto}[1]{\par\medskip\noindent\fbox{\emph{Punto #1}.}} % apartados en una demostración
 
 
 %%% Local Variables:

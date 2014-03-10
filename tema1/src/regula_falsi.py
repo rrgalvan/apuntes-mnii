@@ -25,7 +25,7 @@ def regula_falsi(f, a, b, tol=1e-10, maxIters=100, verb=False):
         # Calcular el punto medio
         c = b - f(b)*(b-a)/(f(b)-f(a)); fc = f(c)
         diferencia = min(b-c, c-a)
-        print "], dif =", diferencia
+        if verb: print "], dif =", diferencia
         # Calcular el nuevo subintervalo e iterar
         if fa*fc < 0:
             b=c; fb=fc; 

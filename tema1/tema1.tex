@@ -572,18 +572,20 @@ Así, se tiene el siguiente resultado:
   independientemente de que ésta sea única, y sin más hipótesis sobre
   $f$ que su continuidad.
 
-Sin embargo, tiene el inconveniente de que su velocidad de
-convergencia es lenta (no alcanzando siquiera orden $1$), necesitando
-muchas más iteraciones que otros métodos que veremos más tarde. De
-hecho, el método no garantiza que el error se reduzca en cada
-iteración: solamente que el intervalo se reduce a la mitad. Véase que,
-el método no utiliza ningún tipo de información acerca de la función
-$f$ (salvo su signo) y de hecho no podemos esperar convergencia en una
-sola iteración, ni siquiera en el caso en el que $f$ sea lineal.
+  Sin embargo, tiene el inconveniente de que su velocidad de
+  convergencia es lenta (orden menor o igual a $1$), necesitando
+  muchas más iteraciones que otros métodos que veremos más tarde. De
+  hecho, el método no garantiza que el error se reduzca en todas las
+  iteraciones: solamente que el intervalo se reduce a la mitad. Véase
+  que el método no utiliza ningún tipo de información acerca de la
+  función $f$ (salvo su signo) y de hecho no podemos esperar
+  convergencia en una sola iteración, ni siquiera en el caso en el que
+  $f$ sea lineal.
 
-De cualquier forma, el algoritmo de bisección es un método sencillo y
-muy útil como ``método de arranque'', con el que realizar iteraciones
-previas antes de pasar a otros métodos más eficientes.
+  De cualquier forma, el algoritmo de bisección es un método sencillo y
+  muy útil como ``método de arranque'' (con el que realizar iteraciones
+  previas antes de pasar a otros métodos de mayor orden), o como base
+  para métodos más eficientes.
  \end{remark}
 
 \begin{remark}
@@ -1002,9 +1004,9 @@ la coercividad de $g$).% En efecto, usando la
     hipótesis del Teorema de punto fijo). En este caso, una primera
     elección, válida para el Teorema de Bolzano es:
     \begin{itemize}
-    \item $[a_1,b_1]=[-\pi/2, 0]$, pues $f(-\pi/2)=-1-\pi^2+1<0$ y
+    \item $[a_1,b_1]=[-\pi/2, 0]$, pues $f(-\pi/2)=-1-4\pi^2+1<0$ y
       $f(0)=1>0$,
-    \item $[a_2,b_2]=[0, \pi/2]$, pues $f(0)=1>0$ y $f(\pi/2)= 1-\pi^2+1<0$
+    \item $[a_2,b_2]=[0, \pi/2]$, pues $f(0)=1>0$ y $f(\pi/2)= 1-4\pi^2+1<0$
     \end{itemize}
     El problema es que la función de punto fijo $g_1$ que definiremos
     más abajo no es derivable en $x=-\pi/2$. Por ello, restringiremos
@@ -1012,7 +1014,7 @@ la coercividad de $g$).% En efecto, usando la
     \begin{itemize}
     \item $[a_1,b_1]=[-\pi/4, 0]$. Seguimos estando en las hipótesis
       del Teorema de Bolzano, pues $f(-\pi/4)=
-      -\sqrt{2}/2-\pi^2/4+1=-2.174...<0$ y $f(0)=1>0$,
+      -\sqrt{2}/2-4\pi^2+1=-2.174...<0$ y $f(0)=1>0$,
     \end{itemize}
   \end{enumerate}
 
@@ -1176,7 +1178,7 @@ solamente se utilizan hipótesis locales sobre la derivada de $g$.
   \label{fig:newton-interpretacion-geometrica}
 \end{figure}
 El método de Newton (también conocido como método de Newton-Raphson o
-de la tangente) es uno de los métodos numéricos más conocidos y más
+de la tangente) es uno de los métodos numéricos más utilizados y más
 eficientes para el cálculo de raíces, si bien las condiciones para la
 convergencia son más restrictivas que en métodos anteriores. 
 
@@ -1332,8 +1334,7 @@ todo el intervalo).
     f(a)<0 \quad\text{y}\quad f(b)>0.
   \end{equation*}
   Y como además $f'$ es decreciente (pues $f''<0$), la
-  hipótesis~\ref{item:Newton:H4} se puede escribir de forma más
-  sencilla:
+  hipótesis~\ref{item:Newton:H4} implica:
   \begin{equation}
     \frac{f(b)}{f'(b)} < b-a.
     \label{eq:Newton:H4.simplificada}
@@ -1382,7 +1383,7 @@ todo el intervalo).
   para todo
   $x\in [a,b]$ se tiene 
   $$
-  g(x)\le g(\alpha)=\alpha \le a.
+  g(x)\le g(\alpha)=\alpha \le b.
   $$
   Veamos que también $g(x)\ge a$ en $[a,b]$ y así concluimos que
   $g([a,b]) \subset [a,b]$, más en concreto 

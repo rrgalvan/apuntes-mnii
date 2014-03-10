@@ -1,0 +1,19 @@
+\usepackage{common}
+
+\usepackage{palatino}
+\usepackage[sc]{mathpazo}
+\linespread{1.05}         % Palatino needs more leading (space between lines)
+\usepackage[T1]{fontenc}
+
+% ------- Formato del documento ----
+\usepackage[hmargin={2.50cm,2.5cm}, vmargin={3cm,2.5cm}]{geometry}
+
+% ------- Relación de problemas
+
+\newenvironment{problemas}{%
+  \begin{enumerate}
+}{%
+  \end{enumerate}
+}
+
+\newenvironment{problema}{\item}{}

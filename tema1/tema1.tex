@@ -1004,9 +1004,9 @@ la coercividad de $g$).% En efecto, usando la
     hipótesis del Teorema de punto fijo). En este caso, una primera
     elección, válida para el Teorema de Bolzano es:
     \begin{itemize}
-    \item $[a_1,b_1]=[-\pi/2, 0]$, pues $f(-\pi/2)=-1-4\pi^2+1<0$ y
+    \item $[a_1,b_1]=[-\pi/2, 0]$, pues $f(-\pi/2)=-1-\pi^2+1<0$ y
       $f(0)=1>0$,
-    \item $[a_2,b_2]=[0, \pi/2]$, pues $f(0)=1>0$ y $f(\pi/2)= 1-4\pi^2+1<0$
+    \item $[a_2,b_2]=[0, \pi/2]$, pues $f(0)=1>0$ y $f(\pi/2)= 1-\pi^2+1<0$
     \end{itemize}
     El problema es que la función de punto fijo $g_1$ que definiremos
     más abajo no es derivable en $x=-\pi/2$. Por ello, restringiremos
@@ -1014,7 +1014,7 @@ la coercividad de $g$).% En efecto, usando la
     \begin{itemize}
     \item $[a_1,b_1]=[-\pi/4, 0]$. Seguimos estando en las hipótesis
       del Teorema de Bolzano, pues $f(-\pi/4)=
-      -\sqrt{2}/2-4\pi^2+1=-2.174...<0$ y $f(0)=1>0$,
+      -\sqrt{2}/2-\pi^2+1=--9.5767...<0$ y $f(0)=1>0$,
     \end{itemize}
   \end{enumerate}
 
@@ -1088,48 +1088,48 @@ la coercividad de $g$).% En efecto, usando la
   \end{program}
 \end{example}
 
-Para terminar, mostramos un resultado que garantiza la convergencia
-de~(\ref{eq:MAS}) hacia un punto fijo conocido, sin utilizar hipótesis
-globales sobre el intervalo. En concreto, en el siguiente teorema
-solamente se utilizan hipótesis locales sobre la derivada de $g$.
+% Para terminar, mostramos un resultado que garantiza la convergencia
+% de~(\ref{eq:MAS}) hacia un punto fijo conocido, sin utilizar hipótesis
+% globales sobre el intervalo. En concreto, en el siguiente teorema
+% solamente se utilizan hipótesis locales sobre la derivada de $g$.
 
-\begin{theorem}[Convergencia local de los métodos de punto fijo]
-  \label{thm:punto-fijo-convergencia-local}
-  Sea $\cero$ un punto fijo de una función $g$. Supongamos que existe
-  $\delta>0$ tal que $g\in C^1(\cero-\delta,\cero+\delta)$ y que
-  $|g'(\cero)|<1$. Entonces:
-  \begin{enumerate}
-  \item Existe $\rho\in (0,\delta)$ tal que método de punto
-    fijo~(\ref{eq:MAS}) está bien definido y converge hacia $\cero$
-    (para cualquier inicialización $x_0 \in [x_0-\rho,x_0+\rho]$).
-  \item Existe una constante de contractividad $\lambda\in [0,1)$ (que
-    depende de $\rho$ y $|g'(\cero)|$) para la que se verifican las
-    estimaciones a priori~(\ref{eq:pto-fijo:cota-a-priori}) y a
-    posterior~(\ref{eq:pto-fijo:cota-a-posteriori}) en
-    $[x_0-\rho,x_0+\rho]$.
-  \end{enumerate}
-\end{theorem}
-  \begin{proof}
-    Simplemente tenemos que aplicar el
-    teorema~\ref{thm:punto-fijo-Banach} (Teorema del punto fijo) en un
-    intervalo adecuado $[x_0-\rho,x_0+\rho]$. En concreto, como
-    $g'(\cero)<1$ y $g \in C^1(\cero-\delta,\cero+\delta)$, podemos
-    asegurar que para algún $\rho\in(0,\delta)$,
-    $$
-    |g'(x)|<1 \quad \forall x\in [\cero-\rho, \cero+\rho],
-    $$
-    luego $g$ es contractiva en $[\cero-\rho, \cero+\rho]$ (debido a
-    la proposición~\ref{pro:1} y a la observación~\ref{rk:3}), con
-    constante $\lambda<1$.
+% \begin{theorem}[Convergencia local de los métodos de punto fijo]
+%   \label{thm:punto-fijo-convergencia-local}
+%   Sea $\cero$ un punto fijo de una función $g$. Supongamos que existe
+%   $\delta>0$ tal que $g\in C^1(\cero-\delta,\cero+\delta)$ y que
+%   $|g'(\cero)|<1$. Entonces:
+%   \begin{enumerate}
+%   \item Existe $\rho\in (0,\delta)$ tal que método de punto
+%     fijo~(\ref{eq:MAS}) está bien definido y converge hacia $\cero$
+%     (para cualquier inicialización $x_0 \in [x_0-\rho,x_0+\rho]$).
+%   \item Existe una constante de contractividad $\lambda\in [0,1)$ (que
+%     depende de $\rho$ y $|g'(\cero)|$) para la que se verifican las
+%     estimaciones a priori~(\ref{eq:pto-fijo:cota-a-priori}) y a
+%     posterior~(\ref{eq:pto-fijo:cota-a-posteriori}) en
+%     $[x_0-\rho,x_0+\rho]$.
+%   \end{enumerate}
+% \end{theorem}
+%   \begin{proof}
+%     Simplemente tenemos que aplicar el
+%     teorema~\ref{thm:punto-fijo-Banach} (Teorema del punto fijo) en un
+%     intervalo adecuado $[x_0-\rho,x_0+\rho]$. En concreto, como
+%     $g'(\cero)<1$ y $g \in C^1(\cero-\delta,\cero+\delta)$, podemos
+%     asegurar que para algún $\rho\in(0,\delta)$,
+%     $$
+%     |g'(x)|<1 \quad \forall x\in [\cero-\rho, \cero+\rho],
+%     $$
+%     luego $g$ es contractiva en $[\cero-\rho, \cero+\rho]$ (debido a
+%     la proposición~\ref{pro:1} y a la observación~\ref{rk:3}), con
+%     constante $\lambda<1$.
 
-    Además es fácil ver que $g([\cero-\rho, \cero+\rho]) \subset
-    [\cero-\rho, \cero+\rho]$, pues si $x\in[\cero-\rho, \cero+\rho]$
-    se tiene $ |x-\cero|<\rho$ y por tanto
-    $$ 
-    |g(x)-\cero| = |g(x)-g(\cero)| \le \lambda |x-\cero|< \rho
-    \Rightarrow g(x)\in [\cero-\rho, \cero+\rho].
-    $$    
-  \end{proof}
+%     Además es fácil ver que $g([\cero-\rho, \cero+\rho]) \subset
+%     [\cero-\rho, \cero+\rho]$, pues si $x\in[\cero-\rho, \cero+\rho]$
+%     se tiene $ |x-\cero|<\rho$ y por tanto
+%     $$ 
+%     |g(x)-\cero| = |g(x)-g(\cero)| \le \lambda |x-\cero|< \rho
+%     \Rightarrow g(x)\in [\cero-\rho, \cero+\rho].
+%     $$    
+%   \end{proof}
 
 \section{El método de Newton}
 \label{sec:metodo-de-newton}
@@ -1201,9 +1201,10 @@ $y-f(x_k) = f'(x_k)(x-x_k)$, el \resaltar{método de
   \right.
   \label{eq:MetNewton}
 \end{equation}
-Obsérvese que para que el método de Newton esté bien definido se debe
-imponer la siguiente restricción: $f'(x)\neq 0$ para todo $x\in
-[a,b]$. Es un método cuya implementación es sencilla (véase el
+Obsérvese que para que el método de Newton esté bien definido debe ser
+$f'(x_k)\neq 0$ para todo $k$, por lo que impondremos la siguiente
+restricción: $f'(x)\neq 0$ para todo $x\in [a,b]$. Es un método cuya
+implementación es sencilla (véase el
 algoritmo~\ref{alg:metodo-newton}) siempre y cuando sea conocida la
 derivada de la función $f$.
 \begin{algorithm}  \begin{python}
@@ -1229,8 +1230,7 @@ introducir el método de Newton:
     f(x)&=f(x_n) + f'(x_n)(x-x_n) + \frac 12 f''(\xi_n)(x-x_n)^2, \quad
     \text{con $\xi_n$ entre $x$ y $x_n$}.
     \\
-    \intertext{En particular, para $x=\cero$ se tiene $f(\cero)=0$,
-      luego}
+    \intertext{En particular, para $x=\cero$,}
     0=f(\cero)&=f(x_n) + f'(x_n)(\cero-x_n) + \frac 12 f''(\xi_n)(\cero-x_n)^2.
   \end{align*}
   Suponiendo que $x_n$ sea ``una buena aproximación'' de $\cero$ el
@@ -1246,7 +1246,7 @@ introducir el método de Newton:
 \item Como una técnica de \textbf{punto fijo} en la que se impone
   orden al menos cuadrático. % La idea es reescribir~(\ref{eq:raiz})
   % en la forma~(\ref{eq:punto-fijo}).
-  Para ello, observamos dada $h:[a,b]\to\Rset$ tal que $h(x)\neq 0$
+  Para ello observamos que dada $h:[a,b]\to\Rset$ tal que $h(x)\neq 0$
   para toda $x\in[a,b]$,
   \begin{align*}
     x \text{ es solución de~(\ref{eq:raiz})} \ \Leftrightarrow\ & h(x)f(x)=0 
@@ -1254,11 +1254,12 @@ introducir el método de Newton:
     \ \Leftrightarrow\ & x \text{ es solución de~(\ref{eq:punto-fijo}) para }
     g(x)=x-h(x)f(x).
   \end{align*}
-  La idea del método de Newton consiste en elegir $h$ de forma que
-  $g'(\cero)=0$, lo que (asumiendo la regularidad necesaria) implicaría
-  que el método de punto fijo~(\ref{eq:MAS}) para $g$ tiene orden (al
-  menos) dos (véase la observación~\ref{rk:MAS.orden.p}). Por
-  definición de $g$,
+  La idea del método de Newton es elegir $h$ de forma que
+  $g'(\cero)=0$, lo que (asumiendo las hipótesis del teorema del punto
+  fijo y la regularidad necesaria para la
+  observación~\ref{rk:MAS.orden.p}) implicaría que el
+  método~(\ref{eq:MAS}) tiene orden al menos dos. Por definición de
+  $g$,
   $$
   0 = g'(\cero) = 1-h'(\cero)f(\cero)-h(\cero)f'(\cero)
   $$
@@ -1272,14 +1273,13 @@ introducir el método de Newton:
 \end{enumerate}
 
 Esta última justificación de~(\ref{eq:MetNewton}) en términos de un
-método de punto fijo es la más rigurosa y de hecho nos permite aplicar
-toda la artillería desarrollada en la
+método de punto fijo nos permitiría, en principio, aplicar toda la
+artillería desarrollada en la
 sección~\ref{sec:metodos-de-punto-fijo}. El inconveniente es que, de
-cara a la existencia y unicidad de solución, el
-teorema~\ref{thm:punto-fijo-Banach} (Teorema de punto fijo) impone
-condiciones que no son fáciles de verificar.  El siguiente resultado
-ofrece una condiciones suficientes más apropiadas, de tipo global (en
-todo el intervalo).
+cara a la existencia y unicidad de solución, el Teorema de punto fijo
+impone condiciones que no son fáciles de verificar.  El siguiente
+resultado ofrece condiciones suficientes más apropiadas, de tipo
+global (en todo el intervalo).
 
 \begin{theorem}[Convergencia global del método de Newton]
   Sea $f\in C^2([a,b])$ para la que se verifican las siguientes
@@ -1303,8 +1303,8 @@ todo el intervalo).
   \item $f$ tiene una única raíz, $\alpha$, en $[a,b]$.
   \item (\ref{eq:MetNewton}) está bien definido (es decir, para todo
     $x_0\in [a,b]$ se tiene que $\{x_k\} \subset [a,b]$).
-  \item (\ref{eq:MetNewton}) es convergente (para todo $x_0\in [a,b]$)
-    y $\lim x_k = \cero$.
+  \item (\ref{eq:MetNewton}) es convergente (para cualquier
+    inicialización $x_0\in [a,b]$) y $\lim x_k = \cero$.
   \item El orden de (\ref{eq:MetNewton}) es, al menos, cuadrático. En
     concreto, para todo $k\ge 0$,
     \begin{equation}
@@ -1333,10 +1333,10 @@ todo el intervalo).
   \begin{equation*}
     f(a)<0 \quad\text{y}\quad f(b)>0.
   \end{equation*}
-  Y como además $f'$ es decreciente (pues $f''<0$), la
-  hipótesis~\ref{item:Newton:H4} implica:
+  Y en este caso, como además $f'$ es decreciente (pues $f''\le 0$), la
+  hipótesis~\ref{item:Newton:H4} significa que:
   \begin{equation}
-    \frac{f(b)}{f'(b)} < b-a.
+    \frac{f(b)}{f'(b)} \le b-a.
     \label{eq:Newton:H4.simplificada}
   \end{equation}
   A continuación, probaremos consecutivamente los cuatro puntos del
@@ -1416,7 +1416,7 @@ todo el intervalo).
     $x_{k+1}\in [a,\alpha]$.
   \item Para ver que la sucesión es creciente a partir del segundo
     término basta darse cuenta de que $f(x_k)\le 0$ para todo $k\ge 1$
-    (no necesariamente para $k=0$), pues $x_k=g(x_{k-1})\in
+    (no necesariamente para el primer término, $k=0$), pues $x_k=g(x_{k-1})\in
     [a,\alpha]$. Por tanto
     $$
     x_{k+1}=g(x_k)=x_k - \frac{f(x_k)}{f'(x_k)} \ge x_k.
@@ -1438,9 +1438,11 @@ todo el intervalo).
   \punto{4} % --------------------------------------------------
   Para estudiar el orden de convergencia, aunque $g'(\cero)=0$ (debido
   a~\eqref{eq:Newton.g'(x)}), no podemos aplicar la
-  observación~\ref{rk:MAS.orden.p} debido a que, en principio,
-  $g\not\in C^2([a,b])$. Pero sí podemos contar con $f\in C^2([a,b])$,
-  por lo que tenemos siguiente desarrollo de Taylor:
+  observación~\ref{rk:MAS.orden.p} debido a que, en principio, $g$ no
+  está en las hipótesis del Teorema~\ref{thm:punto-fijo-Banach} (de
+  punto fijo) y $g\not\in C^2([a,b])$. Pero sí podemos contar con
+  $f\in C^2([a,b])$, por lo que tenemos siguiente desarrollo de
+  Taylor:
   \begin{equation*}
     0 = f(\cero)=f(x_k)+f'(x_k)(\cero-x_k)+\frac12 f''(\theta_k)(\cero-x_k)^2,
     \quad\forall k\ge 0.
@@ -1460,22 +1462,24 @@ todo el intervalo).
 \begin{remark}~
   \label{rk:4}
   \begin{enumerate}
-  \item Además de la estimación ``a
-    priori''~\eqref{eq:Newton.orden.2}, se tiene (no escribiremos aquí
-    la demostración, baste decir que se basa en un desarrollo de
-    Taylor de orden $2$ entre $x_k$ y
-    $x_{k+1}$) la siguiente estimación ``a posteriori'':
+  \item Además de la estimación \textit{a
+      priori}~\eqref{eq:Newton.orden.2}, se tiene la siguiente
+    estimación \textit{a posteriori}%
+    \footnote{No desarrollaremos la demostración, baste decir que se basa
+      en un desarrollo de Taylor de orden $2$ entre $x_k$ y
+      $x_{k+1}$}:
     \begin{equation}
       |x_{k+1}-\cero| \le \frac{M''}{2m'}|x_{k+1}-x_k|.
       \label{eq:newton.estimac.a.posteriori}
     \end{equation}
     Gracias a ella, si en el algoritmo de Newton realizamos
-    iteraciones hasta que $|x_{k+1}-x_k|$ sea pequeño, tenemos
-    garantizada una buena aproximación de la solución exacta. Por
-    ejemplo, dado $\varepsilon>0$, si hacemos que 
+    iteraciones hasta que $|x_{k+1}-x_k|$ suficientemente sea pequeño,
+    tenemos garantizada una buena aproximación de la solución
+    exacta. Por ejemplo, dado $\varepsilon>0$, si hacemos que
     $$
-    |x_{k+1}-x_k| < \frac{M''}{2m'} < \varepsilon
-    \quad\text{entonces}\quad  |x_{k+1}-\cero| < \varepsilon.
+    |x_{k+1}-x_k| < \frac{2m'}{M''} \varepsilon
+    \quad\text{entonces}\quad 
+      |x_{k+1}-\cero| \le \frac{M''}{2m'}|x_{k+1}-x_k|<\varepsilon.
     $$ 
   \item En la demostración del Teorema anterior hemos probado que la
     sucesión $\{x_k\}$ es monótona a partir del primer segundo
@@ -1485,8 +1489,8 @@ todo el intervalo).
     el crecimiento/decrecimiento en los otros tres casos posibles.
   \item La hipótesis~\ref{item:Newton:H4} es necesaria para (como
     hemos visto en la demostración) garantizar que el método de Newton
-    está bien definido en el sentido de los métodos de punto fijo
-    ($g([a,b]\subset [a,b]$). En realidad, es sólo $x_1$ (en la
+    está bien definido en el sentido de los métodos de punto fijo (es
+    decir, $g([a,b]\subset [a,b]$). En realidad, es sólo $x_1$ (en la
     primera iteración) el punto que podría quedar fuera de $[a,b]$
     pues, como hemos visto, el resto de la sucesión converge
     monótonamente hacia $\cero$.
@@ -1517,14 +1521,24 @@ todo el intervalo).
     casos son similares).  Como hemos visto en la demostración del
     Teorema~\ref{thm:Newton.convergencia.global}, las
     hipótesis~\ref{item:Newton.H1}--\ref{item:Newton.H3} implican que
-    existe una sola raíz de $f$ y que la función de punto fijo, $g$,
-    verifica $g([a,b])\subset [a,\alpha]$.
-    
+    existe una sola raíz de $f$, $\alpha$.
+
     En el caso $f'>0$ y $f''<0$ tenemos que $f(a)<0$ y por tanto
-    elegimos $x_0=a$ para que se verifique~\eqref{eq:4}. Esto
-    significa que $x_0\in [a,\alpha]$ y, razonando como anteriormente, toda
-    la sucesión $\{x_k\}_{k\ge 0} \subset[a,\alpha]$ y es creciente y
-    converge hacia $\cero$. La
+    elegimos $x_0=a$ para que se verifique~\eqref{eq:4}.  Razonando
+    como en el Teorema anterior para la función de punto fijo, $g$,
+    tenemos que:
+    \begin{itemize}
+    \item $g$ es creciente en $[a,\alpha]$ y decreciente en
+      $[\alpha,b]$,
+    \item $g(x)\in [a,\alpha]$ para todo $x\in [a,\alpha]$ (en
+      principio, $g(x)\not\in [a,\alpha]$ si $x\in[\alpha,b]$ porque
+      no se verifica la hipótesis~\ref{item:Newton:H4}).
+    \end{itemize}
+    En el caso actual, $x_0=a$ luego $x_0\in [a,\alpha]$ y
+    también $x_{k+1}=g(x_k)\in [a,\alpha]$ para todo $k\ge 0$, así
+    la sucesión $\{x_k\}_{k\ge 0}$ está bien definida y
+    acotada. Razonando como en el Teorema anterior, toda la sucesión es
+    creciente y converge hacia $\cero$. La
     estimación~\eqref{eq:Newton.orden.2} se puede demostrar
     exactamente igual que antes
     y~\eqref{eq:newton.estimac.a.posteriori} se deja sin demostrar,
@@ -1566,9 +1580,9 @@ todo el intervalo).
   hipótesis de la regla de Fourier
   (corolario~\ref{cor:regla.fourier}).
   \begin{itemize}
-  \item $f\in C^2([3,4])$, de hecho $f''(x)=-2/x^2 < 0$ en $[3,4]$.
+  \item $f\in C^2([3,4])$, en concreto $f'(x)=(2-x)/x$, $f''(x)=-2/x^2$..
   \item Se verifican~\ref{item:Newton.H1}, es decir $f(3)f(4)<0$,
-    \ref{item:Newton.H2}, de hecho $f'<0$ en $[3,4]$
+    \ref{item:Newton.H2}, de hecho $f'<0$ en $[3,4]$,
     y~\ref{item:Newton.H3}, en concreto $f''<0$ en $[3,4]$.
   \item Si elegimos $x_0=4$, tenemos $f(x_0)f''(x_0)>0$.
   \end{itemize}
@@ -1705,7 +1719,7 @@ El método de la secante, formulado en el
 algoritmo~\ref{alg:metodo-secante}, puede ser también deducido a
 partir del método de Newton, a través de la siguiente aproximación:
 \begin{equation*}
-  f'(x_k) \approx  \frac{x_k-x_{k-1}}{f(x_k)-f(x_{k-1})}.
+  f'(x_k) \approx  \frac{f(x_k)-f(x_{k-1})}{x_k-x_{k-1}}.
 \end{equation*}
 Se trata de un método de dos pasos (para el cálculo de $x_{k+1}$ se
 utilizan dos estimaciones previas, $x_k$ y $x_{k-1}$) que tiene orden
@@ -1765,8 +1779,14 @@ sobre su implementación; como se puede observar, es muy similar al
 algoritmo~\ref{alg:metodo-biseccion} (método de bisección) teniendo en
 cuenta que:
 \begin{itemize}
-\item Se cambia la condición \texttt{c = (b-a)/2} por \texttt{c = b -
-    f(b)*(b-a)/(f(b)-f(a))}.
+\item Se cambia la condición 
+  \begin{quote}
+    \texttt{c = (b-a)/2}
+  \end{quote}
+  por 
+  \begin{quote}
+    \texttt{c = b - f(b)*(b-a)/(f(b)-f(a))}.
+  \end{quote}
 \item Se modifica ligeramente el test de parada (para tener en
   cuenta que todas las iteraciones se pueden estar realizando lejos de
   uno de los extremos del intervalo).

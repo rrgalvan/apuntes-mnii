@@ -7,58 +7,92 @@
 
 % ==============
 \begin{document}
-% ==============
+% =============
 
 \begin{problemas}
   \begin{problema}
+    Demostrar que la función $f(x)=x^2e^{x}-1$ tiene un único
+    cero. Utilizar el método de bisección para aproximarlo con un
+    error menor que $\varepsilon=10^{-7}$. Comparar el resultado con
+    la solución aproximada que proporciona la función \texttt{fsolve}
+    (contenida en el paquete \texttt{optimize} de \textit{Scipy}).
+  \end{problema}
+  \begin{problema}
+    Utilizar el método de bisección para aproximar las raíces de las
+    siguientes ecuaciones con una tolerancia menor que
+    $\varepsilon=10^{-8}$.
     \begin{enumerate}
-    \item El siguiente método iterativo, publicado en 1593 por
-      François Viète, permite el cálculo de $\pi$ como producto
-      infinito:
-      \begin{align*}
-        a_1 &= \sqrt{2}, \quad a_{k+1} = \sqrt{2+a_k}\\
-        \frac{2}{\pi} & = \prod_{k\to\infty} \frac{a_i}2
-      \end{align*}
+    \item $e^x-3x^2=0$.
+    \item $x^3=x^2+x+1$.
+    \end{enumerate}
+  \end{problema}
+ \begin{problema}
+    Decimos que $\widetilde x$ es una aproximación de $x\in\Rset$ con
+    $s$ cifras decimales exactas ($s\in\Nset$) si
+    \begin{equation}
+    \label{eq:1}  |x-\widetilde x| \le \frac 12 \cdot 10^{-s}.
+    \end{equation}
+    Dadas las siguientes fórmulas para el cálculo de $\pi$, calcula
+    para las iteraciones indicadas: 
+    \begin{itemize}
+    \item El error absoluto
+    \item El número de cifras decimales exactas, despejando $s$
+      en~(\ref{eq:1}) (usa la
+      función \texttt{log10()} de Scipy).
+    \end{itemize}
+    \begin{enumerate}
+    \item Fórmula de Viète (producto infinito publicado en 1593 por
+      François Viète):
+      \begin{equation*}
+        \frac{2}{\pi}  = \prod_{k\to\infty} \frac{a_k}2, \qquad\text{donde }\quad
+        a_1 = \sqrt{2}, \quad a_{k+1} = \sqrt{2+a_k}.
+      \end{equation*}
+      Iteraciones: $k=1,...,10$.
+    \item Agoritmo de Gauss-Legendre (o de Brent-Salamin): $a_0=1$,
+      $b_0=1/\sqrt 2$, $t_0=1/4$, $p_0=1$, 
+    \begin{align*}
+      a_{k+1}&=(a_{k}+b_{k})/2 , &\quad
+      t_{k+1}&=t_k - p_k(a_k -a_{k+1})^2, \\
+      b_{k+1}& =\sqrt{a_{k}\*b_{k}}, &\quad p_{k+1}&=2p_k.
+    \end{align*}
+    $$
+    \pi = \lim_{k\to\infty} \frac{(a_k+b_k)^2}{4t_k}.
+    $$
+    Iteraciones: $k=1,2$.
+    \item
+    Justifica la siguiente afirmación y utilízala para estimar el
+    orden de los métodos anteriores.
+    \begin{quotation}\it
+      Dado un método iterativo de orden $p$, si $s_k$ es el
+      número de cifras decimales de la aproximación $x_k$, entonces
+      existe $C\in\Rset$ tal que:
+      $$
+      s_{k+1} \approx p \; s_k + C.
+      $$
+    \end{quotation}
     \end{enumerate}
   \end{problema}
   \begin{problema}
-    El siguiente método iterativo, conocido como algoritmo de
-    Gauss-Legendre o de Brent-Salamin, se utiliza para el cálculo de
-    dígitos decimales de $\pi$:
-    Fijados $a_0=1$, $b_0=1/\sqrt 2$, $t_0=1/4$, $p_0=1$, para cada entero
-    $n\ge 0$,
-    \begin{align*}
-      a_{n+1}&=(a_{n}+b_{n})/2 , &\quad
-      t_{n+1}&=t_n - p_n(a_n -a_{n+1})^2, \\
-      b_{n+1} &=\sqrt{a_{n}\*b_{n}}, &\quad p_{n+1}&=2p_n,
-    \end{align*}
-    En cada iteración, se puede aproximar el valor de $\pi$ como: 
-    $$
-    \pi \approx x_n= \frac{(a_n+b_n)^2}{4t_n}.
-    $$
+    Consideremos el método de bisección para
+    una función $f$ en el intervalo $[a,b]=[2.6,4.2]$. 
+    \begin{enumerate}
+    \item ¿Cuál es la longitud del subintervalo en el paso $k$--ésimo?
+    \item ¿Cuál es la máxima distancia entre la raíz, $\alpha$, de $f$
+      y el punto medio del intervalo en ese paso $k$--ésimo?
+    \item ¿Cuántas iteraciones son necesarias, como mínimo, para que
+      la longitud del intervalo sea menor que $\varepsilon=10^{-5}$?
+    \end{enumerate}
   \end{problema}
-
+ 
   \begin{problema}
-    Demostrar que en un método iterativo de orden $p$, el número de
-    cifras exactas obtenidas en cada iteración (con respecto a la
-    solución exacta, $\alpha$), se multiplica por $p$ en cada
-    iteración.
-    \begin{flushright}
-      \scriptsize \textit{Indicación}: demostrar que si
-      $d_k=-\log_{10}|x_k-\alpha|$, entonces $d_{n+1}=p d_n + r$, con
-      $r=-\log_{10}\lambda$, siendo $\lambda$ la constante asintótica
-      de error.
-    \end{flushright}
-    Para un método de orden uno y $\lambda=0.999$, ¿cuántas
-    iteraciones serán necesarias para obtener una nueva cifra exacta?
-    Para orden $p=1.01$, ¿cada cuántas iteraciones se dobla el número
-    de cifras exactas? ¿Y para $p=1.1$? Demostrar que la sucesión
-    $x_k=2^{-k}$ proporciona una aproximación de orden $1$ de
-    $\alpha=0$ y determinar $\lambda$. Comprobar numéricamente que
-    $d_{n+1}=p\, d_n + r$, para distintos valores de $n$.
+    Consideremos el problema de punto fijo $x=g(x)$, con
+    $g(x)=1/(2+x)$.  Probar que existe una única solución en el
+    intervalo $[0,1]$ y que método de aproximaciones sucesivas
+    $x_{k+1}=g(x_k)$ converge hacia una solución para cualquier
+    inicialización, $x_0\in[0,1]$. Aproximar la
+    solución con un error menor que $\varepsilon=10^{-8}$.
   \end{problema}
 \end{problemas}
-
 \end{document}
 
 %===============

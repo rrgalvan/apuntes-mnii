@@ -12,15 +12,20 @@
 \DeclareMathOperator\Rset{{\mathbb R}}
 \DeclareMathOperator\Nset{{\mathbb N}}
 
+\DeclareMathOperator\Pol{{\mathbb P}}
+
 %\RequirePackage{xspace}
 
 \def\eps{\varepsilon}
 \newcommand{\st}{\ensuremath{\ / \ }}
+\newcommand{\tq}{\st}
 \DeclareMathOperator{\sen}{sen}
 \DeclareMathOperator{\rg}{rg}
 \DeclareMathOperator{\img}{Img}
 
-\newcommand{\punto}[1]{\par\medskip\noindent\fbox{\emph{Punto #1}.}} % apartados en una demostración
+\newcommand{\etapa}[1]{\par\medskip\noindent{\emph{#1}}}
+\newcommand{\punto}[1]{\par\medskip\noindent{\fbox{\emph Punto #1.}}}
+%\newcommand{\punto}[1]{\etapa{\fbox{Punto #1.}}} % apartados en una demostración
 
 % Definiciones del tema 1 -----------
 \newcommand{\cteContract}{\lambda} % constante de contractividad

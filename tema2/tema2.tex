@@ -181,26 +181,16 @@ por el siguiente polinomio (de orden exactamente igual a $n$):
 %   \frac{x-x_n}{x_i-x_n}.
 \end{equation}
 El conjunto de los polinomios $\{ L_0, L_1,\dots, L_n \}$ se llama
-base de Lagrange asociada al soporte $S=\{x_0,x_1,\dots,x_n\}$.  Es
-fácil demostrar que $\{L_i\}_{i=0}^n$ constituyen una base del espacio
-vectorial formado por los polinomios de grado exactamente igual a
-$n$.
+base de Lagrange asociada al soporte $S=\{x_0,x_1,\dots,x_n\}$. 
 
 Así, dado un conjunto de valores $\{y_0,y_1,\dots,y_n\}$, el polinomio
-que los interpola en el soporte $S$ viene dado por:
+que los interpola en el soporte $S$ viene dado por la siguiente
+combinación lineal:
 \begin{equation}
   p(x)= y_0L_0(x) + y_1 L_1(x) + \cdots + y_n L_n(x),
 \end{equation}
-pues es evidente que, por construcción de los polinomios $L_i$, 
-$p_n$ es solución de~(\ref{eq:problema-interpol-lagrange}).
-
-\begin{remark}
-  Una ventaja de la fórmula de Lagrange es que, fijado un soporte $S$
-  y una vez calculados los polinomios $\{L_0,L_1,\dots, L_n\}$ que
-  forman a la base de Lagrange asociada, es muy sencillo calcular los
-  polinomios que interpolan tantos conjuntos de valores,
-  $\{y_0,y_1,\dots,y_n\}$ como deseemos. 
-\end{remark}
+pues, por construcción de los polinomios $L_i$, el polinomio anterior
+es solución de~(\ref{eq:problema-interpol-lagrange}).
 
 \begin{example}
   \label{sec:formula-de-lagrange}
@@ -210,7 +200,8 @@ $p_n$ es solución de~(\ref{eq:problema-interpol-lagrange}).
     (x_0, y_0)&=(-1,0), &\quad (x_2, y_2)&=(1,2),\\ 
     (x_1, y_1)&=(0,2),   &\quad (x_3, y_3)&=(2,6).
   \end{align*}
-  La base de Lagrange asociada al soporte $S=\{x_0,x_1,x_2,x_3\}=\{-1,0,1,2\}$ es:
+  La base de Lagrange asociada al soporte
+  $S=\{x_0,x_1,x_2,x_3\}=\{-1,0,1,2\}$ es:
   \begin{small}
     \begin{align*}
       L_0(x) & =
@@ -234,7 +225,8 @@ $p_n$ es solución de~(\ref{eq:problema-interpol-lagrange}).
   Así tenemos el polinomio de interpolación para los valores
   $\{y_0,y_1,y_2,y_3\}=\{0,2,2,6\}$:
   \begin{align*}
-    p(x)&= 0\cdot L_0(x) + 2\cdot L_1(x)+ 2\cdot L_2(x)+6\cdot L_3(x)
+    p(x)&= \sum_{i=0}^3 y_iL_i(x) 
+    = 0\cdot L_0(x) + 2\cdot L_1(x)+ 2\cdot L_2(x)+6\cdot L_3(x)
     \\ &=(x-1)x(x+1)-(x-2)x(x+1)+(x-2)(x-1)(x+1)
     =x^3-x^2+2.
   \end{align*}
@@ -246,26 +238,194 @@ $p_n$ es solución de~(\ref{eq:problema-interpol-lagrange}).
     p(x_1)&=p(0) = 2=y_1, & p(x_3)&=2^3-2^2+2 = 6=y_3.
   \end{align*}
 \end{example}
-% \begin{equation}
-%     \{ (x_0,y_0),
-%     (x_1,y_1),
-%     (x_2,y_2),
-%     (x_3,y_3),
-%     (x_4,y_4) \} =
-%     \{ (2,3),(4,-1),(6,4),(8,0),(10,-1) \}
-%   \end{equation}
-%   es 
-%   $$\frac{5x^4}{64} 
-%   - \frac{31x^3}{16}
-%   + \frac{265x^2}
+
+\begin{remark}
+  Una ventaja de la fórmula de Lagrange es que, fijado un soporte $S$
+  y una vez calculados los polinomios $\{L_0,L_1,\dots, L_n\}$ que
+  forman a la base de Lagrange asociada, es muy sencillo calcular los
+  polinomios que interpolan tantos conjuntos de valores,
+  $\{y_0,y_1,\dots,y_n\}$ como deseemos. 
   
-%   $$
-% \
-%end{example}
-\subsubsection{Fórmula de las diferencias divididas de Newton}
+  Sin embargo, su inconveniente es que si deseamos añadir un punto más
+  al soporte (y por tanto realizar la interpolación con un polinomio
+  de un grado mayor) es necesario volver a calcular toda la base de
+  polinomios de Lagrange.
+\end{remark}
+
+\subsubsection{Fórmula de Newton}
 \label{sec:formula-de-newton}
+A continuación, dado el soporte $S=\{x_0,x_1,\dots,x_n\}$ de $n+1$ puntos
+distintos y dados $n+1$ valores $\{y_0,y_1,\dots,y_n\}$, sea
+$p_n$ el (único) polinomio $p_n \in \Pol_n[x]$, que
+interpola los valores $\{y_i\}_{i=0}^n$, es decir
+\begin{equation}
+p_n(x_i)=y_i, \quad \forall i=0,...,n.
+\label{eq:interpol.1}
+\end{equation}
+Expresaremos este polinomio de la siguiente forma:
+\begin{align}
+  \notag
+  p_n(x)&=a_0 + a_1 (x-x_0) + a_2(x-x_0)(x-x_1) + \cdots 
+  + a_n(x-x_0)(x-x_1)\cdots(x-x_{n-1}) \\
+  &=\sum_{k=0}^n a_k \prod_{i=0}^{k-1}(x-x_i),
+\label{eq:pol.newton.dif-div}
+\end{align}
+donde $a_0$, $a_1$, \dots, $a_n\in\Rset$ son coeficientes que se
+pueden ajustar para que se verifiquen las
+ecuaciones~(\ref{eq:interpol.1}):
+\begin{align*}
+  p_n(x_0)&=y_0 \Rightarrow a_0=y_0.\\
+  p_n(x_1)&=y_1 \Rightarrow a_0+a_1(x_1-x_0)=y_1 
+  \Rightarrow a_1=\frac{y_1-y_0}{x_1-x_0}.\\
+  &\vdots
+\end{align*}
+Estos coeficientes se pueden calcular mediante una regla de
+recurrencia sencilla, conocida como fórmula de las diferencias dividas
+de Newton, que veremos a continuación. Históricamente se ha utilizado
+la siguiente notación (en la que se asume que los datos vienen dados
+por cierta función, $y_k=f(x_k)$, y se expresa que cada $a_k$ depende
+solamente de los valores de $f$ en $\{x_0,x_1,\dots,x_k\}$):
+% De forma más compacta, podemos escribir:
+% \begin{equation}
+%   p_n(x)=\sum_{k=0}^n a_k \prod_{i=0}^{k-1}(x-x_i).
+%   \label{eq:interpol.2}
+% \end{equation}
+\begin{definition}
+  Dada una función $f$ de la cual se conocen los valores $y_0=f(x_0)$,
+  $y_1=f(x_1)$, \dots, $y_n=f(x_n)$, 
+  a cada uno de los coeficientes, $a_k$, del polinomio $p_n(x)$
+  anterior se le llama \resaltar{diferencia
+    dividida} (de orden $k$) de $f$ en los nodos $x_0$, $x_1$, \dots
+  $x_n$. La diferencia dividida de orden $k$ se denota como
+  $$
+  a_k = f[x_0,x_1,\dots,x_k].
+  $$
+\end{definition}
 
+\begin{remark}
+  Si observamos último sumando del
+  polinomio~\eqref{eq:pol.newton.dif-div} tenemos que
+   $$
+   (x-x_0)(x-x_1)\cdots (x-x_{n-1}) = x^n + \text{términos de grado
+     menor que $n$},
+   $$
+   por lo tanto $a_n=f[x_0,...,x_n]$ es el coeficiente de $x^n$ en el
+   polinomio de interpolación.
+\label{rk:2}
 
+ \end{remark}
+El siguiente lema expresa las propiedad más importante de las
+diferencias divididas%
+\footnote{El lector interesado en estudiar más a fondo las
+  diferencias divididas  puede consultar por ejemplo la
+  siguiente referencia Bibliográfica: Kincaid, D., Cheney, W.,
+  Análisis Numérico. \textit{Las matemáticas del cálculo
+    científico}. Addison-Wesley-Iberoamericana 1994.}. Aunque la
+demostración es de carácter técnico, la incluimos simplemente de
+modo ilustrativo.
+% \begin{lemma}
+% \label{lem:interpol1}
+% El polinomio de interpolación de los datos $y_i=f(x_i)$ se puede
+% escribir como
+% $$
+% p(x) = a_0 + a_1x + a_2x^2 + \cdots a_nx^n,
+% $$
+% donde cada $a_k=f[x_0,...,x_k]$.
+% \end{lemma}
+% \begin{proof}
+%   Consideremos el polinomio de interpolación, para los valores
+%   $y_i=f(x_i)$, $i=0,...,n$, que hemos expresado de la
+%   forma~(\ref{eq:pol.newton.dif-div}). Por definición, cada
+%   $a_k=f[x_0,...,x_k]$.
+
+%   Si observamos último sumando de tenemos que
+%   $$
+%   (x-x_0)(x-x_1)\cdots (x-x_{n-1}) = x^n + \text{términos de grado
+%     menor que $n$},
+%   $$
+%   por lo tanto $a_n=f[x_0,...,x_n]$ es el coeficiente de $x^n$ en el
+%   polinomio de interpolación.
+
+%   Consideremos ahora el polinomio resultante de truncar el último sumando:
+%   \begin{align*}
+%     p_{n-1}(x)= \sum_{k=0}^{n-1} a_k \prod_{i=0}^{k-1}(x-x_i).
+%   \end{align*}
+%   Es fácil ver que $p_{n-1}$ es el único polinomio de grado $n-1$ que
+%   interpola los valores $(x_i,y_i)$ para $i=0,...,n-1$. En concreto,
+%   %\begin{equation*}
+%    $  p_{n-1}(x)  =p_n(x)-a_n \prod_{i=0}^{n-1}(x-x_i),$
+%   % \end{equation*}
+%    luego $p_{n-1}(x_i)=y_i$ para $i=0,\dots,n-1$, es decir $p_{n-1}$
+%    es el (único) polinomio de interpolación de estos datos.
+   
+%    Si miramos el último sumando de $p_{n-1}(x)$, tenemos 
+%   $$
+%   (x-x_0)(x-x_1)\cdots (x-x_{n-2}) = x^{n-1} + \text{términos de grado
+%     menor que $n-1$},
+%   $$
+% %
+% \end{proof}
+% 
+ 
+\begin{lemma}
+  \label{lem:1}
+  Las formulas divididas satisfacen la siguiente ecuación:
+  \begin{equation*}
+    f[x_0,x_1,\dots,x_n]=
+    \frac{f[x_1,x_2,\dots,x_n]-f[x_0,x_1,\dots,x_{n-1}]}{x_n - x_0}.
+  \end{equation*}
+\end{lemma}
+En la ecuación anterior, los puntos $x_0,...,x_n$ deben interpretarse
+como variables, en un sentido amplio. Es decir, son ciertas todas las
+ecuaciones del tipo
+\begin{equation*}
+  f[x_i,x_{i+1},\dots,x_{i+j}]=
+  \frac{f[x_{i+1},\dots,x_{i+j}]-f[x_i,\dots,x_{i+j-1}]}{x_j - x_i}.
+\end{equation*}
+
+\begin{proof}~
+  \begin{enumerate}
+  \item 
+  \item Sean $p_n\in\Pol_n[x]$ y $p_{n-1}\in \Pol_{n-1}[x]$ los 
+    polinomios de interpolación de los
+    valores $\{x_i,f(x_i)\}_{i=0}^n$ y $\{x_i,f(x_i)\}_{i=0}^{n-1}$,
+    respectivamente. Sea $q_{n-1}\in\Pol_{n-1}[x]$ el polinomio de
+    interpolación de $\{x_i,f(x_i)\}_{i=1}^{n}$.
+
+    Entonces, se verifica:
+    \begin{equation}
+    p_n(x)=q(x)+\frac{x-x_n}{x_n-x_0}\left[q(x)-p_{n-1}(x)\right].\label{eq:1}
+  \end{equation}
+    Esto es debido a que ambos son polinomios de grado $n$ que
+    interpolan los valores $\{x_i,f(x_i)\}_{i=0}^n$.
+  \item A continuación, examinamos los coeficientes de $x^n$ en el
+    primer y el segundo miembro de~(\ref{eq:1}). Estos coeficientes
+    deben ser iguales, lo que nos lleva inmediatamente a la fórmula
+    recursiva que buscamos.
+  \end{enumerate}
+\end{proof}
+
+El lema~\ref{lem:1} nos permite organizar el cálculo de las
+diferencias divididas a través de un procedimiento sencillo
+\begin{center}
+  \includegraphics[width=0.9\linewidth]{tema2/diferencias-div}
+\end{center}
+
+\begin{example}
+  Calcular el polinomio de interpolación de Lagrange de $f(x)=2^x$ en
+  $S=\{-2,-1,0,1,2\}$. 
+\end{example}
+
+Una fórmula poco costosa computacionalmente para la evaluación del
+polinomio de interpolación en un punto es la \resaltar{fórmula de
+  Ruffini-Horner}: 
+\begin{equation*}
+  p_n(r) = a_0 + (r-x_0)(a_1 + (r-x_1)a_2 + \cdots + (r-x_n)a_n)\cdots)
+\end{equation*}
+\begin{example}
+  Utilizaremos la interpolación de $f(x)=2^x$ y la fórmula de
+  Ruffini-Horner para obtener una aproximación de $\sqrt{2}$.
+\end{example}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../apuntes-MNII.tex"

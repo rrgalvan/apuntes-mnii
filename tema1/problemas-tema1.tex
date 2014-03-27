@@ -51,6 +51,34 @@
     \end{enumerate}
   \end{problema}
   \begin{problema}
+    Consideremos el problema de punto fijo $x=g(x)$, con
+    $g(x)=1/(2+x)$.  Probar que existe una única solución en el
+    intervalo $[0,1]$ y que método de aproximaciones sucesivas
+    $x_{k+1}=g(x_k)$ converge hacia una solución para cualquier
+    inicialización, $x_0\in[0,1]$. Aproximar la
+    solución con un error menor que $\varepsilon=10^{-8}$.
+  \end{problema}
+  \begin{problema}
+    Dada la ecuación $f(x)=e^x-(x+1)^2=0$:
+    \begin{itemize}
+    \item Estudiar sus raíces reales
+    \item Localizarlas en intervalos en los que el método de Newton
+      esté bien definido y sea convergente (idea: en cada intervalo,
+      aplicar la regla de Fourier)
+    \item En cada uno de estos intervalos, calcular una aproximación
+      de la raíz con un error menor a $10^{-6}$.
+    \end{itemize}
+  \end{problema}
+  \begin{problema}
+    Dada la ecuación $f(x)=e^x-(x-2)^2=0$:
+    \begin{itemize}
+    \item Justificar geométricamente que sólo posee una raíz real
+    \item Demostrarlo analíticamente. Idea: probar que $f'(x)>0$ para
+      todo $x\in\Rset$. Para ello, cuando $x>2$, aplicar a $e^x$ el
+      teorema del valor medio en $[2,x]$ para probar que $e^x>2(x-2)$.
+    \end{itemize}
+  \end{problema}
+  \begin{problema}
     Calcular las tres primeras aproximaciones ($k=0,1,2$) de $\pi$
     mediante el algoritmo de Gauss-Legendre (o de Brent-Salamin):
     $a_0=1$, $b_0=1/\sqrt 2$, $t_0=1/4$, $p_0=1$,
@@ -77,14 +105,6 @@
     \end{enumerate}
   \end{problema}
  
-  \begin{problema}
-    Consideremos el problema de punto fijo $x=g(x)$, con
-    $g(x)=1/(2+x)$.  Probar que existe una única solución en el
-    intervalo $[0,1]$ y que método de aproximaciones sucesivas
-    $x_{k+1}=g(x_k)$ converge hacia una solución para cualquier
-    inicialización, $x_0\in[0,1]$. Aproximar la
-    solución con un error menor que $\varepsilon=10^{-8}$.
-  \end{problema}
 \end{problemas}
 \end{document}
 

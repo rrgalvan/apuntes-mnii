@@ -277,14 +277,17 @@ ecuaciones~(\ref{eq:interpol.1}):
   p_n(x_0)&=y_0 \Rightarrow a_0=y_0.\\
   p_n(x_1)&=y_1 \Rightarrow a_0+a_1(x_1-x_0)=y_1 
   \Rightarrow a_1=\frac{y_1-y_0}{x_1-x_0}.\\
+  p_n(x_2)&=y_2 \Rightarrow a_0+a_1(x_2-x_0)+a_2(x_2-x_0)(x_2-x_1)=y_2 
+  \Rightarrow a_2=\cdots\\
   &\vdots
 \end{align*}
 Estos coeficientes se pueden calcular mediante una regla de
 recurrencia sencilla, conocida como fórmula de las diferencias dividas
 de Newton, que veremos a continuación. Históricamente se ha utilizado
 la siguiente notación (en la que se asume que los datos vienen dados
-por cierta función, $y_k=f(x_k)$, y se expresa que cada $a_k$ depende
-solamente de los valores de $f$ en $\{x_0,x_1,\dots,x_k\}$):
+por cierta función, $y_k=f(x_k)$, y se expresa el hecho de que cada
+$a_k$ depende solamente de los valores de $f$ en
+$\{x_0,x_1,\dots,x_k\}$):
 % De forma más compacta, podemos escribir:
 % \begin{equation}
 %   p_n(x)=\sum_{k=0}^n a_k \prod_{i=0}^{k-1}(x-x_i).
@@ -302,27 +305,13 @@ solamente de los valores de $f$ en $\{x_0,x_1,\dots,x_k\}$):
   $$
 \end{definition}
 
-\begin{remark}
-  Si observamos último sumando del
-  polinomio~\eqref{eq:pol.newton.dif-div} tenemos que
-   $$
-   (x-x_0)(x-x_1)\cdots (x-x_{n-1}) = x^n + \text{términos de grado
-     menor que $n$},
-   $$
-   por lo tanto $a_n=f[x_0,...,x_n]$ es el coeficiente de $x^n$ en el
-   polinomio de interpolación.
-\label{rk:2}
-
- \end{remark}
 El siguiente lema expresa las propiedad más importante de las
 diferencias divididas%
 \footnote{El lector interesado en estudiar más a fondo las
   diferencias divididas  puede consultar por ejemplo la
   siguiente referencia Bibliográfica: Kincaid, D., Cheney, W.,
   Análisis Numérico. \textit{Las matemáticas del cálculo
-    científico}. Addison-Wesley-Iberoamericana 1994.}. Aunque la
-demostración es de carácter técnico, la incluimos simplemente de
-modo ilustrativo.
+    científico}. Addison-Wesley-Iberoamericana 1994.}.
 % \begin{lemma}
 % \label{lem:interpol1}
 % El polinomio de interpolación de los datos $y_i=f(x_i)$ se puede
@@ -369,40 +358,67 @@ modo ilustrativo.
  
 \begin{lemma}
   \label{lem:1}
-  Las formulas divididas satisfacen la siguiente ecuación:
-  \begin{equation*}
-    f[x_0,x_1,\dots,x_n]=
-    \frac{f[x_1,x_2,\dots,x_n]-f[x_0,x_1,\dots,x_{n-1}]}{x_n - x_0}.
-  \end{equation*}
+  Las formulas divididas satisfacen la siguiente relación recursiva:
+  \begin{equation}
+    \begin{aligned}
+      f[x_i]&=y_i, \quad i=0,...n,
+      \\
+      f[x_0,x_1,\dots,x_n]&=
+      \frac{f[x_1,x_2,\dots,x_n]-f[x_0,x_1,\dots,x_{n-1}]}{x_n - x_0}.
+    \end{aligned}
+    \label{eq:interpol.dif-div.recursiva}
+  \end{equation}
 \end{lemma}
-En la ecuación anterior, los puntos $x_0,...,x_n$ deben interpretarse
-como variables, en un sentido amplio. Es decir, son ciertas todas las
+En~(\ref{eq:interpol.dif-div.recursiva}), los puntos
+$x_0,...,x_n$ deben interpretarse como variables, en un sentido amplio
+(pues de hecho $\{x_k\}_{k=0}^n$ son puntos genéricos, con $n$
+cualquiera, y podrían volver a enumerarse de cualquier otra forma, por
+ejemplo $\{x_k\}_{k=i}^{i+j}$). Por lo tanto, son ciertas todas las
 ecuaciones del tipo
 \begin{equation*}
   f[x_i,x_{i+1},\dots,x_{i+j}]=
   \frac{f[x_{i+1},\dots,x_{i+j}]-f[x_i,\dots,x_{i+j-1}]}{x_j - x_i}.
 \end{equation*}
 
-\begin{proof}~
-  \begin{enumerate}
-  \item 
-  \item Sean $p_n\in\Pol_n[x]$ y $p_{n-1}\in \Pol_{n-1}[x]$ los 
-    polinomios de interpolación de los
-    valores $\{x_i,f(x_i)\}_{i=0}^n$ y $\{x_i,f(x_i)\}_{i=0}^{n-1}$,
-    respectivamente. Sea $q_{n-1}\in\Pol_{n-1}[x]$ el polinomio de
-    interpolación de $\{x_i,f(x_i)\}_{i=1}^{n}$.
+Aunque la demostración del lema anterior es de carácter técnico, la
+incluimos de modo ilustrativo.
+\begin{proof}~ 
+  \etapa{Etapa 1.} Sean $p_n\in\Pol_n[x]$ y $p_{n-1}\in
+  \Pol_{n-1}[x]$ los polinomios de interpolación de los valores
+  $\{x_i,f(x_i)\}_{i=0}^n$ y $\{x_i,f(x_i)\}_{i=0}^{n-1}$,
+  respectivamente. Sea $q_{n-1}\in\Pol_{n-1}[x]$ el polinomio de
+  interpolación de $\{x_i,f(x_i)\}_{i=1}^{n}$.
 
-    Entonces, se verifica:
-    \begin{equation}
-    p_n(x)=q(x)+\frac{x-x_n}{x_n-x_0}\left[q(x)-p_{n-1}(x)\right].\label{eq:1}
+  Entonces, se verifica:
+  \begin{equation}
+    p_n(x)=q_{n-1}(x)+\frac{x-x_n}{x_n-x_0}\left[q_{n-1}(x)-p_{n-1}(x)\right].\label{eq:1}
   \end{equation}
-    Esto es debido a que ambos son polinomios de grado $n$ que
-    interpolan los valores $\{x_i,f(x_i)\}_{i=0}^n$.
-  \item A continuación, examinamos los coeficientes de $x^n$ en el
-    primer y el segundo miembro de~(\ref{eq:1}). Estos coeficientes
-    deben ser iguales, lo que nos lleva inmediatamente a la fórmula
-    recursiva que buscamos.
-  \end{enumerate}
+  Esto es debido a que (como es fácil comprobar usando la definición
+  de $p_{n-1}$ y $q_{n-1}$) el segundo miembro es un polinomio de
+  grado $n$ que interpola los valores $\{x_i,f(x_i)\}_{i=0}^n$. Luego,
+  por unicidad del polinomio de interpolación, tiene que conicidir con
+  $p_n$. 
+
+  \etapa{Etapa 2.}  Por definición, $a_n=f[x_0,...,x_n]$ es el
+  coeficiente del término $ (x-x_0)(x-x_1)\cdots (x-x_{n-1}) $ en la
+  expresión~(\ref{eq:pol.newton.dif-div}) del polinomio de
+  interpolación. Pero teniendo en cuenta que
+   $$
+   (x-x_0)(x-x_1)\cdots (x-x_{n-1}) = x^n + \text{términos de grado
+     menor que $n$},
+   $$
+   $a_n=f[x_0,...,x_n]$ coincide con el coeficiente de $x^n$ en el
+   polinomio de interpolación. En general, para todo $j<k$, $f[x_j,...,x_{k}]$ es el
+   coeficiente del término de mayor grado en el polinomio que
+   interpola los valores $\{x_i,f(x_i)\}_{i=j}^{k}$.
+ 
+   \etapa{Etapa 3.} A continuación, examinamos los coeficientes del
+   término de mayor grado, es decir de $x^n$, en el primer y el
+   segundo miembro de~(\ref{eq:1}). Estos coeficientes deben ser
+   iguales, lo que nos lleva inmediatamente a la fórmula
+   recursiva~(\ref{eq:interpol.dif-div.recursiva}) que buscamos (en el
+   segundo miembro de~(\ref{eq:1}) sólo influye el término de mayor
+   grado de $q_{n-1}(x)-p_{n-1}(x)$).
 \end{proof}
 
 El lema~\ref{lem:1} nos permite organizar el cálculo de las
@@ -420,12 +436,98 @@ Una fórmula poco costosa computacionalmente para la evaluación del
 polinomio de interpolación en un punto es la \resaltar{fórmula de
   Ruffini-Horner}: 
 \begin{equation*}
-  p_n(r) = a_0 + (r-x_0)(a_1 + (r-x_1)a_2 + \cdots + (r-x_n)a_n)\cdots)
+  p_n(r) = a_0 + (r-x_0)(a_1 + (r-x_1)(a_2 + \cdots + (r-x_n)a_n)\cdots)
 \end{equation*}
+En esta fórmula, el número de multiplicaciones se ve reducida
+sustancialmente con con respecto a la
+expresión~(\ref{eq:pol.newton.dif-div}) .
 \begin{example}
   Utilizaremos la interpolación de $f(x)=2^x$ y la fórmula de
   Ruffini-Horner para obtener una aproximación de $\sqrt{2}$.
 \end{example}
+
+\subsection{Expresión del error}
+\label{sec:error-interpol-lagrange}
+Como antes, consideremos una función $f(x)$ definida en un intervalo
+$[a,b]$ de la que conocemos los valores $y_i=f(x_i)$ en un soporte
+$\{x_0,x_1,\dots,x_n\}$. El siguiente resultado nos ofrece, suponiendo
+regularidad en $f$, una cota del error de interpolación en cada punto
+de $[a,b]$:
+\begin{theorem}
+  \label{thm:error-interpol-lagrange}
+  Sea $f\in C^{n+1}([a,b])$ y fijemos un soporte de $n+1$ puntos
+  distintos, $S=\{x_0,x_1,\dots,x_n\}\subset[a,b]$. Sea
+  $p\in\Pol_n[x]$ el polinomio de interpolación asociado a los valores
+  $y_i=f(x_i)$, $i=0,...,n$. Para cada $x\in[a,b]$, existe $\xi_x\in
+  (a,b)$ tal que:
+  \begin{equation}
+    \label{eq:expresion-error-interpol}
+    f(x)-p(x)=\frac{f^{n+1}(\xi_x)}{(n+1)!} (x-x_0)(x-x_1)\dots(x-x_n).
+  \end{equation}
+\end{theorem}
+
+\begin{proof}
+  Si $x=x_i$ para algún $i=0,...,n$,
+  entonces~(\ref{eq:expresion-error-interpol}) es evidente (ambos
+  miembros de la igualdad se anulan).
+
+  \etapa{Etapa 1.}
+  Fijemos, en lo que sigue, $x\neq x_i$ para todo $i=0,...,n$. Denotando
+  \begin{equation}
+  \omega_S=(x-x_0)(x-x_1)\dots (x-x_n),
+ \label{eq:w_S:3} 
+\end{equation}
+  definamos la siguiente función auxiliar:
+  \begin{equation}
+    \phi(t)=f(t)-p(t)-\lambda_x\, \omega_S, \quad \forall t\in[a,b],
+  \label{eq:interpol:2}
+\end{equation}
+  donde $\lambda_x$ se calcula de forma que, $\phi(x)=0$. Es
+  decir,
+  $$
+  \lambda_x = \frac{f(x)-p(x)}{\omega_S(x)}.
+  $$
+  Si conseguimos demostrar que existe $\xi_x\in (a,b)$ tal que
+  $\phi^{n+1)}(\xi_x)=0$ hemos terminado, pues derivando
+  en~(\ref{eq:interpol:2}):
+  \begin{align*}
+    0=\phi^{n+1)}(\xi_x)&=f^{n+1)}(\xi_x)-p^{n+1)}(\xi_x)-\lambda_x\cdot\omega_S^{n+1)}(\xi_x)
+    \\
+    &=f^{n+1)}(\xi_x)- \frac{f(x)-p(x)}{\omega_S(x)}\cdot (n+1)!,
+  \end{align*}
+  de donde podemos despejar $f(x)-p(x)$ para
+  obtener~(\ref{eq:expresion-error-interpol}) \etapa{Etapa 2.}
+  Utilizando repetidas veces el teorema de Rolle podemos comprobar que
+  existe $\xi_x\in (a,b)$ tal que $\phi^{n+1)}(\xi_x)=0$:
+
+  Debido a su definición, $\phi$ verifica:
+  $\phi(x_0)=\phi(x_1)=\cdots=\phi(x_n)=0$ y además, por definición de
+  $\lambda_x$, $\phi(x)=0$. Como $\phi\in C^{n+1}([a,b])$ y se anula
+  en $n+2$ puntos distintos, por el Teorema de Rolle tenemos que
+  $\phi'(x)$ se anula en $n+1$ puntos distintos de $(a,b)$. Aplicando
+  sucesivamente el Teorema de Rolle, llegamos a que $\phi^{n+1)}\in
+  C^0([a,b])$ y se anula (al menos) en un punto, $\xi_x\in (a,b)$.
+\end{proof}
+
+\begin{remark}
+  \label{rk:2}
+  El teorema anterior nos proporciona la siguiente cota uniforme del
+  error:
+  \begin{equation*}
+    ||f-p||_{\infty} \le \frac{M_{n+1}}{(n+1)!}||\omega_S||_\infty,
+  \end{equation*}
+  donde para cualquier función $g\in C^0([a,b])$ denotamos
+  \begin{equation*}
+    ||g||_\infty = \max_{x\in[a,b]} |g(x)|
+  \end{equation*}
+  y $M_{n+1}=||f^{n+1)}||_\infty$, mientras que $\omega_S$ está
+  definido en~(\ref{eq:w_S:3}).
+  En particular, se tiene que:
+  \begin{equation*}
+    ||f-p||_{\infty} \le \frac{M_{n+1}}{(n+1)!}(b-a)^{n+1}.
+  \end{equation*}
+  
+\end{remark}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../apuntes-MNII.tex"

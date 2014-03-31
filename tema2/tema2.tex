@@ -457,12 +457,12 @@ de $[a,b]$:
   \label{thm:error-interpol-lagrange}
   Sea $f\in C^{n+1}([a,b])$ y fijemos un soporte de $n+1$ puntos
   distintos, $S=\{x_0,x_1,\dots,x_n\}\subset[a,b]$. Sea
-  $p\in\Pol_n[x]$ el polinomio de interpolación asociado a los valores
+  $p_n\in\Pol_n[x]$ el polinomio de interpolación asociado a los valores
   $y_i=f(x_i)$, $i=0,...,n$. Para cada $x\in[a,b]$, existe $\xi_x\in
   (a,b)$ tal que:
   \begin{equation}
     \label{eq:expresion-error-interpol}
-    f(x)-p(x)=\frac{f^{n+1}(\xi_x)}{(n+1)!} (x-x_0)(x-x_1)\dots(x-x_n).
+    f(x)-p_n(x)=\frac{f^{n+1}(\xi_x)}{(n+1)!} (x-x_0)(x-x_1)\dots(x-x_n).
   \end{equation}
 \end{theorem}
 
@@ -479,23 +479,23 @@ de $[a,b]$:
 \end{equation}
   definamos la siguiente función auxiliar:
   \begin{equation}
-    \phi(t)=f(t)-p(t)-\lambda_x\, \omega_S, \quad \forall t\in[a,b],
+    \phi(t)=f(t)-p_n(t)-\lambda_x\, \omega_S, \quad \forall t\in[a,b],
   \label{eq:interpol:2}
 \end{equation}
   donde $\lambda_x$ se calcula de forma que, $\phi(x)=0$. Es
   decir,
   $$
-  \lambda_x = \frac{f(x)-p(x)}{\omega_S(x)}.
+  \lambda_x = \frac{f(x)-p_n(x)}{\omega_S(x)}.
   $$
   Si conseguimos demostrar que existe $\xi_x\in (a,b)$ tal que
   $\phi^{n+1)}(\xi_x)=0$ hemos terminado, pues derivando
   en~(\ref{eq:interpol:2}):
   \begin{align*}
-    0=\phi^{n+1)}(\xi_x)&=f^{n+1)}(\xi_x)-p^{n+1)}(\xi_x)-\lambda_x\cdot\omega_S^{n+1)}(\xi_x)
+    0=\phi^{n+1)}(\xi_x)&=f^{n+1)}(\xi_x)-p_n^{n+1)}(\xi_x)-\lambda_x\cdot\omega_S^{n+1)}(\xi_x)
     \\
-    &=f^{n+1)}(\xi_x)- \frac{f(x)-p(x)}{\omega_S(x)}\cdot (n+1)!,
+    &=f^{n+1)}(\xi_x)- \frac{f(x)-p_n(x)}{\omega_S(x)}\cdot (n+1)!,
   \end{align*}
-  de donde podemos despejar $f(x)-p(x)$ para
+  de donde podemos despejar $f(x)-p_n(x)$ para
   obtener~(\ref{eq:expresion-error-interpol}) \etapa{Etapa 2.}
   Utilizando repetidas veces el teorema de Rolle podemos comprobar que
   existe $\xi_x\in (a,b)$ tal que $\phi^{n+1)}(\xi_x)=0$:
@@ -509,24 +509,32 @@ de $[a,b]$:
   C^0([a,b])$ y se anula (al menos) en un punto, $\xi_x\in (a,b)$.
 \end{proof}
 
-\begin{remark}
+\begin{remark}[Cota uniforme del error]
   \label{rk:2}
   El teorema anterior nos proporciona la siguiente cota uniforme del
   error:
-  \begin{equation*}
-    ||f-p||_{\infty} \le \frac{M_{n+1}}{(n+1)!}||\omega_S||_\infty,
-  \end{equation*}
+  \begin{equation}
+    ||f-p_n||_{\infty} \le \frac{M_{n+1}}{(n+1)!}||\omega_S||_\infty,
+    \label{eq:cota-error-interpol-1}
+  \end{equation}
   donde para cualquier función $g\in C^0([a,b])$ denotamos
   \begin{equation*}
-    ||g||_\infty = \max_{x\in[a,b]} |g(x)|
+    ||g||_\infty = \max_{x\in[a,b]} |g(x)|  \quad (\text{norma
+      uniforme de $g$})
   \end{equation*}
   y $M_{n+1}=||f^{n+1)}||_\infty$, mientras que $\omega_S$ está
   definido en~(\ref{eq:w_S:3}).
   En particular, se tiene que:
-  \begin{equation*}
-    ||f-p||_{\infty} \le \frac{M_{n+1}}{(n+1)!}(b-a)^{n+1}.
-  \end{equation*}
-  
+  \begin{equation}
+    ||f-p_n||_{\infty} \le \frac{M_{n+1}}{(n+1)!}(b-a)^{n+1}.
+    \label{eq:cota-error-interpol-2}
+  \end{equation}
+\end{remark}
+
+\begin{remark}[Convergencia uniforme de los polinomios de interpolación]
+  A la vista de la cota uniforme~(\ref{eq:cota-error-interpol-1}), es
+  natural preguntarse si $||f-p_n||_{\infty}$ converge a cero, es
+  decir si
 \end{remark}
 %%% Local Variables:
 %%% mode: latex

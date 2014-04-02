@@ -29,13 +29,14 @@ base de los métodos numéricos que estudiaremos en los próximos capítulos.
 Consideremos conjunto de datos definido por un soporte de $n+1$ nodos
 distintos, $S=\{x_0,x_1,\dots,x_n\}\subset \Rset$, junto a $n+1$
 puntos $y_i \in \Rset$:
+\newcolumntype{g}{>{\columncolor{lightgray}}r}
 \begin{equation}
-  \begin{array}{r|lllcl}
+  \begin{array}{grrrcr}
     \toprule
-    x & x_0 & x_1 & x_2 & \dots & x_n
-    \\ \midrule
-    y & y_0 & y_1 & y_2 & \dots & y_n
-    \\
+       x & x_0 & x_1 & x_2 & \dots & x_n
+        \\ %\midrule
+        y & y_0 & y_1 & y_2 & \dots & y_n
+        \\
     \bottomrule
   \end{array}
   \label{eq:tabla-datos-lagrange}
@@ -722,11 +723,8 @@ p_h(x_i)&=f(x_i).
 \subsection{Interpolación por funciones \textit{spline} o ranura}
 \label{sec:splines}
 
-En la sección anterior se ha estudiado la interpolación mediante
-funciones continuas que son polinómicas a trozos. Ahora nos
-centraremos en el estudio de la interpolación a trozos cuando se
-aumenta la regularidad del interpolante. 
-
+Nos centraremos ahora en
+el caso en que se aumenta la regularidad del interpolante.
 Es decir, dada una partición 
 ${\cal P}= \{a = x_0 <x_1 < \cdots <x_n=b\}$
 del intervalo $[a,b]$ y dados unos datos $y_0$, $y_1$, \dots, $y_n$
@@ -794,8 +792,11 @@ $i=0,\dots,n-1$):
 \end{example}
 es decir:
 \begin{equation*}
-  \begin{array}{r|lllcl}
-    \toprule
+  \small
+  \begin{array}{r@{\rule{4ex}{0pt}}rrrcr}
+    %\toprule
+    i & 0 & 1 & 2 & 3 
+    \\ \toprule %\cline{1-5}
     x_i & 1 & 2 & 3 & 4
     \\ \midrule
     y_i & 2 & -1 & 0  & 1
@@ -804,6 +805,173 @@ es decir:
   \end{array}
   \label{eq:tabla-datos-lagrange}
 \end{equation*}
+Escribiendo las ecuaciones anteriores para los
+estos datos obtenemos:
+\begin{equation*}
+  s_h(x)=\left\{
+    \begin{tabular}{rll}
+      $2 -3 (x-1)$ & si & $x\in[1,2]$,
+      \\\noalign{\medskip}
+      $-1 + (x-2)$ & si & $x\in[2,3]$,
+      \\\noalign{\medskip}
+      $0 + (x-3)$ & si & $x\in[3,4]$
+    \end{tabular} \right.
+  =\left\{
+    \begin{tabular}{rll}
+      $4 -3x$ & si & $x\in[1,2]$,
+      \\\noalign{\smallskip}
+      $x-3$ & si & $x\in[2,3]$,
+      \\\noalign{\smallskip}
+      $x-3$ & si & $x\in[3,4]$.
+    \end{tabular} \right.
+\end{equation*}
+
+\subsubsection{Splines cúbicos}
+\label{sec:splines-lineales}
+
+Consideremos ahora el espacio
+\begin{equation*} V_h = \{q_h \in C^{2}([a,b])\ / \ q_h|_{I_i}\in
+\Pol_3[x],\ \forall i=0,\dots,n-1\}.
+\end{equation*} Nos proponemos calcular una función $s_h\in V_h$ (un
+spline cúbico) que interpole unos datos determinados,
+$\{(x_i,y_i)\}_{i=0}^n$. Comprobaremos que este problema es
+equivalente a un sistema de ecuaciones lineales.
+
+En cada intervalo $I_i=[x_i, x_{i+1}]$, el spline cúbico es un
+polinomio de grado tres, es decir, para cada $i=0,\dots,n-1$ se tiene:
+\begin{equation}
+  s_h(x) = s_i(x) = a_i + b_ix + c_ix^2 + d_ix^3,\quad
+  \forall x\in I_i.
+  \label{eq:spline-cubico}
+\end{equation}
+Para calcular el spline $s_h$ es necesario determinar $\{a_i, b_i,
+c_i, d_i\}_{i=0}^{n-1}$, es decir $4n$ incógnitas. Por lo tanto,
+necesitaremos $4n$ ecuaciones, que se obtienen de la siguiente forma:
+\begin{itemize}
+\item $n+1$ condiciones provienen de la interpolación de los datos
+  $\{(x_i, y_i)\}_{i=0}^n$:
+  $$
+  s_i(x_i)=y_i, \quad i=0,1,\dots,n.
+  $$
+\item $3(n-1)$ condiciones provienen  de la regularidad de $s_h$ en
+  $[a,b]$. En concreto:
+  \begin{equation*}
+    \left.
+  \begin{aligned}
+    s_{i-1}(x_i)&=s_{i}(x_i) \quad \text{(continuidad de $s_h$)}
+    \\
+    s'_{i-1}(x_i)&=s'_{i}(x_i) \quad \text{(continuidad de $s_h'$)}
+    \\
+    s''_{i-1}(x_i)&=s''_{i}(x_i) \quad \text{(continuidad de $s_h''$)}
+  \end{aligned}
+  \right\} \quad \forall i=1,\dots,n-1 
+\end{equation*}
+\item Sumando todo, tenemos $(n+1) + 3(n-1) = 4n-2$ ecuaciones, para
+  las $4n$ incógnitas de las que partimos. En consecuencia,
+  necesitamos $2$ ecuaciones más, que se suelen imponer sobre los
+  extremos del intervalo $[a,b]$. Las más utilizadas son:
+  \begin{itemize}
+  \item Si disponemos de información sobre la derivada en los
+    extremos, $y_a'$, $y_b'\in\Rset$, imponemos:
+    \begin{equation*}
+      s_0'(a)=y_a', \quad s_n'(b)=y_b' \quad \text{(condición de frontera fija)}.
+    \end{equation*}
+  \item Si carecemos de la información anterior, suele imponerse que
+    la segunda derivada se anule en los extremos:
+    \begin{equation*}
+      s_0''(a)=0, \quad s_n''(b)=0 \quad \text{(condición natural o de
+        frontera libre)}.
+    \end{equation*}
+  \end{itemize}
+\end{itemize}
+
+\begin{example}
+  \label{ex:splines-cubicos}
+  A continuación plantearemos el sistema de ecuaciones que resulta al
+  usar splines cúbicos naturales para
+  interpolar los datos del ejemplo~\ref{ex:splines-lineales-1}. Para
+  ello, reescribimos~(\ref{eq:spline-cubico}) como:
+  \begin{equation*}
+    s_h(x)=\left\{
+      \begin{aligned}
+        s_0(x)&=a_0 + b_0(x-1) + c_0(x-1)^2 + d_0(x-1)^3 
+        & \text{si} && x\in[1,2],
+        \\
+        s_1(x)&=a_1 + b_1(x-2) + c_1(x-2)^2 + d_1(x-2)^3 
+        &\text{si}&& x\in[2,3],
+        \\
+        s_2(x)&=a_2 + b_2(x-3) + c_2(x-3)^2 + d_2(x-3)^3 
+        & \text{si}&& x\in[3,4].
+      \end{aligned}\right.
+  \end{equation*}
+\end{example}
+
+Tenemos $12$ incógnitas y disponemos de las siguientes ecuaciones:
+\begin{itemize}
+\item Interpolación:
+  \begin{itemize}
+  \item Imponiendo $s_h(x_i)=y_i$, $i=0,1,2$, llegamos directamente
+    a
+    \begin{equation*}
+      a_0=2, \quad a_1=-1, \quad a_2=0
+    \end{equation*}
+  \item Imponiendo $s_h(x_3)=s_2(x_3)=y_3$, llegamos a:
+    \begin{equation*}
+      a_2+b_2+c_2+d_2=1.
+    \end{equation*}
+  \end{itemize}
+\item Continuidad:
+  \begin{align*}
+   s_0(x_1)=s_1(x_1) &\Rightarrow a_0+b_0+c_0+d_0 = a_1
+   \\
+   s_1(x_2)=s_2(x_2) &\Rightarrow a_1+b_1+c_1+d_1 = a_2
+  \end{align*}
+\item Continuidad de $s_h'$. Usando que
+  $s_i'(x)=b_i+2c_i(x-x_i)+3d_i(x-x_i)^2$:
+  \begin{align*}
+   s_0'(x_1)=s_1'(x_1) &\Rightarrow b_0+2c_0+3d_0 = b_1
+   \\
+   s_1'(x_2)=s_2'(x_2) &\Rightarrow b_1+2c_1+3d_1 = b_2
+  \end{align*}
+\item Continuidad de $s_h''$. Usando que
+  $s_i'(x)=2c_i+6d_i(x-x_i)$:
+  \begin{align*}
+   s_0''(x_1)=s_1''(x_1) &\Rightarrow 2c_0+6d_0 = 2c_1
+   \\
+   s_1''(x_2)=s_2''(x_2) &\Rightarrow 2c_1+6d_1 = 2c_2
+  \end{align*}
+\item Además imponemos condiciones naturales en $x_0$ y en $x_3$,
+  $s_0''(x_0)=0$, $s_22'(x_3)=0$, de donde:
+  \begin{equation*}
+   2c_0 = 0, \quad 2c_2 + 6 d_2 =0.
+  \end{equation*}
+\end{itemize}
+
+\subsubsection*{En resumen}
+En esta sección hemos conseguido mitigar el problema de convergencia
+que puede presenta la interpolación de datos cuando aumenta el grado
+de los polinomios. Para ello se han utilizado de funciones polinómicas
+a trozos y regulares en $[a,b]$, para las que hemos probado
+convergencia uniforme en el caso $C^0([a,b])$. Como ejemplo final, se
+presentan dos imágenes (extraídas de [Burden \& Faires]): en la a
+figura~\ref{fig:pato-alto-orden} se utiliza un polinomio de alto
+orden, generándose grandes oscilaciones. En la
+figura~\ref{fig:pato-spline} se utilizan funciones splines cúbicas,
+obteniéndose excelentes resultados.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\linewidth]{tema2/pato-interpol}
+  \caption{Interpolación con polinomios de alto orden}
+  \label{fig:pato-alto-orden}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.8\linewidth]{tema2/pato-spline}
+  \caption{Interpolación con splines cúbicos}
+  \label{fig:pato-spline}
+\end{figure}
 
 %%% Local Variables:
 %%% mode: latex

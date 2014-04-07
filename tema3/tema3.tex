@@ -1,0 +1,199 @@
+\chapter[Integración numérica]{Integración numérica%
+\footnote{\licenseInfo}}
+\label{cha:integracion-numerica}
+
+El cálculo de una integral definida es un problema que aparece con
+frecuencia, tanto en matemáticas como en otro ámbitos (ciencia,
+ingeniería, economía,...). En concreto, dada una función
+$f:[a,b]\subset\Rset\to\Rset$, se trata de aproximar numéricamente su
+integral definida en $[a,b]$,
+\begin{equation*}
+  \int_a^bf(x)\,dx.
+\end{equation*}
+
+La necesidad de la aproximación numérica de integrales definidas
+estriba en que, con frecuencia, resulta imposible (o demasiado costoso
+computacionalmente) su cálculo de forma exacta. No sólo porque, en
+contextos experimentales, la función podría venir dada por una tabla
+de datos, sino porque la mayor parte de las funciones matemáticas no
+son integrables mediante las técnicas usuales del cálculo elemental
+y por tanto no resulta aplicable la regla de Barrow, $\int_a^b f(x)\,
+dx=F(b)-F(a)$.
+
+En este tema se plantearán métodos o fórmulas numéricas, llamadas
+fórmulas de cuadratura, para la aproximación de $\int_a^b f(x)\,
+dx$. La primera idea es la sustitución de $f(x)$ por un interpolador,
+$p_n(x)$, de forma que $\int_a^bf(x)\,dx \approx \int_a^b p_n(x)\,
+dx$. Como veremos, esta última integral suele ser fácil de calcular y
+expresar como $\sum_{i=0}^n \omega_i \, f(x_i)$, (donde $\omega_i$
+provienen, por ejemplo, de la integración en $[a,b]$ de las funciones
+base de Lagrange).
+
+
+Por tanto, las fórmulas de cuadratura para la aproximación de
+$\int_a^b f(x)\, dx$ serán expresiones que utilizan los valores de la
+función en un conjunto de $n+1$ \emph{nodos}, $\{x_0,x_1,\dots,x_n\}$,
+multiplicados por $n+1$ \emph{pesos}
+$\{\omega_0,\omega_1,\dots,\omega_n\}$:
+\begin{definition}[Fórmula de cuadratura]
+  \label{def:formula-cuadratura}
+  Una \resaltar{fórmula de cuadratura} (abreviadamente, f.c.) con
+  $n+1$ nodos $\{x_i\}_{i=0}^n$ y pesos $\{\omega_i\}_{i=0}^n$ es una
+  expresión del tipo:
+  \begin{align}
+    \label{eq:f.cuadratura}
+    I_n(f)&=\sum_{i=0}^n \omega_i \, f(x_i).
+    \\
+    \intertext{Al valor}
+    \notag
+    E_n(f) &= \int_a^b f(x) - I_n(f) 
+  \end{align}
+  se le llama \resaltar{error} de la fórmula de cuadratura. 
+  % donde $I_n(f)\in\Rset$ representa un valor aproximado de $\int_a^b
+  % f(x)\,dx$ y $E_n(f)\in\Rset$ es el error que se comete en la
+  % aproximación.
+\end{definition}
+En el sentido de que intentaremos que el error <<sea pequeño>>, escribimos:
+\begin{equation*}
+  I_n(f) \approx \int_a^b f(x)\, dx.
+\end{equation*}
+
+\begin{definition}[Orden de una fórmula de cuadratura]
+  \label{def:2}
+  Una fórmula de cuadratura se dirá de \resaltar{orden} $m\in\Nset$ si
+  verifica:
+  \begin{align*}
+    E_n(p)&=0 \quad \forall p\in\Pol_m[x] \text{ (polinomios
+      de grado menor o igual que $m$) y}
+    \\
+    E_n(p)&\neq 0 \quad \text{para \emph{algún} polinomio }
+    p\in\Pol_{m+1}[x] \text{ (de grado $m+1$)}.
+  \end{align*}
+\end{definition}
+Así, decimos que una fórmula de cuadratura de orden $m$ es exacta para
+los polinomios de orden (menor o igual a) $m$, pero no para los de
+orden $m+1$.
+\begin{remark}
+  \label{rk:5}
+  Utilizando la linealidad con respecto a $f$ de $\int_a^bf(x)\,dx$ y
+  de $I_n(f)$, es evidente que una f.c. es de orden $m\in\Nset$ si
+  y sólo si verifica:
+  \begin{align*}
+    E_n(x^k)&=0 \quad \forall k=0\dots,m \text{ y}
+    \\
+    E_n(x^{m+1})&\neq 0.
+  \end{align*}
+  Esta suele ser la forma de estudiar, en la práctica, el orden de una
+  fórmula de cuadratura.
+\end{remark}
+
+\begin{example}
+  \label{ex:formula-punto-medio}
+  La siguiente fórmula de cuadratura de un punto ($n=0$) es conocida
+  como \resaltar{fórmula del punto medio},
+  \begin{equation}
+    \label{eq:f.c.-pto-medio}
+    I_0(f)= (b-a) f\left(\frac{a+b}{2}\right),
+  \end{equation}
+  y tiene orden $1$. En efecto, evaluando $E_0(x^k)$, $k\ge 0$:
+  \begin{align*}
+   \text{Para } k&=0:\ E_0(1) = \int_a^b 1\cdot dx - (b-a)\cdot 1 = 0.
+   \\
+   \text{Para } k&=1:\ E_0(x) = \int_a^b x\cdot dx - (b-a)\frac{a+b}{2}
+   = \frac{1}{2}(b^2-a^2) -  (b-a) \frac{a+b}{2} = 0.
+   \\
+   \text{Para } k&=2:\ E_0(x) = \int_a^b x^2\cdot dx 
+   - (b-a) \frac{(a+b)^2}{4} 
+   = \frac{1}{3}(b^3-a^3) - (b-a)\frac{(a+b)^2}{4} 
+   \neq 0.
+  \end{align*}
+\end{example}
+
+\begin{example}
+  \label{ex:formula-trapecio}
+  La siguiente f.c. de dos puntos ($n=1$) es conocida
+  como \resaltar{fórmula del trapecio}:
+  \begin{equation*}
+    I_1(f)= \frac{b-a}{2}\left(f(a)+f(b)\right).
+  \end{equation*}
+  La formula del trapecio es de orden 1:
+  \begin{align*}
+   \text{Para } k&=0:\ E_1(1) =  (b-a) - \frac{b-a}2\cdot 2 = 0.
+   \\
+   \text{Para } k&=1:\ E_1(x) = \frac{b^2-a^2}{2} -
+   \frac{(b-a)}{2}(a+b) = 0.
+   \\
+   \text{Para } k&=2:\ E_1(x) = \frac{b^3-a^3}{3} - \frac{(b-a)}{2}(a^2+b^2) 
+   \neq 0.
+  \end{align*}
+\end{example}
+
+\begin{example}
+  \label{ex:formula-simpson}
+  La \resaltar{fórmula de Simpson} es la siguiente f.c.
+  de tres puntos ($n=2$):
+  \begin{equation*}
+    I_2(f)= \frac{b-a}{6}\left[f(a)+f
+      \left(\frac{a+b}{2}\right)+f(b)\right],
+  \end{equation*}
+  Su orden es $3$. La demostración es similar a los ejemplos anteriores.
+\end{example}
+
+\section{Fórmulas de cuadratura de tipo interpolatorio}
+\label{sec:cuadratura-interpolatorio}
+
+Cuando una fórmula de cuadratura viene determinada a partir de la integral del
+polinomio de interpolación en un conjunto de nodos, entonces diremos
+que se trata de una fórmula de tipo interpolatorio. Específicamente:
+\begin{definition}[Fórmula de cuadratura de tipo interpolatorio]
+  Sea $f\in C^0([a,b])$ y sea $p_n$ el polinomio de interpolación de
+  Lagrange asociado a $f$ y a $n+1$ nodos
+  $S=\{x_0,x_1,\dots,x_n\}$. Diremos que una f.c. es de tipo
+  interpolatorio si 
+  \begin{equation}
+    \label{eq:fcti}
+    I_n(f)=\int_a^b p_n(x)\, dx.
+  \end{equation}
+\end{definition}
+
+La definición anterior es consistente con la
+definición~\ref{def:formula-cuadratura} de fórmula de cuadratura, pues
+la expresión~(\ref{eq:fcti}) se puede escribir como suma $f(x_i)$ por
+cierto pesos. En efecto, dada $f\in C^0([a,b])$, podemos escribir
+$p_n$ usando la fórmula de interpolación de Lagrange:
+\begin{equation*}
+  p_n(x)=\sum_{i=0}^n f(x_i) L_i(x),
+\end{equation*}
+donde $\{L_i\}_{i=0}^n$ es la base de Lagrange asociada a
+$\{x_i\}_{i=0}^n$. Por lo tanto,
+\begin{equation*}
+  \int_a^bp_n(x)\,dx = \sum_{i=0}^n f(x_i) \int_a^b L_i(x)\,dx 
+  =\sum_{i=0}^n \omega_i f(x_i), \quad \text{con } \omega_i=\int_a^b L_i(x)\,dx.
+\end{equation*}
+
+\begin{example}
+  \label{ex:formula-pto-medio-interpol}
+  La f.c. del punto medio~(\ref{eq:f.c.-pto-medio}) es de tipo
+  interpolatorio. En efecto, dada $f\in C^0([a,b])$, el polinomio de
+  interpolación en $x_0=(a+b)/2$ es el polinomio constante
+  $p_0(x)=f(x_0)$. Y evidentemente,
+  \begin{equation*}
+    \int_a^b p_0(x)\,dx = (b-a)f\left(\frac{a+b}{2}\right).
+  \end{equation*}
+\end{example}
+
+\begin{example}
+  \label{ex:formula-trapecio-interpol}
+  La f.c. del trapecio~(\ref{eq:f.c.-pto-medio}) es también de tipo
+  interpolatorio. En efecto, dada $f\in C^0([a,b])$, el polinomio de
+  interpolación en $x_0=(a+b)/2$ es el polinomio constante
+  $p_0(x)=f(x_0)$. Y evidentemente,
+  \begin{equation*}
+    \int_a^b p_0(x)\,dx = (b-a)f\left(\frac{a+b}{2}\right).
+  \end{equation*}
+  
+\end{example}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../apuntes-MNII.tex"
+%%% End: 

@@ -791,7 +791,7 @@
       \end{equation*}
     \end{example}
     es decir:
-    \begin{equation*}
+    \begin{equation}
       \small
       \begin{array}{r@{\rule{4ex}{0pt}}rrrcr}
         %\toprule
@@ -803,8 +803,8 @@
         \\
         \bottomrule
       \end{array}
-      \label{eq:tabla-datos-lagrange}
-    \end{equation*}
+      \label{eq:tabla-datos-lagrange-splines}
+    \end{equation}
     Escribiendo las ecuaciones anteriores para los
     estos datos obtenemos:
     \begin{equation*}
@@ -818,7 +818,7 @@
         \end{tabular} \right.
       =\left\{
         \begin{tabular}{rll}
-          $4 -3x$ & si & $x\in[1,2]$,
+          $5 -3x$ & si & $x\in[1,2]$,
           \\\noalign{\smallskip}
           $x-3$ & si & $x\in[2,3]$,
           \\\noalign{\smallskip}
@@ -906,74 +906,350 @@
       \end{equation*}
     \end{example}
 
-    Tenemos $12$ incógnitas y disponemos de las siguientes ecuaciones:
-    \begin{itemize}
-    \item Interpolación:
-      \begin{itemize}
-      \item Imponiendo $s_h(x_i)=y_i$, $i=0,1,2$, llegamos directamente
-        a
-        \begin{equation*}
-          a_0=2, \quad a_1=-1, \quad a_2=0
-        \end{equation*}
-      \item Imponiendo $s_h(x_3)=s_2(x_3)=y_3$, llegamos a:
-        \begin{equation*}
-          a_2+b_2+c_2+d_2=1.
-        \end{equation*}
-      \end{itemize}
-    \item Continuidad:
-      \begin{align*}
-       s_0(x_1)=s_1(x_1) &\Rightarrow a_0+b_0+c_0+d_0 = a_1
-       \\
-       s_1(x_2)=s_2(x_2) &\Rightarrow a_1+b_1+c_1+d_1 = a_2
-      \end{align*}
-    \item Continuidad de $s_h'$. Usando que
-      $s_i'(x)=b_i+2c_i(x-x_i)+3d_i(x-x_i)^2$:
-      \begin{align*}
-       s_0'(x_1)=s_1'(x_1) &\Rightarrow b_0+2c_0+3d_0 = b_1
-       \\
-       s_1'(x_2)=s_2'(x_2) &\Rightarrow b_1+2c_1+3d_1 = b_2
-      \end{align*}
-    \item Continuidad de $s_h''$. Usando que
-      $s_i'(x)=2c_i+6d_i(x-x_i)$:
-      \begin{align*}
-       s_0''(x_1)=s_1''(x_1) &\Rightarrow 2c_0+6d_0 = 2c_1
-       \\
-       s_1''(x_2)=s_2''(x_2) &\Rightarrow 2c_1+6d_1 = 2c_2
-      \end{align*}
-    \item Además imponemos condiciones naturales en $x_0$ y en $x_3$,
-      $s_0''(x_0)=0$, $s_22'(x_3)=0$, de donde:
-      \begin{equation*}
-       2c_0 = 0, \quad 2c_2 + 6 d_2 =0.
-      \end{equation*}
-    \end{itemize}
+Tenemos $12$ incógnitas y disponemos de las siguientes ecuaciones:
+\begin{itemize}
+\item Interpolación:
+  \begin{itemize}
+  \item Imponiendo $s_h(x_i)=y_i$, $i=0,1,2$, llegamos directamente
+    a
+    \begin{equation*}
+      a_0=2, \quad a_1=-1, \quad a_2=0
+    \end{equation*}
+  \item Imponiendo $s_h(x_3)=s_2(x_3)=y_3$, llegamos a:
+    \begin{equation*}
+      a_2+b_2+c_2+d_2=1.
+    \end{equation*}
+  \end{itemize}
+\item Continuidad:
+  \begin{align*}
+   s_0(x_1)=s_1(x_1) &\Rightarrow a_0+b_0+c_0+d_0 = a_1,
+   \\
+   s_1(x_2)=s_2(x_2) &\Rightarrow a_1+b_1+c_1+d_1 = a_2.
+  \end{align*}
+\item Continuidad de $s_h'$. Usando que
+  $s_i'(x)=b_i+2c_i(x-x_i)+3d_i(x-x_i)^2$:
+  \begin{align*}
+   s_0'(x_1)=s_1'(x_1) &\Rightarrow b_0+2c_0+3d_0 = b_1,
+   \\
+   s_1'(x_2)=s_2'(x_2) &\Rightarrow b_1+2c_1+3d_1 = b_2.
+  \end{align*}
+\item Continuidad de $s_h''$. Usando que
+  $s_i'(x)=2c_i+6d_i(x-x_i)$:
+  \begin{align*}
+   s_0''(x_1)=s_1''(x_1) &\Rightarrow 2c_0+6d_0 = 2c_1,
+   \\
+   s_1''(x_2)=s_2''(x_2) &\Rightarrow 2c_1+6d_1 = 2c_2.
+  \end{align*}
+\item Además imponemos condiciones naturales en $x_0$ y en $x_3$,
+  $s_0''(x_0)=0$, $s_2'(x_3)=0$, de donde:
+  \begin{equation*}
+   2c_0 = 0, \quad 2c_2 + 6 d_2 =0.
+  \end{equation*}
+\end{itemize}
 
-    \subsubsection*{En resumen}
-    En esta sección hemos conseguido mitigar el problema de convergencia
-    que puede presenta la interpolación de datos cuando aumenta el grado
-    de los polinomios. Para ello se han utilizado de funciones polinómicas
-    a trozos y regulares en $[a,b]$, para las que hemos probado
-    convergencia uniforme en el caso $C^0([a,b])$. Como ejemplo final, se
-    presentan dos imágenes (extraídas de [Burden \& Faires]): en la a
-    figura~\ref{fig:pato-alto-orden} se utiliza un polinomio de alto
-    orden, generándose grandes oscilaciones. En la
-    figura~\ref{fig:pato-spline} se utilizan funciones splines cúbicas,
-    obteniéndose excelentes resultados.
+En notación matricial, tenemos el siguiente sistema de ecuaciones:
+\newcommand{\z}{\color{gray}0}
+\begin{equation*}
+  \left[
+  \begin{array}{rrrr@{\rule{1.3em}{0pt}}rrrr@{\rule{1.3em}{0pt}}rrrr}
+    1&\z&\z&\z& \z&\z&\z&\z& \z&\z&\z&\z \\
+    \z&\z&\z&\z& 1&\z&\z&\z& \z&\z&\z&\z \\
+    \z&\z&\z&\z& \z&\z&\z&\z& 1&\z&\z&\z \\
+    \z&\z&\z&\z& \z&\z&\z&\z& 1&1&1&1 \\\noalign{\medskip}
+    
+    1&1&1&1& -1&\z&\z&\z& \z&\z&\z&\z \\
+    \z&\z&\z&\z& 1&1&1&1& -1&\z&\z&\z \\
+    \z&1&2&3& \z&-1&\z&\z& \z&\z&\z&\z \\
+    \z&\z&\z&\z& \z&1&2&3& \z&-1&\z&\z \\\noalign{\medskip}
 
-    \begin{figure}
-      \centering
-      \includegraphics[width=0.8\linewidth]{tema2/pato-interpol}
-      \caption{Interpolación con polinomios de alto orden}
-      \label{fig:pato-alto-orden}
-    \end{figure}
+    \z&\z&2&6& \z&\z&-2&\z& \z&\z&\z&\z \\
+    \z&\z&\z&\z& \z&\z&2&6& \z&\z&-2&\z \\
+    \z&\z&2&\z& \z&\z&\z&\z& \z&\z&\z&\z \\
+    \z&\z&\z&\z& \z&\z&\z&\z& \z&\z&2&6 \\
+  \end{array}
+  \right]
+  \
+  \left[
+    \begin{array}{r}
+      a_0 \\ b_0 \\ c_0 \\ d_0 \\ \noalign{\medskip}
+      a_1 \\ b_1 \\ c_1 \\ d_1 \\ \noalign{\medskip}
+      a_2 \\ b_2 \\ c_2 \\ d_2
+    \end{array}
+  \right]
+  =
+  \left[
+    \begin{array}{r}
+      2 \\ -1 \\ 0 \\ 1 \\ \noalign{\medskip}
+      \z \\  \z \\ \z \\ \z \\ \noalign{\medskip}
+      \z \\  \z \\ \z \\ \z
+    \end{array}
+  \right]
+\end{equation*}
+\begin{figure}
+  \centering
+  \includegraphics[width=0.4\linewidth]{tema2/spline-cubico}
+ \label{fig:spline-cubico} 
+ \caption{Spline cúbico que interpola los puntos de la
+   tabla~\ref{eq:tabla-datos-lagrange-splines}.}
+\end{figure}
+Se puede demostrar (ver [Burden \& Faires] en la bibliografía) que
+este sistema tiene una única solución y que (como en el caso de
+splines lineales) los splines cúbicos convergen a la función
+interpolada, siempre que ésta sea suficientemente regular. 
+Aunque en el sistema anterior se pueden eliminar fácilmente algunas
+incógnitas ($a_0$, $a_1$, $a_2$ y $c_0$), el sistema resultante
+es de orden $8x8$ y en la práctica debe ser resuelto mediante el
+ordenador (especialmente cuando en la práctica aumente el número de
+subintervalos). Como resultado, se obtienen los coeficientes de los
+polinomios de grado $3$ en $[1,2]$, $[2,3]$ y $[3,4]$ que definen el
+spline cúbico. Estos polinomios han sido representado en la
+figura~\ref{fig:spline-cubico}.
 
-    \begin{figure}
-      \centering
-      \includegraphics[width=0.8\linewidth]{tema2/pato-spline}
-      \caption{Interpolación con splines cúbicos}
-      \label{fig:pato-spline}
-    \end{figure}
 
-    %%% Local Variables:
-    %%% mode: latex
-    %%% TeX-master: "../apuntes-MNII.tex"
-    %%% End: 
+%\subsubsection*{En resumen}
+En resumen, en esta sección hemos conseguido mitigar el problema de
+convergencia que puede presenta la interpolación de datos cuando
+aumenta el grado de los polinomios. Para ello se han utilizado de
+funciones polinómicas a trozos y regulares en $[a,b]$, para las que
+hemos probado convergencia uniforme en el caso $C^0([a,b])$. Como
+ejemplo final, se presentan dos imágenes (extraídas de [Burden \&
+Faires]): en la a figura~\ref{fig:pato-alto-orden} se utiliza un
+polinomio de alto orden, generándose grandes oscilaciones. En la
+figura~\ref{fig:pato-spline} se utilizan funciones splines cúbicas,
+obteniéndose excelentes resultados.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.75\linewidth]{tema2/pato-interpol}
+  \caption{Interpolación con polinomios de alto orden}
+  \label{fig:pato-alto-orden}
+\end{figure}
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.75\linewidth]{tema2/pato-spline}
+  \caption{Interpolación con splines cúbicos}
+  \label{fig:pato-spline}
+\end{figure}
+
+
+\section{Interpolación de Hermite}
+\label{sec:interp-de-hermite}
+
+Consideremos ahora un conjunto de datos definido por un soporte de
+$n+1$ nodos distintos, $S=\{x_0,x_1,\dots,x_n\}\subset \Rset$ junto al
+siguiente conjunto de $2(n+1)$ datos: 
+\begin{equation}
+\{y_0,y_1\dots,y_n\} \cup \{y'_0,y'_1\dots,y'_n\}. 
+\label{eq:datos-hermite}
+\end{equation}
+Con frecuencia, estos datos vienen dados por ciertos valores conocidos
+de una función derivable, es decir  $y_i=f(x_i)$ e
+$y'_i=f'(x_i)$ para alguna función $f$.
+
+Se trata de encontrar un polinomio $p(x)$ del menor grado posible tal
+que 
+\begin{equation}
+  \left.
+\begin{aligned}
+  p(x_i) &= y_i \\ p'(x_i)&=y_i'
+\end{aligned}
+\right\}\quad \forall i=0,\dots,n.
+\label{eq:interpolacion-hermite}
+\end{equation}
+Un polinomio con estas características se llama polinomio de
+interpolación de Hermite.
+
+\subsection{Existencia y unicidad}
+\label{sec:exist-y-unic}
+
+\begin{theorem}[Existencia y unicidad]
+ Dado un soporte de $n+1$ nodos distintos, $x_0$,
+ $x_1$,\dots,$x_n\in\Rset$ y dados $2n+2$ datos como
+ en~(\ref{eq:datos-hermite}), existe un único polinomio de grado
+ $2n+1$ que interpola estos datos, en el sentido
+ de~(\ref{eq:interpolacion-hermite}).
+\end{theorem}
+
+\subsection*{Construcción del polinomio de interpolación de Hermite}
+\label{sec:constr-del-polin-hermite}
+
+Es posible comprobar que el polinomio de hermite que interpola los
+datos~(\ref{eq:datos-hermite}) en un soporte $\{x_0,\dots,x_n\}$
+viene dado por:
+\begin{equation*}
+  p(x)=\sum_{i=0}^{2n+1}(u_i(x)y_i+ v_i(x)y'_i),
+\end{equation*}
+donde
+\begin{align*}
+  u_i(x)&=\left[1-2L'_i(x_i)(x-x_i)\right]\, L_i^2(x)
+  \\ \noalign{\smallskip}
+  v_i(x)&=(x-x_i)\, L_i^2(x),
+\end{align*}
+siendo $\{L_i\}_{i=0}^n$ la base de Lagrange asociada al soporte,
+es decir, cada $L_i$ es el único polinomio de grado $n$ tal que:
+\begin{equation}
+  L_i(x_j)= \delta_{ij} = 
+  \left\{\begin{array}{l}
+      1 \text{ si } i=j, \\\noalign{\medskip} 0 \text{ si } i\neq j
+    \end{array}\right.
+\end{equation}
+
+El inconveniente de esta formulación del polinomio de interpolación de
+Hermite es que es computacionalmente costosa cuando el número de nodos
+es relativamente alto. En la práctica, suele ser más eficiente el
+utilizar la siguiente alternativa, basada en el uso de diferencias
+divididas:
+
+
+\begin{theorem}
+  \label{thm:formula-newton-hermite}
+  Sea $f:[a,b]\to\Rset$ derivable y sea $\{x_i\}_{i=0}^n$ un soporte
+  de $n+1$ nodos distintos y ordenados, esto es,
+  $x_0<x_1<\cdots<x_n$. Denotemos $z_{2i}=x_i$ y $z_{2i+1}=x_i$, esto es:
+  \begin{alignat*}{2} % 2 rl columns
+    z_0&=x_0, & z_1&=x_0,\\ 
+    z_2&=x_1, & z_3&=x_1,\\ 
+    &\ \vdots & &\ \vdots \\
+    z_{2n}&=x_n, \qquad & z_{2n+1}&=x_n.
+  \end{alignat*}
+  Entonces, el polinomio de Hermite puede construirse como:
+  \begin{equation*}
+    p_{2n+1}(x)=\sum_{i=0}^{2n+1}f[z_0,\dots,z_i]
+    (x-z_0)(x-z_1)\cdots(x-z_{i-1}), 
+  \end{equation*}
+  donde, cuando $z_i=z_{i+1}$, se conviene que $f[z_i,z_{i+1}]=y'_i$.
+\end{theorem}
+
+\subsection*{Expresión del error}
+\label{sec:expresion-del-error-hermite}
+
+Para la interpolación de Hermite se tiene una expresión del error
+similar a la obtenida en el teorema~\ref{thm:error-interpol-lagrange}:
+\begin{theorem}
+  Sea $f\in C^{2n+2}([a,b])$ y sea $p_{2n+1}(x)$ el polinomio de
+  Hermite asociado a los datos $y_i=f(x_i)$, $y'_i=f(x_i)$ para un
+  soporte $\{x_i\}_{i=0}^n$. Entonces, para cada $x\in [a,b]$ existe
+  $\xi_x\in (a,b)$ tal que:
+  \begin{equation*}
+%    \label{eq:expresion-error-interpol-hermite}
+    f(x)-p_{2n+1}(x)=\frac{f^{2n+2)}(\xi_x)}{(2n+2)!} (x-x_0)^2(x-x_1)^2\dots(x-x_n)^2.
+  \end{equation*}
+\end{theorem}
+
+\section{Aproximación mediante mínimos cuadrados}
+\label{sec:minimos-cuadrados}
+
+\begin{quotation}
+  \it\tiny El día de Año Nuevo de 1801, el astrónomo italiano Giuseppe
+  Piazzi descubrió el planeta enano Ceres. Fue capaz de seguir su
+  órbita durante 40 días. Durante el curso de ese año, muchos
+  científicos intentaron estimar su trayectoria con base en las
+  observaciones de Piazzi (resolver las ecuaciones no lineales de
+  Kepler de movimiento es muy difícil). La mayoría de las evaluaciones
+  fueron inútiles; el único cálculo suficientemente preciso para
+  permitir a Franz Xaver von Zach, astrónomo alemán, reencontrar a
+  Ceres al final del año fue el de Carl Friedrich Gauss, por entonces
+  un joven de 24 años (los fundamentos de su enfoque ya los había
+  planteado en 1795, cuando aún tenía 18 años). Sin embargo, su método
+  de mínimos cuadrados no se publicó sino hasta 1809, y apareció en el
+  segundo volumen de su trabajo sobre mecánica celeste, Theoria Motus
+  Corporum Coelestium in sectionibus conicis solem ambientium. El
+  francés Adrien-Marie Legendre desarrolló el mismo método de forma
+  independiente en 1805.  En 1829, Gauss fue capaz de establecer la
+  razón del éxito maravilloso de este procedimiento: simplemente, el
+  método de mínimos cuadrados es óptimo en muchos aspectos. El
+  argumento concreto se conoce como teorema de Gauss-Márkov.
+  \par\hfill
+    -- Wikipedia. Último acceso: 7/4/2014.
+\end{quotation}
+
+Con frecuencia en entornos científicos, la relación entre dos
+variables es solamente conocida como resultados de medidas
+experimentales, de datos estadísticos, etc. Por tanto, los datos están
+sujetos a errores y no tiene sentido el plantear que interpolen
+exactamente una serie de valores. En vez de ello nos planteamos el
+siguiente problema:
+
+Dados una serie de datos 
+\begin{equation}
+\{(x_0,y_0),(x_1,y_1),\dots,(x_n,y_n)\}, 
+\label{eq:datos-min-cuadrados}
+\end{equation}
+determinar una función, $g(x)$, que sea ``fácil de calcular'' y tal
+que, el error $|y_i-g(x_i)|$ ``sea mínimo'' en un sentido a precisar.
+
+Este problema se puede generalizar en el siguiente sentido: dado un espacio
+vectorial normado $(V,||\cdot||)$ y dado $U\subset V$, para cada $f\in
+V$ decimos que $\overline u$ es \textit{la mejor aproximación} a $f$
+en $U$ si se verifica:
+\begin{equation*}
+  ||f-\overline u|| \le ||f-u||, \quad \forall u\in U.
+\end{equation*}
+Por falta de espacio, no abordaremos el estudio del problema de la
+mejor aproximación y nos centraremos en el caso de la 
+aproximación mediante mínimos cuadrados lineales.
+
+En concreto, dados los datos~(\ref{eq:datos-min-cuadrados}), nos
+proponemos hallar una función afín (una recta)
+\begin{equation}
+g(x)=ax+b, \quad a,b\in\Rset,\label{eq:5}
+\end{equation}
+tal que
+\begin{equation*}
+  m(a,b) := \sum_{i=0}^n
+  \left(
+    y_i - g(x_i)
+  \right)^2
+  =
+  \left(
+    y_i - a x_i - b
+  \right)^2
+\end{equation*}
+sea mínimo (figura~\ref{fig:min-cuadrados-lineales}).
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\linewidth]{tema2/linear_regression}
+  \caption{Mínimos cuadrados lineales}
+  \label{fig:min-cuadrados-lineales}
+\end{figure}
+
+Para ello:
+\begin{align*}
+  \frac{\partial m}{\partial a} & = 
+  -2\sum_{i=0}^n
+  x_i\left(
+    y_i - a x_i - b
+  \right) = 
+  -2\sum_{i=0}^n x_i y_i
+  +2a\sum_{i=0}^n x_i^2
+  +2b\sum_{i=0}^n x_i
+  = 0
+  \quad \text{y} \\
+  \frac{\partial m}{\partial b} & = 
+  -2\sum_{i=0}^n
+  \left(
+    y_i - a x_i - b
+  \right) = 
+  -2\sum_{i=0}^n  y_i
+  +2a\sum_{i=0}^n x_i
+  +2nb
+  = 0.
+\end{align*}
+
+Basta resolver este sistema lineal de ecuaciones con incógnitas $a$ y
+$b$ para obtener la recta~(\ref{eq:5}) que buscamos:
+\begin{center}
+  \includegraphics[width=0.9\linewidth]{tema2/ecuacion-min-cuadr}
+\end{center}
+
+La idea anterior es generalizable a otro tipo de funciones, $g(x)$,
+por ejemplo funciones cuadráticas (aproximación mediante polinomios de
+grado dos).  En prácticas de ordenador veremos algunos ejemplos de
+aproximación mediante mínimos cuadrados.
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../apuntes-MNII.tex"
+%%% End: 

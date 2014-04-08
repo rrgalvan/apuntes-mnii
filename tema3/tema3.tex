@@ -24,10 +24,10 @@ En este tema se plantearán métodos o fórmulas numéricas, llamadas
 fórmulas de cuadratura, para la aproximación de $\int_a^b f(x)\,
 dx$. La primera idea es la sustitución de $f(x)$ por un interpolador,
 $p_n(x)$, de forma que $\int_a^bf(x)\,dx \approx \int_a^b p_n(x)\,
-dx$. Como veremos, esta última integral suele ser fácil de calcular y
-expresar como $\sum_{i=0}^n \omega_i \, f(x_i)$, (donde $\omega_i$
-provienen, por ejemplo, de la integración en $[a,b]$ de las funciones
-base de Lagrange).
+dx$. Esta última integral es fácil de calcular y, como veremos,
+expresar como $\sum_{i=0}^n \omega_i \, f(x_i)$ (donde los coeficiente
+$\omega_i$ provienen, por ejemplo, de la integración de las
+funciones base de Lagrange).
 
 
 Por tanto, las fórmulas de cuadratura para la aproximación de
@@ -95,7 +95,8 @@ orden $m+1$.
     \label{eq:f.c.-pto-medio}
     I_0(f)= (b-a) f\left(\frac{a+b}{2}\right),
   \end{equation}
-  y tiene orden $1$. En efecto, evaluando $E_0(x^k)$, $k\ge 0$:
+  y tiene orden $1$. En efecto, evaluando $E_0(x^k)=\int_a^b
+  x^k\, dx-I_0(x^k)$ para $k\ge 0$:
   \begin{align*}
    \text{Para } k&=0:\ E_0(1) = \int_a^b 1\cdot dx - (b-a)\cdot 1 = 0.
    \\
@@ -132,16 +133,20 @@ orden $m+1$.
   \label{ex:formula-simpson}
   La \resaltar{fórmula de Simpson} es la siguiente f.c.
   de tres puntos ($n=2$):
-  \begin{equation*}
+  \begin{equation}
     I_2(f)= \frac{b-a}{6}\left[f(a)+f
       \left(\frac{a+b}{2}\right)+f(b)\right],
-  \end{equation*}
+    \label{eq:formula-simpson}
+  \end{equation}
   Su orden es $3$. La demostración es similar a los ejemplos anteriores.
 \end{example}
 
 \section{Fórmulas de cuadratura de tipo interpolatorio}
 \label{sec:cuadratura-interpolatorio}
 
+La expresión~(\ref{eq:f.cuadratura}) define a una fórmula de
+cuadratura para pesos $\omega_i$ y nodos $x_i$ cualesquiera, no
+necesariamente provenientes de la interpolación.
 Cuando una fórmula de cuadratura viene determinada a partir de la integral del
 polinomio de interpolación en un conjunto de nodos, entonces diremos
 que se trata de una fórmula de tipo interpolatorio. Específicamente:
@@ -154,11 +159,11 @@ que se trata de una fórmula de tipo interpolatorio. Específicamente:
     \label{eq:fcti}
     I_n(f)=\int_a^b p_n(x)\, dx.
   \end{equation}
+  \label{def:fcti}
 \end{definition}
 
-La definición anterior es consistente con la
-definición~\ref{def:formula-cuadratura} de fórmula de cuadratura, pues
-la expresión~(\ref{eq:fcti}) se puede escribir como suma $f(x_i)$ por
+La expresión~(\ref{eq:fcti}) se puede escribir de la forma
+de~(\ref{eq:f.cuadratura}), es decir como suma de $f(x_i)$ por
 cierto pesos. En efecto, dada $f\in C^0([a,b])$, podemos escribir
 $p_n$ usando la fórmula de interpolación de Lagrange:
 \begin{equation*}
@@ -174,25 +179,55 @@ $\{x_i\}_{i=0}^n$. Por lo tanto,
 \begin{example}
   \label{ex:formula-pto-medio-interpol}
   La f.c. del punto medio~(\ref{eq:f.c.-pto-medio}) es de tipo
-  interpolatorio. En efecto, dada $f\in C^0([a,b])$, el polinomio de
-  interpolación en $x_0=(a+b)/2$ es el polinomio constante
-  $p_0(x)=f(x_0)$. Y evidentemente,
+  interpolatorio. En efecto, si $p_0(x)$ es el polinomio de 
+  interpolación de grado cero asociado a $f$ en $x_0=(a+b)/2$, es
+  decir $p_0(x)=f(x_0)$ para todo $x\in[a,b]$, entonces:
   \begin{equation*}
-    \int_a^b p_0(x)\,dx = (b-a)f\left(\frac{a+b}{2}\right).
+    I_0(f) = (b-a)f\left(\frac{a+b}{2}\right) = \int_a^b p_0(x)\,dx.
   \end{equation*}
 \end{example}
 
 \begin{example}
   \label{ex:formula-trapecio-interpol}
-  La f.c. del trapecio~(\ref{eq:f.c.-pto-medio}) es también de tipo
-  interpolatorio. En efecto, dada $f\in C^0([a,b])$, el polinomio de
-  interpolación en $x_0=(a+b)/2$ es el polinomio constante
-  $p_0(x)=f(x_0)$. Y evidentemente,
+  Fijamos $n=1$, $x_0=a$ y $x_1=b$. Buscamos coeficientes, $\omega_0$
+  y $\omega_1$ tales que la siguiente fórmula de cuadratura sea de
+  tipo interpolatorio:
   \begin{equation*}
-    \int_a^b p_0(x)\,dx = (b-a)f\left(\frac{a+b}{2}\right).
+    I_1(f)=\omega_0 f(x_0) + \omega_1 f(x_1).
   \end{equation*}
-  
+  Según la definición~\ref{def:fcti}, esto significa que
+  \begin{equation*}
+    I_1(f)=\int_a^b p_n(x)= 
+    \underbrace{\left(\int_a^bL_0(x)\right)}_{\omega_0} f(x_0)+
+    \underbrace{\left(\int_a^bL_1(x)\right)}_{\omega_1} f(x_1).
+  \end{equation*}
+  Como
+  \begin{equation*}
+    L_0(x)=\frac{x-x_1}{x_0-x_1}=\frac{x-b}{a-b} \quad \text{y} \quad
+    L_1(x)=\frac{x-x_0}{x_1-x_0}=\frac{x-a}{b-a},
+  \end{equation*}
+  entonces
+  \begin{equation*}
+    \omega_0 = \int_a^b \frac{x-b}{a-b} = \frac{-(a-b)^2}{2(a-b)}=\frac{b-a}{2},
+    \quad
+    \omega_1 = \int_a^b \frac{x-a}{b-a} = \frac{(b-a)^2}{2(b-a)}=\frac{b-a}{2}.
+  \end{equation*}
+  Es decir, que la fórmula de cuadratura que buscamos es la
+  fórmula del trapecio:
+  \begin{equation*}
+    I_1(f)=\frac{b-a}{2}
+    \left(
+      f(a)+f(b)
+    \right).
+  \end{equation*}
 \end{example}
+
+\begin{example}
+  La fórmula de Simpson~(\ref{eq:formula-simpson}) es de tipo
+  interpolatorio. La demostración se deja como ejercicio.
+\end{example}
+
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../apuntes-MNII.tex"

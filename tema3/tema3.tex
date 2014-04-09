@@ -35,7 +35,7 @@ $\int_a^b f(x)\, dx$ serán expresiones que utilizan los valores de la
 función en un conjunto de $n+1$ \emph{nodos}, $\{x_0,x_1,\dots,x_n\}$,
 multiplicados por $n+1$ \emph{pesos}
 $\{\omega_0,\omega_1,\dots,\omega_n\}$:
-\begin{definition}[Fórmula de cuadratura]
+\begin{definition}[Fórmula de cuadratura de tipo general]
   \label{def:formula-cuadratura}
   Una \resaltar{fórmula de cuadratura} (abreviadamente, f.c.) con
   $n+1$ nodos $\{x_i\}_{i=0}^n$ y pesos $\{\omega_i\}_{i=0}^n$ es una
@@ -53,7 +53,7 @@ $\{\omega_0,\omega_1,\dots,\omega_n\}$:
   % f(x)\,dx$ y $E_n(f)\in\Rset$ es el error que se comete en la
   % aproximación.
 \end{definition}
-En el sentido de que intentaremos que el error <<sea pequeño>>, escribimos:
+Indicando que el error <<será pequeño>>, escribimos:
 \begin{equation*}
   I_n(f) \approx \int_a^b f(x)\, dx.
 \end{equation*}
@@ -119,13 +119,13 @@ orden $m+1$.
   \end{equation*}
   La formula del trapecio es de orden 1:
   \begin{align*}
-   \text{Para } k&=0:\ E_1(1) =  (b-a) - \frac{b-a}2\cdot 2 = 0.
-   \\
-   \text{Para } k&=1:\ E_1(x) = \frac{b^2-a^2}{2} -
-   \frac{(b-a)}{2}(a+b) = 0.
-   \\
-   \text{Para } k&=2:\ E_1(x) = \frac{b^3-a^3}{3} - \frac{(b-a)}{2}(a^2+b^2) 
-   \neq 0.
+    \text{Para } k&=0:\ E_1(1) = (b-a) - \frac{b-a}2\cdot 2 = 0.
+    \\
+    \text{Para } k&=1:\ E_1(x) = \frac{b^2-a^2}{2} -
+    \frac{(b-a)}{2}(a+b) = 0.
+    \\
+    \text{Para } k&=2:\ E_1(x^2) = \frac{b^3-a^3}{3} -
+    \frac{(b-a)}{2}(a^2+b^2) \neq 0.
   \end{align*}
 \end{example}
 
@@ -135,7 +135,7 @@ orden $m+1$.
   de tres puntos ($n=2$):
   \begin{equation}
     I_2(f)= \frac{b-a}{6}\left[f(a)+f
-      \left(\frac{a+b}{2}\right)+f(b)\right],
+      \left(\frac{a+b}{2}\right)+f(b)\right].
     \label{eq:formula-simpson}
   \end{equation}
   Su orden es $3$. La demostración es similar a los ejemplos anteriores.
@@ -145,11 +145,12 @@ orden $m+1$.
 \label{sec:cuadratura-interpolatorio}
 
 La expresión~(\ref{eq:f.cuadratura}) define a una fórmula de
-cuadratura para pesos $\omega_i$ y nodos $x_i$ cualesquiera, no
-necesariamente provenientes de la interpolación.
-Cuando una fórmula de cuadratura viene determinada a partir de la integral del
-polinomio de interpolación en un conjunto de nodos, entonces diremos
-que se trata de una fórmula de tipo interpolatorio. Específicamente:
+cuadratura de tipo general, para pesos $\omega_i$ y nodos $x_i$
+cualesquiera, no necesariamente provenientes de la interpolación.
+Pero por motivos que veremos luego
+(proposición~\ref{pro:existencia.fcti}), nos interesarán especialmente
+aquellas fórmulas de cuadratura que vengan dadas por integración de un
+polinomio de interpolación.
 \begin{definition}[Fórmula de cuadratura de tipo interpolatorio]
   Sea $f\in C^0([a,b])$ y sea $p_n$ el polinomio de interpolación de
   Lagrange asociado a $f$ y a $n+1$ nodos
@@ -226,6 +227,87 @@ $\{x_i\}_{i=0}^n$. Por lo tanto,
   La fórmula de Simpson~(\ref{eq:formula-simpson}) es de tipo
   interpolatorio. La demostración se deja como ejercicio.
 \end{example}
+
+La siguiente proposición afirma que las f.c.t.i. son óptimas, en el
+sentido de que son las f.c. de mayor orden.
+\begin{proposition}
+  \label{pro:existencia.fcti}
+  Dados $n+1$ nodos distintos, $x_0<x_1<\cdots<x_n$:
+  \begin{enumerate}
+  \item Sobre estos nodos existe una única f.c. con orden $\ge
+    n$.
+  \item Esta f.c. coincide con la f.c.t.i. correspondiente a
+    $\{x_i\}_{i=0}^n$.
+  \end{enumerate}
+\end{proposition}
+\begin{proof}~\par
+  \punto{1} Sea $I_n(f)=\sum_{i=0}^n \omega_i f(x_i)$ una
+  f.c. cualquiera sobre $\{x_i\}_{i=0}^n$. $I_n(f)$ tiene orden $\ge
+  n$ si y solo si $E(x^k)=0$ para $k=0,\dots,n$. Escribiendo estas $n+1$
+  ecuaciones,
+  \begin{equation}
+    \left.
+  \begin{alignedat}{2} % 2 bloques de columnas rl
+    E(1)&=0 \quad \Leftrightarrow\ \quad &
+    \omega_0 + \omega_1 + \cdots \omega_n &=
+    \int_a^b 1\cdot\,dx = b-a
+    \\
+    E(x)&=0 \quad \Leftrightarrow\ \quad &
+    \omega_0 x_0 + \omega_1 x_1 + \cdots \omega_n x_n &=
+    \int_a^b x \cdot\,dx = \frac{b^2-a^2}{2}
+    \\
+    &\ \, \vdots & &\ \, \vdots
+    \\
+    E(x^n)&=0 \quad \Leftrightarrow\ \quad &
+    \omega_0 x_0^n + \omega_1 x_1^n + \cdots \omega_n x_n^n &=
+    \int_a^b x^n \cdot\,dx = \frac{b^{n+1}-a^{n+1}}{n+1}
+    \\
+  \end{alignedat}
+  \right\}
+  \label{eq:sl.fcti}
+\end{equation}
+  tenemos un sistema lineal con $n+1$ incógnitas
+  $\{\omega_i\}_{i=0}^n$. La matriz asociada, es la conocida matriz de
+  Vandermonde, 
+  \begin{equation*}
+    A =
+    \begin{pmatrix}
+      1 & x_0& \cdots & x_0^n \\
+      1 & x_1& \cdots & x_1^n \\
+      \vdots & \vdots & & \vdots \\
+      1 & x_n& \cdots & x_n^n 
+    \end{pmatrix}
+  \end{equation*}
+  que fue estudiada en el teorema~\ref{thm:existencia-unicidad-lagrange}
+  (existencia y unicidad del polinomio de interpolación de Lagrange),
+  donde comprobamos que $A$ no es singular si los nodos son distintos.
+  Por lo tanto, existe una única solución, $\{\omega_i\}_{i=0}^n$, que
+  determina la única f.c. $I_n(f)$ de orden $\ge n$.
+
+  \punto{2} Veamos que esta única f.c. de orden $\ge n$ coincide con
+  la f.c.t.i. correspondiente a $\{x_i\}_{i=0}^n$. Para ello, basta
+  comprobar que la f.c.t.i. definida sobre nodos $\{x_i\}_{i=0}^n$
+  tiene orden al menos $n$. 
+  Pero esto es evidente: sea $I_n(f)=\int_a^b p_n(x)\, dx$ donde $p_n$
+  interpola a $f$ en los nodos $\{x_i\}_{i=0}^n$. Si $f(x)=p(x)$ es un
+  polinomio de grado $\le n$, entonces su polinomio de interpolación
+  de Lagrange es $p_n(x)=p(x)$ (por unicidad), por tanto
+  $E_n(p)=\int_a^b p(x)\,dx - \int_a^b p_n(x)\,dx =0$.
+\end{proof}
+
+\begin{remark}
+  \label{rk:6}
+  La demostración de la proposición anterior nos proporciona una forma
+  de calcular los pesos de cualquier f.c.t.i.: resolver el sistema
+  lineal~(\ref{eq:sl.fcti}). Este método se conoce como \emph{método de
+    los coeficientes indeterminados}. Tiene el inconveniente de que su
+  matriz asociada, la matriz de Vandermonde, está mal condicionada
+  cuando $n\to\infty$.
+\end{remark}
+
+\section{Fórmulas de Newton-Côtes}
+\label{sec:formulas-de-newton}
+
 
 
 %%% Local Variables:

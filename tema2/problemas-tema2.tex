@@ -1,0 +1,50 @@
+\documentclass[11pt]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+
+% ------ Cargar estilo específico para la relación de problemas
+\usepackage{problemas-MNII}
+
+
+
+% ==============
+\begin{document}
+% =============
+
+\begin{center}
+  \large \textbf{Relación de poblemas} \\ [0.2em]
+  \Large \textit{Tema 2. Interpolación y aproximación de funciones}
+  % \\
+  % \rule{\linewidth}{0.2pt}
+\end{center}
+
+\medskip
+
+\begin{problemas}
+  \begin{problema}
+    Utilizar el método de bisección para aproximar las raíces de las
+    siguientes ecuaciones con una tolerancia menor que
+    $\varepsilon=10^{-8}$.
+    \begin{enumerate}
+    \item $e^x-3x^2=0$.
+    \item $x^3=x^2+x+1$.
+    \end{enumerate}
+  \end{problema}
+
+  \begin{problema}
+    Obtener una cota del error cuando interpolamos la función
+    $f(x)=e^{2-x}$ usando $n$
+    nodos en $[-2,2]$. Estudiar gráficamente la evolución del error
+    cuando con $n=5,\dots,15$.
+  \end{problema}
+
+\end{problemas}
+
+\end{document}
+
+%===============
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

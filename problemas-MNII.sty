@@ -8,6 +8,21 @@
 % ------- Formato del documento ----
 \usepackage[hmargin={2cm,2cm}, vmargin={2.5cm,2.25cm}]{geometry}
 
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\lhead{%
+  \begin{tabular}[b]{l}
+    Métodos Numéricos 2
+  \end{tabular}
+} 
+\rhead{\scriptsize\em Grado en
+    Matemáticas. Universidad de Cádiz. Curso 2013/2014.}
+%\rhead{\thepage }
+\cfoot{}
+
+\renewcommand{\headrulewidth}{0.2pt} %grosor de la línea de la cabecera
+
+
 % ------- Relación de problemas
 
 \newenvironment{problemas}{%

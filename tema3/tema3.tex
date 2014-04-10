@@ -154,7 +154,7 @@ polinomio de interpolación.
 \begin{definition}[Fórmula de cuadratura de tipo interpolatorio]
   Sea $f\in C^0([a,b])$ y sea $p_n$ el polinomio de interpolación de
   Lagrange asociado a $f$ y a $n+1$ nodos
-  $S=\{x_0,x_1,\dots,x_n\}$. Diremos que una f.c. es de tipo
+  $\{x_0,x_1,\dots,x_n\}$. Diremos que una f.c. es de tipo
   interpolatorio si 
   \begin{equation}
     \label{eq:fcti}
@@ -305,8 +305,56 @@ sentido de que son las f.c. de mayor orden.
   cuando $n\to\infty$.
 \end{remark}
 
+\subsection*{Cota del error en fórmulas de tipo interpolatorio}
+
+Sea $I_n(f)$ una f.c.t.i. sobre $n+1$ puntos y sea $p_n$ el polinomio
+de Lagrange asociado.  Utilizando la
+expresión~(\ref{eq:expresion-error-interpol}) de error de
+interpolación del polinomio de Lagrange podemos razonar como sigue:
+
+\begin{align*}
+  E_n(f)=&\int_a^b f(x)\, dx - I_n(f) =
+  \int_a^b\left(f(x)-p_n(x)\right)\,dx 
+  \\
+  =&\int_a^b \frac{f^{n+1)}(\xi_x)}{(n+1)!} (x-x_0)(x-x_1)\dots(x-x_n) \,dx
+  \le \int_a^b  \frac{M_{n+1}}{(n+1)!} (b-a)^{n+1} \, dx,
+\end{align*}
+donde $M_{n+1}=\max_{x\in [a,b]} |f^{n+1)}(x)|$.
+Por lo tanto toda f.c.t.i con $n+1$ puntos en un intervalo $[a,b]$
+verifica la siguiente cota del error:
+\begin{equation}
+  E_n(f) \le  \frac{M_{n+1}}{(n+1)!} (b-a)^{n+2}.
+  \label{eq:cota-error-fcti}
+\end{equation}
+
+Tal y como en el capítulo~\ref{cha:Interpolacion-aproximacion}, nos
+podemos preguntar: dada una función $f$ suficientemente regular (por
+ejemplo infinitamente derivable), ¿podemos garantizar que $E_n(f)$
+tiende a cero cuando $n\to\infty$?, es decir,
+\begin{eqnarray*}
+  \text{\Large ¿ \;} 
+  \lim_{n\to\infty} \int_a^b p_n(x) = \int_a^bf(x)
+  \text{\; \Large?}
+  \label{eq:pregunta.p_n.to.f}
+\end{eqnarray*}
+Una vez más, la respuesta a esta pregunta es negativa, como sugiere el
+hecho de que en la estimación~(\ref{eq:cota-error-fcti}) no
+resulta posible acotar el término $M_{n+1}$, para cualquier función
+infinitamente derivable, cuando $n\to\infty$.
+
+Sin embargo, si denotamos $h=(b-a)$, la
+cota~(\ref{eq:cota-error-interpol-1}) nos garantiza que $E_n(f)$
+converge a cero cuando $h\to 0$ (de hecho, $E_n(f)=O(h^{n+2})$). Por
+este motivo, en la práctica se suelen utilizar f.c. compuestas, en las
+dividimos $[a,b]$ en subintervalos de integración de modo que $h\to 0$
+(ver sección~\ref{sec:fc-compuestas}).
+
 \section{Fórmulas de Newton-Côtes}
 \label{sec:formulas-de-newton}
+
+\section{Fórmulas de cuadratura compuestas}
+\label{sec:fc-compuestas}
+
 
 
 

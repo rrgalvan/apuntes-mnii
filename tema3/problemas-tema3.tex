@@ -13,7 +13,7 @@
 
 \begin{center}
   \large \textbf{Relación de poblemas} \\ [0.2em]
-  \Large \textit{Tema 2. Interpolación y aproximación de funciones}
+  \Large \textit{Tema 3. Integración numérica}
   % \\
   % \rule{\linewidth}{0.2pt}
 \end{center}
@@ -22,20 +22,9 @@
 
 \begin{problemas}
   \begin{problema}
-    Utilizar el método de bisección para aproximar las raíces de las
-    siguientes ecuaciones con una tolerancia menor que
-    $\varepsilon=10^{-8}$.
-    \begin{enumerate}
-    \item $e^x-3x^2=0$.
-    \item $x^3=x^2+x+1$.
-    \end{enumerate}
-  \end{problema}
-
-  \begin{problema}
-    Obtener una cota del error cuando interpolamos la función
-    $f(x)=e^{2-x}$ usando $n$
-    nodos en $[-2,2]$. Estudiar gráficamente la evolución del error
-    cuando con $n=5,\dots,15$.
+    Investigar si el error $E_n(f)=\int_a^b (f(x)-p_n(x))\, dx$ converge
+    a cero cuando $f$ es la función de Runge:
+    $$f(x)=\frac{1}{1+25x^2}$$  
   \end{problema}
 
 \end{problemas}

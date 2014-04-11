@@ -299,11 +299,39 @@ sentido de que son las f.c. de mayor orden.
   \label{rk:6}
   La demostración de la proposición anterior nos proporciona una forma
   de calcular los pesos de cualquier f.c.t.i.: resolver el sistema
-  lineal~(\ref{eq:sl.fcti}). Este método se conoce como \emph{método de
-    los coeficientes indeterminados}. Tiene el inconveniente de que su
-  matriz asociada, la matriz de Vandermonde, está mal condicionada
+lineal~(\ref{eq:sl.fcti}). Este método se conoce como \resaltar{método de
+  los coeficientes indeterminados}. Tiene el inconveniente de que su
+matriz asociada, la matriz de Vandermonde, está mal condicionada
   cuando $n\to\infty$.
 \end{remark}
+
+\begin{example}
+  Utilizaremos el método de los coeficientes indeterminados para
+  calcular los pesos de la fórmula de cuadratura en $[a,b]$ que es de
+  mayor orden (es decir, la f.c.t.i.) para los nodos $x_0=a+h$ y
+  $x_1=a+2h$, con $h=\frac{b-a}{3}$.
+  
+  Para $n=1$, obtenemos el siguiente sistema:
+  \begin{align*}
+    \omega_0 + \omega_1 &= b-a,
+    \\ 
+    x_0\omega_0 + x_1\omega_1 &= \frac{b^2-a^2}{2},
+  \end{align*}
+  cuya única solución es:
+  \begin{equation*}
+    \omega_0=\omega_1=\frac{3h}{2}
+  \end{equation*}
+  Así obtenemos la siguiente fórmula de cuadratura (que es conocida
+  como \textit{fórmula de los trapecios abierta}:
+  \begin{equation*}
+    I_1(f)=\frac{3h}{2}
+    \left(
+      f(x_0)+f(x_1),
+    \right)
+    \quad \text{con } x_0=a+h, \ x_1=a+2h,
+  \end{equation*}
+  para $h=\frac{b-a}{3}$.
+\end{example}
 
 \subsection*{Cota del error en fórmulas de tipo interpolatorio}
 
@@ -351,6 +379,27 @@ dividimos $[a,b]$ en subintervalos de integración de modo que $h\to 0$
 
 \section{Fórmulas de Newton-Côtes}
 \label{sec:formulas-de-newton}
+
+\begin{definition}
+  \label{def:1}
+  Se denomina fórmula de cuadratura de Newton-Côtes a toda aquella
+  f.c.t.i cuyas abscisas se encuentran uniformemente espaciadas (es
+  decir, $x_{i}-x_{i-1}=h$ para todo $i=1,\dots,n$. Existen dos tipos:
+  \begin{itemize}
+  \item Fórmulas cerradas: aquellas en las que
+    \begin{align*}
+      x_0=a, \quad x_n=b, \quad x_i=x_0 + ih,
+     \quad 
+     \text{con } h=\frac{b-a}{2}.
+    \end{align*}
+  \item Fórmulas abiertas: aquellas en las que
+    \begin{align*}
+      x_0=a+h, \quad x_n=b-h, \quad x_i=x_0 + ih,
+     \quad 
+     \text{con } h=\frac{b-a}{n+2}.
+    \end{align*}
+  \end{itemize}
+\end{definition}
 
 \section{Fórmulas de cuadratura compuestas}
 \label{sec:fc-compuestas}

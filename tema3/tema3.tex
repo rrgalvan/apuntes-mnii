@@ -356,41 +356,53 @@ verifica la siguiente cota del error:
 \end{equation}
 
 Tal y como en el capítulo~\ref{cha:Interpolacion-aproximacion}, nos
-podemos preguntar: dada una función $f$ suficientemente regular (por
-ejemplo infinitamente derivable), ¿podemos garantizar que $E_n(f)$
-tiende a cero cuando $n\to\infty$?, es decir,
+podemos preguntar: dada una f.c.t.i., para una función $f$
+suficientemente regular (por ejemplo infinitamente derivable),
+¿podemos garantizar que $E_n(f)$ tiende a cero cuando $n\to\infty$?,
+es decir,
 \begin{eqnarray*}
-  \text{\Large ¿ \;} 
+  \text{\large ¿ \;} 
   \lim_{n\to\infty} \int_a^b p_n(x) = \int_a^bf(x)
-  \text{\; \Large?}
+  \text{\; \large?}
   \label{eq:pregunta.p_n.to.f}
 \end{eqnarray*}
-Una vez más, la respuesta a esta pregunta es negativa, como sugiere el
-hecho de que en la estimación~(\ref{eq:cota-error-fcti}) no
+Una vez más, la respuesta a esta pregunta es negativa, en general, como
+sugiere el hecho de que en la estimación~(\ref{eq:cota-error-fcti}) no
 resulta posible acotar el término $M_{n+1}$, para cualquier función
 infinitamente derivable, cuando $n\to\infty$.
 
 Sin embargo, si denotamos $h=(b-a)$, la
 cota~(\ref{eq:cota-error-interpol-1}) nos garantiza que $E_n(f)$
-converge a cero cuando $h\to 0$ (de hecho, $E_n(f)=O(h^{n+2})$). Por
-este motivo, en la práctica se suelen utilizar f.c. compuestas, en las
-dividimos $[a,b]$ en subintervalos de integración de modo que $h\to 0$
-(ver sección~\ref{sec:fc-compuestas}).
+converge a cero cuando $h\to 0$. De hecho, si utilizamos la notación
+%$g(h)=O(h^m)$ para expresar que
+\begin{align*}
+  g(h)=O(h^m) \quad&\Longleftrightarrow\quad\lim_{h\to 0} \frac{g(h)}{h^m}=C
+\qquad \text{($C\in \Rset$ constante)},
+%
+\intertext{entonces}
+%
+E_n(f)&=O(h^{n+2}).
+\end{align*}
+
+Por este motivo, en la práctica se suelen utilizar f.c. compuestas, en
+las que dividimos $[a,b]$ en subintervalos de integración de modo que
+$h\to 0$ (ver sección~\ref{sec:fc-compuestas}).
 
 \section{Fórmulas de Newton-Côtes}
 \label{sec:formulas-de-newton}
 
 \begin{definition}
   \label{def:1}
-  Se denomina fórmula de cuadratura de Newton-Côtes a toda aquella
-  f.c.t.i cuyas abscisas se encuentran uniformemente espaciadas (es
-  decir, $x_{i}-x_{i-1}=h$ para todo $i=1,\dots,n$. Existen dos tipos:
+  Se denomina fórmula de cuadratura de Newton-Côtes (abreviadamente
+  N-C) a toda aquella f.c.t.i cuyas abscisas se encuentran
+  uniformemente espaciadas (es decir, $x_{i}-x_{i-1}=h$ para todo
+  $i=1,\dots,n$. Existen dos tipos:
   \begin{itemize}
   \item Fórmulas cerradas: aquellas en las que
     \begin{align*}
       x_0=a, \quad x_n=b, \quad x_i=x_0 + ih,
      \quad 
-     \text{con } h=\frac{b-a}{2}.
+     \text{con } h=\frac{b-a}{n}.
     \end{align*}
   \item Fórmulas abiertas: aquellas en las que
     \begin{align*}
@@ -401,6 +413,97 @@ dividimos $[a,b]$ en subintervalos de integración de modo que $h\to 0$
   \end{itemize}
 \end{definition}
 
+\begin{theorem}
+  \label{thm:error.formulas-nc}
+  Sea $I_n$ una f.c.t.i. sobre $n+1$ puntos equiespaciados en
+  $[a,b]$. Supongamos que $f\in C^k([a,b])$, donde $k=n+2$ si $n$ es par
+  y $k=n+1$ si $n$ es impar. Entonces, existe $\xi\in(a,b)$ tal que
+  \begin{equation*}
+    E_n(f)=\int_a^bf(x)\,dx - I_n(f)
+    = \gamma_n h^{k+1} \frac{f^{k)}(\xi)}{k!},
+  \end{equation*}
+  siendo:
+  \begin{itemize}
+  \item Si $I_n$ es una fórmula cerrada: $h=(b-a)/n$ y
+    \begin{align*}
+      \text{ si $n$ es par }
+      \gamma_n=\int_0^n t \Pi_n(t) dt,
+      \quad \text{si $n$ es impar }
+          \gamma_n=\int_0^n \Pi_n(t) dt.
+    \end{align*}
+  \item Si $I_n$ es una fórmula abierta: $h=(b-a)/(n+2)$ y
+    \begin{align*}
+      \text{si $n$ es par }
+      \gamma_n=\int_{-1}^{n+1} t \Pi_n(t) dt,
+      \quad \text{si $n$ es impar }
+      \gamma_n=\int_{-1}^{n+1} \Pi_n(t) dt.
+    \end{align*}
+  \end{itemize}
+  En lo anterior se ha usado la notación:
+  $\Pi_n(t)=(t)=t(t-1)(t-2)\cdots (t-n)$.
+\end{theorem}
+
+\begin{remark}~
+  \label{rk:7}
+  \begin{enumerate}
+  \item Según la expresión del error en el teorema anterior, el error
+    es cero para polinomios de grado menor o igual a $k$ (pues se
+    anula la derivada), por tanto las fórmulas de Newton-Côtes son
+    exactas para polinomios de grado $k$ ($k=n+1$ ó $n+2$), en
+    concreto:
+    \begin{enumerate}
+    \item Si $n$ es \textit{par}, las fórmulas de N--C son de 
+      orden $n+2$.
+    \item Si $n$ es \textit{impar}, las fórmulas de N--C son de 
+      orden $n+1$.
+    \end{enumerate}
+  \item Aunque una primera impresión puede sugerir que las fórmulas de
+    N-C abiertas y cerradas tienen el mismo orden, no hay que olvidar
+    que el valor de $h$ difiere entre ellas. Si queremos comparar el
+    error entre fórmulas abiertas y cerradas, debemos utilizar el
+    mismo valor de $h$.
+    
+    Fijemos un paso $h=(b-a)/p$, con cierto $p\in\Nset$. Entonces éste
+    se corresponde con una fórmula cerrada de $n=p+1$ puntos o con una
+    fórmula abierta de $n=p-1$ puntos. Así, en la expresión del error:
+    \begin{enumerate}
+    \item En las fórmulas \emph{abiertas}:\par
+      \begin{tabular}{rl}
+      Si $p$ es par, entonces $n$ es impar y: &$k=n+1=p$
+      \\
+      Si $p$ es impar, entonces $n$ es par y: &$k=n+2=p+1$
+    \end{tabular}
+    \item En las fórmulas \emph{cerradas}:\par
+      \begin{tabular}{rl}
+      Si $p$ es par, entonces $n$ es impar y: &$k=n+1=p+2$
+      \\
+      Si $p$ es impar, entonces $n$ es par y: &$k=n+2=p+3$
+    \end{tabular}
+    \end{enumerate}
+  Como conclusión, en todos los casos \emph{el orden de error de las
+  fórmulas cerradas es superior en dos unidades al de las fórmulas
+  abiertas}.
+  \end{enumerate}
+\end{remark}
+\begin{example}[Fórmulas de cuadratura abiertas]
+  Si $[a,b]=[x_{0},x_{n}]$ y $f_k=f(x_k)$, $k=0,\dots,n$, se tienen
+  las siguientes fórmulas de cuadratura de N--C cerradas junto con las
+  expresiones de error asociadas:
+  \label{sec:formulas-nc-abiertas}
+  \begin{center}
+    \includegraphics[width=0.95\linewidth]{tema3/formulas-nc-cerradas}
+  \end{center}
+\end{example}
+
+\begin{example}[Fórmulas de cuadratura abiertas]
+  Si $[a,b]=[x_{-1},x_{n+1}]$ y $f_k=f(x_k)$, $k=0,\dots,n$, se tienen
+  las siguientes fórmulas de cuadratura de N--C abiertas junto con las
+  expresiones de error asociadas:
+  \label{sec:formulas-nc-abiertas}
+  \begin{center}
+    \includegraphics[width=0.95\linewidth]{tema3/formulas-nc-abiertas}
+  \end{center}
+\end{example}
 \section{Fórmulas de cuadratura compuestas}
 \label{sec:fc-compuestas}
 

@@ -445,9 +445,15 @@ $h\to 0$ (ver sección~\ref{sec:fc-compuestas}).
   $\Pi_n(t)=(t)=t(t-1)(t-2)\cdots (t-n)$.
 \end{theorem}
 
+La demostración del teorema anterior puede encontrarse en la
+bibliografía (véase [Isaacson \& Keller]).
+
 \begin{remark}~
   \label{rk:7}
   \begin{enumerate}
+  \item Las constantes $\gamma_n$ no dependen del intervalo $[a,b]$ ni
+    de $f$, de forma que pueden calcularse una sola vez para poder
+    utilizarse cuando sea necesario.
   \item Según la expresión del error en el teorema anterior, el error
     es cero para polinomios de grado menor o igual a $k$ (pues se
     anula la derivada), por tanto las fórmulas de Newton-Côtes son
@@ -459,33 +465,50 @@ $h\to 0$ (ver sección~\ref{sec:fc-compuestas}).
     \item Si $n$ es \textit{impar}, las fórmulas de N--C son de 
       orden $n+1$.
     \end{enumerate}
-  \item Aunque una primera impresión puede sugerir que las fórmulas de
-    N-C abiertas y cerradas tienen el mismo orden, no hay que olvidar
-    que el valor de $h$ difiere entre ellas.
- Si queremos comparar el
-    error entre fórmulas abiertas y cerradas, debemos utilizar el
-    mismo valor de $h$.
-    
-    Fijemos un paso $h=(b-a)/p$, con cierto $p\in\Nset$. Entonces éste
-    se corresponde con una fórmula cerrada de $n=p+1$ puntos o con una
-    fórmula abierta de $n=p-1$ puntos. Así, en la expresión del error:
-    \begin{enumerate}
-    \item En las fórmulas \emph{abiertas}:\par
-      \begin{tabular}{rl}
-      Si $p$ es par, entonces $n$ es impar y: &$k=n+1=p$
-      \\
-      Si $p$ es impar, entonces $n$ es par y: &$k=n+2=p+1$
-    \end{tabular}
-    \item En las fórmulas \emph{cerradas}:\par
-      \begin{tabular}{rl}
-      Si $p$ es par, entonces $n$ es impar y: &$k=n+1=p+2$
-      \\
-      Si $p$ es impar, entonces $n$ es par y: &$k=n+2=p+3$
-    \end{tabular}
-    \end{enumerate}
-    Como conclusión: fijado un mismo paso $h$, en todos los casos
-    \emph{el orden de las fórmulas cerradas es superior en dos
-      unidades al de las fórmulas abiertas}.
+  \item Fijado un número de puntos, las fórmulas de N-C abiertas y
+    cerradas tienen el mismo orden, pues aparece el mismo grado de
+    derivación en la expresión de
+    error~(\ref{eq:error-formulas-nc}). Pero no hay que olvidar que el
+    valor de $h$ difiere entre fórmulas abiertas y cerradas. Así:
+    \begin{itemize}
+    \item Fijado un número de puntos, $n+1$, en un intervalo,
+      $[a,b]$, el paso $h$ será más pequeño en las fórmulas de N-C
+      abiertas, lo que supone una ventaja (aunque las constantes
+      $\gamma_n$ pueden ser mayores en valor absoluto).
+    \item Sin embargo, si en vez del número de puntos fijamos un paso
+      $h$ en un intervalo de integración $[a,b]$, la fórmula de N-C
+      cerrada contendrá un número mayor de puntos (los dos extremos
+      del intervalo) y por tanto será exacta para polinomios de mayor
+      orden. Por ejemplo, si fijamos $h=(b-a)/2$, Entonces:
+      \begin{enumerate}
+      \item La fórmula cerrada contiene los puntos $x_0=a$, $x_1=a+h$,
+        $x_2=b$. Así $n=2$ (de hecho ésta es la fórmula de Simpson, de
+        orden $3$).
+      \item La fórmula abierta contiene solamente el punto $x_0=a+h$.
+        Así $n=0$ (fórmula del punto medio, de orden $1$).
+      \end{enumerate}
+    \end{itemize}
+ 
+  %   Fijemos un paso $h=(b-a)/p$, con cierto $p\in\Nset$. Entonces éste
+  %   se corresponde con una fórmula cerrada de $n=p+1$ puntos o con una
+  %   fórmula abierta de $n=p-1$ puntos. Así, en la expresión del error:
+  %   \begin{enumerate}
+  %   \item En las fórmulas \emph{abiertas}:\par
+  %     \begin{tabular}{rl}
+  %     Si $p$ es par, entonces $n$ es impar y: &$k=n+1=p$
+  %     \\
+  %     Si $p$ es impar, entonces $n$ es par y: &$k=n+2=p+1$
+  %   \end{tabular}
+  %   \item En las fórmulas \emph{cerradas}:\par
+  %     \begin{tabular}{rl}
+  %     Si $p$ es par, entonces $n$ es impar y: &$k=n+1=p+2$
+  %     \\
+  %     Si $p$ es impar, entonces $n$ es par y: &$k=n+2=p+3$
+  %   \end{tabular}
+  %   \end{enumerate}
+  %   Como conclusión: fijado un mismo paso $h$, en todos los casos
+  %   \emph{el orden de las fórmulas cerradas es superior en dos
+  %     unidades al de las fórmulas abiertas}.
   \end{enumerate}
 \end{remark}
 \begin{example}[Fórmulas de cuadratura abiertas]
@@ -543,11 +566,51 @@ $h\to 0$ (ver sección~\ref{sec:fc-compuestas}).
   Se recomienda, como ejercicio, comprobar estas fórmulas para algunos
   valores de $n$.
 \end{example}
+
 \section{Fórmulas de cuadratura compuestas}
 \label{sec:fc-compuestas}
 
+A medida que aumenta el número de nodos en las f.c. de N-C, el número
+de operaciones necesarias para el cálculo de los pesos comienza a ser
+demasiado costoso. Y, lo que es más importante, no podemos asegurar
+que el límite cuando $n\to\infty$ de $I_n(f)$ converja hacia la
+integral de $f$ en $[a,b]$ (de forma similar a lo que ocurría al
+tratar la interpolación de $f$). Por esta razón, en  la práctica se
+usan las fórmulas de cuadratura compuestas (o integración a trozos).
 
+La idea es la siguiente: fijada una partición del intervalo $[a,b]$,
+$a=x_0<x_1<...<x_N=b$, que por simplicidad supondremos uniforme (con
+puntos equiespaciados de forma que $x_k-x_{k-1}=h$, $k=1,...,n$),
+descomponemos la integral global de $f$ como suma de integrales en
+cada subintervalo:
+\begin{equation*}
+  \int_a^b f(x)\,dx = \sum_{k=1}^n \int_{x_{k-1}}^{x_k}f(x)\,dx.
+\end{equation*}
+A continuación aplicamos, en cada uno de los subintervalos, una
+fórmula de cuadratura de N-C sobre $m+1$ puntos (en la práctica
+$m=1$, $2$ ó $3$) para así aproximar la integral de $f$ haciendo que
+$h\to 0$. 
 
+Con más detalle: en cada subintervalo $I_k=[x_{k-1},x_k]$ elegimos $m+1$
+puntos equiespaciados $x_0^{(k)}<x_1^{(k)}<\cdots<x_m^{(k)}$ y
+consideramos una f.c. de N.C:
+\begin{equation*}
+  I_m^k(f)=\sum_{i=0}^m \omega_i^{(k)}f(x_i).
+\end{equation*}
+Definimos el error en cada subintervalo como:
+\begin{equation*}
+  E_m^k(f)=\int_{x_{k-1}}^{x_k} f(x)\,dx -  I_m^k(f).
+\end{equation*}
+Entonces la f.c. compuesta se expresa de la siguiente forma:
+\begin{equation*}
+  I_n(f)=\sum_{k=1}^n I_m^k(f)  =\sum_{k=1}^n \sum_{i=0}^m \omega_i^{(k)}f(x_i)
+\end{equation*}
+y a su vez el error se expresa como:
+
+\begin{equation*}
+  E_n(f)=\sum_{k=1}^n E_m^k(f)  =\sum_{k=1}^n\left(
+    \int_{x_{k-1}}^{x_k} f(x)\,dx -  I_m^k(f) \right)
+\end{equation*}
 
 %%% Local Variables:
 %%% mode: latex

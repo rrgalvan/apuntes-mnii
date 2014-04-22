@@ -103,7 +103,7 @@ orden $m+1$.
    \text{Para } k&=1:\ E_0(x) = \int_a^b x\cdot dx - (b-a)\frac{a+b}{2}
    = \frac{1}{2}(b^2-a^2) -  (b-a) \frac{a+b}{2} = 0.
    \\
-   \text{Para } k&=2:\ E_0(x) = \int_a^b x^2\cdot dx 
+   \text{Para } k&=2:\ E_0(x^2) = \int_a^b x^2\cdot dx 
    - (b-a) \frac{(a+b)^2}{4} 
    = \frac{1}{3}(b^3-a^3) - (b-a)\frac{(a+b)^2}{4} 
    \neq 0.
@@ -306,6 +306,7 @@ matriz asociada, la matriz de Vandermonde, está mal condicionada
 \end{remark}
 
 \begin{example}
+  \label{ex:coef-indetermin:formula-trapecios-abierta}
   Utilizaremos el método de los coeficientes indeterminados para
   calcular los pesos de la fórmula de cuadratura en $[a,b]$ que es de
   mayor orden (es decir, la f.c.t.i.) para los nodos $x_0=a+h$ y
@@ -418,10 +419,11 @@ $h\to 0$ (ver sección~\ref{sec:fc-compuestas}).
   Sea $I_n$ una f.c.t.i. sobre $n+1$ puntos equiespaciados en
   $[a,b]$. Supongamos que $f\in C^k([a,b])$, donde $k=n+2$ si $n$ es par
   y $k=n+1$ si $n$ es impar. Entonces, existe $\xi\in(a,b)$ tal que
-  \begin{equation*}
-    E_n(f)=\int_a^bf(x)\,dx - I_n(f)
-    = \gamma_n h^{k+1} \frac{f^{k)}(\xi)}{k!},
-  \end{equation*}
+  \begin{equation}
+  \label{eq:error-formulas-nc} 
+  E_n(f)=\int_a^bf(x)\,dx - I_n(f)
+    = \gamma_n h^{k+1} \frac{}{k!}f^{k)}(\xi),
+  \end{equation}
   siendo:
   \begin{itemize}
   \item Si $I_n$ es una fórmula cerrada: $h=(b-a)/n$ y
@@ -459,7 +461,8 @@ $h\to 0$ (ver sección~\ref{sec:fc-compuestas}).
     \end{enumerate}
   \item Aunque una primera impresión puede sugerir que las fórmulas de
     N-C abiertas y cerradas tienen el mismo orden, no hay que olvidar
-    que el valor de $h$ difiere entre ellas. Si queremos comparar el
+    que el valor de $h$ difiere entre ellas.
+ Si queremos comparar el
     error entre fórmulas abiertas y cerradas, debemos utilizar el
     mismo valor de $h$.
     
@@ -480,29 +483,65 @@ $h\to 0$ (ver sección~\ref{sec:fc-compuestas}).
       Si $p$ es impar, entonces $n$ es par y: &$k=n+2=p+3$
     \end{tabular}
     \end{enumerate}
-  Como conclusión, en todos los casos \emph{el orden de error de las
-  fórmulas cerradas es superior en dos unidades al de las fórmulas
-  abiertas}.
+    Como conclusión: fijado un mismo paso $h$, en todos los casos
+    \emph{el orden de las fórmulas cerradas es superior en dos
+      unidades al de las fórmulas abiertas}.
   \end{enumerate}
 \end{remark}
 \begin{example}[Fórmulas de cuadratura abiertas]
-  Si $[a,b]=[x_{0},x_{n}]$ y $f_k=f(x_k)$, $k=0,\dots,n$, se tienen
-  las siguientes fórmulas de cuadratura de N--C cerradas junto con las
-  expresiones de error asociadas:
-  \label{sec:formulas-nc-abiertas}
+  Consideremos $n+1$ puntos en un intervalo cualquiera,
+  $[a,b]=[x_{0},x_{n}]$ y $f_k=f(x_k)$, $k=0,\dots,n$. Un simple
+  cálculo nos permite calcular los pesos de la f.c. (bien sea mediante
+  integración de las funciones base de Lagrange, como en los
+  ejemplos~\ref{ex:formula-pto-medio-interpol}
+  y~\ref{ex:formula-trapecio-interpol} o bien usando el método de los
+  coeficiente indeterminados, como en el
+  ejemplo~\ref{ex:coef-indetermin:formula-trapecios-abierta}) y las
+  constantes $\gamma_n$ anteriores para $n=1,2,3,...$.
+
+  Por ejemplo, para $n=1$, tendremos $[a,b]=[x_0,x_1]$. La f.c.t.i
+  asociada es la fórmula de los trapecios (ver
+  ejemplo~\ref{ex:formula-trapecio-interpol}):
+  \begin{equation*}
+    I_1(f) = \int_{a}^{b} \frac{b-a}{2}(f(a)+f(b)) 
+    = \int_{x_0}^{x_1} \frac{h}{2}(f_0+f_1)
+  \end{equation*}
+  y el error viene dado por~(\ref{eq:error-formulas-nc}). En este
+  caso, como $n$ es impar, $k=n+1=2$ y así
+  \begin{equation*}
+    E_n(f)=\gamma_1 h^{3}\frac{f^{2)}(\xi)}{2}=\frac{-h^3}{12} f^{2)}(\xi),
+  \end{equation*}
+  donde se ha usado que, según el Teorema~\ref{thm:error.formulas-nc},
+  para una f.c. cerrada con $n=1$:
+  \begin{equation*}
+    \gamma_1 = \int_0^1 \Pi_1(t)\,dt = \int_0^1 t(t-1) = \frac{-1}{6}.
+  \end{equation*}
+  
+  Despejando $\int_a^b f(x)\,dx$ en~(\ref{eq:error-formulas-nc}) se
+  puede condensar lo anterior en:
+  \begin{equation*}
+    \int_a^b f(x)\,dx = \int_{x_0}^{x_1} f(x)\,dx =
+    \int_{x_0}^{x_1} \frac{h}{2}(f_0+f_1) - \frac{h^3}{12} f^{2)}(\xi).
+  \end{equation*}
+
+  Procediendo análogamente para $n=2,3,4,5$, se tiene las
+  siguiente tabla de fórmulas de cuadratura de N--C cerradas:
   \begin{center}
     \includegraphics[width=0.95\linewidth]{tema3/formulas-nc-cerradas}
   \end{center}
 \end{example}
 
 \begin{example}[Fórmulas de cuadratura abiertas]
-  Si $[a,b]=[x_{-1},x_{n+1}]$ y $f_k=f(x_k)$, $k=0,\dots,n$, se tienen
-  las siguientes fórmulas de cuadratura de N--C abiertas junto con las
-  expresiones de error asociadas:
-  \label{sec:formulas-nc-abiertas}
+  Sean $x_0,x_1,\cdots,x_n$ los $n+1$ puntos interiores al intervalo
+  $[a,b]$ en una f.c. de N--C abierta. Denotemos ahora $x_{-1}=a$,
+  $x_{n+1}=b$ y $f_k=f(x_k)$, $k=0,\dots,n$. Procediendo como antes
+  se tienen las siguientes fórmulas junto con las expresiones de error
+  asociadas:
   \begin{center}
     \includegraphics[width=0.95\linewidth]{tema3/formulas-nc-abiertas}
   \end{center}
+  Se recomienda, como ejercicio, comprobar estas fórmulas para algunos
+  valores de $n$.
 \end{example}
 \section{Fórmulas de cuadratura compuestas}
 \label{sec:fc-compuestas}

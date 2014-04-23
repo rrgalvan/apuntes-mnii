@@ -397,20 +397,20 @@ $h\to 0$ (ver sección~\ref{sec:fc-compuestas}).
   \label{def:1}
   Se denomina fórmula de cuadratura de Newton-Côtes (abreviadamente
   N-C) a toda aquella f.c.t.i cuyas abscisas se encuentran
-  uniformemente espaciadas (es decir, $x_{i}-x_{i-1}=h$ para todo
-  $i=1,\dots,n$. Existen dos tipos:
+  uniformemente espaciadas (es decir, $x_{i}-x_{i-1}=\widehat h$ para todo
+  $i=1,\dots,n$, para determinado $\widehat h\in\Rset$. Existen dos tipos:
   \begin{itemize}
   \item Fórmulas cerradas: aquellas en las que
     \begin{align*}
-      x_0=a, \quad x_n=b, \quad x_i=x_0 + ih,
+      x_0=a, \quad x_n=b, \quad x_i=x_0 + i\widehat h,
      \quad 
-     \text{con } h=\frac{b-a}{n}.
+     \text{con } \widehat h=\frac{b-a}{n}.
     \end{align*}
   \item Fórmulas abiertas: aquellas en las que
     \begin{align*}
-      x_0=a+h, \quad x_n=b-h, \quad x_i=x_0 + ih,
+      x_0=a+\widehat h, \quad x_n=b-\widehat h, \quad x_i=x_0 + i\widehat h,
      \quad 
-     \text{con } h=\frac{b-a}{n+2}.
+     \text{con } \widehat h=\frac{b-a}{n+2}.
     \end{align*}
   \end{itemize}
 \end{definition}
@@ -423,18 +423,18 @@ $h\to 0$ (ver sección~\ref{sec:fc-compuestas}).
   \begin{equation}
   \label{eq:error-formulas-nc} 
   E_n(f)=\int_a^bf(x)\,dx - I_n(f)
-    = \gamma_n h^{k+1} \frac{f^{k)}(\xi)}{k!},
+    = \gamma_n \widehat h^{k+1} \frac{f^{k)}(\xi)}{k!},
   \end{equation}
   siendo:
   \begin{itemize}
-  \item Si $I_n$ es una fórmula cerrada: $h=(b-a)/n$ y
+  \item Si $I_n$ es una fórmula cerrada: $\widehat h=(b-a)/n$ y
     \begin{align*}
       \text{ si $n$ es par }
       \gamma_n=\int_0^n t \Pi_n(t) dt,
       \quad \text{si $n$ es impar }
           \gamma_n=\int_0^n \Pi_n(t) dt.
     \end{align*}
-  \item Si $I_n$ es una fórmula abierta: $h=(b-a)/(n+2)$ y
+  \item Si $I_n$ es una fórmula abierta: $\widehat h=(b-a)/(n+2)$ y
     \begin{align*}
       \text{si $n$ es par }
       \gamma_n=\int_{-1}^{n+1} t \Pi_n(t) dt,
@@ -447,7 +447,9 @@ $h\to 0$ (ver sección~\ref{sec:fc-compuestas}).
 \end{theorem}
 
 La demostración del teorema anterior puede encontrarse en la
-bibliografía (véase [Isaacson \& Keller]).
+bibliografía (véase [Isaacson \& Keller]).  En adelante, escribiremos
+$h$ en vez de $\widehat h$ siempre y cuando no haya posibilidad de
+confusión.
 
 \begin{remark}~
   \label{rk:7}
@@ -585,66 +587,119 @@ partición del intervalo $[a,b]$, $a=x_0<x_1<...<x_N=b$, que por
 simplicidad supondremos uniforme (con $N+1$ puntos
 equiespaciados).  Descomponemos
 la integral global de $f$ como suma de integrales en cada subintervalo
-$[x_{k-1},x_k]$:
+$[x_{j-1},x_j]$:
 \begin{equation*}
-  \int_a^b f(x)\,dx = \sum_{k=1}^N \int_{x_{k-1}}^{x_k}f(x)\,dx.
+  \int_a^b f(x)\,dx = \sum_{j=1}^N \int_{x_{j-1}}^{x_j}f(x)\,dx.
 \end{equation*}
 A continuación aplicamos, en cada uno de estos subintervalos, una
-fórmula de cuadratura de N-C sobre $n+1$ puntos (con $n\in\Nset$ fijo,
-en la práctica $n=0$, $1$ o $2$, siendo esta fórmula sencilla
-de calcular). Así, podemos aproximar la integral de $f$ haciendo que
-$h\to 0$, donde $h=x_k-x_{k-1}$, $k=1,...,N$ (longitud de los
-subintervalos).
+fórmula de cuadratura sobre $n+1$ puntos, con $n\in\Nset$ fijo (en la
+práctica se suelen usar fórmulas sencillas, en concreto fórmulas de
+N--C con $n=0$, $1$ o $2$). Así, podemos aproximar la integral de $f$
+haciendo que $h\to 0$, donde $h=(b-a)/N$ es la longitud de
+los subintervalos.
 
-Con más detalle: en cada subintervalo $[x_{k-1},x_k]$ elegimos $n+1$
-puntos equiespaciados, $x_0^{(k)}<x_1^{(k)}<\cdots<x_n^{(k)}$, y
-consideramos una f.c. de N--C:
+Con más detalle: en el subintervalo $[x_{j-1},x_j]$ elegimos $n+1$
+puntos equiespaciados, $x_0^{(j)}<x_1^{(j)}<\cdots<x_n^{(j)}$, y
+consideramos una f.c:
 \begin{align}
   \label{eq:fc.compuesta.en.un.intervalo}
-  I_n^k(f)&=\sum_{i=0}^n \omega_i^{(k)}f(x_i),
-\intertext{en la que el error, en cada subintervalo, viene dado como:}
-  E_n^k(f)&=\int_{x_{k-1}}^{x_k} f(x)\,dx -  I_n^k(f).
+  I_n^j(f)&=\sum_{i=0}^n \omega_i^{(j)}f(x_i),
+\intertext{en la que el error viene dado (por definición) como:}
+  E_n^j(f)&=\int_{x_{j-1}}^{x_j} f(x)\,dx -  I_n^j(f).
   \label{eq:fc.compuesta.error.subintervalos}
 \end{align}
 \begin{definition}
   Una fórmula de cuadratura compuesta se define como la suma de las f.c. en cada
   uno de los subintervalos de integración:
   \begin{equation*}
-    I_N(f)=\sum_{k=1}^N I_n^k(f)  =\sum_{k=1}^N \sum_{i=0}^n \omega_i^{(k)}f(x_i).
+    I_N(f)=\sum_{j=1}^N I_n^j(f)  =\sum_{j=1}^N \sum_{i=0}^n \omega_i^{(j)}f(x_i).
   \end{equation*}
   \label{def:fc.compuesta}
 \end{definition}
 \subsection*{Expresión del error en fórmulas compuestas}
 Si definimos el error de cuadratura en una fórmula compuesta como la
-diferencia entre la integral $\int_a^b f\,dx$ y su aproximación
+diferencia entre la integral $\int_a^b f(x)\,dx$ y su aproximación
 $I_N(f)$, es fácil ver que este error coincide con la suma de los
-errores en los $N$ subintervalos $[x_{k-1},x_k]$:
+errores en los $N$ subintervalos $[x_{j-1},x_j]$:
 \begin{alignat*}{2}
   E_N(f)&= \int_a^b f(x)\,dx - I_N(f)  
   &\quad \text{(definición del error de integración)}
   \\
-  &= \sum_{k=1}^N \int_{x_{k-1}}^{x_k} f(x)\,dx -
-  \sum_{k=1}^NI_n^k(f) 
+  &= \sum_{j=1}^N \int_{x_{j-1}}^{x_j} f(x)\,dx -
+  \sum_{j=1}^NI_n^j(f) 
   &\text{(definición de una f.c. compuesta)}
   \\ 
-  &= \sum_{k=1}^N\left(
-    \int_{x_{k-1}}^{x_k} f(x)\,dx -  I_n^k(f) \right)
-  =\sum_{k=1}^N E_n^k(f) 
+  &= \sum_{j=1}^N\left(
+    \int_{x_{j-1}}^{x_j} f(x)\,dx -  I_n^j(f) \right)
+  =\sum_{j=1}^N E_n^j(f) 
   &\text{(def. error en subintervalos~(\ref{eq:fc.compuesta.error.subintervalos}))}.
 \end{alignat*}
 
-A continuación, podemos acotar los errores $E_n^k(f)$ que aparecen en
-el sumatorio anterior utilizando la cota genérica del error de
-cuadratura~(\ref{eq:cota-error-fcti}). O, mejor aún, puesto que
-estamos utilizando fórmulas de N--C en cada subintervalo, podemos
-identificar los errores $E_n^k(f)$ usando el
-teorema~\ref{thm:error.formulas-nc}, en concreto la
-expresión~(\ref{eq:error-formulas-nc}). Así:
-\begin{align*}
-  E_n(f)&=\sum_{k=1}^N E_n^k(f) 
-  =\sum_{k=1}^N \gamma_n h^{k+1} \frac{f^{k)}(\xi_k)}{k!},
-\end{align*}
+Si acotamos los errores $E_n^j(f)$ que aparecen en el sumatorio
+anterior utilizando la cota genérica del error de
+cuadratura~(\ref{eq:cota-error-fcti}), podemos obtener una primera
+estimación del error de cuadratura $E_N(f)$ (esta tarea se deja como
+ejercicio).
 
+Pero en el caso habitual estaremos utilizando fórmulas de N--C en cada
+subintervalo, es decir con nodos equiespaciados, y por tanto nos
+encontraremos con una situación más favorable: podemos identificar los
+errores $E_n^j(f)$ usando el teorema~\ref{thm:error.formulas-nc}, en
+concreto la expresión~(\ref{eq:error-formulas-nc}), llegando al
+siguiente resultado:
+
+\begin{theorem}
+  \label{thm:cota.error.fc.compuestas-nc}
+  Sea $I_N$ una f.c. compuesta sobre una partición uniforme
+  $a=x_0<x_1<...<x_N=b$. Supongamos que $I_n$ está definida por una
+  fórmula de N--C de $n+1$ puntos en cada subintervalo
+  $[x_{j-1},x_j]$.  Si $f\in C^k([a,b])$, donde $k=n+2$ si $n$ es par
+  y $k=n+1$ si $n$ es impar, entonces:
+  \begin{equation}
+   |E_N(f)|= \left|\int_a^bf(x)\,dx - I_N(f)\right|
+   \le \delta_n \, \frac{h^{k}}{k!} \, (b-a)\, \|f^{k)}\|_{\infty,a,b},
+  \end{equation}
+  donde $h=(b-a)/N$ y $\delta_n=|\gamma_n|/n^k$ si la fórmula de N--C
+  es abierta, mientras que $\delta_n=|\gamma_n|/(n+2)^k$ si la fórmula
+  de N-C es cerrada, siendo $\gamma_n$ las constantes definidas en el
+  teorema~\ref{thm:error.formulas-nc}.
+\end{theorem}
+
+
+
+
+Así se obtiene literalmente:
+\begin{align*}
+  E_N(f)&=\sum_{j=1}^N E_n^j(f) 
+  =\sum_{j=1}^N \gamma_n \widehat h^{k+1} \frac{f^{k)}(\xi_j)}{k!}
+  = \gamma_n  \frac{\widehat h^{k+1}}{k!} \sum_{j=1}^Nf^{k)}(\xi_j),
+\end{align*}
+donde $\gamma_n$, $\widehat h$ y $k$ vienen dados en el
+teorema~\ref{thm:error.formulas-nc} y $\xi_j\in(x_{j-1},x_j)$.
+
+Tomando valor absoluto y acotando $f^{k)}(\xi_j)$ por
+$\|f^{k)}\|_{\infty,a,b}$ tenemos:
+\begin{equation}
+  \label{eq:fc.6}
+  |E_N(f)|
+  \le |\gamma_n| \frac{\widehat h^{k+1}}{k!} \cdot N
+  \|f^{k)}\|_{\infty,a,b}
+  = |\gamma_n| \frac{\widehat h^{k+1}}{k!} \cdot \frac{b-a}{h} \|f^{k)}\|_{\infty,a,b}.
+\end{equation}
+Es fácil relacionar $\widehat h$ con $h$, en función del tipo de
+fórmula de N-C usada en los subintervalos $[x_{j-1},x_j]$. En concreto:
+\begin{align*}
+\intertext{\quad $\bullet$ Si la f.c. N--C es \emph{cerrada}: $\widehat
+  h=(x_j-x_{j-1})/n=h/n$ y, usando~(\ref{eq:fc.6}),}
+  |E_N(f)|
+  &\le |\gamma_n| \, (b-a)\, \frac{h^{k}}{n^k\,k!} \, \|f^{k)}\|_{\infty,a,b}.    
+\intertext{\quad $\bullet$ Si la f.c. N--C es \emph{abierta}: $\widehat
+  h=(x_j-x_{j-1})/(n+2)=h/(n+2)$ luego}
+  |E_N(f)|
+  &\le |\gamma_n| \, (b-a) \, \frac{h^{k}}{(n+2)^k\,k!} \, \|f^{k)}\|_{\infty,a,b}.    
+\end{align*}
+De esta forma, podemos llegar a la siguiente estimación del error en
+fórmulas compuestas:
 
 
 %%% Local Variables:

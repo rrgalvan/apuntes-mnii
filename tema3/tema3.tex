@@ -48,7 +48,8 @@ $\{\omega_0,\omega_1,\dots,\omega_n\}$:
     \notag
     E_n(f) &= \int_a^b f(x) - I_n(f) 
   \end{align}
-  se le llama \resaltar{error} de la fórmula de cuadratura. 
+  se le llama \resaltar{error} de la fórmula de cuadratura (o
+  simplemente \resaltar{error de cuadratura} o error de integración). 
   % donde $I_n(f)\in\Rset$ representa un valor aproximado de $\int_a^b
   % f(x)\,dx$ y $E_n(f)\in\Rset$ es el error que se comete en la
   % aproximación.
@@ -422,7 +423,7 @@ $h\to 0$ (ver sección~\ref{sec:fc-compuestas}).
   \begin{equation}
   \label{eq:error-formulas-nc} 
   E_n(f)=\int_a^bf(x)\,dx - I_n(f)
-    = \gamma_n h^{k+1} \frac{}{k!}f^{k)}(\xi),
+    = \gamma_n h^{k+1} \frac{f^{k)}(\xi)}{k!},
   \end{equation}
   siendo:
   \begin{itemize}
@@ -573,44 +574,78 @@ bibliografía (véase [Isaacson \& Keller]).
 A medida que aumenta el número de nodos en las f.c. de N-C, el número
 de operaciones necesarias para el cálculo de los pesos comienza a ser
 demasiado costoso. Y, lo que es más importante, no podemos asegurar
-que el límite cuando $n\to\infty$ de $I_n(f)$ converja hacia la
-integral de $f$ en $[a,b]$ (de forma similar a lo que ocurría al
-tratar la interpolación de $f$). Por esta razón, en  la práctica se
-usan las fórmulas de cuadratura compuestas (o integración a trozos).
+que, cuando $n\to\infty$, la aproximación $I_n(f)$ converja hacia la
+integral de $f$ (de forma similar a lo que ocurre al
+aumentar el grado en el polinomio de interpolación de Lagrange). Por
+esta razón, en la práctica se usan fórmulas de cuadratura
+compuestas (o integración a trozos).
 
-La idea es la siguiente: fijada una partición del intervalo $[a,b]$,
-$a=x_0<x_1<...<x_N=b$, que por simplicidad supondremos uniforme (con
-puntos equiespaciados de forma que $x_k-x_{k-1}=h$, $k=1,...,n$),
-descomponemos la integral global de $f$ como suma de integrales en
-cada subintervalo:
+Las fórmulas compuestas se definen de la siguiente forma: sea una
+partición del intervalo $[a,b]$, $a=x_0<x_1<...<x_N=b$, que por
+simplicidad supondremos uniforme (con $N+1$ puntos
+equiespaciados).  Descomponemos
+la integral global de $f$ como suma de integrales en cada subintervalo
+$[x_{k-1},x_k]$:
 \begin{equation*}
-  \int_a^b f(x)\,dx = \sum_{k=1}^n \int_{x_{k-1}}^{x_k}f(x)\,dx.
+  \int_a^b f(x)\,dx = \sum_{k=1}^N \int_{x_{k-1}}^{x_k}f(x)\,dx.
 \end{equation*}
-A continuación aplicamos, en cada uno de los subintervalos, una
-fórmula de cuadratura de N-C sobre $m+1$ puntos (en la práctica
-$m=1$, $2$ ó $3$) para así aproximar la integral de $f$ haciendo que
-$h\to 0$. 
+A continuación aplicamos, en cada uno de estos subintervalos, una
+fórmula de cuadratura de N-C sobre $n+1$ puntos (con $n\in\Nset$ fijo,
+en la práctica $n=0$, $1$ o $2$, siendo esta fórmula sencilla
+de calcular). Así, podemos aproximar la integral de $f$ haciendo que
+$h\to 0$, donde $h=x_k-x_{k-1}$, $k=1,...,N$ (longitud de los
+subintervalos).
 
-Con más detalle: en cada subintervalo $I_k=[x_{k-1},x_k]$ elegimos $m+1$
-puntos equiespaciados $x_0^{(k)}<x_1^{(k)}<\cdots<x_m^{(k)}$ y
-consideramos una f.c. de N.C:
-\begin{equation*}
-  I_m^k(f)=\sum_{i=0}^m \omega_i^{(k)}f(x_i).
-\end{equation*}
-Definimos el error en cada subintervalo como:
-\begin{equation*}
-  E_m^k(f)=\int_{x_{k-1}}^{x_k} f(x)\,dx -  I_m^k(f).
-\end{equation*}
-Entonces la f.c. compuesta se expresa de la siguiente forma:
-\begin{equation*}
-  I_n(f)=\sum_{k=1}^n I_m^k(f)  =\sum_{k=1}^n \sum_{i=0}^m \omega_i^{(k)}f(x_i)
-\end{equation*}
-y a su vez el error se expresa como:
+Con más detalle: en cada subintervalo $[x_{k-1},x_k]$ elegimos $n+1$
+puntos equiespaciados, $x_0^{(k)}<x_1^{(k)}<\cdots<x_n^{(k)}$, y
+consideramos una f.c. de N--C:
+\begin{align}
+  \label{eq:fc.compuesta.en.un.intervalo}
+  I_n^k(f)&=\sum_{i=0}^n \omega_i^{(k)}f(x_i),
+\intertext{en la que el error, en cada subintervalo, viene dado como:}
+  E_n^k(f)&=\int_{x_{k-1}}^{x_k} f(x)\,dx -  I_n^k(f).
+  \label{eq:fc.compuesta.error.subintervalos}
+\end{align}
+\begin{definition}
+  Una fórmula de cuadratura compuesta se define como la suma de las f.c. en cada
+  uno de los subintervalos de integración:
+  \begin{equation*}
+    I_N(f)=\sum_{k=1}^N I_n^k(f)  =\sum_{k=1}^N \sum_{i=0}^n \omega_i^{(k)}f(x_i).
+  \end{equation*}
+  \label{def:fc.compuesta}
+\end{definition}
+\subsection*{Expresión del error en fórmulas compuestas}
+Si definimos el error de cuadratura en una fórmula compuesta como la
+diferencia entre la integral $\int_a^b f\,dx$ y su aproximación
+$I_N(f)$, es fácil ver que este error coincide con la suma de los
+errores en los $N$ subintervalos $[x_{k-1},x_k]$:
+\begin{alignat*}{2}
+  E_N(f)&= \int_a^b f(x)\,dx - I_N(f)  
+  &\quad \text{(definición del error de integración)}
+  \\
+  &= \sum_{k=1}^N \int_{x_{k-1}}^{x_k} f(x)\,dx -
+  \sum_{k=1}^NI_n^k(f) 
+  &\text{(definición de una f.c. compuesta)}
+  \\ 
+  &= \sum_{k=1}^N\left(
+    \int_{x_{k-1}}^{x_k} f(x)\,dx -  I_n^k(f) \right)
+  =\sum_{k=1}^N E_n^k(f) 
+  &\text{(def. error en subintervalos~(\ref{eq:fc.compuesta.error.subintervalos}))}.
+\end{alignat*}
 
-\begin{equation*}
-  E_n(f)=\sum_{k=1}^n E_m^k(f)  =\sum_{k=1}^n\left(
-    \int_{x_{k-1}}^{x_k} f(x)\,dx -  I_m^k(f) \right)
-\end{equation*}
+A continuación, podemos acotar los errores $E_n^k(f)$ que aparecen en
+el sumatorio anterior utilizando la cota genérica del error de
+cuadratura~(\ref{eq:cota-error-fcti}). O, mejor aún, puesto que
+estamos utilizando fórmulas de N--C en cada subintervalo, podemos
+identificar los errores $E_n^k(f)$ usando el
+teorema~\ref{thm:error.formulas-nc}, en concreto la
+expresión~(\ref{eq:error-formulas-nc}). Así:
+\begin{align*}
+  E_n(f)&=\sum_{k=1}^N E_n^k(f) 
+  =\sum_{k=1}^N \gamma_n h^{k+1} \frac{f^{k)}(\xi_k)}{k!},
+\end{align*}
+
+
 
 %%% Local Variables:
 %%% mode: latex

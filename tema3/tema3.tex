@@ -423,7 +423,7 @@ $h\to 0$ (ver sección~\ref{sec:fc-compuestas}).
   \begin{equation}
   \label{eq:error-formulas-nc} 
   E_n(f)=\int_a^bf(x)\,dx - I_n(f)
-    = \gamma_n \widehat h^{k+1} \frac{f^{k)}(\xi)}{k!},
+    = \gamma_n \frac{\widehat h^{k+1}}{k!}f^{k)}(\xi),
   \end{equation}
   siendo:
   \begin{itemize}
@@ -457,16 +457,15 @@ confusión.
   \item Las constantes $\gamma_n$ no dependen del intervalo $[a,b]$ ni
     de $f$, de forma que pueden calcularse una sola vez para poder
     utilizarse cuando sea necesario.
-  \item Según la expresión del error en el teorema anterior, el error
-    es cero para polinomios de grado menor o igual a $k$ (pues se
-    anula la derivada), por tanto las fórmulas de Newton-Côtes son
-    exactas para polinomios de grado $k$ ($k=n+1$ ó $n+2$), en
-    concreto:
+  \item Según la expresión~(\ref{eq:error-formulas-nc}), el error de
+    una fórmula de Newton-Côtes es cero para polinomios de grado menor
+    o igual a $k-1$, debido a que $f^{k)}(x)\equiv 0$ si
+    $f\in\Pol_{k-1}[x]$. Como $k=n+2$ ó $n+1$ tenemos:
     \begin{enumerate}
     \item Si $n$ es \textit{par}, las fórmulas de N--C son de 
-      orden $n+2$.
+      orden $n+1$ (un grado superior a lo esperado).
     \item Si $n$ es \textit{impar}, las fórmulas de N--C son de 
-      orden $n+1$.
+      orden $n$.
     \end{enumerate}
   \item Fijado un número de puntos, las fórmulas de N-C abiertas y
     cerradas tienen el mismo orden, pues aparece el mismo grado de
@@ -657,51 +656,62 @@ siguiente resultado:
   y $k=n+1$ si $n$ es impar, entonces:
   \begin{equation}
    |E_N(f)|= \left|\int_a^bf(x)\,dx - I_N(f)\right|
-   \le \delta_n \, \frac{h^{k}}{k!} \, (b-a)\, \|f^{k)}\|_{\infty,a,b},
+   \le C_n \, (b-a) \, h^{k} \, \|f^{k)}\|_{\infty,a,b},
   \end{equation}
-  donde $h=(b-a)/N$ y $\delta_n=|\gamma_n|/n^k$ si la fórmula de N--C
-  es abierta, mientras que $\delta_n=|\gamma_n|/(n+2)^k$ si la fórmula
-  de N-C es cerrada, siendo $\gamma_n$ las constantes definidas en el
+  donde $h=(b-a)/N$ y $C_n$ es una constante universal (independiente
+  de $f$ y del intervalo $[a,b]$). En concreto:
+  \begin{equation*}
+  C_n=\left\{
+    \begin{array}{cl}
+      \displaystyle\frac{|\gamma_n|}{n^k\,k!} & \quad \text{ si la fórmula de N--C es
+        abierta},
+      \\ \noalign{\medskip}
+      \displaystyle\displaystyle\frac{|\gamma_n|}{(n+2)^k\,k!} &\quad \text{ si la fórmula
+        de N-C es cerrada},
+    \end{array}
+  \right.
+\end{equation*}
+  donde $\gamma_n$ son las constantes definidas en el
   teorema~\ref{thm:error.formulas-nc}.
 \end{theorem}
 
+\begin{proof}~
+  Hemos visto que $E_n(f)=\sum_{j=1}^N E_n^j(f)$.
+  Si utilizamos la expresión~(\ref{eq:error-formulas-nc}) para el
+  error $E_n^j(f)$ en el intervalo $[x_{j-1},x_j]$ llegamos
+  literalmente a:
+  \begin{align*}
+    E_N(f)&=\sum_{j=1}^N E_n^j(f) =\sum_{j=1}^N \gamma_n \widehat
+    h^{k+1} \frac{f^{k)}(\xi_j)}{k!}  = \gamma_n \frac{\widehat
+      h^{k+1}}{k!} \sum_{j=1}^Nf^{k)}(\xi_j),
+  \end{align*}
+  donde $\gamma_n$, $\widehat h$ y $k$ vienen dados en el
+  teorema~\ref{thm:error.formulas-nc} y $\xi_j\in(x_{j-1},x_j)$.
 
-
-
-Así se obtiene literalmente:
-\begin{align*}
-  E_N(f)&=\sum_{j=1}^N E_n^j(f) 
-  =\sum_{j=1}^N \gamma_n \widehat h^{k+1} \frac{f^{k)}(\xi_j)}{k!}
-  = \gamma_n  \frac{\widehat h^{k+1}}{k!} \sum_{j=1}^Nf^{k)}(\xi_j),
-\end{align*}
-donde $\gamma_n$, $\widehat h$ y $k$ vienen dados en el
-teorema~\ref{thm:error.formulas-nc} y $\xi_j\in(x_{j-1},x_j)$.
-
-Tomando valor absoluto y acotando $f^{k)}(\xi_j)$ por
-$\|f^{k)}\|_{\infty,a,b}$ tenemos:
-\begin{equation}
-  \label{eq:fc.6}
-  |E_N(f)|
-  \le |\gamma_n| \frac{\widehat h^{k+1}}{k!} \cdot N
-  \|f^{k)}\|_{\infty,a,b}
-  = |\gamma_n| \frac{\widehat h^{k+1}}{k!} \cdot \frac{b-a}{h} \|f^{k)}\|_{\infty,a,b}.
-\end{equation}
-Es fácil relacionar $\widehat h$ con $h$, en función del tipo de
-fórmula de N-C usada en los subintervalos $[x_{j-1},x_j]$. En concreto:
-\begin{align*}
-\intertext{\quad $\bullet$ Si la f.c. N--C es \emph{cerrada}: $\widehat
-  h=(x_j-x_{j-1})/n=h/n$ y, usando~(\ref{eq:fc.6}),}
-  |E_N(f)|
-  &\le |\gamma_n| \, (b-a)\, \frac{h^{k}}{n^k\,k!} \, \|f^{k)}\|_{\infty,a,b}.    
-\intertext{\quad $\bullet$ Si la f.c. N--C es \emph{abierta}: $\widehat
-  h=(x_j-x_{j-1})/(n+2)=h/(n+2)$ luego}
-  |E_N(f)|
-  &\le |\gamma_n| \, (b-a) \, \frac{h^{k}}{(n+2)^k\,k!} \, \|f^{k)}\|_{\infty,a,b}.    
-\end{align*}
-De esta forma, podemos llegar a la siguiente estimación del error en
-fórmulas compuestas:
-
-
+  Tomando valor absoluto y acotando $f^{k)}(\xi_j)$ por
+  $\|f^{k)}\|_{\infty,a,b}$ tenemos:
+  \begin{equation}
+    \label{eq:fc.6}
+    |E_N(f)|
+    \le |\gamma_n| \, \frac{\widehat h^{k+1}}{k!} \, N
+    \|f^{k)}\|_{\infty,a,b}
+    = |\gamma_n| \, \frac{\widehat h^{k+1}}{k!} \; \frac{b-a}{h} \, \|f^{k)}\|_{\infty,a,b}.
+  \end{equation}
+  Es fácil relacionar $\widehat h$ con $h$, en función del tipo de
+  fórmula de N-C usada en los subintervalos $[x_{j-1},x_j]$. En
+  concreto:
+  \begin{align*}
+    \intertext{\quad $\bullet$ Si la f.c. N--C es \emph{cerrada}:
+      $\widehat h=(x_j-x_{j-1})/n=h/n$ y, usando~(\ref{eq:fc.6}),}
+    |E_N(f)| &\le |\gamma_n| \, (b-a)\, \frac{h^{k}}{n^k\,k!} \,
+    \|f^{k)}\|_{\infty,a,b}.  \intertext{\quad $\bullet$ Si la
+      f.c. N--C es \emph{abierta}: $\widehat
+      h=(x_j-x_{j-1})/(n+2)=h/(n+2)$ luego} |E_N(f)| &\le |\gamma_n|
+    \, (b-a) \, \frac{h^{k}}{(n+2)^k\,k!} \, \|f^{k)}\|_{\infty,a,b}.
+  \end{align*}
+  En cualquiera de los dos casos, si definimos $C_n$ como se
+  indica en el enunciado del teorema, llegamos a~(\ref{eq:fc.6}).
+\end{proof}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../apuntes-MNII.tex"

@@ -1,3 +1,5 @@
+\newcommand{\ox}{\overline x}
+
 \chapter[Integración numérica]{Integración numérica%
 \footnote{\licenseInfo}}
 \label{cha:integracion-numerica}
@@ -517,6 +519,7 @@ confusión.
   \end{enumerate}
 \end{remark}
 \begin{example}[Fórmulas de cuadratura abiertas]
+  \label{ex:fc-NC-abiertas}
   Consideremos $n+1$ puntos en un intervalo cualquiera,
   $[a,b]=[x_{0},x_{n}]$ y $f_k=f(x_k)$, $k=0,\dots,n$. Un simple
   cálculo nos permite calcular los pesos de la f.c. (bien sea mediante
@@ -560,6 +563,7 @@ confusión.
 \end{example}
 
 \begin{example}[Fórmulas de cuadratura abiertas]
+  \label{ex:fc-NC-abiertas}
   Sean $x_0,x_1,\cdots,x_n$ los $n+1$ puntos interiores al intervalo
   $[a,b]$ en una f.c. de N--C abierta. Denotemos ahora $x_{-1}=a$,
   $x_{n+1}=b$ y $f_k=f(x_k)$, $k=0,\dots,n$. Procediendo como antes
@@ -585,13 +589,13 @@ esta razón, en la práctica se usan fórmulas de cuadratura
 compuestas (o integración a trozos).
 
 Las fórmulas compuestas se definen de la siguiente forma: sea una
-partición del intervalo $[a,b]$, $a=x_0<x_1<...<x_N=b$, que por
+partición del intervalo $[a,b]$, $a=\ox_0<\ox_1<...<\ox_N=b$, que por
 simplicidad supondremos uniforme (con $N+1$ puntos
 equiespaciados).  Descomponemos
 la integral global de $f$ como suma de integrales en cada subintervalo
-$[x_{j-1},x_j]$:
+$[\ox_{i-1},\ox_i]$:
 \begin{equation*}
-  \int_a^b f(x)\,dx = \sum_{j=1}^N \int_{x_{j-1}}^{x_j}f(x)\,dx.
+  \int_a^b f(x)\,dx = \sum_{i=1}^N \int_{\ox_{i-1}}^{\ox_i}f(x)\,dx.
 \end{equation*}
 A continuación aplicamos, en cada uno de estos subintervalos, una
 fórmula de cuadratura sobre $n+1$ puntos, con $n\in\Nset$ fijo (en la
@@ -600,21 +604,21 @@ N--C con $n=0$, $1$ o $2$). Así, podemos aproximar la integral de $f$
 haciendo que $h\to 0$, donde $h=(b-a)/N$ es la longitud de
 los subintervalos.
 
-Con más detalle: en el subintervalo $[x_{j-1},x_j]$ elegimos $n+1$
-puntos equiespaciados, $x_0^{(j)}<x_1^{(j)}<\cdots<x_n^{(j)}$, y
+Con más detalle: en el subintervalo $[\ox_{i-1},\ox_i]$ elegimos $n+1$
+puntos equiespaciados, $\ox_0^{(i)}<\ox_1^{(i)}<\cdots<\ox_n^{(i)}$, y
 consideramos una f.c:
 \begin{align}
   \label{eq:fc.compuesta.en.un.intervalo}
-  I_n^j(f)&=\sum_{i=0}^n \omega_i^{(j)}f(x_i),
+  I_n^i(f)&=\sum_{j=0}^n \omega_j^{(i)}f(x_j^{(i)}),
 \intertext{en la que el error viene dado (por definición) como:}
-  E_n^j(f)&=\int_{x_{j-1}}^{x_j} f(x)\,dx -  I_n^j(f).
+  E_n^i(f)&=\int_{\ox_{i-1}}^{\ox_i} f(x)\,dx -  I_n^i(f).
   \label{eq:fc.compuesta.error.subintervalos}
 \end{align}
 \begin{definition}
-  Una fórmula de cuadratura compuesta se define como la suma de las f.c. en cada
-  uno de los subintervalos de integración:
+  Una fórmula de cuadratura compuesta se define como la suma de las
+  f.c. en cada uno de los subintervalos de integración:
   \begin{equation*}
-    I_N(f)=\sum_{j=1}^N I_n^j(f)  =\sum_{j=1}^N \sum_{i=0}^n \omega_i^{(j)}f(x_i).
+    I_N(f)=\sum_{i=1}^N I_n^i(f)  =\sum_{i=1}^N \sum_{j=0}^n \omega_j^{(i)}f(x_j^{(i)}).
   \end{equation*}
   \label{def:fc.compuesta}
 \end{definition}
@@ -622,22 +626,22 @@ consideramos una f.c:
 Si definimos el error de cuadratura en una fórmula compuesta como la
 diferencia entre la integral $\int_a^b f(x)\,dx$ y su aproximación
 $I_N(f)$, es fácil ver que este error coincide con la suma de los
-errores en los $N$ subintervalos $[x_{j-1},x_j]$:
+errores en los $N$ subintervalos $[\ox_{i-1},\ox_i]$:
 \begin{alignat*}{2}
   E_N(f)&= \int_a^b f(x)\,dx - I_N(f)  
   &\quad \text{(definición del error de integración)}
   \\
-  &= \sum_{j=1}^N \int_{x_{j-1}}^{x_j} f(x)\,dx -
-  \sum_{j=1}^NI_n^j(f) 
+  &= \sum_{i=1}^N \int_{\ox_{i-1}}^{\ox_i} f(x)\,dx -
+  \sum_{i=1}^NI_n^i(f) 
   &\text{(definición de una f.c. compuesta)}
   \\ 
-  &= \sum_{j=1}^N\left(
-    \int_{x_{j-1}}^{x_j} f(x)\,dx -  I_n^j(f) \right)
-  =\sum_{j=1}^N E_n^j(f) 
+  &= \sum_{i=1}^N\left(
+    \int_{\ox_{i-1}}^{\ox_i} f(x)\,dx -  I_n^i(f) \right)
+  =\sum_{i=1}^N E_n^i(f) 
   &\text{(def. error en subintervalos~(\ref{eq:fc.compuesta.error.subintervalos}))}.
 \end{alignat*}
 
-Si acotamos los errores $E_n^j(f)$ que aparecen en el sumatorio
+Si acotamos los errores $E_n^i(f)$ que aparecen en el sumatorio
 anterior utilizando la cota genérica del error de
 cuadratura~(\ref{eq:cota-error-fcti}), podemos obtener una primera
 estimación del error de cuadratura $E_N(f)$ (esta tarea se deja como
@@ -646,21 +650,21 @@ ejercicio).
 Pero en el caso habitual estaremos utilizando fórmulas de N--C en cada
 subintervalo, es decir con nodos equiespaciados, y por tanto nos
 encontraremos con una situación más favorable: podemos identificar los
-errores $E_n^j(f)$ usando el teorema~\ref{thm:error.formulas-nc}, en
+errores $E_n^i(f)$ usando el teorema~\ref{thm:error.formulas-nc}, en
 concreto la expresión~(\ref{eq:error-formulas-nc}), llegando al
 siguiente resultado:
 
 \begin{theorem}
   \label{thm:cota.error.fc.compuestas-nc}
   Sea $I_N$ una f.c. compuesta sobre una partición uniforme
-  $a=x_0<x_1<...<x_N=b$. Supongamos que $I_n$ está definida por una
+  $a=\ox_0<\ox_1<...<\ox_N=b$. Supongamos que $I_n$ está definida por una
   fórmula de N--C de $n+1$ puntos en cada subintervalo
-  $[x_{j-1},x_j]$.  Si $f\in C^k([a,b])$, donde $k=n+2$ si $n$ es par
-  y $k=n+1$ si $n$ es impar, entonces:
+  $[\ox_{i-1},\ox_i]$.  Si $f\in C^k([a,b])$, donde $k=n+2$ si $n$ es par
+  y $k=n+1$ si $n$ es impar, entonces existe $\xi\in(a,b)$ tal que:
   \begin{equation}
     \label{eq:error.fc.compuesta-NC}
-   |E_N(f)|= \left|\int_a^bf(x)\,dx - I_N(f)\right|
-   \le C_n \, (b-a) \, h^{k} \, \|f^{k)}\|_{\infty,a,b},
+   E_N(f)= \int_a^bf(x)\,dx - I_N(f)
+   = C_n \, (b-a) \, h^{k} \, f^{k)}(\xi),
   \end{equation}
   donde $h=(b-a)/N$ y $C_n$ es una constante universal (independiente
   de $f$ y del intervalo $[a,b]$). En concreto:
@@ -680,49 +684,67 @@ siguiente resultado:
 \end{theorem}
 
 \begin{proof}~
-  Hemos visto que $E_n(f)=\sum_{j=1}^N E_n^j(f)$.
+  Hemos visto que $E_n(f)=\sum_{i=1}^N E_n^i(f)$.
   Si utilizamos la expresión~(\ref{eq:error-formulas-nc}) para el
-  error $E_n^j(f)$ en el intervalo $[x_{j-1},x_j]$ llegamos
+  error $E_n^i(f)$ en el intervalo $[\ox_{i-1},\ox_i]$ llegamos
   literalmente a:
   \begin{align*}
-    E_N(f)&=\sum_{j=1}^N E_n^j(f) =\sum_{j=1}^N \gamma_n \widehat
-    h^{k+1} \frac{f^{k)}(\xi_j)}{k!}  = \gamma_n \frac{\widehat
-      h^{k+1}}{k!} \sum_{j=1}^Nf^{k)}(\xi_j),
+    E_N(f)&=\sum_{i=1}^N E_n^i(f) =\sum_{i=1}^N \gamma_n \widehat
+    h^{k+1} \frac{f^{k)}(\xi_i)}{k!}  = \gamma_n \frac{\widehat
+      h^{k+1}}{k!} \sum_{i=1}^Nf^{k)}(\xi_i),
   \end{align*}
   donde $\gamma_n$, $\widehat h$ y $k$ vienen dados en el
-  teorema~\ref{thm:error.formulas-nc} y $\xi_j\in(x_{j-1},x_j)$.
-
-  Tomando valor absoluto y acotando $f^{k)}(\xi_j)$ por
-  $\|f^{k)}\|_{\infty,a,b}$ tenemos:
+  teorema~\ref{thm:error.formulas-nc} y $\xi_i\in(\ox_{i-1},\ox_i)$.
+  
+  Veamos que 
   \begin{equation}
-    \label{eq:fc.6}
-    |E_N(f)|
-    \le |\gamma_n| \, \frac{\widehat h^{k+1}}{k!} \, N
-    \|f^{k)}\|_{\infty,a,b}
-    = |\gamma_n| \, \frac{\widehat h^{k+1}}{k!} \; \frac{b-a}{h} \, \|f^{k)}\|_{\infty,a,b}.
+    \label{eq:fc.7}
+    \text{$\exists \xi\in(a,b)$ tal que}
+    f''(\xi)=\frac 1N \sum_{i=1}^Nf^{k)}(\xi_i).
   \end{equation}
-  Es fácil relacionar $\widehat h$ con $h$, en función del tipo de
-  fórmula de N-C usada en los subintervalos $[x_{j-1},x_j]$. En
-  concreto:
+  Como $f\in C^k([a,b])$, $f^{k)}$ es continua en $[a,b]$ y por lo tanto
+  alcanza todos los valores entre su máximo y su mínimo. Sean
+  $m_2=\min_{[a,b]} f^{k)}(x)$ y $M_2=\max_{[a,b]} f^{k)}(x)$. Entonces
+  $$
+  m_2 \le \frac 1N \sum_{i=1}^Nf^{k)}(\xi_i) \le M_2,
+  $$
+  luego se verifica~(\ref{eq:fc.7}). Por lo tanto:
+  \begin{equation}
+    \label{eq:fc.8}
+    E_N(f) = \gamma_n \frac{\widehat
+      h^{k+1}}{k!} N f^{k)}(\xi) =   \gamma_n \frac{\widehat
+      h^{k+1}}{k!}\; \frac{b-a}{h} \,  f^{k)}(\xi)
+  \end{equation}
+
+  Para terminar, es fácil relacionar $\widehat h$ con $h$, en función
+  del tipo de fórmula de N-C usada en los subintervalos
+  $[\ox_{i-1},\ox_i]$. En concreto:
   \begin{align*}
     \intertext{\quad $\bullet$ Si la f.c. N--C es \emph{cerrada}:
-      $\widehat h=(x_j-x_{j-1})/n=h/n$ y, usando~(\ref{eq:fc.6}),}
-    |E_N(f)| &\le |\gamma_n| \, (b-a)\, \frac{h^{k}}{n^k\,k!} \,
-    \|f^{k)}\|_{\infty,a,b}.  \intertext{\quad $\bullet$ Si la
+      $\widehat h=(\ox_i-\ox_{i-1})/n=h/n$ y, usando~(\ref{eq:fc.8}),}
+    E_N(f) &= \gamma_n \, (b-a)\, \frac{h^{k}}{n^k\,k!} \,
+    f^{k)}(\xi).  
+    \intertext{\quad $\bullet$ Si la
       f.c. N--C es \emph{abierta}: $\widehat
-      h=(x_j-x_{j-1})/(n+2)=h/(n+2)$ luego} |E_N(f)| &\le |\gamma_n|
-    \, (b-a) \, \frac{h^{k}}{(n+2)^k\,k!} \, \|f^{k)}\|_{\infty,a,b}.
+      h=(\ox_i-\ox_{i-1})/(n+2)=h/(n+2)$ luego} 
+    E_N(f) &= \gamma_n
+    \, (b-a) \, \frac{h^{k}}{(n+2)^k\,k!} \, f^{k)}(\xi).
   \end{align*}
   En cualquiera de los dos casos, si definimos $C_n$ como se
-  indica en el enunciado del teorema, llegamos a~(\ref{eq:fc.6}).
+  indica en el enunciado del teorema, llegamos a~(\ref{eq:error.fc.compuesta-NC}).
 \end{proof}
 
 Algunas observaciones sobre el teorema anterior:
 \begin{enumerate}
-\item La expresión del error~(\ref{eq:error.fc.compuesta-NC}) nos garantiza la
-  convergencia de $I_N(f)$ hacia $\int_a^b f(x)\, dx$ cuando $h\to 0$
-  (o, equivalentemente, cuando $N=(b-a)/h \to\infty$).
-\item Más aún,~(\ref{eq:error.fc.compuesta-NC}) nos indica cuál es exactamente la
+\item La expresión del error~(\ref{eq:error.fc.compuesta-NC}) nos
+  indica que
+  \begin{equation*}
+    |E_n(f)| \le C_n (b-a) h^k \|f^{k)}\|_{\infty,a,b},
+  \end{equation*}
+  lo que
+  garantiza la convergencia de $I_N(f)$ hacia $\int_a^b f(x)\, dx$
+  cuando $h\to 0$ (o, equivalentemente, cuando $N=(b-a)/h \to\infty$).
+\item Más aún, la cota anterior nos indica cuál es exactamente la
   velocidad de convergencia en una f.c. compuesta (definida por una
   fórmula de N-C):
   \begin{equation*}
@@ -739,14 +761,49 @@ Algunas observaciones sobre el teorema anterior:
 \begin{example}[Fórmula compuesta del punto medio]
   Consideramos la fórmula compuesta definida, en cada subintervalo,
   por la fórmula del punto medio (fórmula de N.C. abierta con $n=0$):
-  para todo $j=1,\dots,N$,
   \begin{equation*}
-    \int_{j-1}^j f(x)\, dx \approx I_1(f)=
-    (x_j-x_{j-1}) \, f\big(\frac{x_j+x_{j-1}} 2 \big) = 
-    2hf_j,
+    \int_{\ox_{i}}^{\ox_{i+1}} f(x)\, dx \approx I_1(f)=
+    (\ox_{i+1}-\ox_{i}) \, f\big(\frac{\ox_{i+1}+\ox_{i}} 2 \big), \quad i=0,...,N-1.
   \end{equation*}
-  donde $h=(x_j-x_{j+1})(n+2)=(x_j-x_{j+1})/2$ y definimos $f_j=f
-  \big(\frac{x_j+x_{j-1}} 2 \big)=f(x_{j+1}+h)$.
+  Para utilizarla dentro de una f.c. compuesta, denotamos
+  $$
+  h=\frac{\ox_{i+1}-\ox_{i}}{n+2}=\frac{\ox_{i+1}-\ox_{i}}2 = \frac{b-a}{2N},
+  $$
+  con lo que los puntos de integración (puntos medios) son de la
+  forma $\ox_{i}+h$.
+  Así, si definimos la partición $\{x_k\}_{k=0}^{2N}$ como
+  \begin{equation*}
+    \left\{
+      \begin{aligned}
+        x_{2i} &= \ox_i, \quad i=0,...,N \quad \text{(extremos de los
+          intervalos)},
+        \\
+        x_{2i+1} &= x_{2i}+h \quad i=0,...,N-1
+        \quad\text{(puntos medios)},
+      \end{aligned}
+      \right.
+    \end{equation*}
+  podemos utilizar, en cada subintervalo, la expresión de la f.c. del
+  punto medio (véase el Ejemplo~\ref{ex:fc-NC-abiertas}) de donde:
+  \begin{equation*}
+    \int_{2x_i}^{2x_{i+2}} f(x)\, dx = 
+    2hf_{2i+1} +
+    \frac{h^3}{3}f^{''}(\xi_i), \quad \text{con }
+    \xi_i\in(2x_i,2x_{i+2}),\ i=0,...,N-1
+  \end{equation*}
+  siendo $f_{2i+1}=f(x_{2i+1})$. En consecuencia:
+  \begin{equation*}
+    \int_a^b f(x)\,dx = \sum_{i=0}^{N-1} \int_{x_{2i}}^{x_{2i+2}} f(x)\,dx
+    = 2h \sum_{i=0}^{N-1} f_{2i+1} + \frac{h^3}{3} \sum_{i=0}^{N-1}f''(\xi_i). 
+  \end{equation*}
+  Procedemos como en la demostración del teorema anterior, tenemos que
+  existe $\xi\in(a,b)$ tal que
+  $$\sum_{i=0}^{N-1}f''(\xi_i)=Nf''(\xi)=\frac{b-a}{2h},$$
+  y así llegamos a la expresión definitiva:
+  \begin{equation*}
+    \int_a^b f(x)\,dx 
+    = 2h \sum_{i=0}^{N-1} f_{2i+1} + \frac{h^3(b-a)}{6} f''(\xi).
+  \end{equation*}  
 \end{example}
 
 %%% Local Variables:

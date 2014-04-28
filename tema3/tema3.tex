@@ -353,7 +353,7 @@ donde $M_{n+1}=\max_{x\in [a,b]} |f^{n+1)}(x)|$.
 Por lo tanto toda f.c.t.i con $n+1$ puntos en un intervalo $[a,b]$
 verifica la siguiente cota del error:
 \begin{equation}
-  E_n(f) \le  \frac{M_{n+1}}{(n+1)!} (b-a)^{n+2}.
+  E_n(f) \le  \frac{M_{n+1}}{(n+1)!} (b-a)^{n+2}y.
   \label{eq:cota-error-fcti}
 \end{equation}
 
@@ -373,18 +373,21 @@ sugiere el hecho de que en la estimación~(\ref{eq:cota-error-fcti}) no
 resulta posible acotar el término $M_{n+1}$, para cualquier función
 infinitamente derivable, cuando $n\to\infty$.
 
-Sin embargo, si denotamos $h=(b-a)$, la
-cota~(\ref{eq:cota-error-interpol-1}) nos garantiza que $E_n(f)$
-converge a cero cuando $h\to 0$. De hecho, si utilizamos la notación
+Sin embargo, si denotamos el tamaño del intervalo como $h=(b-a)$ en la
+acotación~(\ref{eq:cota-error-fcti}), podemos ver que $E_n(f)$
+converge a cero cuando $h\to 0$. De hecho, (\ref{eq:cota-error-fcti})
+nos indica cuál es exactamente la velocidad de convergencia:
 %$g(h)=O(h^m)$ para expresar que
-\begin{align*}
-  g(h)=O(h^m) \quad&\Longleftrightarrow\quad\lim_{h\to 0} \frac{g(h)}{h^m}=C
-\qquad \text{($C\in \Rset$ constante)},
-%
-\intertext{entonces}
-%
-E_n(f)&=O(h^{n+2}).
-\end{align*}
+\begin{align}
+  \notag
+  E_n(f)&=O(h^{n+2}),
+  % 
+  \intertext{donde estamos usando la notación, para toda función $g(x)$,}
+  \label{eq:def.O(h^m)}        
+  % 
+  \ g(h)=O(h^m) \quad&\Longleftrightarrow\quad\lim_{h\to 0} \frac{g(h)}{h^m}=C
+  \qquad \text{($C\in \Rset$ constante)}.
+\end{align}
 
 Por este motivo, en la práctica se suelen utilizar f.c. compuestas, en
 las que dividimos $[a,b]$ en subintervalos de integración de modo que
@@ -655,6 +658,7 @@ siguiente resultado:
   $[x_{j-1},x_j]$.  Si $f\in C^k([a,b])$, donde $k=n+2$ si $n$ es par
   y $k=n+1$ si $n$ es impar, entonces:
   \begin{equation}
+    \label{eq:error.fc.compuesta-NC}
    |E_N(f)|= \left|\int_a^bf(x)\,dx - I_N(f)\right|
    \le C_n \, (b-a) \, h^{k} \, \|f^{k)}\|_{\infty,a,b},
   \end{equation}
@@ -712,6 +716,39 @@ siguiente resultado:
   En cualquiera de los dos casos, si definimos $C_n$ como se
   indica en el enunciado del teorema, llegamos a~(\ref{eq:fc.6}).
 \end{proof}
+
+Algunas observaciones sobre el teorema anterior:
+\begin{enumerate}
+\item La expresión del error~(\ref{eq:error.fc.compuesta-NC}) nos garantiza la
+  convergencia de $I_N(f)$ hacia $\int_a^b f(x)\, dx$ cuando $h\to 0$
+  (o, equivalentemente, cuando $N=(b-a)/h \to\infty$).
+\item Más aún,~(\ref{eq:error.fc.compuesta-NC}) nos indica cuál es exactamente la
+  velocidad de convergencia en una f.c. compuesta (definida por una
+  fórmula de N-C):
+  \begin{equation*}
+      E_N(f)=O(h^{k}), \quad \text{cuando } h\to 0,
+  \end{equation*}
+  donde, donde $O(h^m)$ se define en~(\ref{eq:def.O(h^m)}) y, si la
+  fórmula de N-C es elegida inteligentemente ($n$ par), $k=n+2$.
+  Obsérvese que el error en una fórmula compuesta se rebaja un orden
+  respecto a~(\ref{eq:error-formulas-nc}) (asimilando $\widehat h =
+  h$, salvo constante), por acumulación de los errores locales
+  (cometidos en los subintervalos).
+\end{enumerate}
+
+\begin{example}[Fórmula compuesta del punto medio]
+  Consideramos la fórmula compuesta definida, en cada subintervalo,
+  por la fórmula del punto medio (fórmula de N.C. abierta con $n=0$):
+  para todo $j=1,\dots,N$,
+  \begin{equation*}
+    \int_{j-1}^j f(x)\, dx \approx I_1(f)=
+    (x_j-x_{j-1}) \, f\big(\frac{x_j+x_{j-1}} 2 \big) = 
+    2hf_j,
+  \end{equation*}
+  donde $h=(x_j-x_{j+1})(n+2)=(x_j-x_{j+1})/2$ y definimos $f_j=f
+  \big(\frac{x_j+x_{j-1}} 2 \big)=f(x_{j+1}+h)$.
+\end{example}
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../apuntes-MNII.tex"

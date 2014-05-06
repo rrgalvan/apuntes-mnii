@@ -137,7 +137,7 @@ orden $m+1$.
   La \resaltar{fórmula de Simpson} es la siguiente f.c.
   de tres puntos ($n=2$):
   \begin{equation}
-    I_2(f)= \frac{b-a}{6}\left[f(a)+f
+    I_2(f)= \frac{b-a}{6}\left[f(a)+4f
       \left(\frac{a+b}{2}\right)+f(b)\right].
     \label{eq:formula-simpson}
   \end{equation}
@@ -671,11 +671,11 @@ siguiente resultado:
   \begin{equation*}
   C_n=\left\{
     \begin{array}{cl}
-      \displaystyle\frac{|\gamma_n|}{n^k\,k!} & \quad \text{ si la fórmula de N--C es
-        abierta},
+      \displaystyle\frac{\gamma_n}{n^k\,k!} & \quad \text{ si la fórmula de N--C es
+        cerrada},
       \\ \noalign{\medskip}
-      \displaystyle\displaystyle\frac{|\gamma_n|}{(n+2)^k\,k!} &\quad \text{ si la fórmula
-        de N-C es cerrada},
+      \displaystyle\displaystyle\frac{\gamma_n}{(n+2)^k\,k!} &\quad \text{ si la fórmula
+        de N-C es abierta},
     \end{array}
   \right.
 \end{equation*}
@@ -699,14 +699,16 @@ siguiente resultado:
   Veamos que 
   \begin{equation}
     \label{eq:fc.7}
-    \text{$\exists \xi\in(a,b)$ tal que}
-    f''(\xi)=\frac 1N \sum_{i=1}^Nf^{k)}(\xi_i).
+    \text{$\exists \xi\in(a,b)$ tal que }
+    f^{k)}(\xi)=\frac 1N \sum_{i=1}^Nf^{k)}(\xi_i).
   \end{equation}
-  Como $f\in C^k([a,b])$, $f^{k)}$ es continua en $[a,b]$ y por lo tanto
-  alcanza todos los valores entre su máximo y su mínimo. Sean
-  $m_2=\min_{[a,b]} f^{k)}(x)$ y $M_2=\max_{[a,b]} f^{k)}(x)$. Entonces
+  Como $f\in C^k([a,b])$, $f^{k)}$ es continua en $[a,b]$ y por lo
+  tanto alcanza todos los valores entre su mínimo y su máximo. Sean
+  $m_k=\min_{x\in[a,b]} f^{k)}(x)$ y $M_k=\max_{x\in[a,b]}
+  f^{k)}(x)$. Entonces, como para todo $\xi_i$ se tiene que $m_k\le
+  f^{k)}(\xi_i)\le M_k$, deducimos que
   $$
-  m_2 \le \frac 1N \sum_{i=1}^Nf^{k)}(\xi_i) \le M_2,
+  m_k \le \frac 1N \sum_{i=1}^Nf^{k)}(\xi_i) \le M_k,
   $$
   luego se verifica~(\ref{eq:fc.7}). Por lo tanto:
   \begin{equation}
@@ -762,12 +764,13 @@ Algunas observaciones sobre el teorema anterior:
   Consideramos la fórmula compuesta definida, en cada subintervalo,
   por la fórmula del punto medio (fórmula de N.C. abierta con $n=0$):
   \begin{equation*}
-    \int_{\ox_{i}}^{\ox_{i+1}} f(x)\, dx \approx I_1(f)=
+    \int_{\ox_{i}}^{\ox_{i+1}} f(x)\, dx \approx I_0(f)=
     (\ox_{i+1}-\ox_{i}) \, f\big(\frac{\ox_{i+1}+\ox_{i}} 2 \big), \quad i=0,...,N-1.
   \end{equation*}
-  Para utilizarla dentro de una f.c. compuesta, denotamos
+  Para simplificar la notación en la f.c. compuesta, denotamos
   $$
-  h=\frac{\ox_{i+1}-\ox_{i}}{n+2}=\frac{\ox_{i+1}-\ox_{i}}2 = \frac{b-a}{2N},
+  h=\hat h =\frac{\ox_{i+1}-\ox_{i}}{n+2}=\frac{\ox_{i+1}-\ox_{i}}2 =
+  \frac{b-a}{2N},
   $$
   con lo que los puntos de integración (puntos medios) son de la
   forma $\ox_{i}+h$.
@@ -796,16 +799,208 @@ Algunas observaciones sobre el teorema anterior:
     \int_a^b f(x)\,dx = \sum_{i=0}^{N-1} \int_{x_{2i}}^{x_{2i+2}} f(x)\,dx
     = 2h \sum_{i=0}^{N-1} f_{2i+1} + \frac{h^3}{3} \sum_{i=0}^{N-1}f''(\xi_i). 
   \end{equation*}
-  Procedemos como en la demostración del teorema anterior, tenemos que
-  existe $\xi\in(a,b)$ tal que
-  $$\sum_{i=0}^{N-1}f''(\xi_i)=Nf''(\xi)=\frac{b-a}{2h},$$
-  y así llegamos a la expresión definitiva:
+  Para terminar, agruparemos los términos de error en un único
+  sumando. Para ello, procedemos como en la demostración del teorema
+  anterior (en concreto, como en la demostración de~(\ref{eq:fc.7}), con
+  $k=2$) y así deducimos que existe $\xi\in(a,b)$ tal que
+  $$\sum_{i=0}^{N-1}f''(\xi_i)=Nf''(\xi)=\frac{b-a}{2h}f(\xi),$$
+  obteniendo la expresión definitiva:
   \begin{equation*}
     \int_a^b f(x)\,dx 
-    = 2h \sum_{i=0}^{N-1} f_{2i+1} + \frac{h^3(b-a)}{6} f''(\xi).
+    = 2h \sum_{i=0}^{N-1} f_{2i+1} + \frac{(b-a)h^2}{6} f''(\xi).
   \end{equation*}  
 \end{example}
 
+\begin{example} [Fórmula compuesta de Simpson]
+  Consideramos ahora la fórmula compuesta definida, en cada
+  subintervalo, $[\ox_{i},\ox_{i+1}]$, con $i=0,...,N-1$, como
+   \begin{equation*}
+    \int_{\ox_{i}}^{\ox_{i+1}} f(x)\, dx \approx I_1(f)=
+    \frac{\ox_{i+1}-\ox_{i}}{6} \, \left[f(\ox_i) + 
+      4f\left(\frac{\ox_{i}+\ox_{i+1}}{2}\right)+f(\ox_{i+1})\right].
+  \end{equation*}
+  Como ejercicio se puede comprobar que, procediendo como en el
+  ejemplo anterior, se obtiene la siguiente expresión para la fórmula
+  compuesta de Simpson:
+  \begin{equation*}
+    \int_a^b f(x)\,dx 
+    = \frac{h}{3} \left[
+      f_0 
+      + 2\sum_{i=1}^{N-1} f_{2i} 
+      + 4\sum_{i=0}^{N-1} f_{2i+1} 
+      + f_{2N} \right]
+    + \frac{(b-a)h^4}{180} f^{4)}(\xi).
+  \end{equation*}  
+\end{example}
+
+\section{Fórmulas de cuadratura de Gauss}
+\label{sec:fc-Gauss}
+Dada una fórmula de cuadratura $I_n(f)=\sum_{i=0}^n \omega_i f(x_i)$,
+donde $\{x_i\}$ son $n+1$ nodos distintos fijos en
+$[a,b]$, en la sección~\ref{sec:cuadratura-interpolatorio} (en
+concreto, en la Proposición~\ref{pro:existencia.fcti}) hemos visto que
+podemos elegir $n+1$ pesos $\omega_i$ de forma adecuada (de hecho,
+$\omega_i=\int_a^b L_i(x)\, dx$, es decir la fórmula debe ser de tipo
+interpolatorio) para que la fórmula de cuadratura asociada tenga orden
+máximo, es decir orden $\ge n$.
+
+En la secciones~\ref{sec:formulas-de-newton}
+y~\ref{sec:fc-compuestas}, dedicadas respectivamente a las f.c. de
+Newton-Côtes y a las f.c. compuestas, nos hemos limitado a escoger
+nodos equiespaciados (la elección más sencilla) pero sin que exista
+ningún tipo de garantía de que ésta sea la elección óptima. En esta
+sección nos preguntaremos si es posible elegir los nodos de manera
+adecuada para que el orden de la f.c. sea el mayor posible. En
+concreto, planteamos el siguiente problema:
+\begin{equation}
+\label{eq:pb.fc.Gauss}
+\tag{P}
+\left.
+  \begin{aligned}
+    &\text{Elegir el soporte $S=\{x_0<x_1<...<x_n\}\subset [a,b]$}
+    \\
+    &\text{tal que la f.c.t.i. asociada sea de orden máximo.}
+  \end{aligned}
+\right\}
+\end{equation}
+
+\begin{definition}
+  Las fórmulas de cuadratura con pesos obtenidos como solución del
+  problema~(\ref{eq:pb.fc.Gauss}) reciben el nombre de fórmulas de
+  cuadratura de Gauss.
+\end{definition}
+\subsection*{Aproximación heurística}
+Para resolver el problema anterior, intentemos razonar como en la
+demostración de la proposición~\ref{pro:existencia.fcti} (en la que se
+determinaron de forma óptima los coeficientes $\omega_i=\int_a^b
+L_i(x)\, dx$ como solución de un sistema lineal de ecuaciones con
+matriz de Vandermonde).
+
+
+Una f.c. $I_n(f)=\sum_{i=0}^n \omega_i f(x_i)$ tiene orden $m\in\Nset$
+si y solo si se verifican $m+1$ ecuaciones:
+\begin{alignat*}{2}
+  E_n(x^0)&=\int_a^b x^0\, dx -I_n(x^0)&\; =0 \\
+  E_n(x^1)&=\int_a^b x^1\, dx -I_n(x^1)&\; =0 \\
+  % E_n(x^2)&=\int_a^b x^2\, dx -I_n(x^2)&\; =0 \\
+  &~\quad\vdots \\
+  E_n(x^m)&=\int_a^b x^m\, dx -I_n(x^m)&\; =0
+\end{alignat*}
+En esta ocasión, en la f.c. podemos elegir los $n+1$ nodos
+$\{x_i\}_{i=0}^n$ y los $n+1$ pesos, $\{\omega_i\}_{i=0}^n$. En total
+tenemos a nuestra disposición $2n+2$ incógnitas, por tanto, para que
+el sistema de ecuaciones anterior tenga matriz cuadrada, deberá estar
+formado por $2n+2$ ecuaciones, es decir, debe ser $m=2n+1$. Esto
+significa que podemos aspirar a que las fórmulas de cuadratura de
+Gauss tengan orden $2n+1$.  El inconveniente es que en este caso, el
+sistema de ecuaciones no es lineal por lo que, salvo en casos
+sencillos, no será posible recurrir esta estrategia para calcular los
+nodos de integración.
+
+\begin{example}
+  Dado el intervalo $[a,b]=[-1,1]$, buscamos dos puntos $x_0,x_1\in
+  [a,b]$ y dos pesos $\omega_i\in\Rset$ tales que la f.c. asociada sea
+  de orden $2n+1=3$. Para ello, imponemos que esta f.c. sea exacta
+  para los polinomios $x^i$, $i=0,...,3$:
+  \begin{alignat*}{3}
+    E_n(x^0)&=\int_{-1}^1 x^0\, dx - I_n(x^0)\ =\ 0 \ \Leftrightarrow
+    \quad & 2 &= \omega_0+\omega_1,\\
+    E_n(x^1)&=\int_{-1}^1 x^1\, dx - I_n(x^1)\ =\ 0 \ \Leftrightarrow
+    \quad & 0 &=  \omega_0x_0+\omega_1x_1,\\
+    E_n(x^2)&=\int_{-1}^1 x^2\, dx - I_n(x^2)\ =\ 0 \ \Leftrightarrow
+    \quad & \frac{2}{3} &= \omega_0x_0^2+\omega_1x_1^2,\\
+    E_n(x^3)&=\int_{-1}^1 x^3\, dx - I_n(x^3)\ =\ 0 \ \Leftrightarrow
+    \quad &0 &= 
+    \omega_0x_0^3+\omega_1x_1^3.
+  \end{alignat*}
+  De la segunda y la cuarta ecuaciones deducimos que $x_0=+x_1$ ó
+  $x_0=-x_1$ y $\omega_0=+\omega_1$ ó $\omega_0=-\omega_1$. Pero
+  teniendo en cuenta la primera ecuación, la única posibilidad es
+  $\omega_0=\omega_1=1$ y, según la tercera ecuación,
+  $x_0=x_1=\frac{1}{\sqrt 3}$. Por lo tanto, la fórmula de cuadratura
+  de Gauss con dos puntos en el intervalo $[-1,1]$ se puede expresar
+  de la siguiente forma:
+  \begin{equation*}
+    \int_{-1}^1 f(x)\, dx \approx f\Big( \frac{-1}{\sqrt 3} \Big)
+    + f\Big(\frac{1}{\sqrt 3}\Big).
+  \end{equation*}
+\end{example}
+
+\subsection*{Polinomios ortogonales} 
+En fórmulas de cuadratura de Gauss, en vez de la resolución de los
+sistemas no lineales descritos anteriormente, calcularán los nodos
+óptimos como raíces de unas familias de polinomios conocidos como
+polinomios ortogonales.
+
+\begin{definition}
+  \label{def:pol-orgotonales}
+  Consideremos el espacio vectorial $\Pol_n[x]$, formado por los
+  polinomios de grado menor o igual que $n$. Una base
+  $\{\phi_0,\phi_1,\dots,\phi_n\}$ de $\Pol_n[x]$ (donde cada $\phi_i$
+  tiene grado exactamente igual a $n$) se dice ortogonal en
+  $[a,b]$
+  \begin{equation*}
+    \int_a^b \phi_i(x) \phi_j(x)\, dx = 0 \quad \text{si } i\neq j.
+  \end{equation*}
+  Una base se dice ortonormal cuando es ortogonal y además los
+  polinomios son unitarios, en el siguiente sentido:
+  \begin{equation*}
+    \int_a^b (\phi_i(x))^2 \,dx = 1.
+  \end{equation*}
+\end{definition}
+
+\begin{proposition}
+  Para todo $n\ge 0$ existen bases ortogonales,
+  $\{\phi_0,\phi_1,\dots,\phi_n\}$, de $\Pol_n[x]$, que se pueden
+  construir mediante el siguiente algoritmo, conocido como método de
+  ortogonalización de Gram-Schmidt:
+  \begin{quotation}
+    Dada una base (no necesariamente ortogonal),
+    $\{\varphi_0,\varphi_1,\dots,\varphi_n\}$ de $\Pol_n[x]$,
+    definimos
+    \begin{align*}
+      \phi_0 &= \varphi_0,\\
+      \phi_1 &= \varphi_1 -
+      \frac{\int_a^b\phi_0\varphi_1}{\int_a^b\phi_0^2} \phi_0\\
+      &\ \vdots\\
+      \phi_n &= \varphi_n -
+      \frac{\int_a^b\phi_{n-1}\varphi_n}{\int_a^b\phi_{n-1}^2} \phi_{n-1}\\
+    \end{align*}
+  \end{quotation}
+\end{proposition}
+
+\begin{proof}
+  Es fácil comprobar que el conjunto $\{\phi_0,\phi_1,\dots,\phi_n\}$
+  construido mediante el método de Gram-Schmidt es ortogonal.
+\end{proof}
+
+\begin{proposition}
+  Dadas dos bases ortogonales de $\Pol_n[k]$,
+  $\{\phi_0,\phi_1,\dots,\phi_n\}$ y
+  $\{\overline\phi_0,\overline\phi_1,\dots,\overline\phi_n\}$ los
+  polinomios de cada una de estas bases son proporcionales, es decir,
+  para cada $i=0,...n$ existe $\alpha_i$ tal que
+  \begin{equation*}
+    \phi_i = \alpha_i ,\overline\phi_i.
+  \end{equation*}
+  En particular, $\phi_i$ y $\overline\phi_i$ tienen los mismos
+  ceros.
+\end{proposition}
+
+\begin{theorem}
+  Sea $\{\phi_0,\phi_1,\dots,\phi_n\}$ un conjunto de polinomios
+  ortogonales en $[a,b]$. Entonces cada polinomio $\phi_k$ tiene
+  exactamente $k$ raíces reales simples $\{x_0<x_1<...<x_k\}$ en
+  $(a,b)$.
+\end{theorem}
+
+\begin{theorem}
+  Existe una única f.c.t.i. de orden $(2n+1)$. Esta fórmula se
+  corresponde con el soporte $S=\{x_0<x_1<...<x_n\}$ formado por las
+  $n+1$ raíces de $\phi_{n+1}$, el $n$--ésimo polinomio ortogonal en
+  $(a,b)$. Además, los pesos $\omega_i=\int_a^b L_i(x)\, dx$ son todos
+  positivos.
+\end{theorem}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../apuntes-MNII.tex"

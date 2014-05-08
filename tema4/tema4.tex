@@ -1,0 +1,95 @@
+\renewcommand{\tt}{t}
+\newcommand{\yy}{y}
+\newcommand{\ta}{a}
+\newcommand{\tb}{b}
+\newcommand{\ycero}{y_a}
+\newcommand{\ee}{e\xspace}
+\newcommand{\sol}{y}
+
+\chapter[Problemas de valor inicial para EDOs de primer orden]
+{Problemas de valor inicial para ecuaciones diferenciales de primer
+  orden%
+  \footnote{\licenseInfo}}
+
+Son muy numerosos los problemas (con orígenes diversos como la física,
+química, biología o economía) que se formulan matemáticamente en
+términos de ecuaciones diferenciales, es decir, ecuaciones en las que
+la incógnita es una función $y(x)$ que describe un fenómeno dado, formulado 
+de sus derivadas (y de una serie de datos conocidos que garantizan el buen
+planteamiento del problema). 
+
+Este tema se centra en la resolución numérica de problemas de valor
+inicial (o problemas de Cauchy) asociados a ecuaciones diferenciales
+ordinarias (EDO). Este tipo de problemas se escriben de la siguiente
+forma:
+\begin{equation}
+  \label{eq:pvi}
+  \tag{PVI}
+  \left\{
+  \begin{aligned}
+    &y' = f(\tt,\yy), \quad \tt\in[\ta,\tb],
+    \\
+    &y(\ta) = \ycero,
+  \end{aligned}
+  \right.
+\end{equation}
+donde $f:[\ta,\tb]\times\Rset\to\Rset$ \ee $\ycero\in\Rset$ son datos
+conocidos. En el próximo tema se estudia el caso general, donde
+$f:[\ta,\tb]\times\Rset^n\to\Rset^n$ \ee $\ycero\in\Rset^n$, con
+$n\in\Nset$.
+
+\begin{definition}
+  Llamamos solución de~\eqref{eq:pvi} a toda función $\sol\in
+  C^1([\ta,\tb])$ tal que $\sol'(\tt)=f(\tt,\sol(\tt))$ para todo
+  $\tt\in[\ta,\tb]$ y además $\sol(\ta)=\ycero$.\label{def:3}
+\end{definition}
+
+
+Como paso previo a la resolución numérica de~\eqref{eq:pvi}, deberemos
+garantizar que el problema~\eqref{eq:pvi} está bien planteado, es
+decir asegurar la existencia y unicidad de solución en el sentido de
+la definición anterior. Obsérvese que, según esta definición, el
+concepto de solución tiene un sentido global (en todo el intervalo
+$[a,b]$), no local (en un entorno de $\ta$).
+
+Nuestro objetivo será la descripción, análisis e implementación de
+distintos métodos numéricos para la aproximación de la solución
+de~\eqref{eq:pvi}. Estos métodos partirán con la definición de una
+partición del intervalo $[\ta,\tb]$, formada por $N+1$ puntos:
+\begin{equation*}
+  \ta=\tt_0 < \tt_1 < \cdots < \tt_N=\tb.
+\end{equation*}
+Por simplicidad, supondremos que la partición es uniforme, es decir,
+\begin{equation*}
+  \text{ si } h=\frac{b-a}{N}, \quad \text{entonces} \quad
+  \tt_n=\ta+nh,\quad \forall n=0\dots,N
+\end{equation*}
+(en particular, $\tt_0=a$ y $\tt_N=b$). A continuación procedemos como
+sigue:
+\begin{enumerate}
+\item Usamos el dato inicial $y_a$ para arrancar el método numérico,
+  definiendo $y_0=y_a$ (más precisamente, $y_0\approx y_a$)
+\item Seguidamente definimos una sucesión de forma que $y_{n+1}$ se
+  calcula a partir de $y_n$ (y posiblemente de $y_{n-1}$, ...,
+  $y_{n-k}$ para algún $k\ge 1$), con el fin de que
+  $y_n\approx\sol(\tt_n)$. En concreto, de manera que:
+  \begin{enumerate}
+  \item El método sea \textit{consistente}, en el sentido de que la
+    solución exacta $\{\sol(\tt_n)\}_n$ ``verifique aproximadamente'' el
+    esquema numérico
+  \item El método sea \textit{convergente}, en el sentido de que la
+    solución aproximada $\{y_n\}_n$ ``converja a la solución exacta''
+    $\{\sol(\tt_n)\}_n$ cuando $h\to 0$.
+  \item El método sea \textit{estable}, en el sentido de que ``responda
+    continuamente'' a perturbaciones en los datos iniciales.
+  \end{enumerate}
+\end{enumerate}
+% Más adelante distinguiremos entre métodos de un paso, en los que
+% para calcular $y_{n+1}$ utilizamos solamente de $y_n$ y métodos
+% multipaso, en los que  $y_{n+1}$ depende de los datos en varias etapas
+% anteriores ($y_{n}$, $y_{n-1}$, ..., $y_{n-k}$ para algún $k\ge 1$.)
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../apuntes-MNII.tex"
+%%% End: 

@@ -5,8 +5,9 @@
 \newcommand{\ycero}{y_a}
 \newcommand{\ee}{e\xspace}
 \newcommand{\sol}{y}
-\newcommand{\lischiptz}{$y$--Lischiptz\xspace}
-\newcommand{\locLischiptz}{localmente $y$--Lischiptz\xspace}
+\newcommand{\lipschitz}{Lipschitz\xspace}
+\newcommand{\globLipschitz}{$y$--\lipschitz}
+\newcommand{\locLipschitz}{localmente $y$--\lipschitz}
 
 \chapter[Problemas de valor inicial para EDOs de primer orden]
 {Problemas de valor inicial para ecuaciones diferenciales de primer
@@ -65,21 +66,21 @@ A continuación recordaremos algunos resultados teóricos relacionados
 con la existencia y unicidad de solución del problema de
 Cauchy~(\ref{eq:pvi}), que serán dados sin demostración. La clave en
 estos resultados será el analizar si la función $f(x,y)$ es verifica
-la condición de Lischiptz que se define a continuación:
+la condición de Lipschitz que se define a continuación:
 
 \begin{definition}
-  \label{def:lischiptz}
+  \label{def:lipschitz}
   Decimos que una función $f(\tt,y)$ verifica la condición de
-  \resaltar{Lischiptz uniformemente} (o globalmente) respecto a $y$ en
-    $[\ta,\tb]$ (o simplemente que $f$ es \lischiptz)
+  \resaltar{Lipschitz uniformemente} (o globalmente) respecto a $y$ en
+    $[\ta,\tb]$ (o simplemente que $f$ es \globLipschitz)
     si existe $L>0$ tal que
   \begin{equation*}
     |f(\tt,y) - f(\tt,z)| \le L |y-z|, \quad \forall \tt\in [\ta,\tb],
     \quad  \forall y,z\in \Rset.
   \end{equation*}
   Decimos que una función $f(\tt,y)$ verifica la condición de
-  \resaltar{Lischiptz localmente} respecto a $y$ en
-  $[\ta,\tb]$ (o que $f$ es \locLischiptz) si para todo compacto
+  \resaltar{Lipschitz localmente} respecto a $y$ en
+  $[\ta,\tb]$ (o que $f$ es \locLipschitz) si para todo compacto
   $K\subset\Rset$ existe $L_K>0$ tal que
   \begin{equation*}
     |f(\tt,y) - f(\tt,z)| \le L_K |y-z|, \quad \forall \tt\in [\ta,\tb],
@@ -94,14 +95,14 @@ respecto a $y$, es decir $\dy f(\tt,y) = \frac{\partial f}{\partial
 similares.
 \begin{remark}
   En la práctica, para estudiar si una función es (local o
-  globalmente) Lischiptz se suelen usar las siguientes condiciones
+  globalmente) Lipschitz se suelen usar las siguientes condiciones
   suficientes:
   \begin{enumerate}
   \item Si $\dy f$ es continua en $[\ta,\tb]\times\Rset$, entonces $f$
-    es \locLischiptz.
+    es \locLipschitz.
   \item Si además $\dy f$ está acotada en
     $[\ta,\tb]\times\Rset$, entonces $f$ es uniformemente
-    \lischiptz.
+    \globLipschitz.
   \end{enumerate}
   Comprobaremos la segunda de estas afirmaciones (la primera se
   demuestra de forma análoga, usando que $\dy f$ está acotada
@@ -123,85 +124,118 @@ similares.
 \end{remark}
 
 \begin{example}
-  La función $f(x,y)=y^2$ es \locLischiptz en cualquier intervalo
-  $[\ta,\tb]$, pues la función $\dy f(x,y)=2y$ es continua. Sin
+  La función $$f(x,y)=y^2$$ es \locLipschitz en cualquier intervalo
+  $[\ta,\tb]$, pues su derivada parcial $\dy f(x,y)=2y$ es continua. Sin
   embargo, esta función no está acotada cuando $y\in\Rset$, por lo que
-  no tenemos garantías de que $f(x,y)$ sea uniformemente \lischiptz.
+  no tenemos garantías de que $f(x,y)$ sea uniformemente \globLipschitz.
   
-  Veamos que realmente esta $f(x,y)$ no es a uniformemente
-  \lischiptz. Efectivamente, escribiendo
-  \begin{equation*}
-    |f(\tt,y)-f(\tt,z)| = |y^2-z^2| =  |y+z| \cdot |y-z|,
-  \end{equation*}
-  vemos que, para cualquier constate $L>0$, podemos encontrar dos
+  Veamos que realmente $f(x,y)$ no es a uniformemente \globLipschitz,
+  comprobando que para cualquier constate $L>0$, podemos encontrar dos
   valores, $y_L$, $z_L\in\Rset$ de forma que
   \begin{equation*}
   |f(\tt,y_L)-f(\tt,z_L)| >  L  |y_L-z_L|.
  \end{equation*}
- Por ejemplo, tomando $y_L=L$ y $z_L=0$, el primer miembro es
- $|f(\tt,y_L)-f(\tt,z_L)|=4y_L^2$ mientras que el segundo miembro resulta
- $L|y_L-z_L|=2L^2$.
+ Por ejemplo, dada $L>0$ podemos tomar $y_L=L$ y $z_L=0$, así el
+ primer miembro es
+ \begin{align*}
+   |f(\tt,y_L)-f(\tt,z_L)|&=|L+0|\cdot |L-0|=4L^2,
+   \intertext{mientras que el segundo miembro resulta} 
+   L|y_L-z_L|&=2L^2<4L^2.
+ \end{align*}
 \end{example}
 
 A continuación, presentamos los resultados teóricos fundamentales. El
-segundo de ellos garantiza la existencia de solución de~\eqref{eq:pvi}
-aunque a costa de imponer hipótesis muy fuertes (Lischiptz uniforme),
-reduciendo considerablemente el rango de problemas diferenciales a
-considerar.
-
+primer Teorema utiliza hipótesis más débiles (\locLipschitz), aunque
+sin alcanzar directamente la existencia y unicidad de solución en todo
+$[a,b]$.  El Teorema~\ref{thm:existencia-unif-lipschitz} garantiza la
+existencia y unicidad de solución de~\eqref{eq:pvi} en $[a,b]$,
+aunque a costa de imponer una hipótesis muy fuerte (Lipschitz
+uniforme), que reduce considerablemente el rango de problemas
+diferenciales abarcados.
 \begin{theorem}
-  \label{thm:existencia-loc-lischiptz}
-  Sea $f\in C^0([\ta,\tb]\times\Rset$ y \locLischiptz. Entonces, para
+  \label{thm:existencia-loc-lipschitz}
+  Sea $f\in C^0([\ta,\tb])\times\Rset$ y \locLipschitz. Entonces, para
   cualquier inicialización $\ycero\in\Rset$:
-  \begin{itemize}
+  \begin{enumerate}
   \item Existe una única solución local (definida en
     $[\ta,\ta+\varepsilon]$ para algún $\varepsilon>0$) y existe una
-    única solución maximal (definida en $[\ta,c]\subset[\ta,\tb]$ para
-    algún $c\le b$ y no prolongable a $\tt>c$) de~\eqref{eq:pvi}.
+    única solución maximal (es decir, definida en todo $[a,b]$ o bien
+    en $[\ta,c)\subset[\ta,\tb]$, para algún $c\in(\ta,\tb)$, y no
+    prolongable a $\tt>c$) de~\eqref{eq:pvi}.
   \item Además: o bien la solución maximal $y(\tt)$  está definida en todo
-    $[\ta,\tb]$, o bien éstas explota en tiempo finito (es decir existe
-    $c\in (a,b)$ tal que $\lim_{\tt\to c^-} \sol(\tt) = \infty$).
-  \end{itemize}
+    $[\ta,\tb]$, o bien ésta explota en tiempo finito (es decir existe
+    $c\in (\ta,\tb)$ tal que $\lim_{\tt\to c^-} \sol(\tt) = \infty$).
+  \end{enumerate}
 \end{theorem}
 
 \begin{theorem}
-  \label{thm:existencia-unif-lischiptz}
-  Sea $f\in C^0([\ta,\tb]\times\Rset$ y \locLischiptz.  Entonces, para
+  \label{thm:existencia-unif-lipschitz}
+  Sea $f\in C^0([\ta,\tb]\times\Rset$ y \locLipschitz.  Entonces, para
   cualquier inicialización $\ycero\in\Rset$, existe una única solución
   de~\eqref{eq:pvi}, que está definida en todo el intervalo
-  $[\ta,\tb]$ (solución maximal).
+  $[\ta,\tb]$ (solución maximal).%  Además, para todo $\tt\in[\ta,\tb]$
+  % se tiene la siguiente desigualdad:
+  % \begin{equation*}
+  %   |y(\tt)-y(\ta)| \le (\tb-\ta) \Big( \max_{\tt\in[\ta,\tb]}
+  %     f(\tt,y(\ta))\Big) e^{L(\tt-\ta)}.
+  % \end{equation*}
 \end{theorem}
 
-Cuando la función $f(x,y)$ sea tan solo \locLischiptz, la tarea de la
-existencia de solución en $[\ta,\tb]$ no será inmediata. En este
-caso, intentaremos demostrar que la solución maximal no explota en
-tiempo finito, garantizando así existencia y unicidad en $[\ta,\tb]$
-
-Con este propósito, recordamos ahora algunas propiedades interesantes
-de las ecuaciones diferenciales, que nos resultarán de gran utilidad,
-como veremos en el próximo ejemplo.
+En lo que sigue, estudiaremos el análisis numérico de problemas
+diferenciales en los que, en principio, la función $f(\tt,y)$ es tan
+solo \locLipschitz. Por lo tanto el estudio de la existencia de
+solución en $[\ta,\tb]$ no será una tarea inmediata. Usando el
+Teorema~\ref{thm:existencia-loc-lipschitz}, intentaremos demostrar que
+la solución maximal del problema~(\ref{eq:pvi}) está acotada en
+$[\ta,\tb]$ y por tanto no explota en tiempo finito en este intervalo,
+garantizando así existencia y unicidad de solución en $[\ta,\tb]$ (ver
+en el ejemplo~\ref{ex:existencia-unicidad-loc-lipschitz}). Con este
+propósito, recordamos ahora algunas propiedades interesantes de las
+ecuaciones diferenciales que nos resultarán de gran utilidad.
 
 \begin{proposition}[Algunas propiedades de las ecuaciones diferenciales]
-  ~
+  Bajo las hipótesis del teorema~\ref{thm:existencia-loc-lipschitz}:
   \begin{enumerate}
-  \item Sean $y_1(x)$ e $y_2(x)$ las soluciones de dos problemas del
-    tipo~\eqref{eq:pvi} con la misma ecuación diferencial $y'=f(x,y)$
-    pero con datos iniciales diferentes. Entonces las gráficas de
-    $y_1(x)$ e $y_2(x)$ no se cortan en ningún punto.
-  \item Sean $y_1(x)$ e $y_2(x)$ las soluciones de dos problemas del
-    tipo~\eqref{eq:pvi} con el mismo dato inicial pero para ecuaciones
-    diferenciales diferentes, $y'=f_1(x,y)$ $y'=f_2(x,y)$. Si
+  \item Sean $y_1(\tt)$ e $y_2(\tt)$ las soluciones de dos problemas del
+    tipo~\eqref{eq:pvi} con la misma ecuación diferencial $y'=f(\tt,y)$
+    pero con distintos datos iniciales,
+    $$y_{a}^{(1)}< y_{a}^{(2)}.$$ 
+    Entonces las gráficas de $y_1$ e $y_2$ no se cortan en ningún
+    punto. Es decir, si $y_1$ \ee $y_2$ están definidas
+    respectivamente en $[a,a+\varepsilon_1]$ y $[a,a+\varepsilon_2]$:
+    \begin{equation*}
+      y_1(\tt) < y_2(\tt), \quad \forall \tt \in  [a,a+\varepsilon_1]
+      \cap [a,a+\varepsilon_2].
+    \end{equation*}
+    
+  \item Sean $y_1(\tt)$ e $y_2(\tt)$ las soluciones de dos problemas del
+    tipo~\eqref{eq:pvi} con el mismo dato inicial pero con ecuaciones
+    diferenciales diferentes, $y'=f_1(\tt,y)$ $y'=f_2(\tt,y)$. Si
     $$
     f_1(\tt,y) \le f_2(\tt,y) \quad \forall \tt\in[\ta,\tb], \quad
     \forall y\in\Rset,
     $$
     entonces
     $$
-    y_1(\tt)\le y_2(\tt) \quad \forall \tt\in[\ta,\tb].
+    y_1(\tt)\le y_2(\tt) \quad \forall \tt \in  [a,a+\varepsilon_1]
+      \cap [a,a+\varepsilon_2].
     $$
   \end{enumerate}
 \end{proposition}
 
+\begin{example}
+  \label{ex:existencia-unicidad-loc-lipschitz}
+  Estudiaremos la existencia y unicidad de solución del siguiente
+  problema de valor inicial: 
+  \begin{equation*}
+    \left\{
+      \begin{aligned}
+        &y' = -y^2-2y\,\cos \tt, \quad \tt\in [0,2],\\
+        &y(0)=1.
+      \end{aligned}
+    \right.
+  \end{equation*}
+\end{example}
 \section{Métodos numéricos}
 
 Nuestro objetivo será la descripción, análisis e implementación de

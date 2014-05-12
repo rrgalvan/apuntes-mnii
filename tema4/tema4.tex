@@ -3,7 +3,7 @@
 \newcommand{\ta}{a}
 \newcommand{\tb}{b}
 \newcommand{\ycero}{y_a}
-\newcommand{\sol}{\varphi}
+\newcommand{\sol}{y}
 \newcommand{\lipschitz}{Lipschitz\xspace}
 \newcommand{\globLipschitz}{$y$--\lipschitz}
 \newcommand{\locLipschitz}{localmente $y$--\lipschitz}
@@ -36,13 +36,14 @@ forma:
   \end{aligned}
   \right.
 \end{equation}
-donde la función $f:[\ta,\tb]\times\Rset\to\Rset$ y el estado inicial
-$\ycero\in\Rset$ son datos conocidos. En el próximo tema se estudia el
-caso general, donde $f:[\ta,\tb]\times\Rset^n\to\Rset^n$ e
-$\ycero\in\Rset^n$, con $n\in\Nset$. En numerosos problemas de la
-ciencia y la ingeniería, la variable $\tt$ representa el tiempo aunque
-no siempre es necesario que sea así. Con frecuencia
-hablaremos de $\tt$ como la <<variable temporal>>).
+donde la función (continua) $f:[\ta,\tb]\times\Rset\to\Rset$ y el
+estado inicial $\ycero\in\Rset$ son datos conocidos. En el próximo
+tema se estudia el caso general, donde
+$f:[\ta,\tb]\times\Rset^n\to\Rset^n$ e $\ycero\in\Rset^n$, con
+$n\in\Nset$. En numerosos problemas de la ciencia y la ingeniería, la
+variable $\tt$ representa el tiempo aunque no siempre es necesario que
+sea así. Con frecuencia hablaremos de $\tt$ como la <<variable
+temporal>>).
 
 \begin{definition}
   Llamamos solución de~\eqref{eq:pvi} a toda función $\sol\in
@@ -156,7 +157,7 @@ uniforme), que reduce considerablemente el rango de problemas
 diferenciales abarcados.
 \begin{theorem}
   \label{thm:existencia-loc-lipschitz}
-  Sea $f\in C^0([\ta,\tb])\times\Rset$ y \locLipschitz. Entonces, para
+  Sea $f\in C^0([\ta,\tb]\times\Rset)$ y \locLipschitz. Entonces, para
   cualquier inicialización $\ycero\in\Rset$:
   \begin{enumerate}
   \item Existe una única solución local (definida en
@@ -172,10 +173,10 @@ diferenciales abarcados.
 
 \begin{theorem}
   \label{thm:existencia-unif-lipschitz}
-  Sea $f\in C^0([\ta,\tb]\times\Rset$ y \locLipschitz.  Entonces, para
-  cualquier inicialización $\ycero\in\Rset$, existe una única solución
-  de~\eqref{eq:pvi}, que está definida en todo el intervalo
-  $[\ta,\tb]$.%  Además, para todo $\tt\in[\ta,\tb]$
+  Sea $f\in C^0([\ta,\tb]\times\Rset)$ y (globalmente) \globLipschitz.
+  Entonces, para cualquier inicialización $\ycero\in\Rset$, existe una
+  única solución de~\eqref{eq:pvi}, que está definida en todo el
+  intervalo $[\ta,\tb]$.% Además, para todo $\tt\in[\ta,\tb]$
   % se tiene la siguiente desigualdad:
   % \begin{equation*}
   %   |y(\tt)-y(\ta)| \le (\tb-\ta) \Big( \max_{\tt\in[\ta,\tb]}
@@ -201,9 +202,9 @@ ecuaciones diferenciales que nos resultarán de gran utilidad.
   ($f$ \locLipschitz):
   \begin{enumerate}
   \item Sean $\sol_1(\tt)$ y $\sol_2(\tt)$ las soluciones de dos
-    problemas del tipo~\eqref{eq:pvi} para la misma ecuación
-    diferencial $y'=f(\tt,y)$ pero con distintas condiciones
-    iniciales, es decir:
+    problemas del tipo~\eqref{eq:pvi} para la \textbf{misma ecuación
+    diferencial} $y'=f(\tt,y)$ pero con \textbf{distintas condiciones
+    iniciales}, es decir:
     $$\sol_1(\ta)<\sol_2(\ta)$$ 
     Entonces las gráficas de $\sol_1$ e $\sol_2$ no se cortan en
     ningún punto. En concreto, si $\sol_1$ y $\sol_2$ están
@@ -215,9 +216,9 @@ ecuaciones diferenciales que nos resultarán de gran utilidad.
     \end{equation*}
     
   \item Sean $\sol_1(\tt)$ y $\sol_2(\tt)$ las soluciones de dos
-    problemas del tipo~\eqref{eq:pvi} con el mismo dato inicial pero
-    con ecuaciones diferenciales diferentes, $y'=f_1(\tt,y)$
-    $y'=f_2(\tt,y)$. Si
+    problemas del tipo~\eqref{eq:pvi} con la \textbf{misma condición
+      inicial} pero con \textbf{ecuaciones diferenciales distintas},
+    $y'=f_1(\tt,y)$ $y'=f_2(\tt,y)$. Si
     $$
     f_1(\tt,y) \le f_2(\tt,y) \quad \forall \tt\in[\ta,\tb], \quad
     \forall y\in\Rset,
@@ -345,15 +346,19 @@ $\sol(\tt)$ en cada instante $\tt\in [\ta,\tb]$.
 \begin{center}
   \begin{graficaTikz}[width=23em, height=17em]
     \begin{axis}[ \axisXYmiddle, xtick=\empty, ytick=\empty, legend
-      pos = north east ]
+      pos = north east, xlabel=$t$ ]
       % Draw a curve
       \addplot[domain=1.3:3.3, blue, ultra thick] {20+x*x*x*x};
-      \addplot[domain=1.5:3, red, thick] {36+32*(x-2)};
+      \addplot[domain=1.5:3.1, red, thick] {36+32*(x-2)};
       % Plot a label at curve root
-      \node[coordinate, medium dot, pin=100:{\scriptsize $\sol(\tt_n)$}] at
-      (axis cs:2,36) {}; 
-      \node[coordinate, medium dot, blue, pin=100:{\scriptsize
-        $\sol(\tt_{n+1})$}] at (axis cs:2.7,73.144) {};
+      \node[coordinate, medium dot, 
+            pin={[fill=blue!10!white]120:{\scriptsize $\sol(\tt_n)$}}] at
+            (axis cs:2,36) {}; 
+      \node[coordinate, medium dot, blue,
+            pin={[fill=blue!10!white]120:{\scriptsize $\sol(\tt_{n+1})$}}] at
+            (axis cs:2.7,73.144) {}; 
+      % \node[coordinate, medium dot, blue, pin=100:{\scriptsize
+      %   $\sol(\tt_{n+1})$}] at (axis cs:2.7,73.144) {};
       \addplot[dashed] coordinates {(2,7) (2,36)};
       \addplot[dashed] coordinates {(2.7,7) (2.7,58.4)};
       \node[coordinate, medium dot, pin=-30:{$y_{n}$}] at
@@ -361,7 +366,7 @@ $\sol(\tt)$ en cada instante $\tt\in [\ta,\tb]$.
       \node[coordinate, medium dot, pin=-30:{$y_{n+1}$}] at
       (axis cs:2.7,58.4) {}; 
       % Draw the name of curve
-      \legend {$f$};
+      \legend {$y(t)$};
     \end{axis}
   \end{graficaTikz}
 \end{center}

@@ -1,8 +1,12 @@
 \renewcommand{\tt}{t}
 \newcommand{\yy}{y}
+\newcommand{\yn}{{\yy_n}}
+\newcommand{\ynn}{{\yy_{n+1}}}
 \newcommand{\ta}{a}
 \newcommand{\tb}{b}
-\newcommand{\ycero}{y_a}
+\newcommand{\tn}{{\tt_n}}
+\newcommand{\tnn}{{\tt_{n+1}}}
+\newcommand{\ycero}{{y_a}}
 \newcommand{\sol}{y}
 \newcommand{\lipschitz}{Lipschitz\xspace}
 \newcommand{\globLipschitz}{$y$--\lipschitz}
@@ -157,7 +161,7 @@ uniforme), que reduce considerablemente el rango de problemas
 diferenciales abarcados.
 \begin{theorem}
   \label{thm:existencia-loc-lipschitz}
-  Sea $f\in C^0([\ta,\tb]\times\Rset)$ y \locLipschitz. Entonces, para
+  Sea $f$ continua en $[\ta,\tb]\times\Rset$ y \locLipschitz. Entonces, para
   cualquier inicialización $\ycero\in\Rset$:
   \begin{enumerate}
   \item Existe una única solución local (definida en
@@ -171,9 +175,9 @@ diferenciales abarcados.
   \end{enumerate}
 \end{theorem}
 
-\begin{theorem}
+\begin{theorem}[Picard]
   \label{thm:existencia-unif-lipschitz}
-  Sea $f\in C^0([\ta,\tb]\times\Rset)$ y (globalmente) \globLipschitz.
+  Sea $f$ continua en $C^0([\ta,\tb]\times\Rset$ y (globalmente) \globLipschitz.
   Entonces, para cualquier inicialización $\ycero\in\Rset$, existe una
   única solución de~\eqref{eq:pvi}, que está definida en todo el
   intervalo $[\ta,\tb]$.% Además, para todo $\tt\in[\ta,\tb]$
@@ -307,17 +311,17 @@ sigue:
 \item Seguidamente definimos una sucesión de forma que $y_{n+1}$ se
   calcula a partir de $y_n$ (y posiblemente de $y_{n-1}$, ...,
   $y_{n-k}$ para algún $k\ge 1$), con el fin de que
-  $y_n\approx\sol(\tt_n)$. 
+  $y_n\approx\sol(\tn)$. 
 \end{enumerate}
 Nuestro objetivo será que el método sea \textit{convergente}, en el
-sentido de que la solución aproximada $\{y_n\}_n$ ``converja a la
-solución exacta'' $\{\sol(\tt_n)\}_n$ cuando $h\to 0$. Íntimamente
+sentido de que la solución aproximada $\{\yn\}_n$ ``converja a la
+solución exacta'' $\{\sol(\tn)\}_n$ cuando $h\to 0$. Íntimamente
 relacionados con la convergencia están los conceptos de
 ``\textit{estabilidad}'' y ``\textit{consistencia}'', que estudiaremos
 más adelante.
 % \begin{enumerate}
 % \item El método es \textit{consistente}, si la solución exacta
-%   $\{\sol(\tt_n)\}_n$ ``verifica aproximadamente'' el esquema
+%   $\{\sol(\tn)\}_n$ ``verifica aproximadamente'' el esquema
 %   numérico
 % \item El método es \textit{estable} si ``responde continuamente'' a
 %   perturbaciones en los datos iniciales.
@@ -331,12 +335,17 @@ El método más sencillo es el de Euler (más precisamente, el método
 de Euler explícito):
 \begin{equation}
 \label{eq:metodo-euler}
+\left\{
 \begin{aligned}
   &y_0 = \ycero, \\
-  &y_{n+1} = y_n + h f(\tt_n, y_n), \quad n=0,\dots,N-1.
+  &y_{n+1} = \yn + h f(\tn, \yn), \quad n=0,\dots,N-1.
 \end{aligned}
+\right.
 \end{equation}
+
 Este método admite varias interpretaciones:
+
+\subsection{Interpretaciones del método de Euler}
 
 \subsubsection{Interpretación geométrica}
 En la ecuación $y(\tt)'=f(\tt,y(\tt))$ se puede interpretar que
@@ -352,7 +361,7 @@ $\sol(\tt)$ en cada instante $\tt\in [\ta,\tb]$.
       \addplot[domain=1.5:3.1, red, thick] {36+32*(x-2)};
       % Plot a label at curve root
       \node[coordinate, medium dot, 
-            pin={[fill=blue!10!white]120:{\scriptsize $\sol(\tt_n)$}}] at
+            pin={[fill=blue!10!white]120:{\scriptsize $\sol(\tn)$}}] at
             (axis cs:2,36) {}; 
       \node[coordinate, medium dot, blue,
             pin={[fill=blue!10!white]120:{\scriptsize $\sol(\tt_{n+1})$}}] at
@@ -371,21 +380,178 @@ $\sol(\tt)$ en cada instante $\tt\in [\ta,\tb]$.
   \end{graficaTikz}
 \end{center}
 
-Por tanto, suponiendo que $y_n$ es una buena aproximación de
-$\sol(\tt_n)$ (por simplificar, $y_n=\sol(\tt_n)$):
+Por tanto, suponiendo que $\yn$ es una buena aproximación de
+$\sol(\tn)$ (por simplificar, $\yn=\sol(\tn)$):
 \begin{enumerate}
-\item Calculamos la recta, $r$, que pasa por $(\tt_n,y_n)$ y tiene pendiente
-  $f(\tt_n, y_n)$:
+\item Calculamos la recta, $r$, que pasa por $(\tn,\yn)$ y tiene pendiente
+  $f(\tt_n, \yn)$:
   $$
-  r(\tt) = y_n +  f(\tt_n, y_n) (\tt-\tt_n).
+  r(\tt) = \yn +  f(\tt_n, \yn) (\tt-\tt_n).
   $$
 \item Calculamos $y_{n+1}$ como la ordenada de esta recta en
   $\tt=\tt_{n+1}$ es decir:
-  $$y_{n+1}=r(\tt_{n+1})= y_n +  f(\tt_n, y_n) (\tt_{n+1}-\tt_n) = y_n +  f(\tt_n, y_n) \cdot
-  h.$$
+  $$
+  y_{n+1} = r(\tt_{n+1}) = 
+  \yn +  f(\tt_n, \yn) (\tt_{n+1}-\tt_n) = \yn +  f(\tt_n, \yn) \cdot h.
+  $$
 \end{enumerate}
 Así obtenemos el método de Euler~\eqref{eq:metodo-euler}.
 
+\subsubsection{Desarrollo de Taylor}
+
+Suponiendo que $\sol(t)$ (la solución exacta de~(\ref{eq:pvi})) es de
+$C^2([\ta,\tb])$, podemos hacer su desarrollo de Taylor en $\tn$:
+\begin{equation*}
+  \sol(\tnn)=\sol(\tn+h) = \sol(\tn) + h\sol'(\tn) + \frac{h^2}{2} y''(\xi),
+\end{equation*}
+donde $\xi\in(\tn,\tnn)$. Como $\sol''$ está acotada, el último
+término (el resto) será despreciable cuando $h$ es suficientemente
+pequeño (pues contiene el factor $h^2$):
+\begin{align}
+  \label{eq:euler.taylor.1}
+  \sol(\tnn)&\approx \sol(\tn) + h\sol'(\tn),
+  \intertext{es decir,}
+  \notag
+  \sol(\tnn)&\approx \sol(\tn) + h f(\tn,y(\tn)),
+  \intertext{y aproximando $\sol(\tn)\approx \yn$, $\sol(\tnn)\approx\ynn$:}
+  \notag
+  \ynn &\approx \yn + h f(\tn,\tn).
+\end{align}
+
+\paragraph{Notación.}
+En lo que sigue, se utilizará la siguiente notación (derivada discreta
+de $\ynn$):
+\begin{equation}
+  \label{eq:derivada-discreta}
+  \ddt\ynn = \frac{\ynn-\yn}{h}.
+\end{equation}
+La ecuación~(\ref{eq:euler.taylor.1}) significa que 
+$$\ddt\ynn\approx \sol(\tnn).$$
+Usando esta notación, el método de Euler se puede escribir como
+\begin{equation*}
+  \ddt\ynn = f(\tn,\yn).
+\end{equation*}
+
+Utilizando distintas aproximaciones de $y'$ se podrían haber expuesto
+ahora algunas variantes del método de Euler, pero éstas serán
+introducidas a través de fórmulas de integración.
+
+\subsubsection{Integración numérica}
+La solución exacta de~(\ref{eq:pvi}) puede escribirse de la siguiente
+forma (formulación integral de la solución de~(\ref{eq:pvi})):
+\begin{equation*}
+  \sol(t) = \sol(\ta) + \int_\ta^t f(s,\sol(s))\, ds.
+\end{equation*}
+Tomando $a=\tn$, $t=\tnn$:
+\begin{equation*}
+  \sol(\tnn) = \sol(\tn) + \int_\tn^\tnn f(s,\sol(s))\, ds.
+\end{equation*}
+Para obtener el método de Euler implícito aproximamos la última
+integral mediante la siguiente fórmula de cuadratura (regla
+rectangular izquierda):
+\begin{equation*}
+  \int_a^b g(s)\,ds \approx hg(a), \quad \text{ con $h=b-a$}.
+\end{equation*}
+Aplicándola en el intervalo $[\tn,\tnn]$ para la formulación integral
+anterior,
+\begin{equation*}
+  \ynn =  \yn + h f(\tn,\yn),
+\end{equation*}
+con $\yn\approx\sol(\tn)$, $\ynn\approx\sol(\tnn)$.
+
+\paragraph{Algunas variantes del método de Euler.}
+
+Utilizando otras fórmulas de cuadratura, se obtienen métodos numéricos
+distintos al de Euler explícito. Por ejemplo:
+\begin{enumerate}
+\item Aproximando $\int_\tn^\tnn f(s,\sol(s))\, ds$ por la regla
+  rectangular derecha,
+  \begin{equation*}
+    \int_a^b g(s)\,ds \approx hg(b)
+  \end{equation*}
+  se obtiene el \textit{Método de Euler implícito} (implícito debido a
+  que $\ynn$ no puede calcularse explícitamente, pues aparece en el
+  segundo miembro)
+  \begin{equation}
+    \label{eq:euler-implicito}
+    \tag{EI}
+    \left\{
+    \begin{aligned}
+      &y_0=\ycero,\\ &\ynn = \yn + h f(\tn,\ynn).
+    \end{aligned}
+    \right.
+  \end{equation}
+\item Aproximando $\int_\tn^\tnn f(s,\sol(s))\, ds$ por la regla del
+  punto medio (que tiene orden mayor que las reglas rectangular
+  derecha e izquierda):
+  \begin{equation*}
+    \ynn = \yn + h \; f(\tt_{n+1/2},\sol(\tt_{n+1/2})).
+  \end{equation*}
+  \begin{enumerate}
+  \item Si aproximamos seguidamente $\sol(\tt_{n+1/2})$ por
+    $\frac12\big(\sol(\tn)+\sol(\tnn)\big)$, se tiene el siguiente
+    método implícito, conocido como método de \textit{Crank-Nicolson}
+    (primera versión):
+    \begin{equation}
+    \label{eq:crank-nicolson-1}
+      \tag{CN$_1$}
+      \left\{
+        \begin{aligned}
+          &y_0=\ycero,\\ 
+          &\ynn = \yn + h \; f\big(\tt_{n+1/2},\; \frac{\yn+\ynn}{2}\big).
+        \end{aligned}
+      \right.
+    \end{equation}
+  \item  Si aproximamos $\sol(\tt_{n+1/2})$ por
+    $\sol(\tn)+\frac{h}{2}f(\tn,\sol(\tn))$ se llega al método explícito
+    conocido como de \textit{Euler--Cauchy} o \textit{Euler modificado}:
+    \begin{equation}
+      \label{eq:euler-cauchy}
+      \tag{EC}
+      \left\{
+        \begin{aligned}
+          &y_0=\ycero,\\ 
+          &\ynn = \yn + h \; f\big(\tt_{n+1/2},\;
+          \yn+\frac{h}{2}f(\tn,\yn) \big).
+        \end{aligned}
+      \right.
+    \end{equation}
+  \end{enumerate}
+\item Si aproximamos $\int_\tn^\tnn f(s,\sol(s))\, ds$ por la regla
+  del trapecio se llega al siguiente método (segunda variante del
+  método de Crank-Nicolson):
+  \begin{equation}
+    \label{eq:crank-nicolson-1}
+    \tag{CN$_2$}
+    \left\{
+      \begin{aligned}
+        &y_0=\ycero,\\ 
+        &\ynn = \yn + \frac h2 \; \big\{f(\tn,\;\sol(\tn))+f(\tnn,\;\sol(\tnn))\big\}.
+      \end{aligned}
+      \right.
+    \end{equation}
+    Si además aproximamos $\sol(\tnn)$ por
+    $\sol(\tn)+hf(\tn,\sol(\tn))$ se llega al método explícito
+    conocido como de \textit{Euler mejorado} (o \textit{método de Heunn}):
+    \begin{equation}
+      \label{eq:euler-mejorado}
+      \tag{EM}
+      \left\{
+        \begin{aligned}
+          &y_0=\ycero,\\ º
+          &\ynn = \yn + h \; f\big(\tnn,\;
+          \yn+h f(\tn,\yn) \big).
+        \end{aligned}
+      \right.
+    \end{equation}
+\end{enumerate}
+Estas variantes del método de Euler se pueden escribir en una notación
+algo más sencilla, utilizando la derivada discreta definida
+en~\eqref{eq:derivada-discreta}. Por ejemplo, el método de Euler
+implícito~\eqref{eq:euler-implicito} se sintetiza en:
+\begin{equation*}
+  y(\ta)=\ycero,\quad \ddt\ynn = f(\tnn,\ynn).
+\end{equation*}
 
 %%% Local Variables:
 %%% mode: latex

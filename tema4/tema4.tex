@@ -347,7 +347,7 @@ Este método admite varias interpretaciones:
 
 \subsection{Interpretaciones del método de Euler}
 
-\subsubsection{Interpretación geométrica}
+\subsubsection*{Interpretación geométrica}
 En la ecuación $y(\tt)'=f(\tt,y(\tt))$ se puede interpretar que
 $f(\tt,y(\tt))$ marca la pendiente (la derivada) de la solución,
 $\sol(\tt)$ en cada instante $\tt\in [\ta,\tb]$.
@@ -397,7 +397,7 @@ $\sol(\tn)$ (por simplificar, $\yn=\sol(\tn)$):
 \end{enumerate}
 Así obtenemos el método de Euler~\eqref{eq:metodo-euler}.
 
-\subsubsection{Desarrollo de Taylor}
+\subsubsection*{Desarrollo de Taylor}
 
 Suponiendo que $\sol(t)$ (la solución exacta de~(\ref{eq:pvi})) es de
 $C^2([\ta,\tb])$, podemos hacer su desarrollo de Taylor en $\tn$:
@@ -426,8 +426,8 @@ de $\ynn$):
   \ddt\ynn = \frac{\ynn-\yn}{h}.
 \end{equation}
 La ecuación~(\ref{eq:euler.taylor.1}) significa que 
-$$\ddt\ynn\approx \sol(\tnn).$$
-Usando esta notación, el método de Euler se puede escribir como
+$$\ddt\ynn\approx \sol(\tnn)$$
+y usando esta notación, el método de Euler se puede escribir como
 \begin{equation*}
   \ddt\ynn = f(\tn,\yn).
 \end{equation*}
@@ -436,7 +436,7 @@ Utilizando distintas aproximaciones de $y'$ se podrían haber expuesto
 ahora algunas variantes del método de Euler, pero éstas serán
 introducidas a través de fórmulas de integración.
 
-\subsubsection{Integración numérica}
+\subsubsection*{Integración numérica}
 La solución exacta de~(\ref{eq:pvi}) puede escribirse de la siguiente
 forma (formulación integral de la solución de~(\ref{eq:pvi})):
 \begin{equation*}
@@ -459,7 +459,7 @@ anterior,
 \end{equation*}
 con $\yn\approx\sol(\tn)$, $\ynn\approx\sol(\tnn)$.
 
-\paragraph{Algunas variantes del método de Euler.}
+\subsubsection*{Algunas variantes del método de Euler.}
 
 Utilizando otras fórmulas de cuadratura, se obtienen métodos numéricos
 distintos al de Euler explícito. Por ejemplo:
@@ -538,7 +538,7 @@ distintos al de Euler explícito. Por ejemplo:
       \tag{EM}
       \left\{
         \begin{aligned}
-          &y_0=\ycero,\\ º
+          &y_0=\ycero,\\
           &\ynn = \yn + h \; f\big(\tnn,\;
           \yn+h f(\tn,\yn) \big).
         \end{aligned}
@@ -546,11 +546,12 @@ distintos al de Euler explícito. Por ejemplo:
     \end{equation}
 \end{enumerate}
 Estas variantes del método de Euler se pueden escribir en una notación
-algo más sencilla, utilizando la derivada discreta definida
+algo más sencilla (y más cercana a la ecuación diferencial original),
+utilizando la derivada discreta definida
 en~\eqref{eq:derivada-discreta}. Por ejemplo, el método de Euler
 implícito~\eqref{eq:euler-implicito} se sintetiza en:
 \begin{equation*}
-  y(\ta)=\ycero,\quad \ddt\ynn = f(\tnn,\ynn).
+  y_0=\ycero,\quad \ddt\ynn = f(\tnn,\ynn).
 \end{equation*}
 
 %%% Local Variables:

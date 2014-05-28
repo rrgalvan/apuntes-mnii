@@ -559,10 +559,231 @@ implícito~\eqref{eq:euler-implicito} se sintetiza en:
 \label{sec:convergencia-euler}
 
 
+\section{Error y convergencia en métodos generales de un paso}
+
+Por simplicidad, enunciaremos  el resto de los resultados para
+funciones globalmente \lipschitz, aunque todos ellos son válidos para
+funciones \locLipschitz (en esquemas acotados).
+
+
+Todos los métodos explícitos que hemos enunciado hasta el momento
+(Euler~(\ref{eq:metodo-euler}), Euler--Cauchy~(\ref{eq:euler-cauchy}),
+Euler mejorado~(\ref{eq:euler-mejorado})) se pueden expresar de la
+siguiente forma:
+\begin{equation}
+  \label{eq:pb-general-1paso} 
+  \left\{
+  \begin{aligned}
+    \text{Dado}\quad &y_0 = \ycero,\\
+    \text{hallar}\quad &\ddt\ynn = \Phi(\tn,\yn, h), \quad n=0,\dots,
+    N-1,
+  \end{aligned}
+  \right.
+\end{equation}
+donde $\Phi:[\ta,\tb]\times \Rset \times [0,h^*] \to \Rset$ es una
+función continua dada (que depende de $f$), donde $h^*>0$. Los
+conceptos de consistencia, estabilidad y convergencia estudiados en la
+sección anterior se pueden generalizar a problemas generales de un
+paso, del tipo~(\ref{eq:pb-general-1paso}).
+
+\begin{definition}
+  Se llama error de consistencia (en la etapa $t_n$) del problema
+  general de un paso~(\ref{eq:pb-general-1paso}) a:
+  $${\cal E}_n=\ddt y(\tnn) - \Phi(\tn,y(\tn),h).$$
+  El método es consistente si
+  $$
+  \lim_{h\to 0} ||{\cal E}||_\infty  = 0, \quad \text{donde } {\cal
+    E}=({\cal E}_0,...,{\cal E}_N).
+  $$
+\end{definition}
+
+\newcommand{\Dtotal}[2]{#2^{(#1)}}%\frac{d^{#1}}{dt^{#1}}#2}
+Para enunciar el siguiente teorema de convergencia, definimos la
+derivada total de $f$ de orden $n$ con respecto a $t$ (teniendo en
+cuenta que $y=y(t)$ y usando la regla de la cadena):
+\begin{align*}
+  % \Dtotal 0 f &= f \\
+  \Dtotal 1 f(t,y) & = \frac{d}{dt}f(t,y) =
+  \dt f(t,y) 
+  + f(t,y)\ \dy f (t,y).
+  \\
+  \vdots
+  \\
+  \Dtotal n f(t,y) &= \frac{d}{dt}\Dtotal{n-1}f(t,y) =
+  \dt \Dtotal {n-1} f(t,y) 
+  + f(t,y) \ \dy\Dtotal {n-1}f (t,y).
+\end{align*}
+Recordemos el siguiente resultado de teoría de ecuaciones en derivadas
+parciales:
+\begin{quotation}
+  \emph Si $f\in C^n([\ta,\tb]\times\Rset)$, entonces la solución
+  maximal de~(\ref{eq:pvi}) verifica $y\in
+  C^{n+1}([\ta,\tb]\times\Rset)$ y además $$y^{n+1}(t)=\Dtotal n f(t,
+  y(t))$$.
+\end{quotation}
+
+\begin{theorem}[Consistencia]~
+  \label{thm:consitencia-pb-general-1paso}
+  \begin{enumerate}
+  \item Si $f\in C^1([\ta,\tb]\times\Rset)$,
+    entonces~(\ref{eq:pb-general-1paso}) es consistente si y solo si 
+    \begin{equation*}
+      \Phi(t,y,0) = f(t,y)\quad \forall y\in[\ta,\tb]\times\Rset.
+    \end{equation*}
+  \item Más aún, si $f\in C^p([\ta,\tb]\times\Rset)$ y las derivadas
+    parciales con respecto a $h$ existen y son continuas hasta orden
+    $p$, entonces
+    $$ ||{\cal E}||_\infty<C h^p \quad \text{para algún $C>0$}$$
+    si y sólo si:
+    \begin{align*}
+      \Phi(t,y,0) &= f(x,y), \\
+      \frac{\partial\Phi}{\partial h}(t,y,0) &=
+      \frac{1}{2}\Dtotal1 f(t,y),
+      \\
+      \frac{\partial^2\Phi}{\partial h^2}(t,y,0) &=
+      \frac{1}{3}\Dtotal2 f(t,y),
+      \\
+      &\vdots
+      \\
+      \frac{\partial^{p-1}\Phi}{\partial h^{p-1}}(t,y,0) &=
+      \frac{1}{p} \Dtotal{p-1} f(t,y).
+    \end{align*}
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  Véase, por ejemplo la referencia bibliográfica
+  [Crouzeix-Mignot].
+\end{proof}
+
+\begin{example}~
+  \begin{enumerate}
+  \item 
+    El método de Euler es consistente, con  $ ||{\cal E}||_\infty<C h $
+  \item El método de Euler--Cauchy es consitente, con $ ||{\cal
+      E}||_\infty<C h^2 $
+  \end{enumerate}
+\end{example}
+
+Consideremos el siguiente esquema perturbado:
+
+\begin{equation}
+  \label{eq:pb-perturbado-general-1paso} 
+  \left\{
+  \begin{aligned}
+    \text{Dado}\quad &z_0 = \ycero+\mu_0,\\
+    \text{hallar}\quad &\ddt z_{n+1} = \Phi(\tn,z_n, h) + \delta_n, \quad
+    n=0,\dots, N-1,
+  \end{aligned}
+  \right.
+\end{equation}
+
+Como en la sección anterior, decimos que el esquema~(\ref{eq:pb-general-1paso})
+es estable si para todo $\epsilon>0$ es posible conseguir
+$$
+||\yn - z_n||_\infty < \epsilon
+$$
+tomando $|\mu_0|<\delta$ y $||\delta_n||_\infty<\delta$.
+
+\begin{theorem}
+  Si $\Phi$ es globalmente \lipschitz,
+  entonces~(\ref{eq:pb-general-1paso}) es estable. En concreto:
+  $$
+  ||\yn - z_n||_\infty < C_1|y_0-z_0| + C_2 ||\delta_n||_\infty,
+  $$
+  donde $C_1$ y $C_2$ están definidas como en el teorema de
+  estabilidad de la sección anterior.
+\end{theorem}
+\begin{proof}
+  La demostración es similar a la sección anterior: se trata de una
+  consecuencia directa del lema de Gronwall discreto, junto al hecho
+  de que $\Phi$ sea \lipschitz.
+\end{proof}
+A partir de lo anterior, podemos conseguir la convergencia de los
+métodos generales de un paso. En concreto, si definimos el error de
+discretización como en la sección anterior, podemos demostrar
+fácilmente el siguiente teorema de Convergencia:
+
+\begin{theorem}[Teorema de Lax]
+  Si el método general de un paso~(\ref{eq:pb-general-1paso}) es
+  consistente y estable, entonces es convergente.
+\end{theorem}
+
+\begin{proof}
+  Basta aplicar el Teorema de estabilidad a las sucesiones $\yn$
+  resultantes del método~(\ref{eq:pb-general-1paso}) y $z_n=y(\tn)$,
+  teniendo en cuenta que en este caso $\delta_n={\cal E}_n$, el error
+  de consistencia, que tiende a cero por ser el método convergente.
+\end{proof}
+
 \section{Métodos de Taylor. Métodos de Runge-Kutta}
+
+\subsection{Métodos de Taylor}
 \label{sec:metodos-de-taylor}
 
+Suponiendo que la solución exacta, $y=y(t)$, de (\ref{eq:pvi})) es de
+$C^{p+1}[\ta,\tb])$, podemos hacer su desarrollo de Taylor en $\tn$:
+\begin{align*}
+  \sol(\tnn)&=\sol(\tn+h) \\&= \sol(\tn) + h\sol'(\tn) + \frac{h^2}{2}
+  \sol''(\tn)
+  + \cdots
+  + \frac{h^p}{p!} \sol^{p)}(\tn)
+  + \frac{h^{p+1}}{(p+1)!} \sol^{p+1)}(\xi)
+  \\&= \sol(\tn) + hf(\tn,\sol(\tn)) + \frac{h^2}{2}
+  \Dtotal 1 f(\tn,\sol(\tn)) 
+  + \cdots
+  + \frac{h^p}{p!} \Dtotal {p-1} f(\tn,y(\tn))
+  + O(h^{p+1}).
+\end{align*}
+Pasando $\sol(\tn)$ al primer miembro, dividiendo por
+$h$ y aproximando $\yn\approx y(\tn)$, $\ynn\approx y(\tnn)$
+llegamos a :
+\begin{align*}
+  \ddt \ynn &= \Phi(\tn,\yn,h),
+  \intertext{con}
+  \Phi(t,y,h) &= f(t,y) + \frac{h}{2}
+  \Dtotal 1 f(t,y) 
+  + \cdots
+  + \frac{h^{p-1}}{p!} \Dtotal {p-1} f(t,y)
+\end{align*}
 
+Para esta $\Phi$ se verifica trivialmente el teorema de
+consistencia. Además, es fácil ver que $\Phi$ es \lipschitz siempre
+que las derivadas totales de $f$, $\Dtotal i f$, lo sean. Luego, en
+este caso, el método de Taylor es de orden $p$.
+
+Sin embargo, este método tiene un serio inconveniente que hace que no
+se utilice en la práctica: las expresiones de las derivadas totales
+son complejas y difíciles de calcular (requieren muchas evaluaciones
+de las derivadas parciales hasta orden $p-1$).
+
+
+\section{Métodos de Runge-Kutta}
+
+Los métodos de Runge-Kutta se basan en la idea de intentar obtener
+esquemas de un orden, $p$, sustituyendo el cálculo de derivadas
+parciales de $f$ por la evaluación de $f$ en distintos puntos del
+intervalo $[\tn,\tnn]$. Así, su formulación es del tipo:
+\begin{align*}
+    \text{Dado}\ y_0 &= \ycero,\\ 
+     \ddt y_{n+1} &= \sum_{i=1}^r b_ik_i\quad
+    n=0,\dots, N-1, 
+    \\
+     \text{donde}\ k_i &= f(t_n+h\, c_i,\ y_n + h\, d_{n,i}), \text{\
+      con }
+    \left\{
+      \begin{aligned}
+        & c_i\in [0,1], \ c_0=1,\\ &d_{n,i} \text{ combinación
+          lineal de } k_0,...,k_{i-1}.
+      \end{aligned}
+      \right.
+\end{align*}
+Si $b_1+b_2+\cdots+b_n=1$, entonces el método es consistente, pues
+entonces $\Phi(t,y,0)=\sum_{i=1}^r b_ik_i=f(x,y)$. No es difícil
+demostrar que si $f$ es globalmente \lipschitz, entonces el método es
+estable (se deja como ejercicio). Por lo tanto, los métodos de
+Runge-Kutta son convergentes y el orden de convergencia dependerá de
+los parámetros que definen a cada método concreto.
 
 %%% Local Variables:
 %%% mode: latex

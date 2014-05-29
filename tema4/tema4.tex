@@ -1,3 +1,8 @@
+% *#06#
+%
+% imei
+% 359 778 047 841 331 
+%
 \renewcommand{\tt}{t}
 \newcommand{\yy}{y}
 \newcommand{\yn}{{\yy_n}}
@@ -8,9 +13,12 @@
 \newcommand{\tnn}{{\tt_{n+1}}}
 \newcommand{\ycero}{{y_a}}
 \newcommand{\sol}{y}
-\newcommand{\lipschitz}{Lipschitz\xspace}
-\newcommand{\globLipschitz}{$y$--\lipschitz}
+\newcommand{\lipschitz}{$y$--Lipschitz\xspace}
 \newcommand{\locLipschitz}{localmente $y$--\lipschitz}
+\newcommand{\globLipschitz}{\lipschitz}
+\newcommand{\RK}{Runge--Kutta}
+\newcommand{\AB}{Adams--Bashforth}
+\newcommand{\AM}{Adams--Moulton}
 
 \chapter[Problemas de valor inicial para EDOs de primer orden]
 {Problemas de valor inicial para ecuaciones diferenciales de primer
@@ -190,7 +198,7 @@ diferenciales abarcados.
 
 En lo que sigue, estudiaremos el análisis numérico de problemas
 diferenciales en los que, en principio, la función $f(\tt,y)$ es tan
-solo \locLipschitz. Por lo tanto el estudio de la existencia de
+solo \locLipschitz. Luego el estudio de la existencia de
 solución en $[\ta,\tb]$ no será una tarea inmediata. Usando el
 Teorema~\ref{thm:existencia-loc-lipschitz}, intentaremos demostrar que
 la solución maximal del problema~(\ref{eq:pvi}) está acotada en
@@ -277,12 +285,12 @@ ecuaciones diferenciales que nos resultarán de gran utilidad.
     $$
     \sol_2(\tt)=\frac{2e^{2\tt}}{1+e^{2\tt}},
     $$
-    función continua y por tanto acotada superiormente en $[0,2]$.
+    función continua y, en consecuencia, acotada superiormente en $[0,2]$.
     Según la proposición~\ref{pro:propiedades-pvi} (parte 1)
     \begin{equation*}
-      \sol(\tt)\le\sol_2(\tt)
+      \sol(\tt)\le\sol_2(\tt),
     \end{equation*}
-    y por tanto $\sol(\tt)$ está también acotada superiormente en
+    luego $\sol(\tt)$ está también acotada superiormente en
     $[0,2]$. Por lo tanto, $\sol$ está definida en todo $[0,2]$.
   \end{enumerate}
   \renewcommand{\tt}{t}
@@ -380,7 +388,7 @@ $\sol(\tt)$ en cada instante $\tt\in [\ta,\tb]$.
   \end{graficaTikz}
 \end{center}
 
-Por tanto, suponiendo que $\yn$ es una buena aproximación de
+Luego, suponiendo que $\yn$ es una buena aproximación de
 $\sol(\tn)$ (por simplificar, $\yn=\sol(\tn)$):
 \begin{enumerate}
 \item Calculamos la recta, $r$, que pasa por $(\tn,\yn)$ y tiene pendiente
@@ -562,7 +570,7 @@ implícito~\eqref{eq:euler-implicito} se sintetiza en:
 \section{Error y convergencia en métodos generales de un paso}
 
 Por simplicidad, enunciaremos  el resto de los resultados para
-funciones globalmente \lipschitz, aunque todos ellos son válidos para
+funciones \globLipschitz, aunque todos ellos son válidos para
 funciones \locLipschitz (en esquemas acotados).
 
 
@@ -716,7 +724,7 @@ fácilmente el siguiente teorema de Convergencia:
   de consistencia, que tiende a cero por ser el método convergente.
 \end{proof}
 
-\section{Métodos de Taylor. Métodos de Runge-Kutta}
+\section{Métodos de Taylor. Métodos de \RK}
 
 \subsection{Métodos de Taylor}
 \label{sec:metodos-de-taylor}
@@ -758,33 +766,207 @@ son complejas y difíciles de calcular (requieren muchas evaluaciones
 de las derivadas parciales hasta orden $p-1$).
 
 
-\section{Métodos de Runge-Kutta}
+\subsection{Métodos de \RK}
 
-Los métodos de Runge-Kutta se basan en la idea de intentar obtener
+Los métodos de \RK se basan en la idea de intentar obtener
 esquemas de un orden, $p$, sustituyendo el cálculo de derivadas
 parciales de $f$ por la evaluación de $f$ en distintos puntos del
 intervalo $[\tn,\tnn]$. Así, su formulación es del tipo:
-\begin{align*}
-    \text{Dado}\ y_0 &= \ycero,\\ 
-     \ddt y_{n+1} &= \sum_{i=1}^r b_ik_i\quad
-    n=0,\dots, N-1, 
-    \\
-     \text{donde}\ k_i &= f(t_n+h\, c_i,\ y_n + h\, d_{n,i}), \text{\
-      con }
-    \left\{
-      \begin{aligned}
-        & c_i\in [0,1], \ c_0=1,\\ &d_{n,i} \text{ combinación
-          lineal de } k_0,...,k_{i-1}.
-      \end{aligned}
-      \right.
-\end{align*}
-Si $b_1+b_2+\cdots+b_n=1$, entonces el método es consistente, pues
+\begin{align}
+  \notag
+  \text{Dado}\ y_0 &= \ycero,\\ 
+  \label{eq:R-K-formula-general}
+  \ddt y_{n+1} &= \sum_{i=1}^r b_ik_i\quad
+  n=0,\dots, N-1, 
+  \\
+  \notag
+  \text{donde}\ k_i &= f(t_n+h\, c_i,\ y_n + h\, d_{i}), \text{\
+    con }
+  \left\{
+    \begin{aligned}
+      & c_i\in [0,1], \text{ con } c_1=1,
+      \\ &d_{i} \text{ combinación
+        lineal de } k_1,...,k_{i-1}.
+    \end{aligned}
+  \right.
+\end{align}
+Si $b_1+b_2+\cdots+b_r=1$, entonces el método es consistente, pues
 entonces $\Phi(t,y,0)=\sum_{i=1}^r b_ik_i=f(x,y)$. No es difícil
 demostrar que si $f$ es globalmente \lipschitz, entonces el método es
 estable (se deja como ejercicio). Por lo tanto, los métodos de
-Runge-Kutta son convergentes y el orden de convergencia dependerá de
+\RK son convergentes y el orden de convergencia dependerá de
 los parámetros que definen a cada método concreto.
 
+\begin{example}[Euler--Cauchy y Euler mejorado]
+  Euler--Cauchy~(\ref{eq:euler-cauchy}) (de orden 2) es un método de \RK
+  con $r=2$. En efecto, cada iteración en tiempo se puede escribir
+  como:
+  \begin{align*}
+    k_1 &= f(\tn,\yn), \\ k_2 &= f\big(\tt_{n}+\frac{h}{2},\; \yn+\frac{h}{2}k_1 \big),
+    \\
+    \ynn &= \yn + h \; \big( b_1k_1 + b_2 k_2 \big),
+    \quad
+    \text{ con } b_1=0,\ b_2=1.
+  \end{align*}
+
+  De forma similar, Euler mejorado~(\ref{eq:euler-mejorado}) se puede escribir como un método de
+  \RK con $r=2$.
+\end{example}
+
+\begin{example}[Método clásico de \RK]
+  Pueden construirse métodos de \RK de orden arbitrario
+  (aunque el proceso de construcción es laborioso). El método de este
+  tipo más utilizado, por ser sencillo y fácil de programar, tiene
+  orden $4$ y se conoce como \resaltar{método clásico de \RK}:
+  \begin{center}
+    \includegraphics[width=0.9\linewidth]{tema4/R-K-clasico}
+  \end{center}
+\end{example}
+
+\section{Métodos multipaso}
+\label{sec:metodos-multipaso}
+
+Los métodos numéricos de $k$ son aquellos en los que, para calcular
+$y_{n+k}$ (una aproximación de $y(t_{n+k})$), se utilizan
+aproximaciones de la solución en $k$ etapas de tiempo anteriores,
+\begin{equation*}
+  y_n,\  y_{n+1},\ \dots, y_{n+k-1} \quad \longmapsto \quad y_{n+k}.
+\end{equation*}
+Específicamente:
+\begin{definition}
+  Un método numérico (lineal) de $k$ pasos para aproximar la solución
+  de~(\ref{eq:pvi}) es todo aquél en el que la solución en
+  la etapa $n+k$ viene dada por una expresión recursiva de la forma:
+  \begin{align}
+    \label{eq:metodo-multipaso}
+    \ddt y_{n+k}=&\sum_{j=0}^k \beta_j f(t_{n+j},y_{n+j}), \quad
+    n=0,...,N-k, \intertext{donde $\ddt y_{n+k}$ es un aproximación
+      de $y'(t_{n+k})$ usando un cociente incremental con $k$ puntos:} \ddt
+    \label{eq:cociente-incremental-multipaso}
+    y_{n+k}&=\frac{1}{h}\sum_{j=0}^k\alpha_j y_{n+j}.
+  \end{align}
+\end{definition}
+En las expresiones anteriores, $\alpha_j, \beta_j\in\Rset$, con
+$\alpha_k\neq 0$. Por simplificar, supondremos $$\alpha_k=1$$ (lo que
+equivale a dividir todos los coeficientes por $\alpha_k$). Con
+el fin de abreviar, con frecuencia usaremos la siguiente notación:
+$$f_n=f(\tn,\yn).$$
+
+Puesto que en un método de $k$ pasos del
+tipo~(\ref{eq:metodo-multipaso}) se necesitan $k$ aproximaciones
+previas para calcular $y_{n+k}$, en la primera iteración ($n=0$) es
+necesario disponer de $k$ valores de arranque, $y_0$, $y_1$, ...,
+$y_{k-1}$ (que determinarán $y_k$). Pero en~(\ref{eq:pvi}) sólo
+contamos con un dato inicial, $\ycero$, de forma que necesitaremos
+usar algún método numérico para aproximar $y_1$, $y_2$, ...,
+$y_{k-1}$. Habitualmente se usarán métodos de un paso, con especial
+cuidado en que el orden de estos métodos sea (al menos) igual al 
+del método multipaso (pues, de otra forma, perderíamos calidad en la
+aproximación inicial).
+
+\begin{enumerate}
+\item Si $\beta_k=0$, el método se dice \emph{explícito}. El término
+  $f_{n+k}=f(t_{n+k},y_{n+k})$ no aparece en el segundo miembro
+  de~(\ref{eq:metodo-multipaso}) del método multipaso, en
+  consecuencia, usando~(\ref{eq:cociente-incremental-multipaso}),
+  $y_{n+k}$ puede expresarse explícitamente:
+  \begin{equation*}
+    y_{n+k}=  
+    h\sum_{j=0}^{k-1} \beta_j f_{n+j}-\sum_{j=0}^{k-1}\alpha_j y_{n+j}.
+  \end{equation*}
+\item Si $\beta_k\neq 0$, el método se dice \emph{implícito}. No podemos
+  expresar explícitamente el término $y_{n+k}$ y, en cada paso,
+  para calcular este término será necesario resolver la ecuación (no
+  lineal, en general):
+  \begin{equation*}
+    y_{n+k} - \beta_k f(t_{n+j},y_{n+j})= 
+     h\sum_{j=0}^{k-1} \beta_j f(t_{n+j},y_{n+j})- \sum_{j=0}^{k-1}\alpha_j y_{n+j} .
+  \end{equation*}
+  Para resolver este tipo de ecuaciones existen distintas
+  posibilidades, las más habituales de las cuales son el método de
+  aproximaciones sucesivas (o de punto fijo) y el método de Newton
+  (para asegurar la convergencia, de estos métodos, será necesario
+  imponer hipótesis adicionales a $f$).
+\end{enumerate}
+
+\subsection{Construcción de métodos multipaso lineales}
+
+Para deducir algunos métodos multipaso utilizaremos la formulación
+integral de la ecuación diferencial
+$$
+y'=f(t,y),
+$$
+es decir fijados $t,t^*\in[a,b]$ escribimos
+\begin{equation*}
+  y(t^*)-y(t) = \int_{t}^{t^*} f(x,y(x))\, dx.
+\end{equation*}
+Para cada $n=0,...,N-k$, elegimos $t=x_{n+k-1}$ y $t^*=x_{n+k}$ y
+denotando $y_{n+j}\approx y(t_{n+j})$ a las aproximaciones que
+deseamos calcular,  ponemos en práctica la siguiente idea:
+  % realizar, en esta formulación integral las siguiente
+% aproximación:
+\begin{enumerate}
+\item Elegir $t=x_{n+k-1}$ y $t^*=x_{n+k}$
+% \item Elegir $t$ y $t^*$ adecuadamente.
+% \item Sustituir la función $F(t)=f(t,y(t))$ por su polinomio de
+%   interpolación de Lagrange, $P(t)$, en los nodos $t_n,\ t_{n+1},\
+%   \dots, t_{n+k}$.
+\item Sustituir la función $F(x)=f(x,y(x))$ por su polinomio de
+  interpolación de Lagrange, $P(x)$, en un soporte 
+  $S\subset \{t_{n+j}\}_{j=0}^k$ adecuado:%  interpola los valores
+  % $\{f(t_{n+j},y_{n+j})\}_{j=0}^k$.
+  \begin{enumerate}
+  \item Métodos de \emph{\AB}: 
+    \begin{equation*}
+      S= \{t_{n+j}\}_{j=0}^{k-1}.
+    \end{equation*}
+    Como veremos, se trata de métodos explícitos, pues en la
+    aproximación no aparece el término
+    $f(t_{n+k},y_{n+k})$.
+  \item  Métodos de \emph{\AM}: 
+    \begin{equation*}
+      S= \{t_{n+j}\}_{j=0}^{k},
+    \end{equation*}
+    dando lugar a métodos implícitos.
+  \end{enumerate}
+\end{enumerate}
+
+\begin{example}[Método de \AB de dos pasos]
+  \label{sec:AB-dos-pasos}
+  Consideremos la siguiente expresión integral:
+  \begin{equation}
+   \label{eq:tema4:8} 
+   y(t_{n+2})-y(t_{n+1}) \approx \int_{t_{n+1}}^{t_{n+2}} P(t)\,dt,
+  \end{equation}
+  donde $P(t)$ es el polinomio de interpolación de $F(t)=f(t,y(t))$ en
+  $t_n$ y $t_{n+1}$. Para construirlo, podemos usar la fórmula de
+  diferencias dividas de Newton o bien la fórmula de Lagrange. En este
+  último caso:
+  \begin{equation*}
+   P(t)=F(t_n)\frac{t-t_{n+1}}{t_n-t_{n+1}} +
+   F(t_{n+1})\frac{t-t_{n}}{t_{n+1}-t_{n}}.
+  \end{equation*}
+  Con un simple cálculo (puede ser útil el cambio de variable $t =
+  t_{n+1}+h\,s$, que transforma $t\in [t_{n+1},t_{n+2}]$ en $s\in [0,1]$)
+  el segundo miembro de~(\ref{eq:tema4:8}) resulta:
+  \begin{equation*}
+  \int_{t_{n+1}}^{t_{n+2}} P(t)\,dt = \frac{h}{2} \big[
+  3(f(t_{n+1},y(t_{n+1})) - f(t_{n},y(t_{n})) \big].
+  \end{equation*}
+  Planteamos, por tanto, la siguiente aproximación: dados $y_n$,
+  $y_{n+1}$, calcular $y_{n+2}$ como solución de la
+  fórmula de recurrencia:
+  \begin{equation*}
+    y_{n+2}-y_{n+1} = \frac{h}{2} \big[
+  3f(t_{n+1},y_{n+1}) - f(t_{n},y_{n}) \big],
+  \end{equation*}
+  de donde, para cada $n=0,...,N-2$ podemos obtener explícitamente el
+  valor $y_{n+2}$.
+  
+  El valor $y_0$ se puede obtener a partir del dato inicial $\ycero$,
+  mientras que para el cálculo de $y_1$ será necesario utilizar un
+  método numérico.
+\end{example}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../apuntes-MNII.tex"

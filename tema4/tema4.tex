@@ -529,7 +529,7 @@ distintos al de Euler explícito. Por ejemplo:
   del trapecio se llega al siguiente método (segunda variante del
   método de Crank-Nicolson):
   \begin{equation}
-    \label{eq:crank-nicolson-1}
+    \label{eq:crank-nicolson-2}
     \tag{CN$_2$}
     \left\{
       \begin{aligned}
@@ -841,15 +841,21 @@ Específicamente:
     \label{eq:metodo-multipaso}
     \ddt y_{n+k}=&\sum_{j=0}^k \beta_j f(t_{n+j},y_{n+j}), \quad
     n=0,...,N-k, \intertext{donde $\ddt y_{n+k}$ es un aproximación
-      de $y'(t_{n+k})$ usando un cociente incremental con $k$ puntos:} \ddt
+      de $y'(t_{n+k})$ usando un cociente incremental con $k$ pasos:} 
+    \ddt
     \label{eq:cociente-incremental-multipaso}
     y_{n+k}&=\frac{1}{h}\sum_{j=0}^k\alpha_j y_{n+j}.
   \end{align}
 \end{definition}
 En las expresiones anteriores, $\alpha_j, \beta_j\in\Rset$, con
 $\alpha_k\neq 0$. Por simplificar, supondremos $$\alpha_k=1$$ (lo que
-equivale a dividir todos los coeficientes por $\alpha_k$). Con
-el fin de abreviar, con frecuencia usaremos la siguiente notación:
+equivale a dividir todos los coeficientes por $\alpha_k$).
+
+Por ejemplo, los métodos de Euler (explícito e implícito) y el esquema
+de Crank-Nicolson~(\ref{eq:crank-nicolson-2}) son métodos de este tipo
+con un único paso $k=1$. Más adelante se muestran algunos métodos con
+$k>1$.
+Con el fin de abreviar, con frecuencia usaremos la siguiente notación:
 $$f_n=f(\tn,\yn).$$
 
 Puesto que en un método de $k$ pasos del

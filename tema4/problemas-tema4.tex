@@ -31,9 +31,38 @@
     \texttt{scipy.integrate}).
   \end{problema}
   
+  \begin{problema}%% problema 3
+    Consideremos el siguiente problema de valor inicial:
+    \begin{align*}
+      &y'=1-y^2,\\
+      &y(0)=0,
+    \end{align*}
+    cuya solución exacta es:
+    $$ y(t) = \frac{e^{2t}-1}{e^{2t}+1}.$$
+    Aproximar la solución con $h=0.1$ usando:
+    \begin{enumerate}
+    \item El método de Euler.
+    \item El método de Euler-Cauchy (o Euler
+      modificado).
+    \item El método de Runge-Kutta de orden $4$
+    \end{enumerate}
+  \end{problema}
 
   \begin{problema}
-    
+    Aproximar la solución del problema de Cauchy
+    \begin{equation*}
+      \left\{
+      \begin{aligned}
+        &y'=x^2 - \sqrt{y-e^{x/2}}, \quad x\in[0,2], \\
+        &y(0)=5
+      \end{aligned}
+      \right.
+    \end{equation*}
+    Mediante:
+    \begin{enumerate}
+    \item El método de Adams--Bashforth de orden $2$.
+    \item El método predictor-corrector $AB2$--$AM2$
+    \end{enumerate}
   \end{problema}
   
   \end{problemas}

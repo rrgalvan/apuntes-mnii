@@ -772,7 +772,7 @@ fácil demostrar la convergencia del método de Euler hacia la solución
 exacta, en el sentido que definiremos a continuación.
 
 \begin{definition}
-  \label{def:error-discretizacion-euler}
+  \label{def:error-discretizacion-pvi}
   Dado un método numérico para~(\ref{eq:pvi}), se llama error de
   discretización en el instante $\tn$ a la diferencia
   \begin{equation*}
@@ -969,8 +969,7 @@ parciales:
 \end{theorem}
 
 \begin{proof}
-  Véase, por ejemplo la referencia bibliográfica
-  [Crouzeix-Mignot].
+  Véase [Crouzeix-Mignot] (bibliografía).
 \end{proof}
 
 \begin{example}~
@@ -1018,7 +1017,8 @@ tomando $|\mu_0|<\delta$ y $||\delta_n||_\infty<\delta$.
 \end{proof}
 A partir de lo anterior, podemos conseguir la convergencia de los
 métodos generales de un paso. En concreto, si definimos el error de
-discretización como en la sección anterior, podemos demostrar
+discretización como en la sección anterior
+(definición~\ref{def:error-discretizacion-pvi}), podemos demostrar
 fácilmente el siguiente teorema de Convergencia:
 
 \begin{theorem}[Teorema de Lax]
@@ -1246,7 +1246,7 @@ deseamos calcular,  ponemos en práctica la siguiente idea:
   \end{enumerate}
 \end{enumerate}
 
-\begin{example}[Método de \AB de dos pasos]
+\begin{example}[Método de \AB de dos pasos (orden 2)]
   \label{sec:AB-dos-pasos}
   Consideremos la siguiente expresión integral:
   \begin{equation}
@@ -1270,17 +1270,68 @@ deseamos calcular,  ponemos en práctica la siguiente idea:
   \end{equation*}
   Planteamos, por tanto, la siguiente aproximación: dados $y_n$,
   $y_{n+1}$, calcular $y_{n+2}$ como solución de la
-  fórmula de recurrencia:
-  \begin{equation*}
+  siguiente fórmula de recurrencia:
+  \begin{equation}
+    \tag{AB2}
+    \label{eq:AB2}
     y_{n+2}-y_{n+1} = \frac{h}{2} \big[
-  3f(t_{n+1},y_{n+1}) - f(t_{n},y_{n}) \big],
-  \end{equation*} de donde, para cada $n=0,...,N-2$ podemos obtener explícitamente el
+    3f(t_{n+1},y_{n+1}) - f(t_{n},y_{n}) \big],
+  \end{equation} 
+  de donde, para cada $n=0,...,N-2$ podemos obtener explícitamente el
   valor $y_{n+2}$.
   
   El valor $y_0$ se puede obtener a partir del dato inicial $\ycero$,
   mientras que para el cálculo de $y_1$ será necesario utilizar un
-  método numérico de un paso.
+  método numérico de un paso. Se puede demostrar que este método
+  de \AB tiene orden 2, por tanto el método para inicializar debe
+  tener el mismo orden (por ejemplo, Euler--Cauchy o Euler mejorado).
 \end{example}
+
+\begin{example}[Método de \AM de dos pasos (orden 2)]
+  Si consideramos la ecuación integral (\ref{eq:tema4:8}) pero
+  definimos $P(t)$ como el polinomio de interpolación de
+  $f(t,y(t))$ en $\{t_n,t_{n+1},t_{n+2}\}$, obtenemos el método
+  de \AM de dos pasos. Procediendo como en el ejemplo anterior (lo que
+  se deja como ejercicio) se obtiene:
+  \begin{equation}
+    \tag{AM2}
+    \label{eq:AM2}
+      y_{n+2}-y_{n+1} = \frac{h}{12} \big[
+      5f(t_{n+2},y_{n+2}) + 8 f(t_{n+1},y_{n+1}) - f(t_{n},y_{n}) \big].
+  \end{equation} 
+  Se puede demostrar que el orden de este método es igual a
+  $2$. Puesto que se trata de un método implícito, en principio será
+  necesario usar algún método numérico (por ejemplo, iteraciones de
+  punto fijo) en cada instante $\tn$ para hallar $y_{n+2}$. 
+\end{example}
+
+\begin{example}[Método predictor-corrector~(\ref{eq:AB2})--(\ref{eq:AM2})]
+  Con frecuencia, los métodos de \AB y \AM del mismo orden se suelen
+  combinar para dar lugar a nuevos métodos numéricos. La idea es, en
+  cada etapa $t_n$:
+  \begin{enumerate}
+  \item Utilizar el método de \AB para obtener, de forma explícita una
+    primera aproximación (predicción) de $y_{n+k}$.
+  \item Utilizar la predicción obtenida para aproximar
+    $f(t_{n+k},y_{n+k})$ y así calcular, mediante el método de \AM,
+    una nueva aproximación (corrección) de $y_{n+k}$.
+  \end{enumerate}
+  
+  En el caso~(\ref{eq:AB2})--(\ref{eq:AM2}) cada etapa del método
+  queda:
+  \begin{equation*}\left\{
+      \begin{aligned}
+        y^*_{n+2} &= y_{n+1} + \frac{h}{2} \big[ 3f(t_{n+1},y_{n+1}) -
+        f(t_{n},y_{n}) \big] \quad \text{(predicción),}
+        \\
+        y_{n+2} &= y_{n+1} + \frac{h}{12} \big[ 5f(t_{n+2},y^*_{n+2}) 
+        + 8 f(t_{n+1},y_{n+1}) - f(t_{n},y_{n}) \big] \quad
+        \text{(corrección).}
+      \end{aligned}\right.
+  \end{equation*}
+  Así obtenemos un método explícito que saca partida a las
+  características de los esquemas de \AB y AM.
+  \end{example}
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../apuntes-MNII.tex"

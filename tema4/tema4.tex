@@ -11,16 +11,19 @@
 \newcommand{\tb}{b}
 \newcommand{\tn}{{\tt_n}}
 \newcommand{\tnn}{{\tt_{n+1}}}
+\newcommand{\zn}{{z_n}}
+\newcommand{\znn}{{z_{n+1}}}
 \newcommand{\ycero}{{y_a}}
 \newcommand{\sol}{y}
 \newcommand{\lipschitz}{$y$--Lipschitz\xspace}
-\newcommand{\locLipschitz}{localmente $y$--\lipschitz}
+\newcommand{\locLipschitz}{localmente \lipschitz}
 \newcommand{\globLipschitz}{\lipschitz}
-\newcommand{\RK}{Runge--Kutta}
-\newcommand{\AB}{Adams--Bashforth}
-\newcommand{\AM}{Adams--Moulton}
+\newcommand{\errCons}{{\cal E}}
+\newcommand{\RK}{Runge--Kutta\xspace}
+\newcommand{\AB}{Adams--Bashforth\xspace}
+\newcommand{\AM}{Adams--Moulton\xspace}
 
-\chapter[Problemas de valor inicial para EDOs de primer orden]
+\chapter[Problemas de valor inicial para EDO de orden 1]
 {Problemas de valor inicial para ecuaciones diferenciales de primer
   orden%
   \footnote{\licenseInfo}}
@@ -342,6 +345,7 @@ más adelante.
 El método más sencillo es el de Euler (más precisamente, el método
 de Euler explícito):
 \begin{equation}
+  \tag{EU}
 \label{eq:metodo-euler}
 \left\{
 \begin{aligned}
@@ -403,7 +407,7 @@ $\sol(\tn)$ (por simplificar, $\yn=\sol(\tn)$):
   \yn +  f(\tt_n, \yn) (\tt_{n+1}-\tt_n) = \yn +  f(\tt_n, \yn) \cdot h.
   $$
 \end{enumerate}
-Así obtenemos el método de Euler~\eqref{eq:metodo-euler}.
+Así obtenemos el método~\eqref{eq:metodo-euler}.
 
 \subsubsection*{Desarrollo de Taylor}
 
@@ -427,22 +431,20 @@ pequeño (pues contiene el factor $h^2$):
 \end{align}
 
 \paragraph{Notación.}
-En lo que sigue, se utilizará la siguiente notación (derivada discreta
-de $\ynn$):
+Para cualquier sucesión $\{y_n\}_n$, se utilizará la
+siguiente notación (derivada discreta de $\ynn$):
 \begin{equation}
   \label{eq:derivada-discreta}
   \ddt\ynn = \frac{\ynn-\yn}{h}.
 \end{equation}
-La ecuación~(\ref{eq:euler.taylor.1}) significa que 
-$$\ddt\ynn\approx \sol(\tnn)$$
-y usando esta notación, el método de Euler se puede escribir como
+Así el método de Euler se puede escribir como
 \begin{equation*}
   \ddt\ynn = f(\tn,\yn).
 \end{equation*}
 
-Utilizando distintas aproximaciones de $y'$ se podrían haber expuesto
-ahora algunas variantes del método de Euler, pero éstas serán
-introducidas a través de fórmulas de integración.
+Utilizando diferentes formulaciones de la derivada discreta, se podrían
+haber expuesto ahora algunas variantes del método de Euler, pero éstas
+serán introducidas a través de fórmulas de integración.
 
 \subsubsection*{Integración numérica}
 La solución exacta de~(\ref{eq:pvi}) puede escribirse de la siguiente
@@ -510,9 +512,10 @@ distintos al de Euler explícito. Por ejemplo:
         \end{aligned}
       \right.
     \end{equation}
-  \item  Si aproximamos $\sol(\tt_{n+1/2})$ por
-    $\sol(\tn)+\frac{h}{2}f(\tn,\sol(\tn))$ se llega al método explícito
-    conocido como de \textit{Euler--Cauchy} o \textit{Euler modificado}:
+  \item Si aproximamos $\sol(\tt_{n+1/2})$ por
+    $\sol(\tn)+\frac{h}{2}f(\tn,\sol(\tn))$ se llega al método
+    explícito conocido como de \textit{Euler--Cauchy}, del
+    \textit{punto medio} o \textit{Euler modificado}:
     \begin{equation}
       \label{eq:euler-cauchy}
       \tag{EC}
@@ -564,35 +567,341 @@ implícito~\eqref{eq:euler-implicito} se sintetiza en:
 
 
 \section{Error y convergencia en el método de Euler}
+\label{sec:error-y-convergencia-euler}
+En esta sección comprobaremos que el método de Euler es convergente,
+es decir el error entre la solución exacta y la solución aproximada
+converge a cero (en un sentido que, más adelante, definiremos con
+precisión).
+
+En los métodos numéricos para la resolución de~(\ref{eq:pvi}), el
+estudio de la convergencia se puede desglosar en el análisis de dos
+conceptos: \textit{consitencia} y \textit{estabilidad}. Los
+estudiaremos a continuación.
+
+\subsection{Consistencia del método de Euler}
+\label{sec:consistencia-euler}
+
+La idea de consistencia de un método numérico está relacionada con el
+grado en el que la solución exacta verifica este método.
+
+En lo que sigue supondremos existencia y unicidad de solución $y\in
+C^1([a,b])$ del problema de valor inicial~(\ref{eq:pvi}).
+Consideremos el método de Euler (en una partición $\{t_n\}_{n=0}^N$ de
+$[a,b]$, donde $N\in\Nset$ y $h=(b-a)/N$), que usando la definición
+derivada discreta~(\ref{eq:derivada-discreta}) se escribe como: hallar
+$\{y_n\}_{n=0}^N$ solución de:
+\begin{align*}
+  \ddt \ynn &= \frac{\ynn-\yn}{h} = f(\tn,\yn), \intertext{para cada
+    $n=0,...,N-1$ y partiendo de $y_0=\ycero$. Como $\yn\approx
+    y(\tn)$, la expresión anterior sólo se verifica de forma
+    aproximada al sustituir $\yn$ por $y(\tn)$:}  \ddt y(\tnn) &=
+  \frac{y(\tnn)-y(\tn)}{h} \approx f(\tn,y(\tn)).
+\end{align*}
+\begin{definition}[Consistencia en $\tn$ del método de Euler]
+  \label{def:error-consistencia-euler}
+  Se define el error de consistencia del método de Euler en el
+  instante $\tn$ como
+  \begin{equation}
+    \label{eq:consistencia-euler}
+   \errCons_n = \ddt y(\tnn)-f(\tn,y(\tn)). 
+  \end{equation}
+\end{definition}
+Obviamente, para un problema de valor inicial, el error de
+consistencia dependerá de la talla, $h$, en la discretización del
+intervalo $[a,b]$. Es decir, $\errCons_n=\errCons_n(h)$.
+%  \begin{remark}
+%   Como $y(t)$ es la solución exacta, $y'(\tn)=f(\tn,y(\tn))$, así
+%   podemos en el método de Euler podemos escribir:
+%   \begin{align*}
+%     \ddt y(\tnn) &\approx y'(\tn).
+%   \end{align*}
+% \end{remark}
+
+\begin{definition}[Consistencia de un método numérico para~(\ref{eq:pvi})]
+  \label{def:consitencia-metodo-pvi}
+  Dado un método numérico para~(\ref{eq:pvi}), se define el error de consistencia
+  como:
+  \begin{equation*}
+    \errCons = \errCons(h) = (\errCons_0, \errCons_1,...,\errCons_{N-1}).
+  \end{equation*}
+  Decimos que un método es consistente si
+  \begin{equation*}
+    \lim_{h\to 0} ||\errCons(h)||_\infty = 0.
+  \end{equation*}
+  Decimos que un método numérico para~(\ref{eq:pvi}) tiene orden de
+  consistencia $p$ si existen $C, h_0>0$ tales que
+  \begin{equation*}
+    ||\errCons(h)||_\infty \le C\, h^p, \quad \forall h<h_0.
+  \end{equation*}
+\end{definition}
+
+\begin{theorem}
+  \label{thm:consistencia-euler}
+  Si $y\in C^2([\ta,\tb])$, entonces el método de Euler es
+  consistente. Más aún, se verifica
+  \begin{equation*}
+    ||\errCons(h)||_\infty \le \frac{h}{2} ||y''||_\infty,
+  \end{equation*}
+  por tanto el  orden de consistencia del método de Euler es igual a uno.
+\end{theorem}
+
+\begin{proof}
+  Mediante un desarrollo de Taylor de la solución
+  exacta:
+  \begin{align*}
+    y(\tnn)=y(\tn+h) &= y(\tn) + h y'(\tn) + \frac{h^2}{2} y''(\xi),
+    \\ &= y(\tn) + h f(\tn,y(\tn)) + \frac{h^2}{2} y''(\xi),
+    \quad \text{con $\xi$ entre $\tn$ y $\tnn$,}
+  \intertext{por lo que}
+    \frac{y(\tnn)-y(\tn)}{h} &- f(\tn,y(\tn)) = \frac{h}{2} y''(\xi), 
+    \quad\text{$\xi$ entre $\tn$ y $\tnn$.}
+  \end{align*}
+  Y entonces para todo $n=0,...,N-1$:
+  \begin{equation*}
+  |\errCons_n| \le \frac{h}{2} \max_{t\in[\ta,\tb]} |y''(t)|.
+\end{equation*}
+\end{proof}
+
+\subsection{Estabilidad del método de Euler}
+\label{sec:estabilidad-euler}
+En general, la solución exacta de~(\ref{eq:pvi}) no verifica la regla
+de recurrencia del método de Euler~(\ref{eq:metodo-euler}). En su
+lugar, la ecuación de consistencia~(\ref{eq:consistencia-euler})
+nos indica que la solución exacta verifica el siguiente esquema
+recursivo (que se puede entender como una pequeña perturbación del
+método de Euler):
+\begin{align}
+  \notag
+    \ddt y(\tnn)&=f(\tn,y(\tn))+\errCons_n,
+    \intertext{o equivalentemente}
+    \label{eq:tema4:7}
+    y(\tnn)&=y(\tn)+ h f(\tn,y(\tn))+ h\,\errCons_n,
+\end{align}
+donde $\errCons_n$ es el error de consistencia en el instante
+$t_n$. 
+
+En esta sección estudiemos el modo en que pequeñas perturbaciones
+de~(\ref{eq:metodo-euler}) afectan a su solución, contemplando incluso
+el caso en el que se produce una pequeña perturbación del dato en el
+instante inicial. Planteamos por tanto el siguiente esquema
+perturbado:
+\begin{equation}\left\{
+\begin{aligned}
+  &z_0 = \ycero + \mu_0 \\
+  &\ddt \znn = f(\tn,\zn) + \delta_n,\quad n=0,...,N-1.
+\end{aligned}\right.
+\label{eq:metodo-euler-perturbado}
+\end{equation}
+Este esquema se escribe, de forma equivalente, como
+\begin{equation}
+  \label{eq:tema4:6}
+  \znn = \zn + h f(\tn,\zn) + h \delta_n,\quad n=0,...,N-1.
+\end{equation}
+
+\begin{definition}
+  \label{def:estabilidad}
+  El método de Euler se dirá estable (para un problema de valor inicial
+  dado) si para todo $\varepsilon>0$ existe $\delta>0$ tal que, siempre
+  que $|\mu_0|<\delta$ y $||\delta_n||_\infty<\delta$:
+  \begin{equation*}
+    ||\zn - \yn||_\infty<\varepsilon,
+  \end{equation*}
+  donde $\zn$ e $\yn$ son, respectivamente, las soluciones
+  de~(\ref{eq:metodo-euler}) y de~(\ref{eq:metodo-euler-perturbado}).
+\end{definition}
+
+\begin{theorem}
+  \label{thm:estabilidad-euler}
+  Si $f$ es \globLipschitz (con constante $L$), entonces el método de
+  Euler es estable. Más aún, se verifica la siguiente estimación de
+  estabilidad:
+  \begin{equation*}
+    ||\zn - \yn||_\infty \le C_1|\mu_0| + C_2 ||\delta_n||_\infty,
+  \end{equation*}
+  donde
+  \begin{equation}
+    \label{eq:euler-ctes-estimacion-estabilidad}
+    C_1=e^{(b-a)L}, \qquad C_2=\frac{e^{(b-a)L}-1}{L}.
+  \end{equation}
+\end{theorem}
+
+\begin{proof}
+  Este teorema es consecuencia del siguiente resultado
+  técnico (cuya demostración, basada en la suma parcial de una
+  progresión geométrica adecuada, omitiremos por brevedad):
+  \begin{quote}
+    \begin{lemma}
+      \label{lem:2}
+      Sean $\{a_n\}_{n\ge 0}$ y $\{b_n\}_{n\ge 0}$ dos sucesiones de
+      números reales no negativos y $\Lambda>0$ tales que:
+      \begin{align*}
+        a_{n+1} &\le (1+h\Lambda)a_n + h b_n, \quad \forall n\ge 0.
+        \intertext{Entonces} a_n &\le e^{nh\Lambda}a_0 +
+        \frac{e^{nh\Lambda}-1}{\Lambda}\,\max_{0\le k \le n-1}|b_k|,
+        \quad \forall n\ge 0.
+      \end{align*}
+    \end{lemma}
+  \end{quote}
+  Para  acotar $z_n-y_n$, restaremos las
+  expresiones de $\znn$ en~(\ref{eq:tema4:6}) y de $\ynn$
+  en~(\ref{eq:metodo-euler}):
+  \begin{align*}
+    |\znn-\ynn| &\le |\zn-\yn| + h|f(\tn,\zn)-f(\tn,\yn)| + h |\delta_n|
+    \\
+                &\le |\zn-\yn| + hL |\zn-\yn| + h |\delta_n|
+                \\
+                &=(1+hL)|\zn-\yn| + h |\delta_n|,
+  \end{align*}
+  donde se ha usado el carácter \lipschitz de $f$.
+  Aplicando el lema anterior para las sucesiones $a_n=z_n-y_n$ y $b_n=|\delta_n|$:
+  \begin{align*}
+    |z_n-y_n| &\le e^{nhL}\mu_0 +
+    \frac{e^{nhL}-1}{L}\,||\delta_n||_\infty  
+    \\
+    &\le e^{(b-a)L}\mu_0 +
+    \frac{e^{(b-a)L}-1}{L}\,||\delta_n||_\infty,
+  \end{align*}
+  donde en la última igualdad se usó que (como $\tn = a + nh$): $nh=\tn-a\le (b-a)$.
+\end{proof}
+
+\subsection{Convergencia del método de Euler}
 \label{sec:convergencia-euler}
 
+Utilizando los resultados de consistencia y estabilidad anteriores, es
+fácil demostrar la convergencia del método de Euler hacia la solución
+exacta, en el sentido que definiremos a continuación.
+
+\begin{definition}
+  \label{def:error-discretizacion-euler}
+  Dado un método numérico para~(\ref{eq:pvi}), se llama error de
+  discretización en el instante $\tn$ a la diferencia
+  \begin{equation*}
+    e_n = y(\tn)-\yn.
+  \end{equation*}
+  Por supuesto, $e_n=e_n(h)$, es decir, el error de discretización
+  depende del paso $h$. Se llama error de discretización (global) al
+  vector
+  \begin{equation*}
+    E = E(h) = (e_0,e_1,...,e_n).
+  \end{equation*}
+\end{definition}
+\begin{definition}
+  \label{def:convergencia-euler}
+  Dado un problema de valor inicial, decimos que el método de Euler es
+  convergente si (siempre que $\lim_{h\to 0} |e_0|=0$) se verifica:
+  \begin{equation*}
+    \lim_{h\to 0} ||E(h)||_\infty = 0.
+  \end{equation*}
+  Precisando más, diremos que el orden de convergencia es (al menos)
+  $p$ si existen $C, C_0, h_0>0$ tales que
+  \begin{equation*}
+    ||E(h)||_\infty \le C h^p \quad \forall h<h_0,
+  \end{equation*}
+  siempre que el método parta de una condición inicial $y_0$ en la que
+  $|e_0|\le C_0 h^p$.
+\end{definition}
+
+La clave para determinar la convergencia y el orden del método de
+Euler está en el siguiente teorema, que es una consecuencia del
+Teorema~\ref{thm:estabilidad-euler} (estabilidad del método de Euler).
+\begin{theorem}
+  \label{thm:euler:estimacion-error-discretizacion}
+  Supongamos que $f$ es \globLipschitz. Entonces se verifica la
+  siguiente estimación del error de discretización:
+  \begin{equation}
+    \label{eq:estimacion-discretizacion}
+    ||E||_\infty \le C_1 |e_0| + C_2 ||\errCons||_\infty,
+  \end{equation}
+  donde $C_1$ y $C_2$ vienen dadas
+  en~(\ref{eq:euler-ctes-estimacion-estabilidad}).
+\end{theorem}
+\begin{proof}
+  Consideremos la sucesión de soluciones exactas $z_n=y(\tn)$. Según
+  comprobamos en la sección~\ref{sec:estabilidad-euler}, esta sucesión
+  es solución del esquema recursivo~(\ref{eq:tema4:7}), en el que la
+  perturbación en el instante $\tn$ viene dada por
+  $\delta_n=\errCons_n$ (el error de consistencia en el instante
+  $\tn$), mientras que la (eventual) perturbación inicial es
+  $\mu=y(a)-y_0=e_0$.
+
+  Por tanto, si aplicamos el Teorema~\ref{thm:estabilidad-euler} para
+  esta sucesión, tenemos que
+  $$
+  ||E_n|| = ||\zn - \yn||_\infty \le C_1|\mu_0| + C_2
+  ||\delta_n||_\infty  = C_1|e_0| + C_2 ||\errCons||_\infty.
+  $$
+\end{proof}
+
+Para terminar, la convergencia del método de Euler se puede obtener
+como un simple corolario de la consistencia y de la estimación de
+estabilidad dada en el teorema anterior:
+
+\begin{corollary}[Convergencia y orden del método de Euler]
+  \label{cor:euler:convergencia-y-orden}
+  Si $f$ es \globLipschitz y además $y\in C^2([\ta,\tb])$, entonces el método de Euler es
+  convergente y tiene orden 1. En concreto, si $|e_0|\le C_0 h$ (para
+  alguna constante $C_0\ge 0$), entonces:
+  \begin{equation}
+    \label{eq:tema4:9}
+    ||E||_\infty \le C_0 C_1 \, h + C_2 ||y''||_\infty \frac h2,
+  \end{equation}
+\end{corollary}
+
+\begin{proof}
+  Bajo estas condiciones, el teorema de
+  consistencia~\ref{thm:consistencia-euler} nos garantiza que
+  $||\errCons||_\infty \le \frac h2 ||y''||_\infty$. Aplicando el
+  la estimación~(\ref{eq:estimacion-discretizacion}) llegamos
+  directamente a~(\ref{eq:tema4:9}) (si $|e_0|\le C_0 h$). 
+\end{proof} 
+
+\begin{remark}
+  \label{rk:8}
+  En la practica, es habitual que no exista ninguna perturbación
+  inicial, es decir que tengamos exactamente que $y_0=y(a)$, por lo
+  que $e_0=0$ y podemos suponer $C_0=0$. Por lo tanto, la
+  desigualdad~(\ref{eq:tema4:9}) suele adquirir una expresión más
+  sencilla:
+    \begin{equation}
+    \label{eq:tema4:9}
+    ||E||_\infty \le C_2 ||y''||_\infty \frac h2.
+  \end{equation}
+\end{remark}
 
 \section{Error y convergencia en métodos generales de un paso}
+\label{sec:convergencia-metodos-1paso}
 
 Por simplicidad, enunciaremos  el resto de los resultados para
-funciones \globLipschitz, aunque todos ellos son válidos para
-funciones \locLipschitz (en esquemas acotados).
+funciones \globLipschitz, aunque todos ellos se pueden generalizar para
+funciones \locLipschitz (en esquemas acotados). % Más aún, estudiaremos
+% el orden de convergencia de este método, comprobando que el error
+% converge a cero como una constante por $h$ (orden $1$).
 
 
-Todos los métodos explícitos que hemos enunciado hasta el momento
-(Euler~(\ref{eq:metodo-euler}), Euler--Cauchy~(\ref{eq:euler-cauchy}),
-Euler mejorado~(\ref{eq:euler-mejorado})) se pueden expresar de la
-siguiente forma:
-\begin{equation}
-  \label{eq:pb-general-1paso} 
-  \left\{
-  \begin{aligned}
-    \text{Dado}\quad &y_0 = \ycero,\\
-    \text{hallar}\quad &\ddt\ynn = \Phi(\tn,\yn, h), \quad n=0,\dots,
-    N-1,
-  \end{aligned}
-  \right.
-\end{equation}
-donde $\Phi:[\ta,\tb]\times \Rset \times [0,h^*] \to \Rset$ es una
-función continua dada (que depende de $f$), donde $h^*>0$. Los
-conceptos de consistencia, estabilidad y convergencia estudiados en la
-sección anterior se pueden generalizar a problemas generales de un
-paso, del tipo~(\ref{eq:pb-general-1paso}).
+Todos los métodos explícitos que hemos enunciado hasta el momento son
+problemas de un paso, en los que para aproximar la solución en el
+instante $\tnn$ se utiliza exclusivamente la información en la etapa
+anterior (instante $\tn$). Específicamente:
+\begin{definition}
+  Un esquema de un paso para~(\ref{eq:pvi}) es todo aquél que se puede
+  expresar de la siguiente forma:
+  \begin{equation}
+    \label{eq:pb-general-1paso} 
+    \left\{
+      \begin{aligned}
+        \text{Dado}\quad &y_0 = \ycero,\\
+        \text{hallar}\quad &\ddt\ynn = \Phi(\tn,\yn, h), \quad
+        n=0,\dots, N-1,
+      \end{aligned}
+    \right.
+  \end{equation}
+  donde $\Phi:[\ta,\tb]\times \Rset \times [0,h^*] \to \Rset$ es una
+  función continua dada (que depende de $f$) y $h^*>0$.
+\end{definition}
+
+Los conceptos de consistencia, estabilidad y convergencia estudiados
+en la sección anterior se pueden generalizar a problemas generales de
+un paso, del tipo~(\ref{eq:pb-general-1paso}).
 
 \begin{definition}
   Se llama error de consistencia (en la etapa $t_n$) del problema
@@ -668,7 +977,7 @@ parciales:
   \begin{enumerate}
   \item 
     El método de Euler es consistente, con  $ ||{\cal E}||_\infty<C h $
-  \item El método de Euler--Cauchy es consitente, con $ ||{\cal
+  \item El método de Euler--Cauchy es consistente, con $ ||{\cal
       E}||_\infty<C h^2 $
   \end{enumerate}
 \end{example}
@@ -965,13 +1274,12 @@ deseamos calcular,  ponemos en práctica la siguiente idea:
   \begin{equation*}
     y_{n+2}-y_{n+1} = \frac{h}{2} \big[
   3f(t_{n+1},y_{n+1}) - f(t_{n},y_{n}) \big],
-  \end{equation*}
-  de donde, para cada $n=0,...,N-2$ podemos obtener explícitamente el
+  \end{equation*} de donde, para cada $n=0,...,N-2$ podemos obtener explícitamente el
   valor $y_{n+2}$.
   
   El valor $y_0$ se puede obtener a partir del dato inicial $\ycero$,
   mientras que para el cálculo de $y_1$ será necesario utilizar un
-  método numérico.
+  método numérico de un paso.
 \end{example}
 %%% Local Variables:
 %%% mode: latex

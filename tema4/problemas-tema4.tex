@@ -65,6 +65,37 @@
     \end{enumerate}
   \end{problema}
   
+  \begin{problema}
+    \begin{enumerate}
+    \item Deducir la expresión del método de Adams--Moulton de dos
+      pasos:
+      \begin{equation*}
+        y_{n+2}-y_{n+1} = \frac{h}{12} \big[
+        5f(t_{n+2},y_{n+2}) + 8 f(t_{n+1},y_{n+1}) - f(t_{n},y_{n}) \big].
+      \end{equation*}
+
+  \item Indicar cuál es, en la etapa $n$--ésima, la expresión del
+    método predictor-corrector que se construye mediante el esquema
+    anterior y el método de Adams--Bashforth de dos pasos: 
+    \begin{equation*}
+      y_{n+2}-y_{n+1} = \frac{h}{2} \big[
+      3f(t_{n+1},y_{n+1}) - f(t_{n},y_{n}) \big],
+    \end{equation*} 
+    \end{enumerate}
+  \item Corregir y completar el siguiente extracto de un programa Python:
+\begin{verbatim}
+    # (2) Iteraciones del método predictor-corrector AB2-AM2
+    y0 = sol[0]; y1 = sol[0];
+    f0 = f(a, y0); f1 = f(a+h, y1);
+    for i in (...):
+        yn_predic = yn + h/2 * (...)
+        yn_correc = (...)
+        sol.append(yn)
+        tn = soporte[i+1]
+        f0 = f1; f1 = f(tn, yn)
+    return soporte, sol
+\end{verbatim}
+  \end{problema}
   \end{problemas}
 \end{document}
 

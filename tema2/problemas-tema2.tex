@@ -5,44 +5,39 @@
 % ------ Cargar estilo específico para la relación de problemas
 \usepackage{problemas-MNII}
 
-
-
 % ==============
 \begin{document}
 % =============
-
-\begin{center}
-  \large \textbf{Relación de poblemas} \\ [0.2em]
-  \Large \textit{Tema 2. Interpolación y aproximación de funciones}
-  % \\
-  % \rule{\linewidth}{0.2pt}
-\end{center}
-
-\medskip
+\begin{flushright}
+  \LARGE\it Relación de problemas. Tema \huge 2.\\
+  \bigskip
+\end{flushright}
 
 \begin{problemas}
-  \begin{problema}
-    Utilizar el método de bisección para aproximar las raíces de las
-    siguientes ecuaciones con una tolerancia menor que
-    $\varepsilon=10^{-8}$.
-    \begin{enumerate}
-    \item $e^x-3x^2=0$.
-    \item $x^3=x^2+x+1$.
-    \end{enumerate}
-  \end{problema}
 
-  \begin{problema}
-    Obtener una cota del error cuando interpolamos la función
-    $f(x)=e^{2-x}$ usando $n$
-    nodos en $[-2,2]$. Estudiar gráficamente la evolución del error
-    cuando con $n=5,\dots,15$.
-  \end{problema}
-
-\end{problemas}
-
+   \begin{problema}
+     Para cada $n\in\Nset$ se considera el soporte definido por $n+1$
+     puntos equiespaciados, $S_{n+1}=\{x_0,x_1,...,x_n\}$, en el intervalo
+     $[-1,1]$.  Calcular una cota para el error cometido al aproximar
+     las siguientes funciones mediante el polinomio de interpolación
+     de Hermite, $p_{2n+1}$, en $S_{n+1}$. Analizar, en cada caso, su
+     convergencia cuando $n\to\infty$.
+     \begin{itemize}
+     \item $\displaystyle f_1(x)=\cos x$
+     \item $\displaystyle f_2(x)=e^{2x}$
+     \end{itemize}
+     \begin{quote}\em\small
+       Indicación: Si $f\in C^{2n+2}([a,b])$, se tiene la siguiente
+       expresión del error de interpolación de Hermite: 
+       \begin{equation*}
+         f(x)-P(x)=\frac{f^{2n+2)}(\xi_x)}{(2n+2)!}
+         (x-x_0)^2(x-x_1)^2\dots(x-x_n)^2, \quad\text{con } \xi\in (a,b).
+       \end{equation*}
+     \end{quote}
+   \end{problema}
+  
+  \end{problemas}
 \end{document}
-
-%===============
 
 %%% Local Variables: 
 %%% mode: latex

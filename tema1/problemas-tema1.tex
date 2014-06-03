@@ -8,115 +8,46 @@
 % ==============
 \begin{document}
 % =============
+\begin{flushright}
+  \LARGE\it Relación de problemas. Tema \huge 1.\\
+  \bigskip
+\end{flushright}
 
 \begin{problemas}
-  \begin{problema}
-    Demostrar que la función $f(x)=x^2e^{x}-1$ tiene un único
-    cero. Utilizar el método de bisección para aproximarlo con un
-    error menor que $\varepsilon=10^{-7}$. Comparar el resultado con
-    la solución aproximada que proporciona la función \texttt{fsolve}
-    (contenida en el paquete \texttt{optimize} de \textit{Scipy}).
-  \end{problema}
-  \begin{problema}
-    Utilizar el método de bisección para aproximar las raíces de las
-    siguientes ecuaciones con una tolerancia menor que
-    $\varepsilon=10^{-8}$.
-    \begin{enumerate}
-    \item $e^x-3x^2=0$.
-    \item $x^3=x^2+x+1$.
-    \end{enumerate}
-  \end{problema}
- \begin{problema}
-    Consideremos el siguiente producto infinito para el cálculo de $\pi$:
-    (publicado en 1593 por François Viète y conocido como fórmula de Viète):
-    \begin{equation*}
-      \frac{2}{\pi}  = \prod_{k\to\infty} \frac{a_k}2, \qquad\text{donde }\quad
-      a_0 = \sqrt{2}, \quad a_{k+1} = \sqrt{2+a_k}.
-    \end{equation*}
 
-    \begin{enumerate}
-    \item Calcular las $15$ primeras aproximaciones de $\pi$ para la
-      fórmula de Viète (correspondientes a la evaluación del producto
-      anterior para $k=0,...,14$) y sus errores absolutos, $e_k$.
-    \item Mostrar en una tabla los logaritmos de los errores, $\log
-      e_k$, y los cocientes $\log e_{k+1}/\log
-      e_{k}$ (con $k\ge 0$).
-    \item Justificar la siguiente afirmación y utilizarla para estimar
-      el orden de la fórmula de Viète:
-      \begin{equation*}
-        \label{eq:1}
-        \{x_k\} \text{ es un método iterativo de orden } p 
-        \Leftrightarrow \lim_{k\to\infty} \frac{\log e_{k+1}}{\log e_{k}}=p.
-      \end{equation*}
-    \end{enumerate}
-  \end{problema}
-  \begin{problema}
-    Consideremos el problema de punto fijo $x=g(x)$, con
-    $g(x)=1/(2+x)$.  Probar que existe una única solución en el
-    intervalo $[0,1]$ y que método de aproximaciones sucesivas
-    $x_{k+1}=g(x_k)$ converge hacia una solución para cualquier
-    inicialización, $x_0\in[0,1]$. Aproximar la
-    solución con un error menor que $\varepsilon=10^{-8}$.
-  \end{problema}
-  \begin{problema}
-    Dada la ecuación $f(x)=e^x-(x+1)^2=0$:
-    \begin{itemize}
-    \item Estudiar sus raíces reales
-    \item Localizarlas en intervalos en los que el método de Newton
-      esté bien definido y sea convergente (idea: en cada intervalo,
-      aplicar la regla de Fourier)
-    \item En cada uno de estos intervalos, calcular una aproximación
-      de la raíz de forma que el error con la solución exacta sea
-      menor que $10^{-6}$.
-    \end{itemize}
-  \end{problema}
-  \begin{problema}
-    Calcular mediante el método de Newton las raices de
-    $$f(x)=2\sqrt{x}-\frac{x^3+5}{5}$$ en $[0.1,1]$ realizando
-    iteraciones hasta que la diferencia en dos etapas consecutivas sea
-    menor que $10^{-10}$. ¿Converge el método si partes del punto
-    medio del intervalo? Justifícalo geométricamente. ¿Y desde los
-    extremos? Justifícalo mediante la Regla de Fourier.
-  \end{problema}
-  \begin{problema}
-    Dada la ecuación $f(x)=e^x-(x-2)^2=0$:
-    \begin{itemize}
-    \item Justificar geométricamente que sólo posee una raíz real
-    \item Demostrarlo analíticamente. Idea: probar que $f'(x)>0$ para
-      todo $x\in\Rset$. Para ello, cuando $x>2$, aplicar a $e^x$ el
-      teorema del valor medio en $[2,x]$ para probar que $e^x>2(x-2)$.
-    \end{itemize}
-  \end{problema}
-  \begin{problema}
-    Calcular las tres primeras aproximaciones ($k=0,1,2$) de $\pi$
-    mediante el algoritmo de Gauss-Legendre (o de Brent-Salamin):
-    $a_0=1$, $b_0=1/\sqrt 2$, $t_0=1/4$, $p_0=1$,
-    \begin{align*}
-      a_{k+1}&=(a_{k}+b_{k})/2 , &\quad
-      t_{k+1}&=t_k - p_k(a_k -a_{k+1})^2, \\
-      b_{k+1}& =\sqrt{a_{k}\*b_{k}}, &\quad p_{k+1}&=2p_k.
-    \end{align*}
-    $$
-    \pi = \lim_{k\to\infty} \frac{(a_k+b_k)^2}{4t_k}.
-    $$
-    Utilizando los logaritmos de los errores absolutos, estimar el
-    orden del algoritmo.
-  \end{problema}
-  \begin{problema}
-    Consideremos el método de bisección para
-    una función $f$ en el intervalo $[a,b]=[2.6,4.2]$. 
-    \begin{enumerate}
-    \item ¿Cuál es la longitud del subintervalo en el paso $k$--ésimo?
-    \item ¿Cuál es la máxima distancia entre la raíz, $\alpha$, de $f$
-      y el punto medio del intervalo en ese paso $k$--ésimo?
-    \item ¿Cuántas iteraciones son necesarias, como mínimo, para que
-      la longitud del intervalo sea menor que $\varepsilon=10^{-5}$?
-    \end{enumerate}
-  \end{problema}
-\end{problemas}
+   \begin{problema}
+     Nos proponemos encontrar la solución de la siguiente ecuación en
+     el intervalo $[0,\pi]$: 
+     $$
+     \int_0^x (\sen s)^2 \, ds = 1.
+     $$
+   \end{problema}
+   \begin{enumerate}
+   \item Demostrar que el problema es equivalente a hallar un punto
+     fijo de la función:
+     $$
+     g(x)=2 + \frac{\sen(2x)}{2}
+     $$
+     en el intervalo $[0,\pi]$.
+   \item Comprobar que la función $g$ satisface las hipótesis del
+     teorema del punto fijo en el intervalo $\displaystyle [1.6,2]\subset
+     \bigg(\frac{\pi}{2},\frac{3\pi}{4}\bigg)$.
+   \item Determinar cuantas iteraciones son necesarias para que el
+     error cometido sea menor que $10^{-8}$. Calcular las dos primeras
+     iteraciones.
+   \end{enumerate}
+  %  \begin{problema}
+  %  Dada la ecuación $f(x)=e^x-(x-2)^2=0$, demostrar que sólo posee una
+  %  raíz real.
+  %  \begin{flushright}\em\small
+  %    Idea: probar que $f'(x)>0$ para todo $x\in\Rset$. Para ello,
+  %    cuando $x>2$, aplicar a $e^x$ el teorema del valor medio en
+  %    $[2,x]$ para probar que $e^x>2(x-2)$.
+  %  \end{flushright}
+  % \end{problema}
+  
+  \end{problemas}
 \end{document}
-
-%===============
 
 %%% Local Variables: 
 %%% mode: latex

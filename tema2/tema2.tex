@@ -662,7 +662,7 @@
  Más específicamente, definimos el conjunto de las \resaltar{funciones
    continuas y polinómicas a trozos} como:
  \begin{equation*}
-   V_h = \{ q_h\in C^0([a,b]) \ /\ q_h|_{[x_i,x_{i-1}]}\in \Pol_m[x]\
+   V_h = \{ q_h\in C^0([a,b]) \ /\ q_h|_{[x_{i-1},x_{i}]}\in \Pol_m[x]\
    \forall i=1,...,n \}.
  \end{equation*}
  Para cada $i=1,...,n$, consideramos el subintervalo $[x_{i-1},x_i]$ y
@@ -747,17 +747,20 @@
  % \end{equation*}
  % donde denotamos $I_i=[x_{i+1},x_i]$ para $ i=0,\dots,n-1$.
 
- \begin{definition}
+ \begin{definition}[Funciones spline o ranura]
    \label{def:funcion-spline}
    Sea una partición ${\cal P}= \{a = x_0 <x_1 < \cdots <x_n=b\}$ del
    intervalo $[a,b]$ y unos valores $\{y_i\}_{i=0}^n$. Fijado
-   $k\in\Nset$, consideremos el conjunto:
+   $k\in\Nset$, consideremos el espacio de las funciones que son
+   de clase $C^{k-1}$ en $[a,b]$ y que en cada subintervalo son
+   polinomios de grado $k$:
    \begin{equation*}
      V_h = \{q_h \in C^{k-1}([a,b])\ / \ q_h|_{I_i}\in  \Pol_k[x],\ \forall i=0,\dots,n-1\}.
    \end{equation*}
-   Llamamos función spline (o ranura) a cualquier $s_h\in V_h$. Decimos que una
-   función spline $s_h\in V_h$ interpola los datos $\{(x_i,y_i)\}_{i=0}^n$
-   si $s_h(x_i)=y_i$ para todo $i=0,\dots,n$.
+   Llamamos función \resaltar{spline} (o \resaltar{ranura}) a
+   cualquier $s_h\in V_h$. Decimos que una función spline $s_h\in V_h$
+   interpola los datos $\{(x_i,y_i)\}_{i=0}^n$ si $s_h(x_i)=y_i$ para
+   todo $i=0,\dots,n$.
  \end{definition}
 
  Al caso $k=1$ se le llama \textit{spline lineal} y coincide (para
@@ -775,8 +778,9 @@
  \end{equation*}
  Una función $s_h\in V_h$ que interpole los datos
  $\{(x_i,y_i)\}_{i=0}^n$ queda determinada por las siguientes $n$
- ecuaciones (una para cada subintervalo $I_i=[x_i, x_{i+1}]$,
- $i=0,\dots,n-1$):
+ ecuaciones (que resultan de escribir, en cada subintervalo $I_i=[x_i,
+ x_{i+1}]$, la ecuación de la recta que pasa por los puntos
+ $(x_i,y_i)$ y $(x_{i+1},y_{i+1})$):
  \begin{equation*}
    \label{eq:splines-lineales-1}
    s_h(x) = l_i(x) = y_i + \frac{y_{i+1}-y_i}{x_{i+1}-x_i}(x-x_i) \quad
@@ -815,7 +819,7 @@
        \\\noalign{\medskip}
        $-1 + (x-2)$ & si & $x\in[2,3]$,
        \\\noalign{\medskip}
-       $0 + (x-3)$ & si & $x\in[3,4]$
+       $0 - (x-3)$ & si & $x\in[3,4]$
      \end{tabular} \right.
    =\left\{
      \begin{tabular}{rll}

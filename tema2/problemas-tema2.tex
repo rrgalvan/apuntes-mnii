@@ -5,6 +5,9 @@
 % ------ Cargar estilo específico para la relación de problemas
 \usepackage{problemas-MNII}
 
+% ------ Para incluir ficheros pdf
+\usepackage{pdfpages}
+
 % ==============
 \begin{document}
 % =============
@@ -68,20 +71,52 @@
     \item Mediante la fórmula de Lagrange
     \item Mediante la fórmula de diferencias divididas de Newton
     \end{enumerate}
+    
   \end{problema}
   
 
+  % \begin{problema}
+  %   Calcular el polinomio de interpolación de Hermite para la función
+  %   $f(x)=\log(x)$ en el soporte $\{1,2\}$. Supuesto conocido el valor
+  %     de $\log(2)$, aproximar el valor de $\log(1.5)$, acotando el
+  %     error cometido.
+  % \end{problema}
+  
+
+  
   \begin{problema}
-    Calcular el polinomio de interpolación de Hermite para la función
-    $f(x)=\log(x)$ en el soporte $\{1,2\}$. Supuesto conocido el valor
-      de $\log(2)$, aproximar el valor de $\log(1.5)$, acotando el
-      error cometido.
+    Sea $p_n(x)$ el polinomio de interpolación de $f(x)=e^x$ en el
+    soporte $\{0,1/n,2/n,\dots,(n-1)/n,1\}$. Hallar el valor mínimo
+    que debe tener $n$ para poder asegurar que 
+    $$
+    ||f-p_n||_\infty<10^{-6}.
+    $$
+    \begin{quotation}
+      \small\em Indicación: acotar de la mejor forma posible el
+      producto $(x-x_0)(x-x_1)\cdots(x-x_n)$ en el término de error.
+    \end{quotation}
   \end{problema}
   
   \begin{problema}
-    
+    Sea $f(x)=\log_4(x)$, $x>0$. Calcular $p(32)$, siendo $p$ el
+    polinomio de menor grado posible que coincide con $f$ en los
+    siguientes puntos:
+    \begin{equation*}
+      (a) \quad \{x_0,x_1\}=\{1,64\}. \qquad\qquad
+      (b) \quad \{x_0,x_1,x_2\}=\{1,64,256\}. 
+      \quad
+    \end{equation*}
+    Calcular, en cada caso, la diferencia $f(32)-p(32)$. Este ejemplo
+    muestra que la precisión no mejora, necesariamente, aumentando el
+    número de puntos de interpolación.
   \end{problema}
   \end{problemas}
+  
+  \rule{0.6\linewidth}{2pt}\par
+  La página siguiente se corresponde con una bibliografía externa
+  [Doubova-Guillen]:
+  
+  \includepdf[pages={1}]{Pagina-ejercicios-DoubovaGuillen.pdf}
 \end{document}
 
 %%% Local Variables: 

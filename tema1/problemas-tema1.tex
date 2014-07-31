@@ -61,22 +61,22 @@
   %  \end{flushright}
   % \end{problema}
   
-   \begin{problema}
-     Consideremos la ecuación $$f(x)=(x-1)\tan(x)-1=0.$$
-     \begin{enumerate}
-     \item Demostrar esta ecuación posee infinitas raíces positivas,
-       determinando los intervalos que contengan a cada una de ellas.
-     \item Sea $\alpha>0$ la menor raíz positiva de $f(x)$ y
-       consideremos el intervalo $[a,b]=[0,\pi/4]$. Reescribir la
-       ecuación anterior en términos de punto fijo, $x=g(x)$, para 
-       $g(x)$ adecuada. Demostrar que $\alpha\in [a,b]$ y que $g(x)$
-       verifica las hipótesis del teorema del punto fijo.
-     \item Partiendo de $x_0=0$, realizar dos iteraciones del método
-       de punto fijo. Determinar $n\in\Nset$ tal que, a partir de
-       $x_n$, el error absoluto con la solución exacta sea menor que
-       $\varepsilon = 10^{-3}$.
-     \end{enumerate}
-   \end{problema}
+   % \begin{problema}
+   %   Consideremos la ecuación $$f(x)=(x-1)\tan(x)-1=0.$$
+   %   \begin{enumerate}
+   %   \item Demostrar esta ecuación posee infinitas raíces positivas,
+   %     determinando los intervalos que contengan a cada una de ellas.
+   %   \item Sea $\alpha>0$ la menor raíz positiva de $f(x)$ y
+   %     consideremos el intervalo $[a,b]=[0,\pi/4]$. Reescribir la
+   %     ecuación anterior en términos de punto fijo, $x=g(x)$, para 
+   %     $g(x)$ adecuada. Demostrar que $\alpha\in [a,b]$ y que $g(x)$
+   %     verifica las hipótesis del teorema del punto fijo.
+   %   \item Partiendo de $x_0=0$, realizar dos iteraciones del método
+   %     de punto fijo. Determinar $n\in\Nset$ tal que, a partir de
+   %     $x_n$, el error absoluto con la solución exacta sea menor que
+   %     $\varepsilon = 10^{-3}$.
+   %   \end{enumerate}
+   % \end{problema}
 
    \begin{problema}
      Se sesea aplicar el método de punto fijo para calcular las raíces
@@ -122,7 +122,9 @@
      \begin{enumerate}
      \item Demostrar que existe una única solución, $\alpha\in\Rset$.
      \item Comprobar que se verifican las hipótesis de convergencia
-       global del método de Newton en el intervalo $[0,1]$.
+       global del método de Newton en el intervalo $[0,1]$, pero no
+       las hipótesis de la regla de Fourier (que es una condición
+       suficiente pero no necesaria). 
      \item Realizar tres iteraciones del método de Newton a partir de
        $x_0=1$. Si $x_3$ es la aproximación obtenida, acotar el error
        $|x_3-\alpha|$ en función de $|x_1-x_0|$.

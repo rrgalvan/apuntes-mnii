@@ -86,7 +86,7 @@ En general, un método iterativo converge más rápidamente cuanto mayor
 es su orden de convergencia:
 
 \begin{definition}
-  \label{def:orden-convergencia}  
+  \label{def:orden-convergencia}
   Diremos que un método iterativo (definido por una sucesión $\{x_k\}$
   tal que $\lim x_k=\alpha$) tiene \resaltar{orden de convergencia
     (exactamente)} $p\ge 1$ si existe una constante $C>0$ (y $C<1$ si
@@ -96,7 +96,7 @@ es su orden de convergencia:
     \lim_{k\to+\infty} \frac{|x_{k+1}-\alpha|}{|x_k-\alpha|^p} = C.
   \end{equation}
 \end{definition}
-A $C$ se le llama constante asintótica de error. En el caso $p=1$ 
+A $C$ se le llama constante asintótica de error. En el caso $p=1$
 decimos que la convergencia es \textit{lineal}. Los casos $p>1$ se
 llaman de convergencia \textit{superlineal} (cuadrática para $p=2$,
 supercuadrática si $p>2$, cúbica para $p=3$, etc.).
@@ -110,7 +110,7 @@ esté suficientemente cerca de $\alpha$,
 en el sentido de que para todo $\varepsilon>0$ existe $k_0\in\Nset$ tal que
 \begin{equation*}
    \label{eq:orden-convergencia-2}
-  (C-\varepsilon) |x_{k}-\alpha|^p < |x_{k+1}-\alpha| < 
+  (C-\varepsilon) |x_{k}-\alpha|^p < |x_{k+1}-\alpha| <
   (C+\varepsilon)  |x_{k}-\alpha|^p, \quad \forall k \ge k_0.
 \end{equation*}
 
@@ -311,7 +311,7 @@ tipo bisección (que analizaremos en la próxima sección).
 % resultados anteriores:
 
 \begin{example}
-  \label{ex:tema1:separ-soluc-1} 
+  \label{ex:tema1:separ-soluc-1}
   Nos planteamos el hallar las raíces de la ecuación
   $$
   f(x)=x^3-9x+3 =0.
@@ -345,11 +345,11 @@ tipo bisección (que analizaremos en la próxima sección).
         \addplot[domain=-4.0:4.0, blue, ultra thick, samples=40]
         {x^3-9*x+3};
         % Plot a label at curve root
-        \node[coordinate, medium dot, pin=95:{$\cero_1$}] at 
+        \node[coordinate, medium dot, pin=95:{$\cero_1$}] at
         (axis cs:-3.15,0) {};
-        \node[coordinate, medium dot, pin=85:{$\cero_2$}] at 
+        \node[coordinate, medium dot, pin=85:{$\cero_2$}] at
         (axis cs:0.33,0) {};
-        \node[coordinate, medium dot, pin=95:{ $\cero_3$}] at 
+        \node[coordinate, medium dot, pin=95:{ $\cero_3$}] at
         (axis cs:2.81,0) {};
       \end{axis}
     \end{graficaTikz}
@@ -376,7 +376,7 @@ tipo bisección (que analizaremos en la próxima sección).
   continua y derivable
   $$
   f(x)=2x-\cos(x)
-  $$ 
+  $$
   y, siguiendo las ideas de la
   observación~\ref{rk:tema1:separac-ceros}, comenzamos estudiando la
   derivada
@@ -390,11 +390,11 @@ tipo bisección (que analizaremos en la próxima sección).
   \begin{figure}
     \label{fig:tema1:ejemplo-separ-soluc-2}
     \begin{graficaTikz}[width=23em, height=15em]
-      \begin{axis}[\axisXYmiddle] 
+      \begin{axis}[\axisXYmiddle]
         % Draw a curve
         \addplot[domain=-pi:pi+0.3, blue, ultra thick, samples=40]
-        {{2*x-cos(deg(x))}}; 
-        % Plot a label at curve root 
+        {{2*x-cos(deg(x))}};
+        % Plot a label at curve root
         \node[coordinate, medium dot, pin=-87:{$\cero$}] at (axis cs:0.45,0) {};
       \end{axis}
     \end{graficaTikz}
@@ -465,7 +465,7 @@ def biseccion(f, a, b, tol, max_iters):
   iter = 0
   while b-a >= tol and iter < max_iters:
       c = (a+b)/2.0
-      if f(c)==0:   
+      if f(c)==0:
           return c
       else:
           if f(a)*f(c) < 0:
@@ -473,7 +473,7 @@ def biseccion(f, a, b, tol, max_iters):
           else:
               a=c
       iter = iter + 1
-  return c    
+  return c
 \end{python}
 \caption{Método de bisección}
 \label{alg:metodo-biseccion}
@@ -487,8 +487,8 @@ def biseccion(f, a, b, tol, max_iters):
 
   \begin{itemize}
   \item Empezamos seleccionando $[a_0,b_0]=[0,1]$.
-  \item En la primera etapa, $k=1$, calculamos 
-    $c_0=(1-0)/2=0.5$  y 
+  \item En la primera etapa, $k=1$, calculamos
+    $c_0=(1-0)/2=0.5$  y
     $f(c_0)=f(1/2)=-11/8=-1.375$. Como $f(a_0)=f(0)=3$, elegimos
     $[a_1,b_1]=[a_0,c_0]=[0,0.5]$.
   \item Repetimos el proceso para $k=2,3,...$, obteniendo los resultados que se
@@ -500,10 +500,10 @@ def biseccion(f, a, b, tol, max_iters):
   \centering
   \rule{0.99\linewidth}{1.6pt}
   \begin{equation*}
-    \begin{array}{l<{\quad}rrrrr}%{>{$}r<{$}>{$}r<{$}>{$}r<{$}>{$}r<{$}>{$}r<{$}}    
-     k &  [a_k,b_k] & c_k & f(a_k) & f(b_k) & f(c_k) 
+    \begin{array}{l<{\quad}rrrrr}%{>{$}r<{$}>{$}r<{$}>{$}r<{$}>{$}r<{$}>{$}r<{$}}
+     k &  [a_k,b_k] & c_k & f(a_k) & f(b_k) & f(c_k)
       \\ \toprule%\mbox{}% \mbox{} for avoiding bug with "["
-     0 & [0,1]  &  0.5 
+     0 & [0,1]  &  0.5
       & 3 & -5 & -1.375
       \\ \noalign{\smallskip}
      1 &  [0,0.5] &  0.25
@@ -515,8 +515,8 @@ def biseccion(f, a, b, tol, max_iters):
      3& [0.25,0.375] & 0.3125
       & 0.76 & -0.32 & 0.21
       \\
-      \hfill \vdots \hfill~ & \hfill \vdots \hfill~ & 
-      \hfill \vdots \hfill~ & \hfill \vdots \hfill~ & 
+      \hfill \vdots \hfill~ & \hfill \vdots \hfill~ &
+      \hfill \vdots \hfill~ & \hfill \vdots \hfill~ &
       \hfill \vdots \hfill~ & \hfill \vdots \hfill~
     \end{array}
   \end{equation*}
@@ -623,7 +623,7 @@ Así, se tiene el siguiente resultado:
 
   Por ejemplo, el siguiente código \textit{Python} aproxima un cero de
   la función $f(x)$ introducida en el
-  ejemplo~\ref{ex:tema1:separ-soluc-1} 
+  ejemplo~\ref{ex:tema1:separ-soluc-1}
   con tolerancia $10^{-2}$:
   \pythonexternal{tema1/src/biseccion-test1.py}
   \begin{pythonoutput}
@@ -669,16 +669,16 @@ figura~\ref{fig:ejemplo-punto-fijo-1}).
 
 \begin{figure}
   \begin{graficaTikz}[width=18em, height=15em]
-    \begin{axis}[\axisXYmiddle, 
+    \begin{axis}[\axisXYmiddle,
       % legend style = {anchor=north west, pos = north east}]
       legend pos = outer north east, legend cell align=left]
       % Draw a curve
       \addplot[domain=-2.4:2.4, blue, ultra thick, samples=40] {2-x^2};
       \addplot[domain=-2.5:2.5, gray, ultra thick, samples=40] {x};
       % Plot a label at curve root
-      \node[coordinate, medium dot, pin=0:{\scriptsize$(1,1)$}] 
+      \node[coordinate, medium dot, pin=0:{\scriptsize$(1,1)$}]
       at (axis cs:1,1) {};
-      \node[coordinate, medium dot, pin=-45:{\scriptsize$(-2,-2)$}] 
+      \node[coordinate, medium dot, pin=-45:{\scriptsize$(-2,-2)$}]
       at (axis cs:-2,-2) {};
       \legend {$y=g(x)$,$y=x$};
     \end{axis}
@@ -706,7 +706,7 @@ punto fijo.
   que
   \begin{equation}
     g([a,b])\subset [a,b].
-  \label{eq:g[a,b].subset.[a,b]}  
+  \label{eq:g[a,b].subset.[a,b]}
 \end{equation}
   Entonces existe al menos un punto fijo de $g$ en $[a,b]$.
 \end{proposition}
@@ -781,7 +781,7 @@ para $\cteContract=\max \big\{ \frac{|x+y|}{3}\ /\ x,y\in [-1,1]
 
 \begin{remark}
   Si $g'$ es continua en $[a,b]$, es suficiente
-  para~(\ref{eq:L=sup|g'|<1}) que $g'(x)<1$ para todo $x\in[a,b]$. 
+  para~(\ref{eq:L=sup|g'|<1}) que $g'(x)<1$ para todo $x\in[a,b]$.
   La demostración: $\sup_{x\in(a,b)}|g'(x)| \le \sup_{x\in[a,b]}
   |g'(x)|$ y, debido al teorema de Weierstrass, $g'$ alcanza su máximo
   en algún punto $c\in [a,b]$.
@@ -835,11 +835,11 @@ de aquellas proposiciones.
   que $g$ es contractiva en $[a,b]$ con constante de contractividad
   $\cteContract\in [0,1)$. Entonces:
   \begin{enumerate}
-  \item 
+  \item
     \label{item:punto-fijo-Banach:1}
     La función $g$ tiene un \textsf{único punto fijo}, $\cero$, en
     $[a,b]$.
-  \item 
+  \item
     \label{item:punto-fijo-Banach:2}
     Para todo $x_0\in [a,b]$, el método~(\ref{eq:MAS}) está bien
     definido y es \textsf{convergente} hacia $\alpha$.
@@ -875,9 +875,9 @@ a~(\ref{eq:pto-fijo:cota-a-posteriori}) se la conoce como
   \begin{aligned}
     |x_k-\cero| = &|g(x_{k-1})-g(\cero)| \le \cteContract
     |x_{k-1}-\cero| = \\
-    = \cteContract &|g(x_{k-2})-g(\cero)| \le \cteContract^2 
+    = \cteContract &|g(x_{k-2})-g(\cero)| \le \cteContract^2
     |x_{k-2}-\cero| \le \cdots \le \cteContract^k |x_0-\cero|.
-  \end{aligned}\label{eq:1}  
+  \end{aligned}\label{eq:1}
 \end{equation}
   Así se tiene la estimación a
   priori~(\ref{eq:pto-fijo:cota-a-priori}) y, como
@@ -901,7 +901,7 @@ a~(\ref{eq:pto-fijo:cota-a-posteriori}) se la conoce como
        \cteContract^{k+1} + \cteContract^{k} \right) |x_1-x_0|
      \\
      &=\left(\frac{\cteContract^k-\cteContract^n}{1-\cteContract}\right)
-     |x_1-x_0| 
+     |x_1-x_0|
      \le \frac{L^k}{1-L} |x_1-x_0|.
   \end{align*}
   Y por último, usando que $x_n\to\cero$,
@@ -913,11 +913,11 @@ def punto_fijo(g, x0, tol, max_iters):
     iter = 0
     while iter < max_iters:
         x1 = g(x0)
-        if abs(x1-x0) < tol: 
+        if abs(x1-x0) < tol:
             return x1
         else:
             x0 = x1
-            iter = iter + 1        
+            iter = iter + 1
     print "Fallo de convergencia en el método de punto fijo!"
 \end{python}
 \caption{Método de punto fijo (o aproximaciones sucesivas)}
@@ -950,7 +950,7 @@ la coercividad de $g$).% En efecto, usando la
     por tanto se verifica la condición
     (\ref{eq:orden-convergencia-al-menos-p}) para orden $p=1$ (con
     constante $C=\lambda<1$).
-  \end{remark}    
+  \end{remark}
   \begin{remark}[Orden $p$ de~(\ref{eq:MAS})]
     Para hipótesis más restrictivas sobre $g$ se puede llegar a
     \resaltar{orden mayor que uno}. En concreto, se puede demostrar
@@ -975,9 +975,9 @@ la coercividad de $g$).% En efecto, usando la
 
 \begin{example}
   Nos proponemos el formular en términos de problemas de punto fijo el
-  cálculo de todos los ceros de $f(x)=\sen(x)-4x^2+1$. 
+  cálculo de todos los ceros de $f(x)=\sen(x)-4x^2+1$.
 
-  
+
   \textsf{Primera etapa:} Determinar cuántos ceros son y en qué
   intervalos se encuentran. Como $f$ es continua y derivable en todo
   $\Rset$, utilizaremos el algoritmo de separación de ceros enunciado
@@ -1040,13 +1040,13 @@ la coercividad de $g$).% En efecto, usando la
   \begin{enumerate}
   \item $g_1([a_1,b_1])\subset [a_1,b_1]$: En efecto, $g_1$ es
     decreciente en $[-\pi/4,0]$ (pues $\cos(x)\ge 0$ si $x\in
-    [-\pi/4, 0]$ y por tanto $g_1'(x)\le 0$ en este intervalo). 
+    [-\pi/4, 0]$ y por tanto $g_1'(x)\le 0$ en este intervalo).
     Como
     \begin{align*}
       g_1(-\pi/4)&= -\frac12 \sqrt{1+\sen(-\pi/4)}=-0.270...\in
       [-\pi/4,0]=[-0.785...,0],
       \\
-      g_1(0)&=-1/2 \in [-\pi/4,0], 
+      g_1(0)&=-1/2 \in [-\pi/4,0],
     \end{align*}
     se tiene que $g([-\pi/4,0])\subset
     [g(0),g(-\pi/4)] \subset [-\pi/4,0]$.
@@ -1055,7 +1055,7 @@ la coercividad de $g$).% En efecto, usando la
     proposición~\ref{pro:1} y a la observación~\ref{rk:3}).  Como
     $\sen(x)$ es creciente en $[-\pi/4,0]$, en este intervalo se
     verifica que
-    $$4\sqrt{1+\sen(x)}\ge 4\sqrt{1+\sen(-\pi/4)}=2.164... >1,$$ 
+    $$4\sqrt{1+\sen(x)}\ge 4\sqrt{1+\sen(-\pi/4)}=2.164... >1,$$
     así
     $$
     \left|g'(x)\right| = \frac{|\cos{x}|}{4\sqrt{1+\sen(x)}} \le
@@ -1078,7 +1078,7 @@ la coercividad de $g$).% En efecto, usando la
   \pythonexternal{tema1/src/puntofijo-test1.py}
   \begin{pythonoutput}
     \pythonexternal[backgroundcolor=\color{white},title={Resultado}]{tema1/src/puntofijo-test1.out}
-  \end{pythonoutput}    
+  \end{pythonoutput}
   \label{ex:punto-fijo-1}
   \begin{program}
     \widepythonexternal{tema1/src/puntofijo.py}
@@ -1125,10 +1125,10 @@ la coercividad de $g$).% En efecto, usando la
 %     Además es fácil ver que $g([\cero-\rho, \cero+\rho]) \subset
 %     [\cero-\rho, \cero+\rho]$, pues si $x\in[\cero-\rho, \cero+\rho]$
 %     se tiene $ |x-\cero|<\rho$ y por tanto
-%     $$ 
+%     $$
 %     |g(x)-\cero| = |g(x)-g(\cero)| \le \lambda |x-\cero|< \rho
 %     \Rightarrow g(x)\in [\cero-\rho, \cero+\rho].
-%     $$    
+%     $$
 %   \end{proof}
 
 \section{El método de Newton}
@@ -1147,7 +1147,7 @@ la coercividad de $g$).% En efecto, usando la
     \def\Ax{0.85} \def\Ay{ 2.0162053125} \def\mA{5.31003125}
     \def\Bx{0.47030255236256846} \def\By{0.7144954568706967} \def\mB{2.185217999486167}
     \def\Cx{0.143334965129}
-    \begin{axis}[\axisXYmiddle, 
+    \begin{axis}[\axisXYmiddle,
       restrict y to domain=-1:3.5,
       legend pos = outer north east, legend cell align=left,
       ticks=none]
@@ -1166,11 +1166,11 @@ la coercividad de $g$).% En efecto, usando la
       {\By+(x-\Bx)*\mB};
       \node[coordinate, medium dot]  at (axis cs:\Bx,\By) {};
       \addplot[dashed] coordinates {(\Bx,0) (\Bx,\By)};
-      \node[coordinate, medium dot, pin=-45:{$x_1$}] 
+      \node[coordinate, medium dot, pin=-45:{$x_1$}]
       at (axis cs:\Bx,0) {};
       \legend {$y=f(x)$};
       % Point 3
-      \node[coordinate, medium dot, pin=-45:{$x_2$}] 
+      \node[coordinate, medium dot, pin=-45:{$x_2$}]
       at (axis cs:\Cx,0) {};
     \end{axis}
   \end{graficaTikz}
@@ -1180,7 +1180,7 @@ la coercividad de $g$).% En efecto, usando la
 El método de Newton (también conocido como método de Newton-Raphson o
 de la tangente) es uno de los métodos numéricos más utilizados y más
 eficientes para el cálculo de raíces, si bien las condiciones para la
-convergencia son más restrictivas que en métodos anteriores. 
+convergencia son más restrictivas que en métodos anteriores.
 
 El método fue deducido históricamente a partir de la siguiente
 construcción geométrica
@@ -1212,11 +1212,11 @@ def newton(f, df, x0, tol, max_iters):
     iter = 0
     while iter < max_iters:
         x1 = x0 - f(x0)/df(x0)
-        if abs(x1-x0) < tol: 
+        if abs(x1-x0) < tol:
             return x1
         else:
             x0 = x1
-            iter = iter + 1        
+            iter = iter + 1
     print "Fallo de convergencia en el método de Newton!"
 \end{python}
 \caption{Método de Newton}
@@ -1249,7 +1249,7 @@ introducir el método de Newton:
   Para ello observamos que dada $h:[a,b]\to\Rset$ tal que $h(x)\neq 0$
   para toda $x\in[a,b]$,
   \begin{align*}
-    x \text{ es solución de~(\ref{eq:raiz})} \ \Leftrightarrow\ & h(x)f(x)=0 
+    x \text{ es solución de~(\ref{eq:raiz})} \ \Leftrightarrow\ & h(x)f(x)=0
     \ \Leftrightarrow\ x-h(x)f(x)=x \\
     \ \Leftrightarrow\ & x \text{ es solución de~(\ref{eq:punto-fijo}) para }
     g(x)=x-h(x)f(x).
@@ -1263,7 +1263,7 @@ introducir el método de Newton:
   $$
   0 = g'(\cero) = 1-h'(\cero)f(\cero)-h(\cero)f'(\cero)
   $$
-  y como $f(\cero)=0$ nos queda 
+  y como $f(\cero)=0$ nos queda
   $$
   0 = 1-h(\cero)f'(\cero).
   $$
@@ -1288,8 +1288,8 @@ global (en todo el intervalo).
   \item $f(a)f(b)<0$.
     \label{item:Newton.H1}
   \item  $f'(x)\neq 0$, para todo $x \in [a,b]$.
-    \label{item:Newton.H2}    
-  \item 
+    \label{item:Newton.H2}
+  \item
     El signo de $f''$ no cambia en $[a,b]$ (o sea,
       $f''(x)\ge 0 \ \forall x\in [a,b]$ o $f''(x)\le 0 \ \forall x\in [a,b]$).
     \label{item:Newton.H3}
@@ -1308,12 +1308,12 @@ global (en todo el intervalo).
   \item El orden de (\ref{eq:MetNewton}) es, al menos, cuadrático. En
     concreto, para todo $k\ge 0$,
     \begin{equation}
-      |x_{x+1} - \cero| \le \frac {M''}{2m'} |x_k-\alpha|^2, 
-      \label{eq:Newton.orden.2}    
+      |x_{x+1} - \cero| \le \frac {M''}{2m'} |x_k-\alpha|^2,
+      \label{eq:Newton.orden.2}
     \end{equation}
     donde definimos $m':=\min_{x\in[a,b]} |f'(x)|$ y $M'':=\max_{x\in[a,b]}|f''(x)|$.
   \end{enumerate}
-  \label{thm:Newton.convergencia.global}  
+  \label{thm:Newton.convergencia.global}
 \end{theorem}
 
 \begin{proof}
@@ -1328,7 +1328,7 @@ global (en todo el intervalo).
   (es decir, $f$ es creciente y convexa, como en la
   figura~\ref{fig:newton-interpretacion-geometrica}). Para las otras
   tres combinaciones posibles ($f'>0$ y $f''\ge 0$, $f'<0$ y $f''\ge 0$,
-  $f'<0$ y $f''\le 0$) la demostración es similar a la actual.  
+  $f'<0$ y $f''\le 0$) la demostración es similar a la actual.
   En el caso~\eqref{eq:f'>0.f''<=0}, el hecho de que $f$ sea creciente implica que
   \begin{equation*}
     f(a)<0 \quad\text{y}\quad f(b)>0.
@@ -1368,7 +1368,7 @@ global (en todo el intervalo).
     g'(x)
     = 1-\frac{\left(f'(x)\right)^2-f(x)f''(x)}{\left(f'(x)\right)^2}
     = \frac{f(x)f''(x)}{\left(f'(x)\right)^2}.
-    \label{eq:Newton.g'(x)}    
+    \label{eq:Newton.g'(x)}
   \end{equation}
   Debido a que $f''(x)\le 0$, el signo de $g'(x)$ depende sólo del
   signo de $f(x)$. Así
@@ -1381,14 +1381,14 @@ global (en todo el intervalo).
 
   Por lo tanto, $\max_{x\in [a,b]} g(x)=g(\alpha)$, lo que implica que
   para todo
-  $x\in [a,b]$ se tiene 
+  $x\in [a,b]$ se tiene
   $$
   g(x)\le g(\alpha)=\alpha \le b.
   $$
   Veamos que también $g(x)\ge a$ en $[a,b]$ y así concluimos que
-  $g([a,b]) \subset [a,b]$, más en concreto 
+  $g([a,b]) \subset [a,b]$, más en concreto
   \begin{equation}
-    g([a,b])\subset [a,\alpha] \subset [a,b].\label{eq:2}    
+    g([a,b])\subset [a,\alpha] \subset [a,b].\label{eq:2}
   \end{equation}
 
   \begin{itemize}
@@ -1469,7 +1469,7 @@ global (en todo el intervalo).
       en un desarrollo de Taylor de orden $2$ entre $x_k$ y
       $x_{k+1}$}:
     \begin{equation}
-      |x_{k+1}-\cero| \le \frac{M''}{2m'}|x_{k+1}-x_k|.
+      |x_{k+1}-\alpha| \le \frac{M''}{2m'}|x_{k+1}-x_k|.
       \label{eq:newton.estimac.a.posteriori}
     \end{equation}
     Gracias a ella, si en el algoritmo de Newton realizamos
@@ -1478,9 +1478,9 @@ global (en todo el intervalo).
     exacta. Por ejemplo, dado $\varepsilon>0$, si hacemos que
     $$
     |x_{k+1}-x_k| < \frac{2m'}{M''} \varepsilon
-    \quad\text{entonces}\quad 
+    \quad\text{entonces}\quad
       |x_{k+1}-\cero| \le \frac{M''}{2m'}|x_{k+1}-x_k|<\varepsilon.
-    $$ 
+    $$
   \item En la demostración del Teorema anterior hemos probado que la
     sucesión $\{x_k\}$ es monótona a partir del primer segundo
     término, $x_1$. En concreto, en el caso estudiado en la
@@ -1515,7 +1515,7 @@ global (en todo el intervalo).
   definida, converge monótonamente hacia $\cero$ y se verifican las
   acotaciones~\eqref{eq:Newton.orden.2}
   y~\eqref{eq:newton.estimac.a.posteriori}.
-  \label{cor:regla.fourier}    
+  \label{cor:regla.fourier}
   \end{corollary}
   \begin{proof}
     Consideremos de nuevo $f'>0$ y $f''<0$ en $[a,b]$ (los otros tres
@@ -1545,9 +1545,9 @@ global (en todo el intervalo).
     y~\eqref{eq:newton.estimac.a.posteriori} se deja sin demostrar,
     como en la observación~\ref{rk:4}.
   \end{proof}
-  
+
   \begin{example}
-    Consideremos la siguiente ecuación: 
+    Consideremos la siguiente ecuación:
     $$f(x)=2\log(x)-x+1=0.$$
   \begin{figure}
     \label{fig:tema1:ejemplo-separ-soluc-1}
@@ -1556,7 +1556,7 @@ global (en todo el intervalo).
         % Draw a curve
         \addplot[domain=0.6:4, blue, ultra thick, samples=40] {2*ln(x)-(x-1)};
         \node[coordinate, medium dot, pin=-80:{$\cero_1$}] at (axis cs:1,0) {};
-        \def\Bx{3.5128} 
+        \def\Bx{3.5128}
         \node[coordinate, medium dot, pin=-100:{$\cero_2$}] at (axis
         cs:\Bx,0) {};
 %        \legend {$f(x)$}
@@ -1564,7 +1564,7 @@ global (en todo el intervalo).
     \end{graficaTikz}
     \caption{Gráfica en la que se muestran los dos ceros de $f(x)=2\log(x)-x+1$}
     \label{fig:2log.x.-x+1}
-  \end{figure}  
+  \end{figure}
   La función, cuya gráfica se representa en la
   figura~\ref{fig:2log.x.-x+1}, es continua y derivable en su dominio,
   $(0,+\infty)$. Su derivada, $f'(x)=(2-x)/x$, está bien definida en
@@ -1575,7 +1575,7 @@ global (en todo el intervalo).
   $f(1)=0$) y el segundo, $\cero_2$, parece estar entorno a
   $x=3.5$. Gracias al teorema de Bolzano podemos asegurar que está
   localizado en $[3,4]$, pues $f(3)=0.197...>0$ y $f(4)=-0.227...<0$.
-  
+
   Utilizaremos el método de Newton para calcular $\cero_2$,
   comprobando previamente que en el intervalo $[3,4]$ se verifican las
   hipótesis de la regla de Fourier
@@ -1589,7 +1589,7 @@ global (en todo el intervalo).
   \end{itemize}
   Así tenemos asegurada la convergencia monótona de $\{x_k\}$ hacia
   $\cero_2$, a partir de $x_0=4$ (en este caso, de forma decreciente).
-  
+
   Con la ayuda de una calculadora o un ordenador es fácil realizar
   algunas iteraciones del método de Newton. Por ejemplo, utilizando la
   implementación que aparece en el programa~\ref{pro:metodo-newton},
@@ -1598,7 +1598,7 @@ global (en todo el intervalo).
   \pythonexternal{tema1/src/newton-test1.py}
   \begin{pythonoutput}
     \pythonexternal[backgroundcolor=\color{white},title={Resultado}]{tema1/src/newton-test1.out}
-  \end{pythonoutput}    
+  \end{pythonoutput}
   \begin{program}
     \widepythonexternal{tema1/src/newton.py}
     \label{pro:metodo-newton}
@@ -1650,7 +1650,7 @@ derivada.
     \def\Ax{0.6} \def\Ay{1.35}
     \def\Bx{0.3} \def\By{0.41}
     \def\Cx{0.166}
-    \begin{axis}[\axisXYmiddle, 
+    \begin{axis}[\axisXYmiddle,
       restrict y to domain=-0.6:1.9,
       legend pos = outer north east, legend cell align=left,
       ticks=none]
@@ -1667,7 +1667,7 @@ derivada.
       \addplot[dashed] coordinates {(\Ax,0) (\Ax,\Ay)};
 
       \node[coordinate, medium dot, pin=-45:{$x_k$}]  at (axis cs:\Bx,0) {};
-      \node[coordinate, medium dot]  at (axis cs:\Bx,\By) {};            
+      \node[coordinate, medium dot]  at (axis cs:\Bx,\By) {};
       \addplot[dashed] coordinates {(\Bx,0) (\Bx,\By)};
 
       \node[coordinate, medium dot, pin=-45:{$x_{k+1}$}] at (axis cs:\Cx,0) {};
@@ -1705,12 +1705,12 @@ def secante(f, x0, x1, tol, max_iters):
     iter = 0
     while iter < max_iters:
         x2 = x1 - f(x1)* (x1-x0)/(f(x1)-f(x0))
-        if abs(x2-x1) < tol: 
+        if abs(x2-x1) < tol:
             return x2
         else:
             x0 = x1
             x1 = x2
-            iter = iter + 1        
+            iter = iter + 1
     print "Fallo de convergencia en el método de la secante!"
 \end{python}
 \caption{Método de la secante}
@@ -1754,7 +1754,7 @@ puntos interiores dados por el método de la secante, tal y como sigue:
 \item Como inicialización, fijamos $a_0=a$ y $b_0=b$.
 \item En la etapa $k+1$:
   \begin{enumerate}%[label=\textit{\arabic*)}]
-  \item 
+  \item
     Calculamos $x_{k+1}$ usando~\eqref{eq:MetSecante}, donde $x_{k-1}$
     y $x_k$ vienen dados por los extremos del intervalo
     $[a_k,b_k]$. Es decir:
@@ -1780,11 +1780,11 @@ sobre su implementación; como se puede observar, es muy similar al
 algoritmo~\ref{alg:metodo-biseccion} (método de bisección) teniendo en
 cuenta que:
 \begin{itemize}
-\item Se cambia la condición 
+\item Se cambia la condición
   \begin{quote}
     \texttt{c = (b-a)/2}
   \end{quote}
-  por 
+  por
   \begin{quote}
     \texttt{c = b - f(b)*(b-a)/(f(b)-f(a))}.
   \end{quote}
@@ -1817,4 +1817,4 @@ def regula_falsi(f, a, b, tol, max_iters):
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../apuntes-MNII.tex"
-%%% End: 
+%%% End:

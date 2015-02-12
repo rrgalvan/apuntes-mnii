@@ -6,9 +6,25 @@
 \usepackage[T1]{fontenc}
 
 % ------- Formato del documento ----
+\setlength{\headheight}{0cm}
+\setlength{\headsep}{1.4cm}
+\setlength{\footskip}{0.9cm}
 \RequirePackage{marginnote}
-\usepackage[hmargin={2.1cm,3.9cm}, vmargin={3.6cm,3cm}, 
-  marginparwidth=3.5cm]{geometry}
+\usepackage[
+%% Configuración en a4 on márgenes anchos
+hmargin={2.9cm,3.9cm}, vmargin={3.9cm,3.4cm},
+marginparwidth=3.5cm
+% %% Configuración de 'geometry' para servicio de publicaciones
+% \RequirePackage[
+% paperwidth=16.5cm,
+% paperheight=23.5cm,
+% inner=1.65cm,
+% outer=2.25cm,
+% top=1.8cm,
+% bottom=1cm, % P. Cervera decía 1.8, pero le resto \footskip
+% includehead,
+% includefoot
+]{geometry}
 
 % Environmet "extension" as margin notes
 \RequirePackage{environ} % To send environment to a \macro
@@ -20,14 +36,14 @@
 
 \RequirePackage{fancyhdr}
 \setlength{\headheight}{15pt} %Required by fancyhdr
-\renewcommand{\headrulewidth}{0.05pt} % Top horizontal line 
+\renewcommand{\headrulewidth}{0.05pt} % Top horizontal line
 \renewcommand{\footrulewidth}{0pt} % Bottom horizontal line
-\newcommand{\fancyHDRextendedwidth}{2.5cm}
+\newcommand{\fancyHDRextendedwidth}{1.5cm}
 \fancyheadoffset[RO,LE]{\fancyHDRextendedwidth} % Make header wider than body text
 \pagestyle{fancy}
 \renewcommand{\chaptermark}[1]{%
   \markboth{\textit{\thetitle}.\quad \chaptername\ \thechapter.\ #1}{}}
-%  \markright{\chaptername\ \thechapter.\ #1}{}}
+% \markright{\chaptername\ \thechapter.\ #1}{}}
 \renewcommand{\sectionmark}[1]{%
   \markright{\thesection.\ #1}{}}
 \fancyhf{}
@@ -39,13 +55,13 @@
 \RequirePackage{booktabs} % Pretty tables
 \RequirePackage{ctable} % \toprule, \bottomrule, etc.
 \RequirePackage{colortbl} % Color in tables
-\RequirePackage{multirow} % Multirow/multicolumn in tables 
+\RequirePackage{multirow} % Multirow/multicolumn in tables
 \RequirePackage{graphicx}
 \RequirePackage{fancybox}
 \RequirePackage{enumitem}
 \RequirePackage{marginnote}
 
-% %------------------------------------------------------------
+% % ------------------------------------------------------------
 % \RequirePackage{xcolor}
 % \RequirePackage{framed}
 \RequirePackage{mdframed}
@@ -66,29 +82,29 @@
 % \newtheorem{proposition}[theorem]{Proposición}
 % \newtheorem{lemma}[theorem]{Lema}
 % \newtheorem{corollary}[theorem]{Corolario}
-%\theoremstyle{definition} % roman, extra space above and below
+% \theoremstyle{definition} % roman, extra space above and below
 \newtheoremstyle{mytheorem}% <name>
-  {3pt}% <Space above>
-  {3pt}% <Space below>
-  {}% <Body font>
-  {}% <Indent amount>
-  {\itshape\bfseries}% <Theorem head font>
-  {.}% <Punctuation after theorem head>
-  {.5em}% <Space after theorem heading>
-  {}
-\newtheorem{definition}[theorem]{Definición} 
+{3pt}% <Space above>
+{3pt}% <Space below>
+{}% <Body font>
+{}% <Indent amount>
+{\itshape\bfseries}% <Theorem head font>
+{.}% <Punctuation after theorem head>
+{.5em}% <Space after theorem heading>
+{}
+\newtheorem{definition}[theorem]{Definición}
 \newtheorem{test}[theorem]{Test}
 
-%\theoremstyle{remark}   % roman, no extra space above and below
+% \theoremstyle{remark}   % roman, no extra space above and below
 \newtheorem{RemarkWithQed}[theorem]{Observación}
 \newenvironment{remark}
-  {\RemarkWithQed}
-  {\qed\endRemarkWithQed}
+{\RemarkWithQed}
+{\qed\endRemarkWithQed}
 % And also examples
 \newtheorem{ExampleWithQed}[theorem]{Ejemplo} % Default: append \qed
 \newenvironment{example}
-  {\ExampleWithQed}
-  {\qed\endExampleWithQed}
+{\ExampleWithQed}
+{\qed\endExampleWithQed}
 
 \newcommand{\resaltar}[1]{\textbf{#1}}
 
@@ -101,11 +117,11 @@ plainpages=false % To avoid bug with \frontmatter et al
 {hyperref}
 \definecolor{gray75}{gray}{0.75}
 \definecolor{darkblue}{rgb}{0.05,0.1,0.32}
-%\definecolor{darkgreen}{rgb}{0.0,0.32,0.15}
+% \definecolor{darkgreen}{rgb}{0.0,0.32,0.15}
 \definecolor{darkgreen}{rgb}{0.0,0.27,0.1}
 \definecolor{darkred}{rgb}{0.3,0.1,0.0}
 \def\refColor{darkgreen}
-%\def\refColor{black}
+% \def\refColor{black}
 \hypersetup{%
   colorlinks,
   linkcolor=\refColor,
@@ -113,6 +129,26 @@ plainpages=false % To avoid bug with \frontmatter et al
   anchorcolor=\refColor,
   citecolor=\refColor
 }
+
+% ----------------------------------------------------------------------
+
+\newcounter{problem}
+
+\newenvironment{EjerciciosResueltos}
+{\section{Ejercicios Resueltos}%
+  \newcommand{\problema}{%
+    \stepcounter{problem}%
+    \paragraph{Ejercicio \theproblem.}}%
+  \newcommand{\solucion}{\paragraph{Solución.}\em}%
+}
+{}
+
+\newenvironment{EjerciciosPropuestos}
+{\section{Ejercicios Propuestos}\newcommand{\problema}{\item}\begin{enumerate}}
+  {\end{enumerate}}
+
+% Captions: changing the font size
+\usepackage[font=small,labelfont=bf]{caption}
 
 % ----------------------------------------------------------------------
 
@@ -138,62 +174,62 @@ plainpages=false % To avoid bug with \frontmatter et al
   {Ñ}{{\~{N}}}1
 }
 
-% \lstset{ 
+% \lstset{
 %      % frame=Ltb,
 %      % framerule=0pt,
-%      aboveskip=0.5cm,
-%      framextopmargin=3pt,
-%      framexbottommargin=3pt,
-%      framexleftmargin=0.5em,
-%      framesep=0pt,
-%      rulesep=.4pt,
+% aboveskip=0.5cm,
+% framextopmargin=3pt,
+% framexbottommargin=3pt,
+% framexleftmargin=0.5em,
+% framesep=0pt,
+% rulesep=.4pt,
 % }
-%      backgroundcolor=\color{red!10!gray!40!yellow!10!white},
-%      rulesepcolor=\color{black},
+%   backgroundcolor=\color{red!10!gray!40!yellow!10!white},
+%   rulesepcolor=\color{black},
 %      %
-%      % stringstyle=\ttfamily,
-%      showstringspaces = false,
-%      basicstyle=\ttfamily\small,
-% %     commentstyle=\color{gray40},
-%      % keywordstyle=\bfseries,%\color{gray!150},
-%      % identifierstyle=\itshape\bfseries%\color{gray25},
+%      %   stringstyle=\ttfamily,
+%   showstringspaces = false,
+%   basicstyle=\ttfamily\small,
+% %   commentstyle=\color{gray40},
+%      %   keywordstyle=\bfseries,%\color{gray!150},
+%      %   identifierstyle=\itshape\bfseries%\color{gray25},
 %      %
-%      % numbers=left,
-%      % numbersep=15pt,
-%      % numberstyle=\tiny,
-%      % numberfirstline = false,
-%      % breaklines=true,
-%    }
+%      %   numbers=left,
+%      %   numbersep=15pt,
+%      %   numberstyle=\tiny,
+%      %   numberfirstline = false,
+%      %   breaklines=true,
+% }
 
 \lstdefinelanguage{Maxima}{
-keywords={addrow,addcol,zeromatrix,ident,augcoefmatrix,ratsubst,diff,ev,tex,%
-with_stdout,nouns,express,depends,load,submatrix,div,grad,curl,%
-rootscontract,solve,part,assume,sqrt,integrate,abs,inf,exp},
-sensitive=true
-comment=[n][\itshape]{/*}{*/}
+  keywords={addrow,addcol,zeromatrix,ident,augcoefmatrix,ratsubst,diff,ev,tex,%
+    with_stdout,nouns,express,depends,load,submatrix,div,grad,curl,%
+    rootscontract,solve,part,assume,sqrt,integrate,abs,inf,exp},
+  sensitive=true
+  comment=[n][\itshape]{/*}{*/}
 }
 \lstdefinelanguage{pseudocodigo}{
-keywords={Para, para, fin_para, sumatorio, funcion, fin_funcion, devolver},
-sensitive=false,
-comment=[n][\itshape]{\%}{},
-basicstyle=\ttfamily
+  keywords={Para, para, fin_para, sumatorio, funcion, fin_funcion, devolver},
+  sensitive=false,
+  comment=[n][\itshape]{\%}{},
+  basicstyle=\ttfamily
 }
 
 \lstnewenvironment{algoritmo}[1][]
-    {\lstset{language=pseudocodigo,#1}}
-    {}
+{\lstset{language=pseudocodigo,#1}}
+{}
 \lstnewenvironment{octave}[1][]
-    {\lstset{language=Octave,#1}}
-    {}
+{\lstset{language=Octave,#1}}
+{}
 \lstnewenvironment{mathematica}[1][]
-    {\lstset{language=Mathematica,#1}}
-    {}
+{\lstset{language=Mathematica,#1}}
+{}
 % \lstnewenvironment{c}[1][]
-%     {\lstset{language=c,#1}}
-%     {}
+% {\lstset{language=c,#1}}
+% {}
 \lstnewenvironment{C++}[1][]
-    {\lstset{language=c++,#1}}
-    {}
+{\lstset{language=c++,#1}}
+{}
 
 % % Python style for highlighting...
 
@@ -209,33 +245,33 @@ basicstyle=\ttfamily
 
 % \newcommand\pythonstyle{\lstset{
 % language=Python,
-% %basicstyle=\ttm,
+% % basicstyle=\ttm,
 % otherkeywords={self},             % Add keywords here
-% %keywordstyle=\ttb\color{deepblue},
+% % keywordstyle=\ttb\color{deepblue},
 % keywordstyle=\bfseries\color{deepblue},
 % emph={MyClass,__init__},          % Custom highlighting
-% %emphstyle=\ttb\color{deepred},    % Custom highlighting style
+% % emphstyle=\ttb\color{deepred},    % Custom highlighting style
 % emphstyle=\color{deepred},    % Custom highlighting style
 % commentstyle=\color{deepred},
 % stringstyle=\color{deepgreen},
-% %identifierstyle=\color{deepred},
+% % identifierstyle=\color{deepred},
 % frame=tb,                         % Any extra options here
-% showstringspaces=false            % 
+% showstringspaces=false            %
 % }}
 
-% % \lstnewenvironment{python}[1][]
-% %     {\pythonstyle\lstset{language=Python,#1}}
-% %     {}
-% % Python environment
-% \lstnewenvironment{python}[1][]
-% {
-% \pythonstyle
-% \lstset{#1}
+% %   \lstnewenvironment{python}[1][]
+% %   {\pythonstyle\lstset{language=Python,#1}}
+% %   {}
+% %   Python environment
+%   \lstnewenvironment{python}[1][]
+%   {
+%   \pythonstyle
+%   \lstset{#1}
 % }
-% {}
+%   {}
 
 \lstset{
-basicstyle=\ttfamily
+  basicstyle=\ttfamily
 }
 
 \usepackage{setspace}
@@ -252,48 +288,48 @@ basicstyle=\ttfamily
 \definecolor{Classname}{rgb}{0,0,0}
 \definecolor{FunctionName}{rgb}{1,0,0}
 \definecolor{Operators}{rgb}{0,0,0}
-%\definecolor{Background}{rgb}{0.99,0.987,0.966}
+% \definecolor{Background}{rgb}{0.99,0.987,0.966}
 \definecolor{Background}{rgb}{0.99,0.99,0.93}
 \definecolor{Numbers}{gray}{0.7}
 
 \newcommand{\pythonstyle}{\lstset{
-%numbers=left,
-numberstyle=\color{Numbers}\footnotesize\sffamily,
-numbersep=1em,
-xleftmargin=1em,
-framextopmargin=2em,
-framexbottommargin=2em,
-showspaces=false,
-showtabs=false,
-showstringspaces=false,
-frame=l,
-tabsize=4,
-% Basic
-basicstyle=\ttfamily\small\setstretch{1},
-backgroundcolor=\color{Background},
-language=Python,
-% Comments
-commentstyle=\color{Comments}\slshape,
-% Strings
-stringstyle=\color{Strings},
-morecomment=[s][\color{Strings}]{"""}{"""},
-morecomment=[s][\color{Strings}]{'''}{'''},
-% keywords
-morekeywords={import,from,class,def,for,while,if,is,in,elif,else,not,and,or,print,break,continue,return,True,False,None,access,as,,del,except,exec,finally,global,import,lambda,pass,print,raise,try,assert},
-keywordstyle={\color{Keywords}\bfseries},
-% additional keywords
-morekeywords={[2]@invariant},
-keywordstyle={[2]\color{Decorators}\slshape},
-emph={self},
-emphstyle={\color{self}\slshape},
-%
-}}
+    % numbers=left,
+    numberstyle=\color{Numbers}\footnotesize\sffamily,
+    numbersep=1em,
+    xleftmargin=1em,
+    framextopmargin=2em,
+    framexbottommargin=2em,
+    showspaces=false,
+    showtabs=false,
+    showstringspaces=false,
+    frame=l,
+    tabsize=4,
+    % Basic
+    basicstyle=\ttfamily\small\setstretch{1},
+    backgroundcolor=\color{Background},
+    language=Python,
+    % Comments
+    commentstyle=\color{Comments}\slshape,
+    % Strings
+    stringstyle=\color{Strings},
+    morecomment=[s][\color{Strings}]{"""}{"""},
+    morecomment=[s][\color{Strings}]{'''}{'''},
+    % keywords
+    morekeywords={import,from,class,def,for,while,if,is,in,elif,else,not,and,or,print,break,continue,return,True,False,None,access,as,,del,except,exec,finally,global,import,lambda,pass,print,raise,try,assert},
+    keywordstyle={\color{Keywords}\bfseries},
+    % additional keywords
+    morekeywords={[2]@invariant},
+    keywordstyle={[2]\color{Decorators}\slshape},
+    emph={self},
+    emphstyle={\color{self}\slshape},
+    %
+  }}
 
 % Python environment
 \lstnewenvironment{python}[1][]
 {
-\pythonstyle
-\lstset{#1}
+  \pythonstyle
+  \lstset{#1}
 }
 {}
 
@@ -301,9 +337,9 @@ emphstyle={\color{self}\slshape},
 % Python for inline
 \newcommand\pythoninline[1]{{\pythonstyle\lstinline!#1!}}
 
-%%,--------------------------------
-%%| Python for input external files
-%%`--------------------------------
+%% ,--------------------------------
+%% | Python for input external files
+%% `--------------------------------
 
 % Test if material (even floas) is odd page. Needs two compiler runs
 \RequirePackage{ifoddpage}
@@ -312,22 +348,22 @@ emphstyle={\color{self}\slshape},
 \newcommand{\widelstinputlisting}[2][]{%
   \checkoddpage
   \ifoddpage
-   \lstset{xleftmargin=0pt,xrightmargin=-\fancyHDRextendedwidth}
-   \lstinputlisting[#1]{#2}
-   \else
-   \lstset{xleftmargin=-\fancyHDRextendedwidth,xrightmargin=0pt}
-   \lstinputlisting[#1]{#2}
-   \fi}
+  \lstset{xleftmargin=0pt,xrightmargin=-\fancyHDRextendedwidth}
+  \lstinputlisting[#1]{#2}
+  \else
+  \lstset{xleftmargin=-\fancyHDRextendedwidth,xrightmargin=0pt}
+  \lstinputlisting[#1]{#2}
+  \fi}
 
 % 2. Define command for including external files
 \newcommand\widepythonexternal[2][]{{
-\pythonstyle
-\widelstinputlisting[#1]{#2}}}
+    \pythonstyle
+    \widelstinputlisting[#1]{#2}}}
 
 % 2. Define command for including external files
 \newcommand\pythonexternal[2][]{{
-\pythonstyle
-\lstinputlisting[#1]{#2}}}
+    \pythonstyle
+    \lstinputlisting[#1]{#2}}}
 
 
 % program (new figure-like environment)...
@@ -336,12 +372,12 @@ emphstyle={\color{self}\slshape},
 
 \newenvironment{program}{%
   \begin{Programa}\lstset{numbers=left}}{%
-    \end{Programa}}
+  \end{Programa}}
 
 % Python input
 \newenvironment{pythoninput}{%
-\begin{python}
-}{\end{python}}
+  \begin{python}
+  }{\end{python}}
 
 \newenvironment{pythonoutput}{%
   \definecolor{Background}{rgb}{0.99,0.987,1}
@@ -357,4 +393,4 @@ emphstyle={\color{self}\slshape},
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "./apuntes-MNII.tex"
-%%% End: 
+%%% End:

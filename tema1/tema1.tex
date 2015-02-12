@@ -28,9 +28,9 @@ Recordemos que, dada una función real de una variable real, $f$, con
 dominio $I\subset\Rset$, una \textit{raíz} (o un \textit{cero}) de $f$
 es una solución del siguiente problema:
 \begin{equation}
-\label{eq:raiz}
-\tag{P}
-\text{Hallar $\cero\in I$ tal que} \quad f(\cero)=0.
+  \label{eq:raiz}
+  \tag{P}
+  \text{Hallar $\cero\in I$ tal que} \quad f(\cero)=0.
 \end{equation}
 
 % El cero es simple si
@@ -586,7 +586,7 @@ Así, se tiene el siguiente resultado:
   muy útil como ``método de arranque'' (con el que realizar iteraciones
   previas antes de pasar a otros métodos de mayor orden), o como base
   para métodos más eficientes.
- \end{remark}
+\end{remark}
 
 \begin{remark}
   \label{rk:tema1:bisecc:iteraciones}
@@ -1807,14 +1807,276 @@ def regula_falsi(f, a, b, tol, max_iters):
             else:
                 a=c
         iter = iter + 1
-    print "Fallo de convergencia en el método de 'regula-falsi'"
-\end{python}
-\caption{Método de \textit{regula falsi}}
-\label{alg:metodo-regula-falsi}
-\end{algorithm}
+        print "Fallo de convergencia en el método de 'regula-falsi'"
+      \end{python}
+      \caption{Método de \textit{regula falsi}}
+      \label{alg:metodo-regula-falsi}
+ \end{algorithm}
+
+ \begin{EjerciciosResueltos}
+
+   \begin{problema}
+     Consideremos la siguiente ecuación:
+     \begin{equation}
+       \label{eq:cero}
+       e^{2x-3} = 2x+1.
+     \end{equation}
+     \begin{enumerate}
+
+     \item Demostrar que existen exactamente dos soluciones,
+       $\alpha_1<\alpha_2$, y separarlas en intervalos.
+
+       \begin{solucion}
+         Sea $$f(x)=e^{2x-3} - 2x-1.$$ Calculamos las raíces de la
+         derivada:
+         $$
+         f'(x)=2e^{2x-3}-2=0,
+         $$
+         o sea $e^{2x-3}=1$, es decir, $f'$ tiene un solo cero, $x=3/2$
+         y por lo tanto $f$ tiene a lo sumo dos ceros, $\alpha_1$ y
+         $\alpha_2$, separados por $x=3/2$.
+
+         Usando el teorema de Bolzano, podemos localizarlos en
+         $[-1,3/2]$ y en $[3/2,3]$. O mejor aún:
+         \begin{enumerate}
+         \item $\alpha_1\in [-1,0]$, pues $f(-1)=e^{-5}+1>0$ y $f(0)=e^{-3}-1<0$.
+         \item $\alpha_2\in [2,3]$, pues $f(2)=e-5<0$ y $f(3)=e^{3}-7 >
+           0$.
+         \end{enumerate}
+       \end{solucion}
+
+     \item Localizar un intervalo $[a,b]$ que contenga a $\alpha_1$,
+       de forma que la siguiente formulación de~(\ref{eq:cero})
+       verifique las hipótesis del teorema del punto fijo:
+       \begin{equation}
+         \label{eq:pto-fijo}
+         \text{Hallar } x=g(x), \quad \text{ con } g(x)=\frac{e^{2x-3}-1}2.
+       \end{equation}
+
+       \begin{solucion}
+         Tomamos $[a,b]=[-1,0]$. Entonces:
+         \begin{enumerate}
+         \item $g([a,b])\subset [a,b]$. En efecto, $g$ es monótona (creciente) porque
+           $$
+           g'(x)=2e^{2x-3}>0,
+           $$
+           y además $g(-1)=e^{-5}/2 - 1/2 \in[-1,0]$ y
+           $g(0)=e^{-3}/2-1/2  \in [-1,0]$.
+         \item $g$ es contractiva con constante $\lambda<1$. Para ello es
+           suficiente ver que $\lambda=\max_{x\in[a,b]} |g'(x)|<
+           1$. Como $$g''(x)=4e^{2x-3}>0,$$ entonces $g'$ es creciente,
+           luego alcanza su máximo en $x=0$ y $g'(0)=2e^{-3}
+           \approx 0.099<1$. Podemos tomar $\lambda=0.1$ como cota de
+           la derivada, y por tanto como constante de contractividad en
+           $[a,b]$.
+         \end{enumerate}
+       \end{solucion}
 
 
-%%% Local Variables:
-%%% mode: latex
-%%% TeX-master: "../apuntes-MNII.tex"
-%%% End:
+     \item Sea $x_0\in [a,b]$ y sea $x_k$  la sucesión de
+       aproximaciones sucesivas para el problema de punto
+       fijo~(\ref{eq:pto-fijo}). Estimar el número mínimo de
+       iteraciones para las que el error absoluto es menor que
+       $10^{-5}$.
+
+       \begin{solucion}
+         (a)
+         Por definición, $x_k=g(x_{k-1})$. Además, como $\alpha_1$ es un
+         punto fijo de $g$, $g(\alpha_1)=\alpha_1$. Aplicando lo
+         anterior y la contractividad de $g$ (repetidamente):
+         \begin{align*}
+           |x_k -\alpha_1| &= |g(x_{k-1})-g(\alpha_1)| \le
+                             \lambda|x_{k-1}-\alpha_1| \\
+                           &= \lambda |g(x_{k-2})-g(\alpha_1)| \le
+                             \lambda^2 |x_{k-2}-\alpha_1| \le \cdots \le \lambda^k
+                             |x_0 - \alpha_1|.
+         \end{align*}
+         (b)
+         Por otra parte, usando que $x_0, \alpha_1\in [a,b]$,
+         \begin{equation*}
+           |x_k -\alpha_1| < \lambda^k |x_0 - \alpha_1| \le \lambda^k (b-a),
+         \end{equation*}
+         por tanto para que $|x_k -\alpha_1| < \varepsilon = 10^{-5}$, es suficiente que
+         \begin{equation*}
+           \lambda^k < \frac{\varepsilon}{(b-a)}.
+         \end{equation*}
+         Para ello, basta tomar $k$ como el primer entero mayor que $k_0$, con
+         \begin{equation*}
+           k_0\in\Rset \text{tal que } \lambda^{k_0} = \frac{\varepsilon}{(b-a)},
+         \end{equation*}
+         es decir, para $\varepsilon=10^{-5}$, $[a,b]=[-1,0]$ y $\lambda=0.1$,
+         \begin{equation*}
+           k_0 = \frac{\log(10^{-5})}{\log{(0.1)}}=5 \quad \Rightarrow \fbox{k=6}.
+         \end{equation*}
+       \end{solucion}
+
+
+     \item Demostrar que la aproximación mediante el método de Newton
+       de~\eqref{eq:cero} converge en el intervalo $[2,3]$ si elegimos
+       $x_0=3$.
+       Aproximar $\alpha_2$ mediante dos iteraciones del algoritmo de
+       Newton a partir de $x_0=3$.
+
+       \begin{solucion}
+         (a) Tomamos
+         \begin{align*}
+           f(x)&=e^{2x-3} -2x-1, \\
+           f'(x)&=2e^{2x-3} -2, \\
+           f''(x)&=4e^{2x-3}. \\
+         \end{align*}
+         Para $x_0=3$, se satisfacen las hipótesis de la Regla de Fourier en $[2,3]$:
+         \begin{enumerate}
+         \item $f(2)=e-5<0$, $f(3)=e^3-7>0$.
+         \item $f'$ es creciente, por lo tanto $f'(x)>f(2)=2e-2>0$ en $[2,3]$.
+         \item $f''(x)>0$ en $[2,3]$.
+         \item Como $f(3)>0$ y $f''(3)>0$, se verifica $f(3)f''(3)>0$.
+         \end{enumerate}
+         En consecuencia, el método de Newton es
+         convergente.
+
+         (b) Realicemos las dos primeras iteraciones:
+         \begin{enumerate}
+         \item $x_1 = x_0 - f(x_0)/f'(x_0) = 3 - (e^3-7)/(4e^3-2)
+           \approx 2.65718708947.$
+         \item $x_2 =  x_1 - f(x_1)/f'(x_1) \approx 2.44859042303.$
+         \end{enumerate}
+       \end{solucion}
+     \end{enumerate}
+   \end{problema}
+ \end{EjerciciosResueltos}
+
+ \begin{EjerciciosPropuestos}
+   \begin{problema}
+     Aproximar mediante el método de bisección las raíces del polinomio
+     $$
+     p(x) = x^3 + 4x^2 -3x -5,
+     $$
+     de forma que el error relativo en las estimaciones obtenidas sea
+     menor que $10^{-2}$.
+   \end{problema}
+   \begin{problema}
+     Nos proponemos encontrar la solución de la siguiente ecuación en
+     el intervalo $[0,\pi]$:
+     $$
+     \int_0^x (\sen s)^2 \, ds = 1.
+     $$
+
+     \begin{enumerate}
+     \item Demostrar que el problema es equivalente a hallar un punto
+       fijo de la función:
+       $$
+       g(x)=2 + \frac{\sen(2x)}{2}
+       $$
+       en el intervalo $[0,\pi]$.
+     \item Comprobar que la función $g$ satisface las hipótesis del
+       teorema del punto fijo en el intervalo $\displaystyle [1.6,2]\subset
+       \bigg(\frac{\pi}{2},\frac{3\pi}{4}\bigg)$.
+     \item Determinar el número de iteraciones, $k$, para las que el
+       error cometido sea menor que $10^{-8}$.
+       \begin{quote}\em\small
+         Indicación:
+         $|x_k-\alpha|\le \lambda^k|x_0-\alpha|,
+         \quad\lambda=\text{c. de contractividad}$
+       \end{quote}
+     \item Calcular las dos primeras iteraciones.
+     \end{enumerate}
+   \end{problema}
+
+   % \begin{problema}
+   %   Dada la ecuación $f(x)=e^x-(x-2)^2=0$, demostrar que sólo posee una
+   %   raíz real.
+   %   \begin{flushright}\em\small
+   %     Idea: probar que $f'(x)>0$ para todo $x\in\Rset$. Para ello,
+   %     cuando $x>2$, aplicar a $e^x$ el teorema del valor medio en
+   %     $[2,x]$ para probar que $e^x>2(x-2)$.
+   %   \end{flushright}
+   % \end{problema}
+
+   % \begin{problema}
+   %   Consideremos la ecuación $$f(x)=(x-1)\tan(x)-1=0.$$
+   %   \begin{enumerate}
+   %   \item Demostrar esta ecuación posee infinitas raíces positivas,
+   %     determinando los intervalos que contengan a cada una de ellas.
+   %   \item Sea $\alpha>0$ la menor raíz positiva de $f(x)$ y
+   %     consideremos el intervalo $[a,b]=[0,\pi/4]$. Reescribir la
+   %     ecuación anterior en términos de punto fijo, $x=g(x)$, para
+   %     $g(x)$ adecuada. Demostrar que $\alpha\in [a,b]$ y que $g(x)$
+   %     verifica las hipótesis del teorema del punto fijo.
+   %   \item Partiendo de $x_0=0$, realizar dos iteraciones del método
+   %     de punto fijo. Determinar $n\in\Nset$ tal que, a partir de
+   %     $x_n$, el error absoluto con la solución exacta sea menor que
+   %     $\varepsilon = 10^{-3}$.
+   %   \end{enumerate}
+   % \end{problema}
+
+   \begin{problema}
+     Se sesea aplicar el método de punto fijo para calcular las raíces
+     de la ecuación
+     $$
+     f(x)=2x^2+6e^{-x}-4=0.
+     $$
+     \begin{itemize}
+     \item Reescribir (para cada raíz) la ecuación anterior en términos
+       de punto fijo y demostrando que se verifican las hipótesis del
+       teorema correspondiente.
+     \item Realizar (para cada raíz) cinco iteraciones de punto fijo.
+     \item Estimar el error cometido, en cada caso.
+     \end{itemize}
+   \end{problema}
+
+   \begin{problema}
+     Fijado $\gamma>0$, podemos usar el método de Newton para calcular
+     raíces reales $n$--ésimas (para cualquier $n\in\Nset$ dado)
+     de $\gamma$, resolviendo la ecuación:
+     $$
+     x^n - \gamma = 0.
+     $$
+     \begin{enumerate}
+     \item Determinar un intervalo y un valor inicial para los que el
+       método de Newton sea convergente
+       \begin{quote}\em\small
+         Indicación: distinguir los casos $\gamma>1$ y $\gamma<1$.
+       \end{quote}
+     \item Realizando tres iteraciones del método de Newton, aproximar
+       los valores de $\sqrt{2}$ y $\sqrt[3]{1/3}$. Estimar, en cada
+       caso, el error cometido.
+     \end{enumerate}
+
+   \end{problema}
+
+
+   \begin{problema}
+     Consideremos la ecuación
+     $$
+     x-1 + \log(1+x^2) = 0
+     $$
+     \begin{enumerate}
+     \item Demostrar que existe una única solución, $\alpha\in\Rset$.
+     \item Comprobar que se verifican las hipótesis de convergencia
+       global del método de Newton en el intervalo $[0,1]$, pero no
+       las hipótesis de la regla de Fourier (que es una condición
+       suficiente pero no necesaria).
+     \item Realizar tres iteraciones del método de Newton a partir de
+       $x_0=1$. Si $x_3$ es la aproximación obtenida, acotar el error
+       $|x_3-\alpha|$ en función de $|x_1-x_0|$.
+     \end{enumerate}
+   \end{problema}
+
+   \begin{problema}
+     Dada la ecuación $$e^x=(x+1)^2:$$
+     \begin{enumerate}
+     \item Estudiar sus raíces y localizarlas en intervalos
+     \item Utilizar el método de bisección para aproximar la mayor de
+       ellas con dos cifras decimales exactas
+     \item Para esta raíz, localizar un intervalo en el que, mediante
+       la regla de Fourier, se pueda garantizar la convergencia del
+       método de Newton. Utilizar este método para aproximar esta raíz
+       con cuatro cifras decimales exactas.
+     \end{enumerate}
+   \end{problema}
+ \end{EjerciciosPropuestos}
+
+ %%% Local Variables:
+ %%% mode: latex
+ %%% TeX-master: "../apuntes-MNII.tex"
+ %%% End:

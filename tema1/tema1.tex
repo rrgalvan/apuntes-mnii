@@ -105,17 +105,17 @@ Obsérvese que~\eqref{eq:orden-convergencia} implica que, cuando $x_k$
 esté suficientemente cerca de $\alpha$,
 \begin{equation}
   \label{eq:orden-convergencia-aprox}
-   |x_{k+1}-\alpha| \approx C |x_{k}-\alpha|^p,
+  |x_{k+1}-\alpha| \approx C |x_{k}-\alpha|^p,
 \end{equation}
 en el sentido de que para todo $\varepsilon>0$ existe $k_0\in\Nset$ tal que
 \begin{equation*}
-   \label{eq:orden-convergencia-2}
+  \label{eq:orden-convergencia-2}
   (C-\varepsilon) |x_{k}-\alpha|^p < |x_{k+1}-\alpha| <
   (C+\varepsilon)  |x_{k}-\alpha|^p, \quad \forall k \ge k_0.
 \end{equation*}
 
 \begin{remark}
-\label{rk:interpretacion-orden-convergencia}
+  \label{rk:interpretacion-orden-convergencia}
   La expresión~(\ref{eq:orden-convergencia-aprox}) puede interpretarse
   en el siguiente sentido: puesto que $\lim x_k=\alpha$, para $k$
   suficientemente grande tendremos que el error $|x_k-\alpha|$ es
@@ -140,11 +140,11 @@ orden en el siguiente sentido:
   \end{equation}
 \end{definition}
 
-%\begin{remark}
-  % La desigualdad~(\ref{eq:orden-convergencia-2}) significa que todo
-  % método iterativo con orden de convergencia (exactamente) $p$ tiene
-  % orden de convergencia al menos $p$ para una constante ligeramente
-  % mayor, $C+\epsilon$.
+% \begin{remark}
+%   La desigualdad~(\ref{eq:orden-convergencia-2}) significa que todo
+%   método iterativo con orden de convergencia (exactamente) $p$ tiene
+%   orden de convergencia al menos $p$ para una constante ligeramente
+%   mayor, $C+\epsilon$.
 Algunos comentarios:
 \begin{itemize}
 \item Un método iterativo de orden al menos $p$ podría tener,
@@ -428,9 +428,9 @@ en el que $f$ cambia de signo (y que contiene a la raíz, según el
 teorema de Bolzano). Con más detalle: el método consiste en construir
 una sucesión de intervalos,
 \begin{equation}
-\label{eq:tema1:bisecc:0}
-[a,b]=[a_0,b_0] \supset [a_1,b_1] \supset [a_2,b_2] \cdots \supset
-[a_n,b_n] \supset \cdots
+  \label{eq:tema1:bisecc:0}
+  [a,b]=[a_0,b_0] \supset [a_1,b_1] \supset [a_2,b_2] \cdots \supset
+  [a_n,b_n] \supset \cdots
 \end{equation}
 definida a partir de sus puntos medios, $c_n=(a_n+b_n)/2$, tal y como sigue:
 \begin{itemize}
@@ -461,22 +461,22 @@ pseudocódigo%
   este manual constituirá código conforme a Python 2.x} en el
 Algoritmo~\ref{alg:metodo-biseccion}.
 \begin{algorithm}  \begin{python}
-def biseccion(f, a, b, tol, max_iters):
-  iter = 0
-  while b-a >= tol and iter < max_iters:
-      c = (a+b)/2.0
-      if f(c)==0:
-          return c
-      else:
-          if f(a)*f(c) < 0:
-              b=c
-          else:
-              a=c
-      iter = iter + 1
-  return c
-\end{python}
-\caption{Método de bisección}
-\label{alg:metodo-biseccion}
+    def biseccion(f, a, b, tol, max_iters):
+    iter = 0
+    while b-a >= tol and iter < max_iters:
+    c = (a+b)/2.0
+    if f(c)==0:
+    return c
+    else:
+    if f(a)*f(c) < 0:
+    b=c
+    else:
+    a=c
+    iter = iter + 1
+    return c
+  \end{python}
+  \caption{Método de bisección}
+  \label{alg:metodo-biseccion}
 \end{algorithm}
 
 \begin{example}
@@ -501,23 +501,23 @@ def biseccion(f, a, b, tol, max_iters):
   \rule{0.99\linewidth}{1.6pt}
   \begin{equation*}
     \begin{array}{l<{\quad}rrrrr}%{>{$}r<{$}>{$}r<{$}>{$}r<{$}>{$}r<{$}>{$}r<{$}}
-     k &  [a_k,b_k] & c_k & f(a_k) & f(b_k) & f(c_k)
+      k &  [a_k,b_k] & c_k & f(a_k) & f(b_k) & f(c_k)
       \\ \toprule%\mbox{}% \mbox{} for avoiding bug with "["
-     0 & [0,1]  &  0.5
-      & 3 & -5 & -1.375
+      0 & [0,1]  &  0.5
+                           & 3 & -5 & -1.375
       \\ \noalign{\smallskip}
-     1 &  [0,0.5] &  0.25
-      & 3 & -1.375 & 0.76
+      1 &  [0,0.5] &  0.25
+                           & 3 & -1.375 & 0.76
       \\ \smallskip
-     2 & [0.25,0.5] & 0.375
-      & 0.76 & -1.375 & -0.32
-     \\ \smallskip
-     3& [0.25,0.375] & 0.3125
-      & 0.76 & -0.32 & 0.21
+      2 & [0.25,0.5] & 0.375
+                           & 0.76 & -1.375 & -0.32
+      \\ \smallskip
+      3& [0.25,0.375] & 0.3125
+                           & 0.76 & -0.32 & 0.21
       \\
       \hfill \vdots \hfill~ & \hfill \vdots \hfill~ &
-      \hfill \vdots \hfill~ & \hfill \vdots \hfill~ &
-      \hfill \vdots \hfill~ & \hfill \vdots \hfill~
+                                                      \hfill \vdots \hfill~ & \hfill \vdots \hfill~ &
+                                                                                                      \hfill \vdots \hfill~ & \hfill \vdots \hfill~
     \end{array}
   \end{equation*}
   \rule{0.99\linewidth}{1.5pt}
@@ -648,9 +648,9 @@ métodos de punto fijo o de aproximaciones sucesivas.
 Llamamos \resaltar{punto fijo} de una función continua
 $g:I\subset\Rset\to\Rset$ a una solución del siguiente  problema:
 \begin{equation}
-\tag{$P_{\text{PF}}$}
-\text{Hallar $\cero\in I$ tal que} \quad \cero=g(\cero).
-\label{eq:punto-fijo}
+  \tag{$P_{\text{PF}}$}
+  \text{Hallar $\cero\in I$ tal que} \quad \cero=g(\cero).
+  \label{eq:punto-fijo}
 \end{equation}
 
 Geométricamente, una solución de la ecuación $x=g(x)$ se corresponde
@@ -706,8 +706,8 @@ punto fijo.
   que
   \begin{equation}
     g([a,b])\subset [a,b].
-  \label{eq:g[a,b].subset.[a,b]}
-\end{equation}
+    \label{eq:g[a,b].subset.[a,b]}
+  \end{equation}
   Entonces existe al menos un punto fijo de $g$ en $[a,b]$.
 \end{proposition}
 \begin{proof}
@@ -739,13 +739,13 @@ introduciremos la siguiente definición:
 \end{definition}
 
 \begin{example}
-La función $g(x)=(x^2-1)/3$ es contractiva en $[-1,1]$, pues
-$$
-|g(x)-g(y)|=\left|\frac{x^2-y^2}{3}\right| = \frac{|x+y|}{3}|x-y| \le
-\cteContract |x-y|,
-$$
-para $\cteContract=\max \big\{ \frac{|x+y|}{3}\ /\ x,y\in [-1,1]
-\big\} =\frac23 <1$.
+  La función $g(x)=(x^2-1)/3$ es contractiva en $[-1,1]$, pues
+  $$
+  |g(x)-g(y)|=\left|\frac{x^2-y^2}{3}\right| = \frac{|x+y|}{3}|x-y| \le
+  \cteContract |x-y|,
+  $$
+  para $\cteContract=\max \big\{ \frac{|x+y|}{3}\ /\ x,y\in [-1,1]
+  \big\} =\frac23 <1$.
 \end{example}
 
 \begin{remark}[Algunas propiedades de las funciones contractivas]~
@@ -757,7 +757,7 @@ para $\cteContract=\max \big\{ \frac{|x+y|}{3}\ /\ x,y\in [-1,1]
     uniformemente continua en ese mismo intervalo (es decir, para
     todo $\varepsilon>0$ existe $\delta>0$ tal que $|x-y|<\delta
     \Rightarrow |f(x)-f(y)|<\varepsilon$).
-\end{itemize}
+  \end{itemize}
 \end{remark}
 
 \begin{proposition}[Condición suficiente de contractividad]
@@ -818,7 +818,7 @@ aproximaciones sucesivas (o simplemente, \resaltar{métodos de punto
       \text{Dado } x_0\in [a,b], \\
       \text{calcular } x_{k+1}=g(x_k), \quad \forall k\ge 0.
     \end{array}
-    \right.
+  \right.
   \label{eq:MAS}
 \end{equation}
 Véase que para que el método esté \textit{bien definido} es necesario
@@ -852,7 +852,7 @@ de aquellas proposiciones.
       \\
       \label{eq:pto-fijo:cota-a-posteriori}
       |x_k-\cero| \le \frac{\cteContract^k}{1-\cteContract}
-      &|x_1-x_0|.
+                                     &|x_1-x_0|.
     \end{align}
   \end{enumerate}
 \end{theorem}
@@ -872,13 +872,13 @@ a~(\ref{eq:pto-fijo:cota-a-posteriori}) se la conoce como
   Acerca de la convergencia, dado $x_0\in
   [a,b]$ podemos aplicar repetidamente la función $g$ obteniendo:
   \begin{equation}
-  \begin{aligned}
-    |x_k-\cero| = &|g(x_{k-1})-g(\cero)| \le \cteContract
-    |x_{k-1}-\cero| = \\
-    = \cteContract &|g(x_{k-2})-g(\cero)| \le \cteContract^2
-    |x_{k-2}-\cero| \le \cdots \le \cteContract^k |x_0-\cero|.
-  \end{aligned}\label{eq:1}
-\end{equation}
+    \begin{aligned}
+      |x_k-\cero| = &|g(x_{k-1})-g(\cero)| \le \cteContract
+      |x_{k-1}-\cero| = \\
+      = \cteContract &|g(x_{k-2})-g(\cero)| \le \cteContract^2
+      |x_{k-2}-\cero| \le \cdots \le \cteContract^k |x_0-\cero|.
+    \end{aligned}\label{eq:1}
+  \end{equation}
   Así se tiene la estimación a
   priori~(\ref{eq:pto-fijo:cota-a-priori}) y, como
   $L<1$, podemos concluir que $x_k\to\cero$.
@@ -894,34 +894,34 @@ a~(\ref{eq:pto-fijo:cota-a-posteriori}) se la conoce como
   Sean ahora $k,n\in\Nset$ y supongamos $n>k$. Aplicando la
   desigualdad triangular junto a la desigualdad anterior obtenemos:
   \begin{align*}
-     |x_n-x_k| &\le |x_n-x_{n-1}| + |x_{n-1}-x_{n-2}| + \cdots +
-     |x_{k+2}-x_{k+1}| + |x_{k+1}-x_{k}|
-     \\
-     &\le \left(\cteContract^{n-1} + \cteContract^{n-2} +\cdots+
-       \cteContract^{k+1} + \cteContract^{k} \right) |x_1-x_0|
-     \\
-     &=\left(\frac{\cteContract^k-\cteContract^n}{1-\cteContract}\right)
-     |x_1-x_0|
-     \le \frac{L^k}{1-L} |x_1-x_0|.
+    |x_n-x_k| &\le |x_n-x_{n-1}| + |x_{n-1}-x_{n-2}| + \cdots +
+                |x_{k+2}-x_{k+1}| + |x_{k+1}-x_{k}|
+    \\
+              &\le \left(\cteContract^{n-1} + \cteContract^{n-2} +\cdots+
+                \cteContract^{k+1} + \cteContract^{k} \right) |x_1-x_0|
+    \\
+              &=\left(\frac{\cteContract^k-\cteContract^n}{1-\cteContract}\right)
+                |x_1-x_0|
+                \le \frac{L^k}{1-L} |x_1-x_0|.
   \end{align*}
   Y por último, usando que $x_n\to\cero$,
   podemos llegar a~(\ref{eq:pto-fijo:cota-a-posteriori}).
 \end{proof}
 
 \begin{algorithm}  \begin{python}
-def punto_fijo(g, x0, tol, max_iters):
+    def punto_fijo(g, x0, tol, max_iters):
     iter = 0
     while iter < max_iters:
-        x1 = g(x0)
-        if abs(x1-x0) < tol:
-            return x1
-        else:
-            x0 = x1
-            iter = iter + 1
+    x1 = g(x0)
+    if abs(x1-x0) < tol:
+    return x1
+    else:
+    x0 = x1
+    iter = iter + 1
     print "Fallo de convergencia en el método de punto fijo!"
-\end{python}
-\caption{Método de punto fijo (o aproximaciones sucesivas)}
-\label{alg:metodo-punto_fijo}
+  \end{python}
+  \caption{Método de punto fijo (o aproximaciones sucesivas)}
+  \label{alg:metodo-punto_fijo}
 \end{algorithm}
 El método de punto fijo o de aproximaciones sucesivas se ha enunciado
 en el algoritmo~\ref{alg:metodo-punto_fijo}.  Dada una tolerancia
@@ -932,46 +932,46 @@ de parada está bien formulado, pues implica $|\cero-x_k|<\epsilon$
 la coercividad de $g$).% En efecto, usando la
 % desigualdad triangular,
 % \begin{align*}
-%   |\cero-x_k| \le |\cero-x_{k+1}|+|x_{k+1}-x_k|
-%   = |g(\cero)-g(x_k)| + |x_{k+1}-x_k|
-%   \le \lambda|\cero-x_k| + |x_{k+1}-x_k|
-% \end{align*}
+    %     |\cero-x_k| \le |\cero-x_{k+1}|+|x_{k+1}-x_k|
+    %     = |g(\cero)-g(x_k)| + |x_{k+1}-x_k|
+    %     \le \lambda|\cero-x_k| + |x_{k+1}-x_k|
+    %   \end{align*}
 
 \begin{remark}[Orden uno de~(\ref{eq:MAS})]
-   En las hipótesis del Teorema~\ref{thm:punto-fijo-Banach} los
-    métodos de punto fijo tienen \resaltar{orden de convergencia al
-      menos uno}.  En efecto, si $g$ verifica estas hipótesis,
-    siguiendo la demostración anterior tenemos la cadena de)
-    desigualdades~(\ref{eq:1}). Si nos fijamos en la primera
-    desigualdad,
-    $$
-    |x_k-\cero|\le\cteContract |x_{k-1}-\cero|,
-    $$
-    por tanto se verifica la condición
-    (\ref{eq:orden-convergencia-al-menos-p}) para orden $p=1$ (con
-    constante $C=\lambda<1$).
-  \end{remark}
-  \begin{remark}[Orden $p$ de~(\ref{eq:MAS})]
-    Para hipótesis más restrictivas sobre $g$ se puede llegar a
-    \resaltar{orden mayor que uno}. En concreto, se puede demostrar
-    que si~(\ref{eq:MAS}) converge a un punto fijo, $\cero$, y si
-    $g\in C^p([a,b])$ siendo $p \ge 1$ un entero, con
-    \begin{extension}
-      (En el caso $p=1$ es necesario exigir $g'(\cero)<1$).
-    \end{extension}
-    \begin{equation*}
-      g'(\cero)=g''(\cero)=\cdots=g^{p-1)}(\cero)=0, \quad
-      g^p)(\cero)\neq 0,
-    \end{equation*}
-    entonces~(\ref{eq:MAS}) tiene orden exactamente $p$.
-    \begin{extension}
-      (Siempre que no ocurra que $x_k=\alpha\ \forall k\ge k_0$).
-    \end{extension}
-    La demostración se basa en un desarrollo de Taylor de $g$ hasta
-    orden $p$.
-    \label{rk:MAS.orden.p}
-  \end{remark}
-%\subsection{Ejemplos}
+  En las hipótesis del Teorema~\ref{thm:punto-fijo-Banach} los
+  métodos de punto fijo tienen \resaltar{orden de convergencia al
+    menos uno}.  En efecto, si $g$ verifica estas hipótesis,
+  siguiendo la demostración anterior tenemos la cadena de)
+  desigualdades~(\ref{eq:1}). Si nos fijamos en la primera
+  desigualdad,
+  $$
+  |x_k-\cero|\le\cteContract |x_{k-1}-\cero|,
+  $$
+  por tanto se verifica la condición
+  (\ref{eq:orden-convergencia-al-menos-p}) para orden $p=1$ (con
+  constante $C=\lambda<1$).
+\end{remark}
+\begin{remark}[Orden $p$ de~(\ref{eq:MAS})]
+  Para hipótesis más restrictivas sobre $g$ se puede llegar a
+  \resaltar{orden mayor que uno}. En concreto, se puede demostrar
+  que si~(\ref{eq:MAS}) converge a un punto fijo, $\cero$, y si
+  $g\in C^p([a,b])$ siendo $p \ge 1$ un entero, con
+  \begin{extension}
+    (En el caso $p=1$ es necesario exigir $g'(\cero)<1$).
+  \end{extension}
+  \begin{equation*}
+    g'(\cero)=g''(\cero)=\cdots=g^{p-1)}(\cero)=0, \quad
+    g^p)(\cero)\neq 0,
+  \end{equation*}
+  entonces~(\ref{eq:MAS}) tiene orden exactamente $p$.
+  \begin{extension}
+    (Siempre que no ocurra que $x_k=\alpha\ \forall k\ge k_0$).
+  \end{extension}
+  La demostración se basa en un desarrollo de Taylor de $g$ hasta
+  orden $p$.
+  \label{rk:MAS.orden.p}
+\end{remark}
+    %     \subsection{Ejemplos}
 
 \begin{example}
   Nos proponemos el formular en términos de problemas de punto fijo el
@@ -1026,48 +1026,48 @@ la coercividad de $g$).% En efecto, usando la
   \begin{itemize}
   \item En $[a_1,b_1]=[-\pi/4, 0]$, como $x<0$, definiremos el
     problema de punto fijo
-  $$
-  x=g_1(x)=-\dfrac 12 \sqrt{1+\sen(x)}.
-  $$
-  La función $g_1$ está bien definida (pues $1+\sen(x)\ge 0$) y es
-  continua en todo $\Rset$. Veamos que está en las hipótesis del
-  teorema de punto fijo. En primer lugar,
-  $$
-  g_1'(x)=\frac{-\cos(x)}{4\sqrt{1+\sen(x)}},
-  $$
-  que está bien definida para todo $x\in[-\pi/4, 0]$, ya que
-  $\sen(x)>-1$ en este intervalo. Además:
-  \begin{enumerate}
-  \item $g_1([a_1,b_1])\subset [a_1,b_1]$: En efecto, $g_1$ es
-    decreciente en $[-\pi/4,0]$ (pues $\cos(x)\ge 0$ si $x\in
-    [-\pi/4, 0]$ y por tanto $g_1'(x)\le 0$ en este intervalo).
-    Como
-    \begin{align*}
-      g_1(-\pi/4)&= -\frac12 \sqrt{1+\sen(-\pi/4)}=-0.270...\in
-      [-\pi/4,0]=[-0.785...,0],
-      \\
-      g_1(0)&=-1/2 \in [-\pi/4,0],
-    \end{align*}
-    se tiene que $g([-\pi/4,0])\subset
-    [g(0),g(-\pi/4)] \subset [-\pi/4,0]$.
-  \item Veamos que $g_1$ es contractiva en $[a_1,b_1]$, para lo que es
-    suficiente que $|g'(x)|<1$ en $[a_1,b_1]=[-\pi/4,0]$ (según la
-    proposición~\ref{pro:1} y a la observación~\ref{rk:3}).  Como
-    $\sen(x)$ es creciente en $[-\pi/4,0]$, en este intervalo se
-    verifica que
-    $$4\sqrt{1+\sen(x)}\ge 4\sqrt{1+\sen(-\pi/4)}=2.164... >1,$$
-    así
     $$
-    \left|g'(x)\right| = \frac{|\cos{x}|}{4\sqrt{1+\sen(x)}} \le
-    \frac{1}{4\sqrt{\sen(x)+1}} < 1.
+    x=g_1(x)=-\dfrac 12 \sqrt{1+\sen(x)}.
     $$
-  \end{enumerate}
-\item En $[a_2,b_2]=[0,\pi/2]$ podemos proceder de forma similar para
-  $g_2(x)=+\frac 12 \sqrt{1+\sen(x)}$, obteniendo que
-  $g_2([0,\pi/2])\subset[0,\pi/2]$ y $g_2$ es contractiva, por lo que
-  $g_2$ está en las hipótesis del Teorema del punto fijo en
-  $[a_2,b_2]$. El desarrollo de este apartado se deja como ejercicio
-  al lector.
+    La función $g_1$ está bien definida (pues $1+\sen(x)\ge 0$) y es
+    continua en todo $\Rset$. Veamos que está en las hipótesis del
+    teorema de punto fijo. En primer lugar,
+    $$
+    g_1'(x)=\frac{-\cos(x)}{4\sqrt{1+\sen(x)}},
+    $$
+    que está bien definida para todo $x\in[-\pi/4, 0]$, ya que
+    $\sen(x)>-1$ en este intervalo. Además:
+    \begin{enumerate}
+    \item $g_1([a_1,b_1])\subset [a_1,b_1]$: En efecto, $g_1$ es
+      decreciente en $[-\pi/4,0]$ (pues $\cos(x)\ge 0$ si $x\in
+      [-\pi/4, 0]$ y por tanto $g_1'(x)\le 0$ en este intervalo).
+      Como
+      \begin{align*}
+        g_1(-\pi/4)&= -\frac12 \sqrt{1+\sen(-\pi/4)}=-0.270...\in
+                     [-\pi/4,0]=[-0.785...,0],
+        \\
+        g_1(0)&=-1/2 \in [-\pi/4,0],
+      \end{align*}
+      se tiene que $g([-\pi/4,0])\subset
+      [g(0),g(-\pi/4)] \subset [-\pi/4,0]$.
+    \item Veamos que $g_1$ es contractiva en $[a_1,b_1]$, para lo que es
+      suficiente que $|g'(x)|<1$ en $[a_1,b_1]=[-\pi/4,0]$ (según la
+      proposición~\ref{pro:1} y a la observación~\ref{rk:3}).  Como
+      $\sen(x)$ es creciente en $[-\pi/4,0]$, en este intervalo se
+      verifica que
+      $$4\sqrt{1+\sen(x)}\ge 4\sqrt{1+\sen(-\pi/4)}=2.164... >1,$$
+      así
+      $$
+      \left|g'(x)\right| = \frac{|\cos{x}|}{4\sqrt{1+\sen(x)}} \le
+      \frac{1}{4\sqrt{\sen(x)+1}} < 1.
+      $$
+    \end{enumerate}
+  \item En $[a_2,b_2]=[0,\pi/2]$ podemos proceder de forma similar para
+    $g_2(x)=+\frac 12 \sqrt{1+\sen(x)}$, obteniendo que
+    $g_2([0,\pi/2])\subset[0,\pi/2]$ y $g_2$ es contractiva, por lo que
+    $g_2$ está en las hipótesis del Teorema del punto fijo en
+    $[a_2,b_2]$. El desarrollo de este apartado se deja como ejercicio
+    al lector.
   \end{itemize}
   La \textsf{tercera y última etapa} consistiría en
   aplicar~(\ref{eq:MAS}) para aproximar las soluciones en cada uno de
@@ -1088,48 +1088,48 @@ la coercividad de $g$).% En efecto, usando la
   \end{program}
 \end{example}
 
-% Para terminar, mostramos un resultado que garantiza la convergencia
-% de~(\ref{eq:MAS}) hacia un punto fijo conocido, sin utilizar hipótesis
-% globales sobre el intervalo. En concreto, en el siguiente teorema
-% solamente se utilizan hipótesis locales sobre la derivada de $g$.
+                %                 Para terminar, mostramos un resultado que garantiza la convergencia
+                %                 de~(\ref{eq:MAS}) hacia un punto fijo conocido, sin utilizar hipótesis
+                %                 globales sobre el intervalo. En concreto, en el siguiente teorema
+                %                 solamente se utilizan hipótesis locales sobre la derivada de $g$.
 
-% \begin{theorem}[Convergencia local de los métodos de punto fijo]
-%   \label{thm:punto-fijo-convergencia-local}
-%   Sea $\cero$ un punto fijo de una función $g$. Supongamos que existe
-%   $\delta>0$ tal que $g\in C^1(\cero-\delta,\cero+\delta)$ y que
-%   $|g'(\cero)|<1$. Entonces:
-%   \begin{enumerate}
-%   \item Existe $\rho\in (0,\delta)$ tal que método de punto
-%     fijo~(\ref{eq:MAS}) está bien definido y converge hacia $\cero$
-%     (para cualquier inicialización $x_0 \in [x_0-\rho,x_0+\rho]$).
-%   \item Existe una constante de contractividad $\lambda\in [0,1)$ (que
-%     depende de $\rho$ y $|g'(\cero)|$) para la que se verifican las
-%     estimaciones a priori~(\ref{eq:pto-fijo:cota-a-priori}) y a
-%     posterior~(\ref{eq:pto-fijo:cota-a-posteriori}) en
-%     $[x_0-\rho,x_0+\rho]$.
-%   \end{enumerate}
-% \end{theorem}
-%   \begin{proof}
-%     Simplemente tenemos que aplicar el
-%     teorema~\ref{thm:punto-fijo-Banach} (Teorema del punto fijo) en un
-%     intervalo adecuado $[x_0-\rho,x_0+\rho]$. En concreto, como
-%     $g'(\cero)<1$ y $g \in C^1(\cero-\delta,\cero+\delta)$, podemos
-%     asegurar que para algún $\rho\in(0,\delta)$,
-%     $$
-%     |g'(x)|<1 \quad \forall x\in [\cero-\rho, \cero+\rho],
-%     $$
-%     luego $g$ es contractiva en $[\cero-\rho, \cero+\rho]$ (debido a
-%     la proposición~\ref{pro:1} y a la observación~\ref{rk:3}), con
-%     constante $\lambda<1$.
+                %                 \begin{theorem}[Convergencia local de los métodos de punto fijo]
+                %                 \label{thm:punto-fijo-convergencia-local}
+                %                 Sea $\cero$ un punto fijo de una función $g$. Supongamos que existe
+                %                 $\delta>0$ tal que $g\in C^1(\cero-\delta,\cero+\delta)$ y que
+                %                 $|g'(\cero)|<1$. Entonces:
+                %                 \begin{enumerate}
+                %                 \item Existe $\rho\in (0,\delta)$ tal que método de punto
+                %                 fijo~(\ref{eq:MAS}) está bien definido y converge hacia $\cero$
+                %                 (para cualquier inicialización $x_0 \in [x_0-\rho,x_0+\rho]$).
+                %                 \item Existe una constante de contractividad $\lambda\in [0,1)$ (que
+                %                 depende de $\rho$ y $|g'(\cero)|$) para la que se verifican las
+                %                 estimaciones a priori~(\ref{eq:pto-fijo:cota-a-priori}) y a
+                %                 posterior~(\ref{eq:pto-fijo:cota-a-posteriori}) en
+                %                 $[x_0-\rho,x_0+\rho]$.
+                %                 \end{enumerate}
+                %                 \end{theorem}
+                %                 \begin{proof}
+                %                 Simplemente tenemos que aplicar el
+                %                 teorema~\ref{thm:punto-fijo-Banach} (Teorema del punto fijo) en un
+                %                 intervalo adecuado $[x_0-\rho,x_0+\rho]$. En concreto, como
+                %                 $g'(\cero)<1$ y $g \in C^1(\cero-\delta,\cero+\delta)$, podemos
+                %                 asegurar que para algún $\rho\in(0,\delta)$,
+                %                 $$
+                %                 |g'(x)|<1 \quad \forall x\in [\cero-\rho, \cero+\rho],
+                %                 $$
+                %                 luego $g$ es contractiva en $[\cero-\rho, \cero+\rho]$ (debido a
+                %                 la proposición~\ref{pro:1} y a la observación~\ref{rk:3}), con
+                %                 constante $\lambda<1$.
 
-%     Además es fácil ver que $g([\cero-\rho, \cero+\rho]) \subset
-%     [\cero-\rho, \cero+\rho]$, pues si $x\in[\cero-\rho, \cero+\rho]$
-%     se tiene $ |x-\cero|<\rho$ y por tanto
-%     $$
-%     |g(x)-\cero| = |g(x)-g(\cero)| \le \lambda |x-\cero|< \rho
-%     \Rightarrow g(x)\in [\cero-\rho, \cero+\rho].
-%     $$
-%   \end{proof}
+                %                 Además es fácil ver que $g([\cero-\rho, \cero+\rho]) \subset
+                %                 [\cero-\rho, \cero+\rho]$, pues si $x\in[\cero-\rho, \cero+\rho]$
+                %                 se tiene $ |x-\cero|<\rho$ y por tanto
+                %                 $$
+                %                 |g(x)-\cero| = |g(x)-g(\cero)| \le \lambda |x-\cero|< \rho
+                %                 \Rightarrow g(x)\in [\cero-\rho, \cero+\rho].
+                %                 $$
+                %                 \end{proof}
 
 \section{El método de Newton}
 \label{sec:metodo-de-newton}
@@ -1208,19 +1208,19 @@ implementación es sencilla (véase el
 algoritmo~\ref{alg:metodo-newton}) siempre y cuando sea conocida la
 derivada de la función $f$.
 \begin{algorithm}  \begin{python}
-def newton(f, df, x0, tol, max_iters):
+    def newton(f, df, x0, tol, max_iters):
     iter = 0
     while iter < max_iters:
-        x1 = x0 - f(x0)/df(x0)
-        if abs(x1-x0) < tol:
-            return x1
-        else:
-            x0 = x1
-            iter = iter + 1
+    x1 = x0 - f(x0)/df(x0)
+    if abs(x1-x0) < tol:
+    return x1
+    else:
+    x0 = x1
+    iter = iter + 1
     print "Fallo de convergencia en el método de Newton!"
-\end{python}
-\caption{Método de Newton}
-\label{alg:metodo-newton}
+  \end{python}
+  \caption{Método de Newton}
+  \label{alg:metodo-newton}
 \end{algorithm}
 Además de su interpretación geométrica, existen otras formas de
 introducir el método de Newton:
@@ -1228,7 +1228,7 @@ introducir el método de Newton:
 \item Mediante el \textbf{desarrollo de Taylor} de $f$: dado $x_n\in [a,b]$,
   \begin{align*}
     f(x)&=f(x_n) + f'(x_n)(x-x_n) + \frac 12 f''(\xi_n)(x-x_n)^2, \quad
-    \text{con $\xi_n$ entre $x$ y $x_n$}.
+          \text{con $\xi_n$ entre $x$ y $x_n$}.
     \\
     \intertext{En particular, para $x=\cero$,}
     0=f(\cero)&=f(x_n) + f'(x_n)(\cero-x_n) + \frac 12 f''(\xi_n)(\cero-x_n)^2.
@@ -1238,8 +1238,8 @@ introducir el método de Newton:
   ``mucho más pequeño'' y puede eliminarse el último sumando de la
   ecuación anterior, de donde
   \begin{equation*}
-        0 \approx f(x_n) + f'(x_n)(\cero-x_n), \quad \text{es decir} \quad
-        \cero \approx x_n - \frac{f(x_n)}{f'(x_n)},
+    0 \approx f(x_n) + f'(x_n)(\cero-x_n), \quad \text{es decir} \quad
+    \cero \approx x_n - \frac{f(x_n)}{f'(x_n)},
   \end{equation*}
   lo cual justifica que la elección de $x_{n+1}$ dada
   en~(\ref{eq:MetNewton}) es una aproximación de $\cero$.
@@ -1250,9 +1250,9 @@ introducir el método de Newton:
   para toda $x\in[a,b]$,
   \begin{align*}
     x \text{ es solución de~(\ref{eq:raiz})} \ \Leftrightarrow\ & h(x)f(x)=0
-    \ \Leftrightarrow\ x-h(x)f(x)=x \\
+                                                                  \ \Leftrightarrow\ x-h(x)f(x)=x \\
     \ \Leftrightarrow\ & x \text{ es solución de~(\ref{eq:punto-fijo}) para }
-    g(x)=x-h(x)f(x).
+                         g(x)=x-h(x)f(x).
   \end{align*}
   La idea del método de Newton es elegir $h$ de forma que
   $g'(\cero)=0$, lo que (asumiendo las hipótesis del teorema del punto
@@ -1291,7 +1291,7 @@ global (en todo el intervalo).
     \label{item:Newton.H2}
   \item
     El signo de $f''$ no cambia en $[a,b]$ (o sea,
-      $f''(x)\ge 0 \ \forall x\in [a,b]$ o $f''(x)\le 0 \ \forall x\in [a,b]$).
+    $f''(x)\ge 0 \ \forall x\in [a,b]$ o $f''(x)\le 0 \ \forall x\in [a,b]$).
     \label{item:Newton.H3}
   \item
     $\max\left\{ \dfrac{|f(a)|}{|f'(a)|}, \dfrac{|f(b)|}{|f'(b)|}
@@ -1425,9 +1425,9 @@ global (en todo el intervalo).
     término de la igualdad
     \begin{equation*}
       x_{k+1}=x_k- \frac{f(x_k)}{f'(x_k)}
-%    \end{equation*}
-    \quad\text{ llegamos a }\quad
-%    \begin{equation*}
+      % \end{equation*}
+      \quad\text{ llegamos a }\quad
+      % \begin{equation*}
       \overline\cero = \overline\cero -
       \frac{f(\overline\cero)}{f'(\overline\cero)},
     \end{equation*}
@@ -1479,7 +1479,7 @@ global (en todo el intervalo).
     $$
     |x_{k+1}-x_k| < \frac{2m'}{M''} \varepsilon
     \quad\text{entonces}\quad
-      |x_{k+1}-\cero| \le \frac{M''}{2m'}|x_{k+1}-x_k|<\varepsilon.
+    |x_{k+1}-\cero| \le \frac{M''}{2m'}|x_{k+1}-x_k|<\varepsilon.
     $$
   \item En la demostración del Teorema anterior hemos probado que la
     sucesión $\{x_k\}$ es monótona a partir del primer segundo
@@ -1516,39 +1516,39 @@ global (en todo el intervalo).
   acotaciones~\eqref{eq:Newton.orden.2}
   y~\eqref{eq:newton.estimac.a.posteriori}.
   \label{cor:regla.fourier}
-  \end{corollary}
-  \begin{proof}
-    Consideremos de nuevo $f'>0$ y $f''<0$ en $[a,b]$ (los otros tres
-    casos son similares).  Como hemos visto en la demostración del
-    Teorema~\ref{thm:Newton.convergencia.global}, las
-    hipótesis~\ref{item:Newton.H1}--\ref{item:Newton.H3} implican que
-    existe una sola raíz de $f$, $\alpha$.
+\end{corollary}
+\begin{proof}
+  Consideremos de nuevo $f'>0$ y $f''<0$ en $[a,b]$ (los otros tres
+  casos son similares).  Como hemos visto en la demostración del
+  Teorema~\ref{thm:Newton.convergencia.global}, las
+  hipótesis~\ref{item:Newton.H1}--\ref{item:Newton.H3} implican que
+  existe una sola raíz de $f$, $\alpha$.
 
-    En el caso $f'>0$ y $f''<0$ tenemos que $f(a)<0$ y por tanto
-    elegimos $x_0=a$ para que se verifique~\eqref{eq:4}.  Razonando
-    como en el Teorema anterior para la función de punto fijo, $g$,
-    tenemos que:
-    \begin{itemize}
-    \item $g$ es creciente en $[a,\alpha]$ y decreciente en
-      $[\alpha,b]$,
-    \item $g(x)\in [a,\alpha]$ para todo $x\in [a,\alpha]$ (en
-      principio, $g(x)\not\in [a,\alpha]$ si $x\in[\alpha,b]$ porque
-      no se verifica la hipótesis~\ref{item:Newton:H4}).
-    \end{itemize}
-    En el caso actual, $x_0=a$ luego $x_0\in [a,\alpha]$ y
-    también $x_{k+1}=g(x_k)\in [a,\alpha]$ para todo $k\ge 0$, así
-    la sucesión $\{x_k\}_{k\ge 0}$ está bien definida y
-    acotada. Razonando como en el Teorema anterior, toda la sucesión es
-    creciente y converge hacia $\cero$. La
-    estimación~\eqref{eq:Newton.orden.2} se puede demostrar
-    exactamente igual que antes
-    y~\eqref{eq:newton.estimac.a.posteriori} se deja sin demostrar,
-    como en la observación~\ref{rk:4}.
-  \end{proof}
+  En el caso $f'>0$ y $f''<0$ tenemos que $f(a)<0$ y por tanto
+  elegimos $x_0=a$ para que se verifique~\eqref{eq:4}.  Razonando
+  como en el Teorema anterior para la función de punto fijo, $g$,
+  tenemos que:
+  \begin{itemize}
+  \item $g$ es creciente en $[a,\alpha]$ y decreciente en
+    $[\alpha,b]$,
+  \item $g(x)\in [a,\alpha]$ para todo $x\in [a,\alpha]$ (en
+    principio, $g(x)\not\in [a,\alpha]$ si $x\in[\alpha,b]$ porque
+    no se verifica la hipótesis~\ref{item:Newton:H4}).
+  \end{itemize}
+  En el caso actual, $x_0=a$ luego $x_0\in [a,\alpha]$ y
+  también $x_{k+1}=g(x_k)\in [a,\alpha]$ para todo $k\ge 0$, así
+  la sucesión $\{x_k\}_{k\ge 0}$ está bien definida y
+  acotada. Razonando como en el Teorema anterior, toda la sucesión es
+  creciente y converge hacia $\cero$. La
+  estimación~\eqref{eq:Newton.orden.2} se puede demostrar
+  exactamente igual que antes
+  y~\eqref{eq:newton.estimac.a.posteriori} se deja sin demostrar,
+  como en la observación~\ref{rk:4}.
+\end{proof}
 
-  \begin{example}
-    Consideremos la siguiente ecuación:
-    $$f(x)=2\log(x)-x+1=0.$$
+\begin{example}
+  Consideremos la siguiente ecuación:
+  $$f(x)=2\log(x)-x+1=0.$$
   \begin{figure}
     \label{fig:tema1:ejemplo-separ-soluc-1}
     \begin{graficaTikz}[width=20em, height=13em]
@@ -1559,7 +1559,7 @@ global (en todo el intervalo).
         \def\Bx{3.5128}
         \node[coordinate, medium dot, pin=-100:{$\cero_2$}] at (axis
         cs:\Bx,0) {};
-%        \legend {$f(x)$}
+        % \legend {$f(x)$}
       \end{axis}
     \end{graficaTikz}
     \caption{Gráfica en la que se muestran los dos ceros de $f(x)=2\log(x)-x+1$}
@@ -1610,11 +1610,11 @@ global (en todo el intervalo).
   decreciente en $[3,4]$):
   \begin{equation*}
     \left.
-    \begin{array}{ll}
-      M''&:=\displaystyle\max_{x\in[3,4]}|f''(x)|=|f''(3)|=2/9
-      \\\noalign{\medskip}
-      m'&:=\displaystyle\min_{x\in[3,4]} |f'(x)|=|f'(3)|=1/3
-    \end{array}
+      \begin{array}{ll}
+        M''&:=\displaystyle\max_{x\in[3,4]}|f''(x)|=|f''(3)|=2/9
+        \\\noalign{\medskip}
+        m'&:=\displaystyle\min_{x\in[3,4]} |f'(x)|=|f'(3)|=1/3
+      \end{array}
     \right\} \ \Rightarrow \
     \frac{M''}{2m'} = 3.
   \end{equation*}
@@ -1626,8 +1626,8 @@ global (en todo el intervalo).
     \\
     \intertext{o incluso afinar más, usando el resultado del programa anterior,}
     |x_{4}-\cero|&\le \frac{M''}{2m'} |x_4-x_3| \le 3 \cdot 2.28588
-    \cdot 10^{-7}
-    = 6.85764 \cdot 10^{-7}.
+                   \cdot 10^{-7}
+                   = 6.85764 \cdot 10^{-7}.
   \end{align*}
 \end{example}
 
@@ -1701,20 +1701,20 @@ tomando $y=0$ y $x=x_{k+1}$ tenemos la formulación del \resaltar{método de la 
 \end{equation}
 
 \begin{algorithm}  \begin{python}
-def secante(f, x0, x1, tol, max_iters):
+    def secante(f, x0, x1, tol, max_iters):
     iter = 0
     while iter < max_iters:
-        x2 = x1 - f(x1)* (x1-x0)/(f(x1)-f(x0))
-        if abs(x2-x1) < tol:
-            return x2
-        else:
-            x0 = x1
-            x1 = x2
-            iter = iter + 1
+    x2 = x1 - f(x1)* (x1-x0)/(f(x1)-f(x0))
+    if abs(x2-x1) < tol:
+    return x2
+    else:
+    x0 = x1
+    x1 = x2
+    iter = iter + 1
     print "Fallo de convergencia en el método de la secante!"
-\end{python}
-\caption{Método de la secante}
-\label{alg:metodo-secante}
+  \end{python}
+  \caption{Método de la secante}
+  \label{alg:metodo-secante}
 \end{algorithm}
 El método de la secante, formulado en el
 algoritmo~\ref{alg:metodo-secante}, puede ser también deducido a
@@ -1795,216 +1795,207 @@ cuenta que:
 
 
 \begin{algorithm}  \begin{python}
-def regula_falsi(f, a, b, tol, max_iters):
+    def regula_falsi(f, a, b, tol, max_iters):
     iter = 0
     while iter < max_iters:
-        c = b - f(b)*(b-a)/(f(b)-f(a))
-        if min(b-c, c-a) < tol:
-            return c
-        else:
-            if f(a)*f(c) < 0:
-                b=c
-            else:
-                a=c
-        iter = iter + 1
-        print "Fallo de convergencia en el método de 'regula-falsi'"
-      \end{python}
-      \caption{Método de \textit{regula falsi}}
-      \label{alg:metodo-regula-falsi}
- \end{algorithm}
+    c = b - f(b)*(b-a)/(f(b)-f(a))
+    if min(b-c, c-a) < tol:
+    return c
+    else:
+    if f(a)*f(c) < 0:
+    b=c
+    else:
+    a=c
+    iter = iter + 1
+    print "Fallo de convergencia en el método de 'regula-falsi'"
+  \end{python}
+  \caption{Método de \textit{regula falsi}}
+  \label{alg:metodo-regula-falsi}
+\end{algorithm}
 
- \begin{EjerciciosResueltos}
+\begin{EjerciciosResueltos}
 
-   \begin{problema}
-     Consideremos la siguiente ecuación:
-     \begin{equation}
-       \label{eq:cero}
-       e^{2x-3} = 2x+1.
-     \end{equation}
-     \begin{enumerate}
+  \begin{problema}
+    Consideremos la siguiente ecuación:
+    \begin{equation}
+      \label{eq:cero}
+      e^{2x-3} = 2x+1.
+    \end{equation}
 
-     \item Demostrar que existen exactamente dos soluciones,
-       $\alpha_1<\alpha_2$, y separarlas en intervalos.
+    \begin{enumerate}
+    \item Demostrar que existen exactamente dos soluciones,
+      $\alpha_1<\alpha_2$, y separarlas en intervalos.
 
-       \begin{solucion}
-         Sea $$f(x)=e^{2x-3} - 2x-1.$$ Calculamos las raíces de la
-         derivada:
-         $$
-         f'(x)=2e^{2x-3}-2=0,
-         $$
-         o sea $e^{2x-3}=1$, es decir, $f'$ tiene un solo cero, $x=3/2$
-         y por lo tanto $f$ tiene a lo sumo dos ceros, $\alpha_1$ y
-         $\alpha_2$, separados por $x=3/2$.
+    \item Localizar un intervalo $[a,b]$ que contenga a $\alpha_1$,
+      de forma que la siguiente formulación de~(\ref{eq:cero})
+      verifique las hipótesis del teorema del punto fijo:
+      \begin{equation}
+        \label{eq:pto-fijo}
+        \text{Hallar } x=g(x), \quad \text{ con } g(x)=\frac{e^{2x-3}-1}2.
+      \end{equation}
 
-         Usando el teorema de Bolzano, podemos localizarlos en
-         $[-1,3/2]$ y en $[3/2,3]$. O mejor aún:
-         \begin{enumerate}
-         \item $\alpha_1\in [-1,0]$, pues $f(-1)=e^{-5}+1>0$ y $f(0)=e^{-3}-1<0$.
-         \item $\alpha_2\in [2,3]$, pues $f(2)=e-5<0$ y $f(3)=e^{3}-7 >
-           0$.
-         \end{enumerate}
-       \end{solucion}
+    \item Sea $x_0\in [a,b]$ y sea $x_k$  la sucesión de
+      aproximaciones sucesivas para el problema de punto
+      fijo~(\ref{eq:pto-fijo}). Estimar el número mínimo de
+      iteraciones para las que el error absoluto es menor que
+      $10^{-5}$.
 
-     \item Localizar un intervalo $[a,b]$ que contenga a $\alpha_1$,
-       de forma que la siguiente formulación de~(\ref{eq:cero})
-       verifique las hipótesis del teorema del punto fijo:
-       \begin{equation}
-         \label{eq:pto-fijo}
-         \text{Hallar } x=g(x), \quad \text{ con } g(x)=\frac{e^{2x-3}-1}2.
-       \end{equation}
+    \item Demostrar que la aproximación mediante el método de Newton
+      de~\eqref{eq:cero} converge en el intervalo $[2,3]$ si elegimos
+      $x_0=3$.
+      Aproximar $\alpha_2$ mediante dos iteraciones del algoritmo de
+      Newton a partir de $x_0=3$.
+    \end{enumerate}
+  \end{problema}
 
-       \begin{solucion}
-         Tomamos $[a,b]=[-1,0]$. Entonces:
-         \begin{enumerate}
-         \item $g([a,b])\subset [a,b]$. En efecto, $g$ es monótona (creciente) porque
-           $$
-           g'(x)=2e^{2x-3}>0,
-           $$
-           y además $g(-1)=e^{-5}/2 - 1/2 \in[-1,0]$ y
-           $g(0)=e^{-3}/2-1/2  \in [-1,0]$.
-         \item $g$ es contractiva con constante $\lambda<1$. Para ello es
-           suficiente ver que $\lambda=\max_{x\in[a,b]} |g'(x)|<
-           1$. Como $$g''(x)=4e^{2x-3}>0,$$ entonces $g'$ es creciente,
-           luego alcanza su máximo en $x=0$ y $g'(0)=2e^{-3}
-           \approx 0.099<1$. Podemos tomar $\lambda=0.1$ como cota de
-           la derivada, y por tanto como constante de contractividad en
-           $[a,b]$.
-         \end{enumerate}
-       \end{solucion}
+  \begin{solucion}
+    \begin{enumerate}
 
+    \item
+      Sea $$f(x)=e^{2x-3} - 2x-1.$$ Calculamos las raíces de la
+      derivada:
+      $$
+      f'(x)=2e^{2x-3}-2=0,
+      $$
+      o sea $e^{2x-3}=1$, es decir, $f'$ tiene un solo cero, $x=3/2$
+      y por lo tanto $f$ tiene a lo sumo dos ceros, $\alpha_1$ y
+      $\alpha_2$, separados por $x=3/2$.
 
-     \item Sea $x_0\in [a,b]$ y sea $x_k$  la sucesión de
-       aproximaciones sucesivas para el problema de punto
-       fijo~(\ref{eq:pto-fijo}). Estimar el número mínimo de
-       iteraciones para las que el error absoluto es menor que
-       $10^{-5}$.
+      Usando el teorema de Bolzano, podemos localizarlos en
+      $[-1,3/2]$ y en $[3/2,3]$. O mejor aún:
+      \begin{enumerate}
+      \item $\alpha_1\in [-1,0]$, pues $f(-1)=e^{-5}+1>0$ y
+        $f(0)=e^{-3}-1<0$.
+      \item $\alpha_2\in [2,3]$, pues $f(2)=e-5<0$ y
+        $f(3)=e^{3}-7 > 0$.
+      \end{enumerate}
 
-       \begin{solucion}
-         (a)
-         Por definición, $x_k=g(x_{k-1})$. Además, como $\alpha_1$ es un
-         punto fijo de $g$, $g(\alpha_1)=\alpha_1$. Aplicando lo
-         anterior y la contractividad de $g$ (repetidamente):
-         \begin{align*}
-           |x_k -\alpha_1| &= |g(x_{k-1})-g(\alpha_1)| \le
-                             \lambda|x_{k-1}-\alpha_1| \\
-                           &= \lambda |g(x_{k-2})-g(\alpha_1)| \le
-                             \lambda^2 |x_{k-2}-\alpha_1| \le \cdots \le \lambda^k
-                             |x_0 - \alpha_1|.
-         \end{align*}
-         (b)
-         Por otra parte, usando que $x_0, \alpha_1\in [a,b]$,
-         \begin{equation*}
-           |x_k -\alpha_1| < \lambda^k |x_0 - \alpha_1| \le \lambda^k (b-a),
-         \end{equation*}
-         por tanto para que $|x_k -\alpha_1| < \varepsilon = 10^{-5}$, es suficiente que
-         \begin{equation*}
-           \lambda^k < \frac{\varepsilon}{(b-a)}.
-         \end{equation*}
-         Para ello, basta tomar $k$ como el primer entero mayor que $k_0$, con
-         \begin{equation*}
-           k_0\in\Rset \text{tal que } \lambda^{k_0} = \frac{\varepsilon}{(b-a)},
-         \end{equation*}
-         es decir, para $\varepsilon=10^{-5}$, $[a,b]=[-1,0]$ y $\lambda=0.1$,
-         \begin{equation*}
-           k_0 = \frac{\log(10^{-5})}{\log{(0.1)}}=5 \quad \Rightarrow \fbox{k=6}.
-         \end{equation*}
-       \end{solucion}
+    \item Tomamos $[a,b]=[-1,0]$. Entonces:
+      \begin{enumerate}
+      \item $g([a,b])\subset [a,b]$. En efecto, $g$ es monótona
+        (creciente) porque
+        $$
+        g'(x)=2e^{2x-3}>0,
+        $$
+        y además $g(-1)=e^{-5}/2 - 1/2 \in[-1,0]$ y
+        $g(0)=e^{-3}/2-1/2 \in [-1,0]$.
+      \item $g$ es contractiva con constante $\lambda<1$. Para ello
+        es suficiente ver que $\lambda=\max_{x\in[a,b]} |g'(x)|< 1$.
+        Como $$g''(x)=4e^{2x-3}>0,$$ entonces $g'$ es creciente,
+        luego alcanza su máximo en $x=0$ y
+        $g'(0)=2e^{-3} \approx 0.099<1$. Podemos tomar $\lambda=0.1$
+        como cota de la derivada, y por tanto como constante de
+        contractividad en $[a,b]$.
+      \end{enumerate}
 
+    \item
+      Usando la estimación a priori del error~\eqref{eq:pto-fijo:cota-a-priori}:
+      \begin{equation*}
+        |x_k -\alpha_1| < \lambda^k |x_0 - \alpha_1| \le \lambda^k (b-a),
+      \end{equation*}
+      por tanto para que $|x_k -\alpha_1| < \varepsilon = 10^{-5}$,
+      es suficiente que
+      \begin{equation*}
+        \lambda^k < \frac{\varepsilon}{(b-a)}.
+      \end{equation*}
+      Para ello, basta tomar $k$ como el primer entero mayor que
+      $k_0$, siendo:
+      \begin{equation*}
+        k_0\in\Rset \text{tal que } \lambda^{k_0} = \frac{\varepsilon}{(b-a)}.
+      \end{equation*}
+      En nuestro caso, para $\varepsilon=10^{-5}$, $[a,b]=[-1,0]$ y
+      $\lambda=0.1$,
+      \begin{equation*}
+        k_0 = \frac{\log(10^{-5})}{\log{(0.1)}}=5 \quad \Rightarrow \fbox{k=6}.
+      \end{equation*}
 
-     \item Demostrar que la aproximación mediante el método de Newton
-       de~\eqref{eq:cero} converge en el intervalo $[2,3]$ si elegimos
-       $x_0=3$.
-       Aproximar $\alpha_2$ mediante dos iteraciones del algoritmo de
-       Newton a partir de $x_0=3$.
+    \item Tomamos
+      \begin{align*}
+        f(x)&=e^{2x-3} -2x-1, \\
+        f'(x)&=2e^{2x-3} -2, \\
+        f''(x)&=4e^{2x-3}. \\
+      \end{align*}
+      Para $x_0=3$, se satisfacen las hipótesis de la Regla de
+      Fourier en $[2,3]$:
+      \begin{enumerate}
+      \item $f(2)=e-5<0$, $f(3)=e^3-7>0$.
+      \item $f'$ es creciente, por lo tanto $f'(x)>f(2)=2e-2>0$ en
+        $[2,3]$.
+      \item $f''(x)>0$ en $[2,3]$.
+      \item Como $f(3)>0$ y $f''(3)>0$, se verifica $f(3)f''(3)>0$.
+      \end{enumerate}
+      En consecuencia, el método de Newton es convergente.
+      Realizaremos las dos primeras iteraciones:
+      \begin{enumerate}
+      \item
+        $x_1 = x_0 - f(x_0)/f'(x_0) = 3 - (e^3-7)/(4e^3-2) \approx
+        2.65718708947.$
+      \item $x_2 = x_1 - f(x_1)/f'(x_1) \approx 2.44859042303.$
+      \end{enumerate}
+    \end{enumerate}
+  \end{solucion}
+\end{EjerciciosResueltos}
 
-       \begin{solucion}
-         (a) Tomamos
-         \begin{align*}
-           f(x)&=e^{2x-3} -2x-1, \\
-           f'(x)&=2e^{2x-3} -2, \\
-           f''(x)&=4e^{2x-3}. \\
-         \end{align*}
-         Para $x_0=3$, se satisfacen las hipótesis de la Regla de Fourier en $[2,3]$:
-         \begin{enumerate}
-         \item $f(2)=e-5<0$, $f(3)=e^3-7>0$.
-         \item $f'$ es creciente, por lo tanto $f'(x)>f(2)=2e-2>0$ en $[2,3]$.
-         \item $f''(x)>0$ en $[2,3]$.
-         \item Como $f(3)>0$ y $f''(3)>0$, se verifica $f(3)f''(3)>0$.
-         \end{enumerate}
-         En consecuencia, el método de Newton es
-         convergente.
+\begin{EjerciciosPropuestos}
+  \begin{problema}
+    Aproximar mediante el método de bisección las raíces del polinomio
+    $$
+    p(x) = x^3 + 4x^2 -3x -5,
+    $$
+    de forma que el error relativo en las estimaciones obtenidas sea
+    menor que $10^{-2}$.
+  \end{problema}
+  \begin{problema}
+    Nos proponemos encontrar la solución de la siguiente ecuación en
+    el intervalo $[0,\pi]$:
+    $$
+    \int_0^x (\sen s)^2 \, ds = 1.
+    $$
 
-         (b) Realicemos las dos primeras iteraciones:
-         \begin{enumerate}
-         \item $x_1 = x_0 - f(x_0)/f'(x_0) = 3 - (e^3-7)/(4e^3-2)
-           \approx 2.65718708947.$
-         \item $x_2 =  x_1 - f(x_1)/f'(x_1) \approx 2.44859042303.$
-         \end{enumerate}
-       \end{solucion}
-     \end{enumerate}
-   \end{problema}
- \end{EjerciciosResueltos}
+    \begin{enumerate}
+    \item Demostrar que el problema es equivalente a hallar un punto
+      fijo de la función:
+      $$
+      g(x)=2 + \frac{\sen(2x)}{2}
+      $$
+      en el intervalo $[0,\pi]$.
+    \item Comprobar que la función $g$ satisface las hipótesis del
+      teorema del punto fijo en el intervalo $\displaystyle [1.6,2]\subset
+      \bigg(\frac{\pi}{2},\frac{3\pi}{4}\bigg)$.
+    \item Determinar el número de iteraciones, $k$, para las que el
+      error cometido sea menor que $10^{-8}$.
+      \begin{quote}\em\small
+        Indicación:
+        $|x_k-\alpha|\le \lambda^k|x_0-\alpha|,
+        \quad\lambda=\text{c. de contractividad}$
+      \end{quote}
+    \item Calcular las dos primeras iteraciones.
+    \end{enumerate}
+  \end{problema}
 
- \begin{EjerciciosPropuestos}
-   \begin{problema}
-     Aproximar mediante el método de bisección las raíces del polinomio
-     $$
-     p(x) = x^3 + 4x^2 -3x -5,
-     $$
-     de forma que el error relativo en las estimaciones obtenidas sea
-     menor que $10^{-2}$.
-   \end{problema}
-   \begin{problema}
-     Nos proponemos encontrar la solución de la siguiente ecuación en
-     el intervalo $[0,\pi]$:
-     $$
-     \int_0^x (\sen s)^2 \, ds = 1.
-     $$
+  % \begin{problema}
+  %   Dada la ecuación $f(x)=e^x-(x-2)^2=0$, demostrar que sólo posee una
+  %   raíz real.
+  %   \begin{flushright}\em\small
+  %     Idea: probar que $f'(x)>0$ para todo $x\in\Rset$. Para ello,
+  %     cuando $x>2$, aplicar a $e^x$ el teorema del valor medio en
+  %     $[2,x]$ para probar que $e^x>2(x-2)$.
+  %   \end{flushright}
+  % \end{problema}
 
-     \begin{enumerate}
-     \item Demostrar que el problema es equivalente a hallar un punto
-       fijo de la función:
-       $$
-       g(x)=2 + \frac{\sen(2x)}{2}
-       $$
-       en el intervalo $[0,\pi]$.
-     \item Comprobar que la función $g$ satisface las hipótesis del
-       teorema del punto fijo en el intervalo $\displaystyle [1.6,2]\subset
-       \bigg(\frac{\pi}{2},\frac{3\pi}{4}\bigg)$.
-     \item Determinar el número de iteraciones, $k$, para las que el
-       error cometido sea menor que $10^{-8}$.
-       \begin{quote}\em\small
-         Indicación:
-         $|x_k-\alpha|\le \lambda^k|x_0-\alpha|,
-         \quad\lambda=\text{c. de contractividad}$
-       \end{quote}
-     \item Calcular las dos primeras iteraciones.
-     \end{enumerate}
-   \end{problema}
-
-   % \begin{problema}
-   %   Dada la ecuación $f(x)=e^x-(x-2)^2=0$, demostrar que sólo posee una
-   %   raíz real.
-   %   \begin{flushright}\em\small
-   %     Idea: probar que $f'(x)>0$ para todo $x\in\Rset$. Para ello,
-   %     cuando $x>2$, aplicar a $e^x$ el teorema del valor medio en
-   %     $[2,x]$ para probar que $e^x>2(x-2)$.
-   %   \end{flushright}
-   % \end{problema}
-
-   % \begin{problema}
-   %   Consideremos la ecuación $$f(x)=(x-1)\tan(x)-1=0.$$
-   %   \begin{enumerate}
-   %   \item Demostrar esta ecuación posee infinitas raíces positivas,
-   %     determinando los intervalos que contengan a cada una de ellas.
-   %   \item Sea $\alpha>0$ la menor raíz positiva de $f(x)$ y
-   %     consideremos el intervalo $[a,b]=[0,\pi/4]$. Reescribir la
-   %     ecuación anterior en términos de punto fijo, $x=g(x)$, para
-   %     $g(x)$ adecuada. Demostrar que $\alpha\in [a,b]$ y que $g(x)$
-   %     verifica las hipótesis del teorema del punto fijo.
-   %   \item Partiendo de $x_0=0$, realizar dos iteraciones del método
-   %     de punto fijo. Determinar $n\in\Nset$ tal que, a partir de
-   %     $x_n$, el error absoluto con la solución exacta sea menor que
+  % \begin{problema}
+  %   Consideremos la ecuación $$f(x)=(x-1)\tan(x)-1=0.$$
+  %   \begin{enumerate}
+  %   \item Demostrar esta ecuación posee infinitas raíces positivas,
+  %     determinando los intervalos que contengan a cada una de ellas.
+  %   \item Sea $\alpha>0$ la menor raíz positiva de $f(x)$ y
+  %     consideremos el intervalo $[a,b]=[0,\pi/4]$. Reescribir la
+  %     ecuación anterior en términos de punto fijo, $x=g(x)$, para
+  %     $g(x)$ adecuada. Demostrar que $\alpha\in [a,b]$ y que $g(x)$
+  %     verifica las hipótesis del teorema del punto fijo.
+  %   \item Partiendo de $x_0=0$, realizar dos iteraciones del método
+  %     de punto fijo. Determinar $n\in\Nset$ tal que, a partir de
+  %     $x_n$, el error absoluto con la solución exacta sea menor que
    %     $\varepsilon = 10^{-3}$.
    %   \end{enumerate}
    % \end{problema}

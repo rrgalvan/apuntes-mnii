@@ -1,7 +1,7 @@
 % *#06#
 %
 % imei
-% 359 778 047 841 331 
+% 359 778 047 841 331
 %
 \renewcommand{\tt}{t}
 \newcommand{\yy}{y}
@@ -72,7 +72,7 @@ $[a,b]$), no local (en un entorno de $\ta$).
 Como paso previo a la resolución numérica de~\eqref{eq:pvi}, deberemos
 garantizar que el problema~\eqref{eq:pvi} está bien planteado, es
 decir asegurar la existencia y unicidad de solución en el sentido
-anterior. 
+anterior.
 
 \section{Resultados teóricos preliminares}
 \label{sec:tema4:resultados-teoricos}
@@ -135,7 +135,7 @@ similares.
   \end{equation*}
   Como además  $\dy f$ está acotada, existe $L>0$ tal que $|\dy
   f(\tt,y)|\le L$ para todo $(\tt,y)\in [\ta,\tb]\times\Rset$ y
-  entonces 
+  entonces
   \begin{equation*}
     |f(\tt,y) - f(\tt,z)| \le L |y-z|.
   \end{equation*}
@@ -146,7 +146,7 @@ similares.
   $[\ta,\tb]$, pues su derivada parcial $\dy f(x,y)=2y$ es continua. Sin
   embargo, esta función no está acotada cuando $y\in\Rset$, por lo que
   no tenemos garantías de que $f(x,y)$ sea uniformemente \globLipschitz.
-  
+
   Veamos que realmente $f(x,y)$ no es a uniformemente \globLipschitz,
   comprobando que para cualquier constate $L>0$, podemos encontrar dos
   valores, $y_L$, $z_L\in\Rset$ de forma que
@@ -157,7 +157,7 @@ similares.
  primer miembro es
  \begin{align*}
    |f(\tt,y_L)-f(\tt,z_L)|&=|L+0|\cdot |L-0|=4L^2,
-   \intertext{mientras que el segundo miembro resulta} 
+   \intertext{mientras que el segundo miembro resulta}
    L|y_L-z_L|&=2L^2<4L^2.
  \end{align*}
 \end{example}
@@ -220,7 +220,7 @@ ecuaciones diferenciales que nos resultarán de gran utilidad.
     problemas del tipo~\eqref{eq:pvi} para la \textbf{misma ecuación
     diferencial} $y'=f(\tt,y)$ pero con \textbf{distintas condiciones
     iniciales}, es decir:
-    $$\sol_1(\ta)<\sol_2(\ta)$$ 
+    $$\sol_1(\ta)<\sol_2(\ta)$$
     Entonces las gráficas de $\sol_1$ e $\sol_2$ no se cortan en
     ningún punto. En concreto, si $\sol_1$ y $\sol_2$ están
     definidas, respectivamente, en los intervalos $I_1$ e $I_2$,
@@ -229,7 +229,7 @@ ecuaciones diferenciales que nos resultarán de gran utilidad.
       \sol_1(\tt) < \sol_2(\tt), \quad \forall \tt \in I_1
       \cap I_2.
     \end{equation*}
-    
+
   \item Sean $\sol_1(\tt)$ y $\sol_2(\tt)$ las soluciones de dos
     problemas del tipo~\eqref{eq:pvi} con la \textbf{misma condición
       inicial} pero con \textbf{ecuaciones diferenciales distintas},
@@ -250,7 +250,7 @@ ecuaciones diferenciales que nos resultarán de gran utilidad.
   \renewcommand{\tt}{x}
   \label{ex:existencia-unicidad-loc-lipschitz}
   Estudiaremos la existencia y unicidad de solución del siguiente
-  problema de valor inicial: 
+  problema de valor inicial:
   \begin{equation*}
     \left\{
       \begin{aligned}
@@ -280,7 +280,7 @@ ecuaciones diferenciales que nos resultarán de gran utilidad.
   \item Sea ahora $f_2(\tt,y)=-y^2+2y$. Como $\cos\tt \le 1$  (y como
     ya podemos suponer $y>0$):
     $$f(\tt,y)=-y^2+2y\cos\tt \le -y^2+2y = f_2(\tt,y)\quad
-    \forall \tt\in I, \forall y\in\Rset^+.$$ 
+    \forall \tt\in I, \forall y\in\Rset^+.$$
     Ahora podemos calcular
     directamente la solución $\sol_2$ del problema de valor inicial
     $y'=f_2(\tt,y)$, $y(0)=1$ (ya que la ecuación es autónoma),
@@ -322,7 +322,7 @@ sigue:
 \item Seguidamente definimos una sucesión de forma que $y_{n+1}$ se
   calcula a partir de $y_n$ (y posiblemente de $y_{n-1}$, ...,
   $y_{n-k}$ para algún $k\ge 1$), con el fin de que
-  $y_n\approx\sol(\tn)$. 
+  $y_n\approx\sol(\tn)$.
 \end{enumerate}
 Nuestro objetivo será que el método sea \textit{convergente}, en el
 sentido de que la solución aproximada $\{\yn\}_n$ ``converja a la
@@ -372,20 +372,20 @@ $\sol(\tt)$ en cada instante $\tt\in [\ta,\tb]$.
       \addplot[domain=1.3:3.3, blue, ultra thick] {20+x*x*x*x};
       \addplot[domain=1.5:3.1, red, thick] {36+32*(x-2)};
       % Plot a label at curve root
-      \node[coordinate, medium dot, 
+      \node[coordinate, medium dot,
             pin={[fill=blue!10!white]120:{\scriptsize $\sol(\tn)$}}] at
-            (axis cs:2,36) {}; 
+            (axis cs:2,36) {};
       \node[coordinate, medium dot, blue,
             pin={[fill=blue!10!white]120:{\scriptsize $\sol(\tt_{n+1})$}}] at
-            (axis cs:2.7,73.144) {}; 
+            (axis cs:2.7,73.144) {};
       % \node[coordinate, medium dot, blue, pin=100:{\scriptsize
       %   $\sol(\tt_{n+1})$}] at (axis cs:2.7,73.144) {};
       \addplot[dashed] coordinates {(2,7) (2,36)};
       \addplot[dashed] coordinates {(2.7,7) (2.7,58.4)};
       \node[coordinate, medium dot, pin=-30:{$y_{n}$}] at
-      (axis cs:2,36) {}; 
+      (axis cs:2,36) {};
       \node[coordinate, medium dot, pin=-30:{$y_{n+1}$}] at
-      (axis cs:2.7,58.4) {}; 
+      (axis cs:2.7,58.4) {};
       % Draw the name of curve
       \legend {$y(t)$};
     \end{axis}
@@ -403,7 +403,7 @@ $\sol(\tn)$ (por simplificar, $\yn=\sol(\tn)$):
 \item Calculamos $y_{n+1}$ como la ordenada de esta recta en
   $\tt=\tt_{n+1}$ es decir:
   $$
-  y_{n+1} = r(\tt_{n+1}) = 
+  y_{n+1} = r(\tt_{n+1}) =
   \yn +  f(\tt_n, \yn) (\tt_{n+1}-\tt_n) = \yn +  f(\tt_n, \yn) \cdot h.
   $$
 \end{enumerate}
@@ -507,7 +507,7 @@ distintos al de Euler explícito. Por ejemplo:
       \tag{CN$_1$}
       \left\{
         \begin{aligned}
-          &y_0=\ycero,\\ 
+          &y_0=\ycero,\\
           &\ynn = \yn + h \; f\big(\tt_{n+1/2},\; \frac{\yn+\ynn}{2}\big).
         \end{aligned}
       \right.
@@ -521,7 +521,7 @@ distintos al de Euler explícito. Por ejemplo:
       \tag{EC}
       \left\{
         \begin{aligned}
-          &y_0=\ycero,\\ 
+          &y_0=\ycero,\\
           &\ynn = \yn + h \; f\big(\tt_{n+1/2},\;
           \yn+\frac{h}{2}f(\tn,\yn) \big).
         \end{aligned}
@@ -536,7 +536,7 @@ distintos al de Euler explícito. Por ejemplo:
     \tag{CN$_2$}
     \left\{
       \begin{aligned}
-        &y_0=\ycero,\\ 
+        &y_0=\ycero,\\
         &\ynn = \yn + \frac h2 \; \big\{f(\tn,\;\sol(\tn))+f(\tnn,\;\sol(\tnn))\big\}.
       \end{aligned}
       \right.
@@ -603,7 +603,7 @@ $\{y_n\}_{n=0}^N$ solución de:
   instante $\tn$ como
   \begin{equation}
     \label{eq:consistencia-euler}
-   \errCons_n = \ddt y(\tnn)-f(\tn,y(\tn)). 
+   \errCons_n = \ddt y(\tnn)-f(\tn,y(\tn)).
   \end{equation}
 \end{definition}
 Obviamente, para un problema de valor inicial, el error de
@@ -653,7 +653,7 @@ intervalo $[a,b]$. Es decir, $\errCons_n=\errCons_n(h)$.
     \\ &= y(\tn) + h f(\tn,y(\tn)) + \frac{h^2}{2} y''(\xi),
     \quad \text{con $\xi$ entre $\tn$ y $\tnn$,}
   \intertext{por lo que}
-    \frac{y(\tnn)-y(\tn)}{h} &- f(\tn,y(\tn)) = \frac{h}{2} y''(\xi), 
+    \frac{y(\tnn)-y(\tn)}{h} &- f(\tn,y(\tn)) = \frac{h}{2} y''(\xi),
     \quad\text{$\xi$ entre $\tn$ y $\tnn$.}
   \end{align*}
   Y entonces para todo $n=0,...,N-1$:
@@ -678,7 +678,7 @@ método de Euler):
     y(\tnn)&=y(\tn)+ h f(\tn,y(\tn))+ h\,\errCons_n,
 \end{align}
 donde $\errCons_n$ es el error de consistencia en el instante
-$t_n$. 
+$t_n$.
 
 En esta sección estudiemos el modo en que pequeñas perturbaciones
 de~(\ref{eq:metodo-euler}) afectan a su solución, contemplando incluso
@@ -756,7 +756,7 @@ Este esquema se escribe, de forma equivalente, como
   Aplicando el lema anterior para las sucesiones $a_n=z_n-y_n$ y $b_n=|\delta_n|$:
   \begin{align*}
     |z_n-y_n| &\le e^{nhL}\mu_0 +
-    \frac{e^{nhL}-1}{L}\,||\delta_n||_\infty  
+    \frac{e^{nhL}-1}{L}\,||\delta_n||_\infty
     \\
     &\le e^{(b-a)L}\mu_0 +
     \frac{e^{(b-a)L}-1}{L}\,||\delta_n||_\infty,
@@ -852,8 +852,8 @@ estabilidad dada en el teorema anterior:
   consistencia~\ref{thm:consistencia-euler} nos garantiza que
   $||\errCons||_\infty \le \frac h2 ||y''||_\infty$. Aplicando el
   la estimación~(\ref{eq:estimacion-discretizacion}) llegamos
-  directamente a~(\ref{eq:tema4:9}) (si $|e_0|\le C_0 h$). 
-\end{proof} 
+  directamente a~(\ref{eq:tema4:9}) (si $|e_0|\le C_0 h$).
+\end{proof}
 
 \begin{remark}
   \label{rk:8}
@@ -883,10 +883,10 @@ problemas de un paso, en los que para aproximar la solución en el
 instante $\tnn$ se utiliza exclusivamente la información en la etapa
 anterior (instante $\tn$). Específicamente:
 \begin{definition}
-  Un esquema de un paso para~(\ref{eq:pvi}) es todo aquél que se puede
+  Un esquema de un paso para~(\ref{eq:pvi}) es todo aquel que se puede
   expresar de la siguiente forma:
   \begin{equation}
-    \label{eq:pb-general-1paso} 
+    \label{eq:pb-general-1paso}
     \left\{
       \begin{aligned}
         \text{Dado}\quad &y_0 = \ycero,\\
@@ -921,14 +921,14 @@ cuenta que $y=y(t)$ y usando la regla de la cadena):
 \begin{align*}
   % \Dtotal 0 f &= f \\
   \Dtotal 1 f(t,y) & = \frac{d}{dt}f(t,y) =
-  \dt f(t,y) 
-  + f(t,y)\ \dy f (t,y).
+                     \dt f(t,y)
+                     + f(t,y)\ \dy f (t,y).
   \\
   \vdots
   \\
   \Dtotal n f(t,y) &= \frac{d}{dt}\Dtotal{n-1}f(t,y) =
-  \dt \Dtotal {n-1} f(t,y) 
-  + f(t,y) \ \dy\Dtotal {n-1}f (t,y).
+                     \dt \Dtotal {n-1} f(t,y)
+                     + f(t,y) \ \dy\Dtotal {n-1}f (t,y).
 \end{align*}
 Recordemos el siguiente resultado de teoría de ecuaciones en derivadas
 parciales:
@@ -943,7 +943,7 @@ parciales:
   \label{thm:consitencia-pb-general-1paso}
   \begin{enumerate}
   \item Si $f\in C^1([\ta,\tb]\times\Rset)$,
-    entonces~(\ref{eq:pb-general-1paso}) es consistente si y solo si 
+    entonces~(\ref{eq:pb-general-1paso}) es consistente si y solo si
     \begin{equation*}
       \Phi(t,y,0) = f(t,y)\quad \forall y\in[\ta,\tb]\times\Rset.
     \end{equation*}
@@ -955,15 +955,15 @@ parciales:
     \begin{align*}
       \Phi(t,y,0) &= f(x,y), \\
       \frac{\partial\Phi}{\partial h}(t,y,0) &=
-      \frac{1}{2}\Dtotal1 f(t,y),
+                                               \frac{1}{2}\Dtotal1 f(t,y),
       \\
       \frac{\partial^2\Phi}{\partial h^2}(t,y,0) &=
-      \frac{1}{3}\Dtotal2 f(t,y),
+                                                   \frac{1}{3}\Dtotal2 f(t,y),
       \\
-      &\vdots
+                  &\vdots
       \\
       \frac{\partial^{p-1}\Phi}{\partial h^{p-1}}(t,y,0) &=
-      \frac{1}{p} \Dtotal{p-1} f(t,y).
+                                                           \frac{1}{p} \Dtotal{p-1} f(t,y).
     \end{align*}
   \end{enumerate}
 \end{theorem}
@@ -974,7 +974,7 @@ parciales:
 
 \begin{example}~
   \begin{enumerate}
-  \item 
+  \item
     El método de Euler es consistente, con  $ ||{\cal E}||_\infty<C h $
   \item El método de Euler--Cauchy es consistente, con $ ||{\cal
       E}||_\infty<C h^2 $
@@ -984,13 +984,13 @@ parciales:
 Consideremos el siguiente esquema perturbado:
 
 \begin{equation}
-  \label{eq:pb-perturbado-general-1paso} 
+  \label{eq:pb-perturbado-general-1paso}
   \left\{
-  \begin{aligned}
-    \text{Dado}\quad &z_0 = \ycero+\mu_0,\\
-    \text{hallar}\quad &\ddt z_{n+1} = \Phi(\tn,z_n, h) + \delta_n, \quad
-    n=0,\dots, N-1,
-  \end{aligned}
+    \begin{aligned}
+      \text{Dado}\quad &z_0 = \ycero+\mu_0,\\
+      \text{hallar}\quad &\ddt z_{n+1} = \Phi(\tn,z_n, h) + \delta_n, \quad
+      n=0,\dots, N-1,
+    \end{aligned}
   \right.
 \end{equation}
 
@@ -1042,26 +1042,26 @@ Suponiendo que la solución exacta, $y=y(t)$, de (\ref{eq:pvi})) es de
 $C^{p+1}[\ta,\tb])$, podemos hacer su desarrollo de Taylor en $\tn$:
 \begin{align*}
   \sol(\tnn)&=\sol(\tn+h) \\&= \sol(\tn) + h\sol'(\tn) + \frac{h^2}{2}
-  \sol''(\tn)
-  + \cdots
-  + \frac{h^p}{p!} \sol^{p)}(\tn)
-  + \frac{h^{p+1}}{(p+1)!} \sol^{p+1)}(\xi)
+                              \sol''(\tn)
+                              + \cdots
+                              + \frac{h^p}{p!} \sol^{p)}(\tn)
+                              + \frac{h^{p+1}}{(p+1)!} \sol^{p+1)}(\xi)
   \\&= \sol(\tn) + hf(\tn,\sol(\tn)) + \frac{h^2}{2}
-  \Dtotal 1 f(\tn,\sol(\tn)) 
-  + \cdots
-  + \frac{h^p}{p!} \Dtotal {p-1} f(\tn,y(\tn))
-  + O(h^{p+1}).
+      \Dtotal 1 f(\tn,\sol(\tn))
+      + \cdots
+      + \frac{h^p}{p!} \Dtotal {p-1} f(\tn,y(\tn))
+      + O(h^{p+1}).
 \end{align*}
 Pasando $\sol(\tn)$ al primer miembro, dividiendo por
 $h$ y aproximando $\yn\approx y(\tn)$, $\ynn\approx y(\tnn)$
 llegamos a :
 \begin{align*}
   \ddt \ynn &= \Phi(\tn,\yn,h),
-  \intertext{con}
-  \Phi(t,y,h) &= f(t,y) + \frac{h}{2}
-  \Dtotal 1 f(t,y) 
-  + \cdots
-  + \frac{h^{p-1}}{p!} \Dtotal {p-1} f(t,y)
+              \intertext{con}
+              \Phi(t,y,h) &= f(t,y) + \frac{h}{2}
+                            \Dtotal 1 f(t,y)
+                            + \cdots
+                            + \frac{h^{p-1}}{p!} \Dtotal {p-1} f(t,y)
 \end{align*}
 
 Para esta $\Phi$ se verifica trivialmente el teorema de
@@ -1083,21 +1083,21 @@ parciales de $f$ por la evaluación de $f$ en distintos puntos del
 intervalo $[\tn,\tnn]$. Así, su formulación es del tipo:
 \begin{align}
   \notag
-  \text{Dado}\ y_0 &= \ycero,\\ 
+  \text{Dado}\ y_0 &= \ycero,\\
   \label{eq:R-K-formula-general}
   \ddt y_{n+1} &= \sum_{i=1}^r b_ik_i\quad
-  n=0,\dots, N-1, 
+                 n=0,\dots, N-1,
   \\
   \notag
   \text{donde}\ k_i &= f(t_n+h\, c_i,\ y_n + h\, d_{i}), \text{\
-    con }
-  \left\{
-    \begin{aligned}
-      & c_i\in [0,1], \text{ con } c_1=1,
-      \\ &d_{i} \text{ combinación
-        lineal de } k_1,...,k_{i-1}.
-    \end{aligned}
-  \right.
+                      con }
+                      \left\{
+                      \begin{aligned}
+                        & c_i\in [0,1], \text{ con } c_1=1,
+                        \\ &d_{i} \text{ combinación
+                          lineal de } k_1,...,k_{i-1}.
+                      \end{aligned}
+                             \right.
 \end{align}
 Si $b_1+b_2+\cdots+b_r=1$, entonces el método es consistente, pues
 entonces $\Phi(t,y,0)=\sum_{i=1}^r b_ik_i=f(x,y)$. No es difícil
@@ -1114,8 +1114,8 @@ los parámetros que definen a cada método concreto.
     k_1 &= f(\tn,\yn), \\ k_2 &= f\big(\tt_{n}+\frac{h}{2},\; \yn+\frac{h}{2}k_1 \big),
     \\
     \ynn &= \yn + h \; \big( b_1k_1 + b_2 k_2 \big),
-    \quad
-    \text{ con } b_1=0,\ b_2=1.
+           \quad
+           \text{ con } b_1=0,\ b_2=1.
   \end{align*}
 
   De forma similar, Euler mejorado~(\ref{eq:euler-mejorado}) se puede escribir como un método de
@@ -1144,13 +1144,13 @@ aproximaciones de la solución en $k$ etapas de tiempo anteriores,
 Específicamente:
 \begin{definition}
   Un método numérico (lineal) de $k$ pasos para aproximar la solución
-  de~(\ref{eq:pvi}) es todo aquél en el que la solución en
+  de~(\ref{eq:pvi}) es todo aquel en el que la solución en
   la etapa $n+k$ viene dada por una expresión recursiva de la forma:
   \begin{align}
     \label{eq:metodo-multipaso}
     \ddt y_{n+k}=&\sum_{j=0}^k \beta_j f(t_{n+j},y_{n+j}), \quad
     n=0,...,N-k, \intertext{donde $\ddt y_{n+k}$ es un aproximación
-      de $y'(t_{n+k})$ usando un cociente incremental con $k$ pasos:} 
+      de $y'(t_{n+k})$ usando un cociente incremental con $k$ pasos:}
     \ddt
     \label{eq:cociente-incremental-multipaso}
     y_{n+k}&=\frac{1}{h}\sum_{j=0}^k\alpha_j y_{n+j}.
@@ -1175,7 +1175,7 @@ $y_{k-1}$ (que determinarán $y_k$). Pero en~(\ref{eq:pvi}) sólo
 contamos con un dato inicial, $\ycero$, de forma que necesitaremos
 usar algún método numérico para aproximar $y_1$, $y_2$, ...,
 $y_{k-1}$. Habitualmente se usarán métodos de un paso, con especial
-cuidado en que el orden de estos métodos sea (al menos) igual al 
+cuidado en que el orden de estos métodos sea (al menos) igual al
 del método multipaso (pues, de otra forma, perderíamos calidad en la
 aproximación inicial).
 
@@ -1186,7 +1186,7 @@ aproximación inicial).
   consecuencia, usando~(\ref{eq:cociente-incremental-multipaso}),
   $y_{n+k}$ puede expresarse explícitamente:
   \begin{equation*}
-    y_{n+k}=  
+    y_{n+k}=
     h\sum_{j=0}^{k-1} \beta_j f_{n+j}-\sum_{j=0}^{k-1}\alpha_j y_{n+j}.
   \end{equation*}
 \item Si $\beta_k\neq 0$, el método se dice \emph{implícito}. No podemos
@@ -1194,7 +1194,7 @@ aproximación inicial).
   para calcular este término será necesario resolver la ecuación (no
   lineal, en general):
   \begin{equation*}
-    y_{n+k} - \beta_k f(t_{n+j},y_{n+j})= 
+    y_{n+k} - \beta_k f(t_{n+j},y_{n+j})=
      h\sum_{j=0}^{k-1} \beta_j f(t_{n+j},y_{n+j})- \sum_{j=0}^{k-1}\alpha_j y_{n+j} .
   \end{equation*}
   Para resolver este tipo de ecuaciones existen distintas
@@ -1227,18 +1227,18 @@ deseamos calcular,  ponemos en práctica la siguiente idea:
 %   interpolación de Lagrange, $P(t)$, en los nodos $t_n,\ t_{n+1},\
 %   \dots, t_{n+k}$.
 \item Sustituir la función $F(x)=f(x,y(x))$ por su polinomio de
-  interpolación de Lagrange, $P(x)$, en un soporte 
+  interpolación de Lagrange, $P(x)$, en un soporte
   $S\subset \{t_{n+j}\}_{j=0}^k$ adecuado:%  interpola los valores
   % $\{f(t_{n+j},y_{n+j})\}_{j=0}^k$.
   \begin{enumerate}
-  \item Métodos de \emph{\AB}: 
+  \item Métodos de \emph{\AB}:
     \begin{equation*}
       S= \{t_{n+j}\}_{j=0}^{k-1}.
     \end{equation*}
     Como veremos, se trata de métodos explícitos, pues en la
     aproximación no aparece el término
     $f(t_{n+k},y_{n+k})$.
-  \item  Métodos de \emph{\AM}: 
+  \item  Métodos de \emph{\AM}:
     \begin{equation*}
       S= \{t_{n+j}\}_{j=0}^{k},
     \end{equation*}
@@ -1250,7 +1250,7 @@ deseamos calcular,  ponemos en práctica la siguiente idea:
   \label{sec:AB-dos-pasos}
   Consideremos la siguiente expresión integral:
   \begin{equation}
-   \label{eq:tema4:8} 
+   \label{eq:tema4:8}
    y(t_{n+2})-y(t_{n+1}) \approx \int_{t_{n+1}}^{t_{n+2}} P(t)\,dt,
   \end{equation}
   donde $P(t)$ es el polinomio de interpolación de $F(t)=f(t,y(t))$ en
@@ -1276,10 +1276,10 @@ deseamos calcular,  ponemos en práctica la siguiente idea:
     \label{eq:AB2}
     y_{n+2}-y_{n+1} = \frac{h}{2} \big[
     3f(t_{n+1},y_{n+1}) - f(t_{n},y_{n}) \big],
-  \end{equation} 
+  \end{equation}
   de donde, para cada $n=0,...,N-2$ podemos obtener explícitamente el
   valor $y_{n+2}$.
-  
+
   El valor $y_0$ se puede obtener a partir del dato inicial $\ycero$,
   mientras que para el cálculo de $y_1$ será necesario utilizar un
   método numérico de un paso. Se puede demostrar que este método
@@ -1298,11 +1298,11 @@ deseamos calcular,  ponemos en práctica la siguiente idea:
     \label{eq:AM2}
       y_{n+2}-y_{n+1} = \frac{h}{12} \big[
       5f(t_{n+2},y_{n+2}) + 8 f(t_{n+1},y_{n+1}) - f(t_{n},y_{n}) \big].
-  \end{equation} 
+  \end{equation}
   Se puede demostrar que el orden de este método es igual a
   $2$. Puesto que se trata de un método implícito, en principio será
   necesario usar algún método numérico (por ejemplo, iteraciones de
-  punto fijo) en cada instante $\tn$ para hallar $y_{n+2}$. 
+  punto fijo) en cada instante $\tn$ para hallar $y_{n+2}$.
 \end{example}
 
 \begin{example}[Método predictor-corrector~(\ref{eq:AB2})--(\ref{eq:AM2})]
@@ -1316,7 +1316,7 @@ deseamos calcular,  ponemos en práctica la siguiente idea:
     $f(t_{n+k},y_{n+k})$ y así calcular, mediante el método de \AM,
     una nueva aproximación (corrección) de $y_{n+k}$.
   \end{enumerate}
-  
+
   En el caso~(\ref{eq:AB2})--(\ref{eq:AM2}) cada etapa del método
   queda:
   \begin{equation*}\left\{
@@ -1324,7 +1324,7 @@ deseamos calcular,  ponemos en práctica la siguiente idea:
         y^*_{n+2} &= y_{n+1} + \frac{h}{2} \big[ 3f(t_{n+1},y_{n+1}) -
         f(t_{n},y_{n}) \big] \quad \text{(predicción),}
         \\
-        y_{n+2} &= y_{n+1} + \frac{h}{12} \big[ 5f(t_{n+2},y^*_{n+2}) 
+        y_{n+2} &= y_{n+1} + \frac{h}{12} \big[ 5f(t_{n+2},y^*_{n+2})
         + 8 f(t_{n+1},y_{n+1}) - f(t_{n},y_{n}) \big] \quad
         \text{(corrección).}
       \end{aligned}\right.
@@ -1335,4 +1335,4 @@ deseamos calcular,  ponemos en práctica la siguiente idea:
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../apuntes-MNII.tex"
-%%% End: 
+%%% End:

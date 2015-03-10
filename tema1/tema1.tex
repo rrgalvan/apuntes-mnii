@@ -690,7 +690,7 @@ la función $y=g(x)$ y la recta $y=x$ (ver
 figura~\ref{fig:ejemplo-punto-fijo-1}).
 
 \begin{example}
-  La función $g(x)=2-x^2$ tiene puntos dos puntos fijos en $x=1$ y
+  La función $g(x)=2-x^2$ tiene dos puntos fijos en $x=1$ y
   $x=-2$, pues $g(1)=2-1=1$ y $g(-2)=2-4=-2$. No tiene más puntos
   fijos en $\Rset$, pues éstos son raíces de $g(x)-x$, que en este
   caso es un polinomio de grado dos. En la
@@ -793,7 +793,7 @@ introduciremos la siguiente definición:
 
 \begin{proposition}[Condición suficiente de contractividad]
   \label{pro:1}
-  Supongamos que $g\in C([a,b])$ y derivable en $(a,b)$, tal que
+  Supongamos que $g\in C^0([a,b])$ y derivable en $(a,b)$, tal que
   \begin{equation}
     \cteContract=\sup_{x\in(a,b)} |g'(x)|<1.
     \label{eq:L=sup|g'|<1}
@@ -841,13 +841,13 @@ más de un punto fijo:
 Los problemas de punto fijo~(\ref{eq:punto-fijo}) dan lugar al
 siguiente tipo de esquemas recursivos, conocidos como métodos de
 aproximaciones sucesivas (o simplemente, \resaltar{métodos de punto
-fijo}):
+  fijo}):
 \begin{equation}
   \tag{$M_{\text{AS}}$}
   \left\{
     \begin{array}{l}
-    \text{Dado } x_0\in [a,b], \\
-    \text{calcular } x_{k+1}=g(x_k), \quad \forall k\ge 0.
+      \text{Dado } x_0\in [a,b], \\
+      \text{calcular } x_{k+1}=g(x_k), \quad \forall k\ge 0.
     \end{array}
   \right.
   \label{eq:MAS}
@@ -860,7 +860,7 @@ y~\ref{pro:unicidad-punto-fijo}, a la vez que garantiza el buen
 planteamiento y la convergencia de~(\ref{eq:MAS}) bajo las hipótesis
 de aquellas proposiciones.
 
-\begin{theorem}[Teorema del punto fijo]
+\begin{theorem}[Teorema del punto fijo de Banach]
   \label{thm:punto-fijo-Banach}
   Sea $g:[a,b]\to\Rset$ tal que $g([a,b]) \subset [a,b]$ y supongamos
   que $g$ es contractiva en $[a,b]$ con constante de contractividad
@@ -879,11 +879,13 @@ de aquellas proposiciones.
     \label{item:punto-fijo-Banach:3}
     \begin{align}
       \label{eq:pto-fijo:cota-a-priori}
-      |x_k-\cero| \le \cteContract^k &|x_0-\cero|,
+      |x_k-\cero| &\le \cteContract^k |x_0-\cero|,
       \\
       \label{eq:pto-fijo:cota-a-posteriori}
-      |x_k-\cero| \le \frac{\cteContract^k}{1-\cteContract}
-                                     &|x_1-x_0|.
+      |x_k-\cero| &\le \frac{\cteContract}{1-\cteContract}
+                    |x_k-x_{k-1}| \le \dots \le
+                    \frac{\cteContract^k}{1-\cteContract}
+                    |x_1-x_0|.
     \end{align}
   \end{enumerate}
 \end{theorem}
@@ -893,116 +895,98 @@ La acotación~(\ref{eq:pto-fijo:cota-a-priori}) llama
 a~(\ref{eq:pto-fijo:cota-a-posteriori}) se la conoce como
 \textit{estimación a posteriori} del error.
 
-% \begin{proof}~\par
-                                                             %                                                              El punto~\ref{item:punto-fijo-Banach:1} no es más que una
-                                                             %                                                              reiteración de las Proposiciones~\ref{pro:existencia-punto-fijo}
-                                                             %                                                              y~\ref{pro:unicidad-punto-fijo}.  Respecto al
-                                                             %                                                              punto~\ref{item:punto-fijo-Banach:2}, para cualquier $x_0\in [a,b]$,
-                                                             %                                                              el método iterativo está bien definido, ya que para $k>1$,
-                                                             %                                                              $x_{k}=g(x_{k-1})$ y $g([a,b])\subset [a,b]$.
-                                                             %                                                              Acerca de la convergencia, dado $x_0\in
-                                                             %                                                              [a,b]$ podemos aplicar repetidamente la función $g$ obteniendo:
-                                                             %                                                              \begin{equation}
-                                                             %                                                              \begin{aligned}
-                                                             %                                                              |x_k-\cero| = &|g(x_{k-1})-g(\cero)| \le \cteContract
-                                                                                                                                            %                                                                                                                                             |x_{k-1}-\cero| = \\
-        %         = \cteContract &|g(x_{k-2})-g(\cero)| \le \cteContract^2
-                                   %                                    |x_{k-2}-\cero| \le \cdots \le \cteContract^k |x_0-\cero|.
-                                   %                                    \end{aligned}\label{eq:1}
-                                   %                                    \end{equation}
-                                   %                                    Así se tiene la estimación a
-                                   %                                    priori~(\ref{eq:pto-fijo:cota-a-priori}) y, como
-                                   %                                    $L<1$, podemos concluir que $x_k\to\cero$.
+\begin{proof}~\par
+  El punto~\ref{item:punto-fijo-Banach:1} resulta
+  directamente de las Proposiciones~\ref{pro:existencia-punto-fijo}
+  y~\ref{pro:unicidad-punto-fijo}. Respecto al
+  punto~\ref{item:punto-fijo-Banach:2}, para cualquier $x_0\in [a,b]$,
+  el método iterativo está bien definido, ya que para $k>1$,
+  $x_{k}=g(x_{k-1})$ y $g([a,b])\subset [a,b]$. Acerca de la
+  convergencia, dado $x_0\in [a,b]$ podemos aplicar repetidamente la
+  función $g$ obteniendo:
+  \begin{equation}
+    \begin{aligned}
+      |x_k-\cero| = &|g(x_{k-1})-g(\cero)| \le \cteContract
+      |x_{k-1}-\cero| = \\
+      = \cteContract &|g(x_{k-2})-g(\cero)| \le \cteContract^2
+      |x_{k-2}-\cero| \le \cdots \le \cteContract^k |x_0-\cero|.
+    \end{aligned}\label{eq:1}
+  \end{equation}
+  Así se tiene la estimación a
+  priori~(\ref{eq:pto-fijo:cota-a-priori}) y, como
+  $\lambda<1$, podemos concluir que $x_k\to\cero$.
+  %
+  La demostración la estimación~(\ref{eq:pto-fijo:cota-a-posteriori})
+  es algo más técnica y se relega a una nota a pie de página\footnote{
+    Para probar~(\ref{eq:pto-fijo:cota-a-posteriori}) comenzamos con
+    un razonamiento análogo al anterior. Utilizando que $g$ es
+    contractiva (y que $x_k\in [a,b]$ para todo $k\ge 0$) tenemos que
+    para todo $n \ge 0$:
+    \begin{equation*}
+      |x_{n+1}-x_{n}| =
+      |g(x_{n})-g(x_{n-1})|\le\cteContract|x_{n}-x_{n-1}| \le \cdots \le \cteContract^n|x_1-x_0|.
+    \end{equation*}
+    Sean $k,n\in\Nset$, con $n>k$. Lo anterior junto a la
+    desigualdad triangular implican:
+    \begin{align*}
+      |x_n-x_k| &\le |x_n-x_{n-1}| + |x_{n-1}-x_{n-2}| + \cdots +
+                  |x_{k+2}-x_{k+1}| + |x_{k+1}-x_{k}|
+      \\
+                &\le \left(\cteContract^{n-k} + \cteContract^{n-k+1} +\cdots+
+                  \cteContract^{2} + \cteContract \right) |x_k-x_{k-1}|
+      \\
+                &=\left(\frac{\cteContract-\cteContract^{n-k+1}}{1-\cteContract}\right)
+                  |x_{k}-x_{k-1}|.
+    \end{align*}
+    Tomando $n\to+\infty$ en los dos miembros de la desigualdad
+    anterior, $x_n\to\alpha$ y $\lambda^{n-k+1}\to 0$, así:
+    $$
+    |x_k-\cero| \le \frac{\cteContract}{1-\cteContract}
+    |x_{k}-x_{k-1}|.
+    $$
+    Y aplicando reiteradamente la contractividad, se obtienen las
+    demás desigualdades de~(\ref{eq:pto-fijo:cota-a-posteriori}).
+  }.
+\end{proof}
 
-                                   %                                    Para demostrar la estimación~(\ref{eq:pto-fijo:cota-a-posteriori})
-                                   %                                    comenzamos con un razonamiento análogo al anterior. Utilizando que
-                                   %                                    $g$ es contractiva (y que $x_k\in [a,b]$ para todo $k\ge 0$) tenemos
-                                   %                                    que para todo $n \ge 0$:
-                                   %                                    \begin{equation*}
-                                   %                                    |x_{n+1}-x_{n}| =
-                                   %                                    |g(x_{n})-g(x_{n-1})|\le\cteContract|x_{n}-x_{n-1}| \le \cdots \le \cteContract^n|x_1-x_0|.
-                                   %                                    \end{equation*}
-                                   %                                    Sean ahora $k,n\in\Nset$ y supongamos $n>k$. Aplicando la
-                                   %                                    desigualdad triangular junto a la desigualdad anterior obtenemos:
-                                   %                                    \begin{align*}
-                                   %                                    |x_n-x_k| &\le |x_n-x_{n-1}| + |x_{n-1}-x_{n-2}| + \cdots +
-                                                                                    %                                                                                     |x_{k+2}-x_{k+1}| + |x_{k+1}-x_{k}|
-                                                                                    %         \\
-        %                                                  &\le \left(\cteContract^{n-1} + \cteContract^{n-2} +\cdots+
-                                                             %                                                              \cteContract^{k+1} + \cteContract^{k} \right) |x_1-x_0|
-                                                             %         \\
-        %                                                  &=\left(\frac{\cteContract^k-\cteContract^n}{1-\cteContract}\right)
-                                                             %                                                              |x_1-x_0|
-                                                             %                                                              \le \frac{L^k}{1-L} |x_1-x_0|.
-                                                             %       \end{align*}
-                                                             %                                                              Y por último, usando que $x_n\to\cero$,
-                                                             %                                                              podemos llegar a~(\ref{eq:pto-fijo:cota-a-posteriori}).
-                                                             %                                                              \end{proof}
+\begin{algorithm} \begin{python}
+def punto_fijo(g, x0, tol, max_iters):
+  iter = 0
+  while iter < max_iters:
+    x1 = g(x0)
+    if abs(x1-x0) < tol: return x1
+    x0 = x1
+    iter = iter + 1
+  print "Fallo de convergencia en el método de punto fijo!"
+\end{python}
+\caption{Método de punto fijo (o aproximaciones sucesivas)}
+\label{alg:metodo-punto_fijo}
+\end{algorithm}
 
-                                                             %                                                              \begin{algorithm}  \begin{python}
-                                                             %                                                              def punto_fijo(g, x0, tol, max_iters):
-                                                             %                                                              iter = 0
-                                                             %                                                              while iter < max_iters:
-                                                             %                                                              x1 = g(x0)
-                                                             %                                                              if abs(x1-x0) < tol:
-                                                             %                                                              return x1
-                                                             %                                                              else:
-                                                             %                                                              x0 = x1
-                                                             %                                                              iter = iter + 1
-                                                             %                                                              print "Fallo de convergencia en el método de punto fijo!"
-                                                             %                                                              \end{python}
-                                                             %                                                              \caption{Método de punto fijo (o aproximaciones sucesivas)}
-                                                             %                                                              \label{alg:metodo-punto_fijo}
-                                                             %                                                              \end{algorithm}
-                                                             %                                                              El método de punto fijo o de aproximaciones sucesivas se ha enunciado
-                                                             %                                                              en el algoritmo~\ref{alg:metodo-punto_fijo}.  Dada una tolerancia
-                                                             %                                                              $\epsilon$, el algoritmo realiza iteraciones hasta que se verifica el
-                                                             %                                                              test de parada $|x_{k+1}-x_k|<\epsilon$. Si $g$ es coerciva, este test
-                                                             %                                                              de parada está bien formulado, pues implica $|\cero-x_k|<\epsilon$
-                                                             %                                                              (ejercicio: demostrar lo anterior, usando la desigualdad triangular y
-                                                             %                                                              la coercividad de $g$).% En efecto, usando la
-                                                             % %                                                              desigualdad triangular,
-                                                             % %                                                              \begin{align*}
-                                                             %     %                                                                |\cero-x_k| \le |\cero-x_{k+1}|+|x_{k+1}-x_k|
-                                                             %     %                                                                = |g(\cero)-g(x_k)| + |x_{k+1}-x_k|
-                                                             %     %                                                                \le \lambda|\cero-x_k| + |x_{k+1}-x_k|
-                                                             %     %                                                              \end{align*}
+\begin{remark}
+  En la práctica, la estimación a
+  posteriori~(\ref{eq:pto-fijo:cota-a-posteriori}) garantiza la
+  acotación del error de truncamiento, de forma que éste se hará
+  pequeño siempre que realicemos iteraciones de~(\ref{eq:MAS}) hasta
+  que el error entre dos iteraciones consecutivas sea pequeño (en
+  concreto, si $|x_{k+1}-x_k|<\delta$, donde $\delta$ es una
+  tolerancia prefijada, entonces
+  $|x_{k+1}-\alpha|<\epsilon=\delta\cdot\lambda/(1-\lambda)$). Véase al
+  algoritmo~\ref{alg:metodo-punto_fijo}.
 
-                                                             %                                                              \begin{remark}[Orden uno de~(\ref{eq:MAS})]
-                                                             %                                                              En las hipótesis del Teorema~\ref{thm:punto-fijo-Banach} los
-                                                             %                                                              métodos de punto fijo tienen \resaltar{orden de convergencia al
-                                                             %                                                              menos uno}.  En efecto, si $g$ verifica estas hipótesis,
-                                                             %                                                              siguiendo la demostración anterior tenemos la cadena de)
-                                                             %                                                              desigualdades~(\ref{eq:1}). Si nos fijamos en la primera
-                                                             %                                                              desigualdad,
-                                                             %                                                              $$
-                                                             %                                                              |x_k-\cero|\le\cteContract |x_{k-1}-\cero|,
-                                                             %                                                              $$
-                                                             %                                                              por tanto se verifica la condición
-                                                             %                                                              (\ref{eq:orden-convergencia-al-menos-p}) para orden $p=1$ (con
-                                                             %                                                              constante $C=\lambda<1$).
-                                                             %                                                              \end{remark}
-                                                             %                                                              \begin{remark}[Orden $p$ de~(\ref{eq:MAS})]
-                                                             %                                                              Para hipótesis más restrictivas sobre $g$ se puede llegar a
-                                                             %                                                              \resaltar{orden mayor que uno}. En concreto, se puede demostrar
-                                                             %                                                              que si~(\ref{eq:MAS}) converge a un punto fijo, $\cero$, y si
-                                                             %                                                              $g\in C^p([a,b])$ siendo $p \ge 1$ un entero, con
-                                                             %                                                              \begin{extension}
-                                                             %                                                              (En el caso $p=1$ es necesario exigir $g'(\cero)<1$).
-                                                             %                                                              \end{extension}
-                                                             %                                                              \begin{equation*}
-                                                             %                                                              g'(\cero)=g''(\cero)=\cdots=g^{p-1)}(\cero)=0, \quad
-                                                             %                                                              g^p)(\cero)\neq 0,
-                                                             %                                                              \end{equation*}
-                                                             %                                                              entonces~(\ref{eq:MAS}) tiene orden exactamente $p$.
-                                                             %                                                              \begin{extension}
-                                                             %                                                              (Siempre que no ocurra que $x_k=\alpha\ \forall k\ge k_0$).
-                                                             %                                                              \end{extension}
-                                                             %                                                              La demostración se basa en un desarrollo de Taylor de $g$ hasta
-                                                             %                                                              orden $p$.
-                                                             %                                                              \label{rk:MAS.orden.p}
-                                                             %                                                              \end{remark}
-                                                             %     %                                                              \subsection{Ejemplos}
+  % aproximaciones sucesivas se ha enunciado
+  % en el algoritmo. Dada una tolerancia $\epsilon$, el algoritmo
+  % realiza iteraciones hasta que se verifica el test de parada
+  % $|x_{k+1}-x_k|<\epsilon$. Si $g$ es coerciva, este test de parada
+  % está bien formulado, pues implica $|\cero-x_k|<\epsilon$ (ejercicio:
+  % demostrar lo anterior, usando la desigualdad triangular y la
+  % coercividad de $g$). En efecto, usando la desigualdad triangular,
+  % \begin{align*}
+      %       |\cero-x_k| \le |\cero-x_{k+1}|+|x_{k+1}-x_k|
+      %       = |g(\cero)-g(x_k)| + |x_{k+1}-x_k|
+      %       \le \lambda|\cero-x_k| + |x_{k+1}-x_k|
+      %     \end{align*}
+\end{remark}
 
 \begin{example}
   Nos proponemos el formular en términos de problemas de punto fijo el
@@ -1113,81 +1097,117 @@ a~(\ref{eq:pto-fijo:cota-a-posteriori}) se la conoce como
   \label{ex:punto-fijo-1}
   \begin{program}
     \widepythonexternal{tema1/src/puntofijo.py}
-    \label{pro:metodo-puntofijo}
     \caption{Una implementación en lenguaje Python del método de
       aproximaciones sucesivas para el cálculo un punto fijo $x=g(x)$}
+    \label{pro:metodo-puntofijo}
   \end{program}
 \end{example}
 
-                          %                 %                           Para terminar, mostramos un resultado que garantiza la convergencia
-                          %                 %                           de~(\ref{eq:MAS}) hacia un punto fijo conocido, sin utilizar hipótesis
-                          %                 %                           globales sobre el intervalo. En concreto, en el siguiente teorema
-                          %                 %                           solamente se utilizan hipótesis locales sobre la derivada de $g$.
 
-                          %                 %                           \begin{theorem}[Convergencia local de los métodos de punto fijo]
-                          %                 %                             \label{thm:punto-fijo-convergencia-local}
-                          %                 %                             Sea $\cero$ un punto fijo de una función $g$. Supongamos que existe
-                          %                 %                             $\delta>0$ tal que $g\in C^1(\cero-\delta,\cero+\delta)$ y que
-                          %                 %                             $|g'(\cero)|<1$. Entonces:
-                          %                 %                             \begin{enumerate}
-                          %                 %                             \item Existe $\rho\in (0,\delta)$ tal que método de punto
-                          %                 %                               fijo~(\ref{eq:MAS}) está bien definido y converge hacia $\cero$
-                          %                 %                               (para cualquier inicialización $x_0 \in [x_0-\rho,x_0+\rho]$).
-                          %                 %                             \item Existe una constante de contractividad $\lambda\in [0,1)$ (que
-                          %                 %                               depende de $\rho$ y $|g'(\cero)|$) para la que se verifican las
-                          %                 %                               estimaciones a priori~(\ref{eq:pto-fijo:cota-a-priori}) y a
-                          %                 %                               posterior~(\ref{eq:pto-fijo:cota-a-posteriori}) en
-  %                 %     $[x_0-\rho,x_0+\rho]$.
-  %                 %   \end{enumerate}
-  %                 % \end{theorem}
-  %                 % \begin{proof}
-  %                 %   Simplemente tenemos que aplicar el
-  %                 %   teorema~\ref{thm:punto-fijo-Banach} (Teorema del punto fijo) en un
-  %                 %   intervalo adecuado $[x_0-\rho,x_0+\rho]$. En concreto, como
-  %                 %   $g'(\cero)<1$ y $g \in C^1(\cero-\delta,\cero+\delta)$, podemos
-  %                 %   asegurar que para algún $\rho\in(0,\delta)$,
-  %                 %   $$
-  %                 %   |g'(x)|<1 \quad \forall x\in [\cero-\rho, \cero+\rho],
-  %                 %   $$
-  %                 %   luego $g$ es contractiva en $[\cero-\rho, \cero+\rho]$ (debido a
-  %                 %   la proposición~\ref{pro:1} y a la observación~\ref{rk:3}), con
-  %                 %   constante $\lambda<1$.
+\begin{remark}[Orden uno de~(\ref{eq:MAS})]
+  En las hipótesis del Teorema~\ref{thm:punto-fijo-Banach} los
+  métodos de punto fijo tienen \resaltar{orden de convergencia (al
+    menos) uno}.  En efecto, si $g$ verifica estas hipótesis,
+  siguiendo la demostración anterior tenemos la cadena de)
+  desigualdades~(\ref{eq:1}). Si nos fijamos en la primera
+  desigualdad,
+  $$
+  |x_k-\cero|\le\cteContract |x_{k-1}-\cero|,
+  $$
+  por tanto se verifica la condición
+  (\ref{eq:orden-convergencia-al-menos-p}) para orden $p=1$ (con
+  constante $C=\lambda<1$).
+\end{remark}
+\begin{remark}[Orden $p$ de~(\ref{eq:MAS})]
+  Para hipótesis más restrictivas sobre $g$ se puede llegar a
+  \resaltar{orden mayor que uno}. En concreto, se puede demostrar
+  que si~(\ref{eq:MAS}) converge a un punto fijo, $\cero$, y si
+  $g\in C^p([a,b])$ siendo $p \ge 1$ un entero, con
+  \begin{extension}
+    (En el caso $p=1$ es necesario exigir $g'(\cero)<1$).
+  \end{extension}
+  \begin{equation*}
+    g'(\cero)=g''(\cero)=\cdots=g^{p-1)}(\cero)=0, \quad
+    g^p)(\cero)\neq 0,
+  \end{equation*}
+  entonces~(\ref{eq:MAS}) tiene orden exactamente $p$.
+  \begin{extension}
+    (Siempre que no ocurra que $x_k=\alpha\ \forall k\ge k_0$).
+  \end{extension}
+  La demostración se basa en un desarrollo de Taylor de $g$ hasta
+  orden $p$.
+  \label{rk:MAS.orden.p}
+\end{remark}
+%     % \subsection{Ejemplos}
+Para terminar, mostramos un resultado que garantiza la convergencia
+de~(\ref{eq:MAS}) hacia un punto fijo conocido, sin utilizar hipótesis
+globales sobre el intervalo. En concreto, en el siguiente teorema
+solamente se utilizan hipótesis locales sobre la derivada de $g$.
 
-  %                 %   Además es fácil ver que $g([\cero-\rho, \cero+\rho]) \subset
-  %                 %   [\cero-\rho, \cero+\rho]$, pues si $x\in[\cero-\rho, \cero+\rho]$
-  %                 %   se tiene $ |x-\cero|<\rho$ y por tanto
-  %                 %   $$
-  %                 %   |g(x)-\cero| = |g(x)-g(\cero)| \le \lambda |x-\cero|< \rho
-  %                 %   \Rightarrow g(x)\in [\cero-\rho, \cero+\rho].
-  %                 %   $$
-  %                 % \end{proof}
+\begin{theorem}[Convergencia local de los métodos de punto fijo]
+  \label{thm:punto-fijo-convergencia-local}
+  Sea $\cero$ un punto fijo de una función $g$. Supongamos que existe
+  $\delta>0$ tal que $g\in C^1(\cero-\delta,\cero+\delta)$ y que
+  $|g'(\cero)|<1$. Entonces:
+  \begin{enumerate}
+  \item Existe $\rho\in (0,\delta)$ tal que método de punto
+    fijo~(\ref{eq:MAS}) está bien definido y converge hacia $\cero$
+    (para cualquier inicialización $x_0 \in [x_0-\rho,x_0+\rho]$).
+  \item Existe una constante de contractividad $\lambda\in [0,1)$ (que
+    depende de $\rho$ y $|g'(\cero)|$) para la que se verifican las
+    estimaciones a priori~(\ref{eq:pto-fijo:cota-a-priori}) y a
+    posteriori\ref{eq:pto-fijo:cota-a-posteriori}) en
+    $[x_0-\rho,x_0+\rho]$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  Simplemente tenemos que aplicar el
+  teorema~\ref{thm:punto-fijo-Banach} (Teorema del punto fijo) en un
+  intervalo adecuado $[x_0-\rho,x_0+\rho]$. En concreto, como
+  $g'(\cero)<1$ y $g \in C^1(\cero-\delta,\cero+\delta)$, podemos
+  asegurar que para algún $\rho\in(0,\delta)$,
+  $$
+  |g'(x)|<1 \quad \forall x\in [\cero-\rho, \cero+\rho],
+  $$
+  luego $g$ es contractiva en $[\cero-\rho, \cero+\rho]$ (debido a
+  la proposición~\ref{pro:1} y a la observación~\ref{rk:3}), con
+  constante $\lambda<1$.
 
-  % \section{El método de Newton}
-  % \label{sec:metodo-de-newton}
-  % \begin{figure}
-  %   %   Código Python para calcular los datos de las rectas tangentes
-  %   %   f = lambda x: x+x**2+x**5
-  %   %   df = lambda x: 1+2*x+5*x**4
-  %   %   x0=0.85; y0=f(x0); r0 = lambda x: y0+(x-x0)*df(x0)
-  %   %   print "Punto 0:", (x0, y0, df(x0))
-  %   %   x1=x0-y0/df(x0); y1=f(x1); r1 = lambda x: y1+(x-x1)*df(x1)
-  %   %   print "Punto 1:", (x1, y1, df(x1))
-  %   %   x2=x1-y1/df(x1); y2=f(x2); r2 = lambda x: y2+(x-x2)*df(x2)
-  %   %   print "Punto 2:", x2
-  %   \begin{graficaTikz}[width=25em, height=17em]
-  %     \def\Ax{0.85} \def\Ay{ 2.0162053125} \def\mA{5.31003125}
-  %     \def\Bx{0.47030255236256846} \def\By{0.7144954568706967} \def\mB{2.185217999486167}
-  %     \def\Cx{0.143334965129}
-  %     \begin{axis}[\axisXYmiddle,
-  %       restrict y to domain=-1:3.5,
-  %       legend pos = outer north east, legend cell align=left,
-  %       ticks=none]
-  %       %       Draw a curve
-  %       \addplot[domain=-0.2:1.1, blue, ultra thick, samples=40]
-  %       {x+x^2+x^4};
-  %       %       Tangent 1
-  %       \addplot[domain=-0.2:1.1, gray, thick, samples=40]
-  %       {\Ay+(x-\Ax)*\mA};
+  Además es fácil ver que $g([\cero-\rho, \cero+\rho]) \subset
+  [\cero-\rho, \cero+\rho]$, pues si $x\in[\cero-\rho, \cero+\rho]$
+  se tiene $ |x-\cero|<\rho$ y por tanto
+  $$
+  |g(x)-\cero| = |g(x)-g(\cero)| \le \lambda |x-\cero|< \rho
+  \Rightarrow g(x)\in [\cero-\rho, \cero+\rho].
+  $$
+\end{proof}
+
+% \section{El método de Newton}
+% \label{sec:metodo-de-newton}
+% \begin{figure}
+%   %   Código Python para calcular los datos de las rectas tangentes
+%   %   f = lambda x: x+x**2+x**5
+%   %   df = lambda x: 1+2*x+5*x**4
+%   %   x0=0.85; y0=f(x0); r0 = lambda x: y0+(x-x0)*df(x0)
+%   %   print "Punto 0:", (x0, y0, df(x0))
+%   %   x1=x0-y0/df(x0); y1=f(x1); r1 = lambda x: y1+(x-x1)*df(x1)
+%   %   print "Punto 1:", (x1, y1, df(x1))
+%   %   x2=x1-y1/df(x1); y2=f(x2); r2 = lambda x: y2+(x-x2)*df(x2)
+%   %   print "Punto 2:", x2
+%   \begin{graficaTikz}[width=25em, height=17em]
+%     \def\Ax{0.85} \def\Ay{ 2.0162053125} \def\mA{5.31003125}
+%     \def\Bx{0.47030255236256846} \def\By{0.7144954568706967} \def\mB{2.185217999486167}
+%     \def\Cx{0.143334965129}
+%     \begin{axis}[\axisXYmiddle,
+%       restrict y to domain=-1:3.5,
+%       legend pos = outer north east, legend cell align=left,
+%       ticks=none]
+%       %       Draw a curve
+%       \addplot[domain=-0.2:1.1, blue, ultra thick, samples=40]
+%       {x+x^2+x^4};
+%       %       Tangent 1
+%       \addplot[domain=-0.2:1.1, gray, thick, samples=40]
+%       {\Ay+(x-\Ax)*\mA};
   %       \node[coordinate, medium dot]  at (axis cs:\Ax,\Ay) {};
   %       \addplot[dashed] coordinates {(\Ax,0) (\Ax,\Ay)};
   %       \node[coordinate, medium dot, pin=-45:{$x_0$}]
@@ -1226,543 +1246,543 @@ a~(\ref{eq:pto-fijo:cota-a-posteriori}) se la conoce como
   %   \tag{$M_{\text{N}}$}
   %   \left\{
   %     \begin{array}{l}
-  %       \text{Dado } x_0\in [a,b], \\ \noalign{\medskip}
-  %       \text{calcular } x_{k+1} = x_k - \dfrac{f(x_k)}{f'(x_k)} , \quad \forall k\ge 0.
-  %     \end{array}
-  %   \right.
-  %   \label{eq:MetNewton}
-  % \end{equation}
-  % Obsérvese que para que el método de Newton esté bien definido debe ser
-  % $f'(x_k)\neq 0$ para todo $k$, por lo que impondremos la siguiente
-  % restricción: $f'(x)\neq 0$ para todo $x\in [a,b]$. Es un método cuya
-  % implementación es sencilla (véase el
-  % algoritmo~\ref{alg:metodo-newton}) siempre y cuando sea conocida la
-  % derivada de la función $f$.
-  % \begin{algorithm}  \begin{python}
-  %     def newton(f, df, x0, tol, max_iters):
-  %     iter = 0
-  %     while iter < max_iters:
-  %     x1 = x0 - f(x0)/df(x0)
-  %     if abs(x1-x0) < tol:
-  %     return x1
-  %     else:
-  %     x0 = x1
-  %     iter = iter + 1
-  %     print "Fallo de convergencia en el método de Newton!"
-  %   \end{python}
-  %   \caption{Método de Newton}
-  %   \label{alg:metodo-newton}
-  % \end{algorithm}
-  % Además de su interpretación geométrica, existen otras formas de
-  % introducir el método de Newton:
-  % \begin{enumerate}
-  % \item Mediante el \textbf{desarrollo de Taylor} de $f$: dado $x_n\in [a,b]$,
-  %   \begin{align*}
-  %     f(x)&=f(x_n) + f'(x_n)(x-x_n) + \frac 12 f''(\xi_n)(x-x_n)^2, \quad
-  %     \text{con $\xi_n$ entre $x$ y $x_n$}.
-  %     \\
-  %     \intertext{En particular, para $x=\cero$,}
-  %     0=f(\cero)&=f(x_n) + f'(x_n)(\cero-x_n) + \frac 12 f''(\xi_n)(\cero-x_n)^2.
-  %   \end{align*}
-  %   Suponiendo que $x_n$ sea ``una buena aproximación'' de $\cero$ el
-  %   término $|\cero-x_n|$ es ``pequeño'', luego $(\cero-x_n)^2$ es
-  %   ``mucho más pequeño'' y puede eliminarse el último sumando de la
-  %   ecuación anterior, de donde
-  %   \begin{equation*}
-  %     0 \approx f(x_n) + f'(x_n)(\cero-x_n), \quad \text{es decir} \quad
-  %     \cero \approx x_n - \frac{f(x_n)}{f'(x_n)},
-  %   \end{equation*}
-  %   lo cual justifica que la elección de $x_{n+1}$ dada
-  %   en~(\ref{eq:MetNewton}) es una aproximación de $\cero$.
-  % \item Como una técnica de \textbf{punto fijo} en la que se impone
-  %   orden al menos cuadrático. % La idea es reescribir~(\ref{eq:raiz})
-  %   %   en la forma~(\ref{eq:punto-fijo}).
-  %   Para ello observamos que dada $h:[a,b]\to\Rset$ tal que $h(x)\neq 0$
-  %   para toda $x\in[a,b]$,
-  %   \begin{align*}
-  %     x \text{ es solución de~(\ref{eq:raiz})} \ \Leftrightarrow\ & h(x)f(x)=0
-  %     \ \Leftrightarrow\ x-h(x)f(x)=x \\
-  %     \ \Leftrightarrow\ & x \text{ es solución de~(\ref{eq:punto-fijo}) para }
-  %     g(x)=x-h(x)f(x).
-  %   \end{align*}
-  %   La idea del método de Newton es elegir $h$ de forma que
-  %   $g'(\cero)=0$, lo que (asumiendo las hipótesis del teorema del punto
-  %   fijo y la regularidad necesaria para la
-  %   observación~\ref{rk:MAS.orden.p}) implicaría que el
-  %   método~(\ref{eq:MAS}) tiene orden al menos dos. Por definición de
-  %   $g$,
-  %   $$
-  %   0 = g'(\cero) = 1-h'(\cero)f(\cero)-h(\cero)f'(\cero)
-  %   $$
-  %   y como $f(\cero)=0$ nos queda
-  %   $$
-  %   0 = 1-h(\cero)f'(\cero).
-  %   $$
-  %   Es decir, la mejor elección es $h(x)=1/f'(x)$, con lo que
-  %   $g(x)=x-f(x)/f'(x)$. El método de Newton no es más
-  %   que un método de punto fijo~(\ref{eq:MAS}) aplicado a esta función.
-  % \end{enumerate}
-
-  % Esta última justificación de~(\ref{eq:MetNewton}) en términos de un
-  % método de punto fijo nos permitiría, en principio, aplicar toda la
-  % artillería desarrollada en la
-  % sección~\ref{sec:metodos-de-punto-fijo}. El inconveniente es que, de
-  % cara a la existencia y unicidad de solución, el Teorema de punto fijo
-  % impone condiciones que no son fáciles de verificar.  El siguiente
-  % resultado ofrece condiciones suficientes más apropiadas, de tipo
-  % global (en todo el intervalo).
-
-  % \begin{theorem}[Convergencia global del método de Newton]
-  %   Sea $f\in C^2([a,b])$ para la que se verifican las siguientes
-  %   hipótesis:
-  %   \begin{enumerate}[label=($N_{\arabic*}$)]
-  %   \item $f(a)f(b)<0$.
-  %     \label{item:Newton.H1}
-  %   \item  $f'(x)\neq 0$, para todo $x \in [a,b]$.
-  %     \label{item:Newton.H2}
-  %   \item
-  %     El signo de $f''$ no cambia en $[a,b]$ (o sea,
-  %     $f''(x)\ge 0 \ \forall x\in [a,b]$ o $f''(x)\le 0 \ \forall x\in [a,b]$).
-  %     \label{item:Newton.H3}
-  %   \item
-  %     $\max\left\{ \dfrac{|f(a)|}{|f'(a)|}, \dfrac{|f(b)|}{|f'(b)|}
-  %     \right\} \le b-a.$
-  %     \label{item:Newton:H4}
-  %   \end{enumerate}
-  %   Entonces:
-  %   \begin{enumerate}
-  %   \item $f$ tiene una única raíz, $\alpha$, en $[a,b]$.
-  %   \item (\ref{eq:MetNewton}) está bien definido (es decir, para todo
-  %     $x_0\in [a,b]$ se tiene que $\{x_k\} \subset [a,b]$).
-  %   \item (\ref{eq:MetNewton}) es convergente (para cualquier
-  %     inicialización $x_0\in [a,b]$) y $\lim x_k = \cero$.
-  %   \item El orden de (\ref{eq:MetNewton}) es, al menos, cuadrático. En
-  %     concreto, para todo $k\ge 0$,
-  %     \begin{equation}
-  %       |x_{x+1} - \cero| \le \frac {M''}{2m'} |x_k-\alpha|^2,
- %       \label{eq:Newton.orden.2}
- %     \end{equation}
- %     donde definimos $m':=\min_{x\in[a,b]} |f'(x)|$ y $M'':=\max_{x\in[a,b]}|f''(x)|$.
- %   \end{enumerate}
- %   \label{thm:Newton.convergencia.global}
- % \end{theorem}
-
- % \begin{proof}
- %   Como $f'$ es continua y la hipótesis~\ref{item:Newton.H2} especifica
- %   que $f'(x) \neq 0$, tendremos que $f'(x)>0$ o $f'(x)<0$ en $[a,b]$.
- %   Además, según la hipótesis~\ref{item:Newton.H3}, $f''(x)\ge 0$ o
- %   $f''(x)\le 0$ en $[a,b]$. En esta demostración supondremos que
- %   \begin{equation}
- %     f'(x)>0 \quad \text{y}\quad f''(x)\le 0
- %     \label{eq:f'>0.f''<=0}
- %   \end{equation}
- %   (es decir, $f$ es creciente y convexa, como en la
- %   figura~\ref{fig:newton-interpretacion-geometrica}). Para las otras
- %   tres combinaciones posibles ($f'>0$ y $f''\ge 0$, $f'<0$ y $f''\ge 0$,
- %   $f'<0$ y $f''\le 0$) la demostración es similar a la actual.
- %   En el caso~\eqref{eq:f'>0.f''<=0}, el hecho de que $f$ sea creciente implica que
- %   \begin{equation*}
- %     f(a)<0 \quad\text{y}\quad f(b)>0.
- %   \end{equation*}
- %   Y en este caso, como además $f'$ es decreciente (pues $f''\le 0$), la
- %   hipótesis~\ref{item:Newton:H4} significa que:
- %   \begin{equation}
- %     \frac{f(b)}{f'(b)} \le b-a.
- %     \label{eq:Newton:H4.simplificada}
- %   \end{equation}
- %   A continuación, probaremos consecutivamente los cuatro puntos del
- %   teorema.
-
- %   \punto{1} % --------------------------------------------------
- %   Es evidente que existe al menos una raíz, $\cero$, pues la
- %   hipótesis~\ref{item:Newton.H1} implica que podemos aplicar el
- %   Teorema de Bolzano en $[a,b]$. Más aún, como $f'(x)>0$, la raíz es única (véase el
- %   Corolario~\ref{cor:tema1:exist+unic}).
-
- %   \punto{2} % --------------------------------------------------
- %   El método de Newton es un
- %   método~(\ref{eq:MAS}), $x_{k+1}=g(x_k)$, para la siguiente función:
- %   \begin{equation*}
- %     g(x)=x-\frac{f(x)}{f'(x)}.
- %   \end{equation*}
- %   Para que este tipo de métodos estén bien definidos (o sea
- %   $\{x_k\}\subset [a,b]$) es suficiente que $g([a,b])\subset [a,b]$.
- %   %   Veremos, en concreto, que
- %   %   \begin{equation}
- %   %     g([a,b])\subset [a,\cero]\subset [a,b].
- %   %     \label{eq:3}
- %   %   \end{equation}
- %   Para ello, estudiamos el crecimiento de $g$.
- %   Como $f\in C^2([a,b])$ y $f'(x)\neq 0$ en
- %   $[a,b]$, deducimos que $g\in C^1([a,b])$ y
- %   \begin{equation}
- %     g'(x)
- %     = 1-\frac{\left(f'(x)\right)^2-f(x)f''(x)}{\left(f'(x)\right)^2}
- %     = \frac{f(x)f''(x)}{\left(f'(x)\right)^2}.
- %     \label{eq:Newton.g'(x)}
- %   \end{equation}
- %   Debido a que $f''(x)\le 0$, el signo de $g'(x)$ depende sólo del
- %   signo de $f(x)$. Así
- %   \begin{itemize}%[label=\emph{\roman*)}]
- %   \item Si $x\in [a,\cero]$, $g'(x)\ge 0$, es decir $g$ es creciente en
- %     $[a,\cero]$.
- %   \item Si $x\in [\cero,b]$, $g'(x)\le 0$, esto es, $g$ es decreciente
- %     en $[\cero,b]$.
- %   \end{itemize}
-
- %   Por lo tanto, $\max_{x\in [a,b]} g(x)=g(\alpha)$, lo que implica que
- %   para todo
- %   $x\in [a,b]$ se tiene
- %   $$
- %   g(x)\le g(\alpha)=\alpha \le b.
- %   $$
- %   Veamos que también $g(x)\ge a$ en $[a,b]$ y así concluimos que
- %   $g([a,b]) \subset [a,b]$, más en concreto
- %   \begin{equation}
- %     g([a,b])\subset [a,\alpha] \subset [a,b].\label{eq:2}
- %   \end{equation}
-
- %   \begin{itemize}
- %   \item Si $x\in [a,\cero]$, como $g$ es creciente en este intervalo,
- %     $$g(x)\ge  g(a) = a-f(a)/f'(a) > a.$$
- %   \item Si $x\in [\cero,b]$ no basta usar que $g$ es
- %     decreciente en el intervalo: necesitamos además la
- %     hipótesis~\ref{item:Newton:H4} que, como vimos, se escribe
- %     como~(\ref{eq:Newton:H4.simplificada}). Así
- %     $$g(x) \ge g(b)=b-f(b)/f'(b) \ge b-(b-a)=a.$$
- %   \end{itemize}
- %   Así hemos visto que se verifica~\eqref{eq:2}.
-
- %   \punto{3} % --------------------------------------------------
- %   Veremos que la sucesión $\{x_k\}$ es convergente y su límite es
- %   $\alpha$ a través del siguiente razonamiento: \textit{(a)} $\{x_k\}$
- %   está acotada superiormente, \textit{(b)} $\{x_k\}$ es creciente (a
- %   partir del segundo término), luego existe $\lim x_k=\overline\cero$
- %   y \textit{(c)} $\overline\cero$ coincide con $\cero$.
- %   \begin{enumerate}[label=\emph{(\alph*)}]
- %   \item Para cualquier $x_0\in[a,b]$, consideremos la sucesión
- %     $\{x_k\}$ definida por~\eqref{eq:MetNewton}. Para cualquier $k\ge
- %     0$, $x_{k+1}=g(x_{k})$ y como $g([a,b])\subset [a,\cero]$
- %     (según vimos en~\eqref{eq:2}) tenemos que
- %     $x_{k+1}\in [a,\alpha]$.
- %   \item Para ver que la sucesión es creciente a partir del segundo
- %     término basta darse cuenta de que $f(x_k)\le 0$ para todo $k\ge 1$
- %     (no necesariamente para el primer término, $k=0$), pues $x_k=g(x_{k-1})\in
- %     [a,\alpha]$. Por tanto
- %     $$
- %     x_{k+1}=g(x_k)=x_k - \frac{f(x_k)}{f'(x_k)} \ge x_k.
- %     $$
- %   \item Sea entonces $\overline\alpha = \lim x_k$. Tomando límite en cada
- %     término de la igualdad
- %     \begin{equation*}
- %       x_{k+1}=x_k- \frac{f(x_k)}{f'(x_k)}
- %       %     \end{equation*}
- %     \quad\text{ llegamos a }\quad
- %       %     \begin{equation*}
- %       \overline\cero = \overline\cero -
- %       \frac{f(\overline\cero)}{f'(\overline\cero)},
- %     \end{equation*}
- %     por lo que $f(\overline\cero)=0$. Luego $\overline\cero=\cero$ (la
- %     raíz de $f$ es única).
- %   \end{enumerate}
-
- %   \punto{4} % --------------------------------------------------
- %   Para estudiar el orden de convergencia, aunque $g'(\cero)=0$ (debido
- %   a~\eqref{eq:Newton.g'(x)}), no podemos aplicar la
- %   observación~\ref{rk:MAS.orden.p} debido a que, en principio, $g$ no
- %   está en las hipótesis del Teorema~\ref{thm:punto-fijo-Banach} (de
- %   punto fijo) y $g\not\in C^2([a,b])$. Pero sí podemos contar con
- %   $f\in C^2([a,b])$, por lo que tenemos siguiente desarrollo de
- %   Taylor:
- %   \begin{equation*}
- %     0 = f(\cero)=f(x_k)+f'(x_k)(\cero-x_k)+\frac12 f''(\theta_k)(\cero-x_k)^2,
- %     \quad\forall k\ge 0.
- %   \end{equation*}
- %   Por otra parte, por construcción de $x_{k+1}$ en~\eqref{eq:MetNewton},
- %   \begin{equation*}
- %     0=f(x_k)+f'(x_k)(x_{k+1}-x_k).
- %   \end{equation*}
- %   Restando ambas expresiones,
- %   \begin{equation*}
- %     f'(x_k)(\cero-x_{k+1}) + \frac12 f''(\theta_k)(\cero-x_k)^2 = 0.
- %   \end{equation*}
- %   Y despejando $\cero-x_{k+1}$ y tomando valor absoluto
- %   deducimos~\eqref{eq:Newton.orden.2}, lo que finaliza la demostración.
- % \end{proof}
-
- % \begin{remark}~
- %   \label{rk:4}
- %   \begin{enumerate}
- %   \item Además de la estimación \textit{a
- %     priori}~\eqref{eq:Newton.orden.2}, se tiene la siguiente
- %     estimación \textit{a posteriori}%
- %     \footnote{No desarrollaremos la demostración, baste decir que se basa
- %     en un desarrollo de Taylor de orden $2$ entre $x_k$ y
- %     $x_{k+1}$}:
- %     \begin{equation}
- %       |x_{k+1}-\alpha| \le \frac{M''}{2m'}|x_{k+1}-x_k|.
- %       \label{eq:newton.estimac.a.posteriori}
- %     \end{equation}
- %     Gracias a ella, si en el algoritmo de Newton realizamos
- %     iteraciones hasta que $|x_{k+1}-x_k|$ suficientemente sea pequeño,
- %     tenemos garantizada una buena aproximación de la solución
- %     exacta. Por ejemplo, dado $\varepsilon>0$, si hacemos que
- %     $$
- %     |x_{k+1}-x_k| < \frac{2m'}{M''} \varepsilon
- %     \quad\text{entonces}\quad
- %     |x_{k+1}-\cero| \le \frac{M''}{2m'}|x_{k+1}-x_k|<\varepsilon.
- %     $$
- %   \item En la demostración del Teorema anterior hemos probado que la
- %     sucesión $\{x_k\}$ es monótona a partir del primer segundo
- %     término, $x_1$. En concreto, en el caso estudiado en la
- %     demostración ($f'>0$ y $f''\le 0$) hemos visto que la sucesión es
- %     monótona creciente. Se deja como ejercicio al lector el discutir
- %     el crecimiento/decrecimiento en los otros tres casos posibles.
- %   \item La hipótesis~\ref{item:Newton:H4} es necesaria para (como
- %     hemos visto en la demostración) garantizar que el método de Newton
- %     está bien definido en el sentido de los métodos de punto fijo (es
- %     decir, $g([a,b]\subset [a,b]$). En realidad, es sólo $x_1$ (en la
- %     primera iteración) el punto que podría quedar fuera de $[a,b]$
- %     pues, como hemos visto, el resto de la sucesión converge
- %     monótonamente hacia $\cero$.
-
- %     El siguiente resultado proporciona una condición suficiente (pero
- %     no necesaria, ver ejercicio 5) muy útil para evitar la
- %     hipótesis~\ref{item:Newton:H4}:
- %   \end{enumerate}
- % \end{remark}
-
- % \begin{corollary}[Regla de Fourier]
- %   Sea $f \in C^2([a,b])$ una función que satisface las
- %   hipótesis~\ref{item:Newton.H1}--\ref{item:Newton.H3} del
- %   Teorema~\ref{thm:Newton.convergencia.global}. Si elegimos $x_0=a$
- %   o $x_0=b$ de forma que se verifique
- %   \begin{equation}
- %     \label{eq:4}
- %     f(x_0) f''(x_0) > 0,
- %   \end{equation}
- %   entonces $f$ tiene una única raíz $\alpha$ en $[a,b]$ y la
- %   sucesión $\{x_k\}$ definida por~\eqref{eq:MetNewton} está bien
- %   definida, converge monótonamente hacia $\cero$ y se verifican las
- %   acotaciones~\eqref{eq:Newton.orden.2}
- %   y~\eqref{eq:newton.estimac.a.posteriori}.
- %   \label{cor:regla.fourier}
- % \end{corollary}
- % \begin{proof}
- %   Consideremos de nuevo $f'>0$ y $f''<0$ en $[a,b]$ (los otros tres
- %   casos son similares).  Como hemos visto en la demostración del
- %   Teorema~\ref{thm:Newton.convergencia.global}, las
- %   hipótesis~\ref{item:Newton.H1}--\ref{item:Newton.H3} implican que
- %   existe una sola raíz de $f$, $\alpha$.
-
- %   En el caso $f'>0$ y $f''<0$ tenemos que $f(a)<0$ y por tanto
- %   elegimos $x_0=a$ para que se verifique~\eqref{eq:4}.  Razonando
- %   como en el Teorema anterior para la función de punto fijo, $g$,
- %   tenemos que:
- %   \begin{itemize}
- %   \item $g$ es creciente en $[a,\alpha]$ y decreciente en
- %     $[\alpha,b]$,
- %   \item $g(x)\in [a,\alpha]$ para todo $x\in [a,\alpha]$ (en
- %     principio, $g(x)\not\in [a,\alpha]$ si $x\in[\alpha,b]$ porque
- %     no se verifica la hipótesis~\ref{item:Newton:H4}).
- %   \end{itemize}
- %   En el caso actual, $x_0=a$ luego $x_0\in [a,\alpha]$ y
- %   también $x_{k+1}=g(x_k)\in [a,\alpha]$ para todo $k\ge 0$, así
- %   la sucesión $\{x_k\}_{k\ge 0}$ está bien definida y
- %   acotada. Razonando como en el Teorema anterior, toda la sucesión es
-%   creciente y converge hacia $\cero$. La
-%   estimación~\eqref{eq:Newton.orden.2} se puede demostrar
-%   exactamente igual que antes
-%   y~\eqref{eq:newton.estimac.a.posteriori} se deja sin demostrar,
-%   como en la observación~\ref{rk:4}.
-% \end{proof}
-
-% \begin{example}
-%   Consideremos la siguiente ecuación:
-%   $$f(x)=2\log(x)-x+1=0.$$
-%   \begin{figure}
-%     \label{fig:tema1:ejemplo-separ-soluc-1}
-%     \begin{graficaTikz}[width=20em, height=13em]
-%       \begin{axis}[\axisXYmiddle]
-%         %         Draw a curve
-%         \addplot[domain=0.6:4, blue, ultra thick, samples=40] {2*ln(x)-(x-1)};
-%         \node[coordinate, medium dot, pin=-80:{$\cero_1$}] at (axis cs:1,0) {};
-%         \def\Bx{3.5128}
-%         \node[coordinate, medium dot, pin=-100:{$\cero_2$}] at (axis
-%         cs:\Bx,0) {};
-%         %         \legend {$f(x)$}
-%       \end{axis}
-%     \end{graficaTikz}
-%     \caption{Gráfica en la que se muestran los dos ceros de $f(x)=2\log(x)-x+1$}
-%     \label{fig:2log.x.-x+1}
-%   \end{figure}
-%   La función, cuya gráfica se representa en la
-%   figura~\ref{fig:2log.x.-x+1}, es continua y derivable en su dominio,
-%   $(0,+\infty)$. Su derivada, $f'(x)=(2-x)/x$, está bien definida en
-%   $(0,+\infty)$ y tiene un único cero, $x=2$ (siendo $f'>0$ en $(0,2)$
-%   y $f'<0$ en $(2,+\infty)$). Por lo tanto, $f$ tiene a lo sumo dos
-%   ceros, separados por $x=2$, tal y como sugiere la gráfica. El
-%   primero de estos ceros es, evidentemente, $\cero_1=1$ (pues
-%   $f(1)=0$) y el segundo, $\cero_2$, parece estar entorno a
-%   $x=3.5$. Gracias al teorema de Bolzano podemos asegurar que está
-%   localizado en $[3,4]$, pues $f(3)=0.197...>0$ y $f(4)=-0.227...<0$.
-
-%   Utilizaremos el método de Newton para calcular $\cero_2$,
-%   comprobando previamente que en el intervalo $[3,4]$ se verifican las
-%   hipótesis de la regla de Fourier
-%   (corolario~\ref{cor:regla.fourier}).
-%   \begin{itemize}
-%   \item $f\in C^2([3,4])$, en concreto $f'(x)=(2-x)/x$, $f''(x)=-2/x^2$..
-%   \item Se verifican~\ref{item:Newton.H1}, es decir $f(3)f(4)<0$,
-%     \ref{item:Newton.H2}, de hecho $f'<0$ en $[3,4]$,
-%     y~\ref{item:Newton.H3}, en concreto $f''<0$ en $[3,4]$.
-%   \item Si elegimos $x_0=4$, tenemos $f(x_0)f''(x_0)>0$.
-%   \end{itemize}
-%   Así tenemos asegurada la convergencia monótona de $\{x_k\}$ hacia
-%   $\cero_2$, a partir de $x_0=4$ (en este caso, de forma decreciente).
-
-%   Con la ayuda de una calculadora o un ordenador es fácil realizar
-%   algunas iteraciones del método de Newton. Por ejemplo, utilizando la
-%   implementación que aparece en el programa~\ref{pro:metodo-newton},
-%   se obtiene el siguiente resultado (en el que conseguimos
-%   $|x_{k+1}-x_k|<10^{-6}$ en tan solo 4 iteraciones):
-%   \pythonexternal{tema1/src/newton-test1.py}
-%   \begin{pythonoutput}
-%     \pythonexternal[backgroundcolor=\color{white},title={Resultado}]{tema1/src/newton-test1.out}
-%   \end{pythonoutput}
-%   \begin{program}
-%     \widepythonexternal{tema1/src/newton.py}
-%     \label{pro:metodo-newton}
-%     \caption{Una implementación en lenguaje Python del método de
-%     Newton}
-%   \end{program}
-
-%   En este caso, tenemos (debido a que $f'$ es creciente y $f''$
-%   decreciente en $[3,4]$):
-%   \begin{equation*}
-%     \left.
-%       \begin{array}{ll}
-          %           M''&:=\displaystyle\max_{x\in[3,4]}|f''(x)|=|f''(3)|=2/9
-                           %           \\\noalign{\medskip}
-          %           m'&:=\displaystyle\min_{x\in[3,4]} |f'(x)|=|f'(3)|=1/3
-                          %         \end{array}
-                          %                           \right\} \ \Rightarrow \
-                          %                           \frac{M''}{2m'} = 3.
-                          %                           \end{equation*}
-                          %                           La estimación a
-                          %                           posteriori~\eqref{eq:newton.estimac.a.posteriori} nos permite acotar el
-                          %                           error absoluto para tolerancia $10^{-6}$,
-                          %                           \begin{align*}
-                          %                           |x_{4}-\cero|&\le \frac{M''}{2m'} |x_4-x_3| \le 3\cdot 10^{-6},
-                                                                     %           \\
-          %           \intertext{o incluso afinar más, usando el resultado del programa anterior,}
-          %           |x_{4}-\cero|&\le \frac{M''}{2m'} |x_4-x_3| \le 3 \cdot 2.28588
-                                     %                                      \cdot 10^{-7}
-                                     %                                      = 6.85764 \cdot 10^{-7}.
-                                     %         \end{align*}
-                                     %                                      \end{example}
-
-                                     %                                      \section{Los métodos de la secante y de regula falsi}
-                                     %                                      \label{sec:secante-y-regula-falsi}
-
-                                     %                                      \subsection{Método de la secante}
-                                     %                                      \label{sec:metodo-secante}
-
-                                     %                                      El método de Newton tiene como inconveniente la necesidad del cálculo
-                                     %                                      de la derivada y la evaluación de $f'(x)$ en cada iteración, lo cual
-                                     %                                      no podría no ser posible o bien requerir un esfuerzo de cálculo
-                                     %                                      prohibitivo. Por ejemplo la función $f$ podría venir dada por una
-                                     %                                      tabla de valores sobre un número discreto de puntos, o bien dada por
-                                     %                                      un programa de ordenador para el que no pudiera contemplarse la
-                                     %                                      derivada.
-
-                                     %                                      \begin{figure}
-                                     %                                      \begin{graficaTikz}[width=25em, height=16em]
-                                     %                                      \def\Ax{0.6} \def\Ay{1.35}
-                                     %                                      \def\Bx{0.3} \def\By{0.41}
-                                     %                                      \def\Cx{0.166}
-                                     %                                      \begin{axis}[\axisXYmiddle,
-                                     %                                      restrict y to domain=-0.6:1.9,
-                                     %                                      legend pos = outer north east, legend cell align=left,
-                                     %                                      ticks=none]
-                                     %                                      \legend {$y=f(x)$};
-                                     %       %                                      Draw a curve
-                                     %                                      \addplot[domain=-0.1:1.15, blue, ultra thick, samples=40]
-                                     %                                      {x+x^2+3*x^4};
-                                     %       %                                      Secant
-                                     %                                      \addplot[domain=-0.2:1.15, gray, thick]
-                                     %                                      {\Ay+(x-\Ax)*(\Ay-\By)/(\Ax-\Bx)};
-                                     %       %                                      Points
-                                     %                                      \node[coordinate, medium dot, pin=-45:{$x_{k-1}$}]  at (axis cs:\Ax,0) {};
-                                     %                                      \node[coordinate, medium dot]  at (axis cs:\Ax,\Ay) {};
-                                     %                                      \addplot[dashed] coordinates {(\Ax,0) (\Ax,\Ay)};
-
-                                     %                                      \node[coordinate, medium dot, pin=-45:{$x_k$}]  at (axis cs:\Bx,0) {};
-                                     %                                      \node[coordinate, medium dot]  at (axis cs:\Bx,\By) {};
-                                     %                                      \addplot[dashed] coordinates {(\Bx,0) (\Bx,\By)};
-
-                                     %                                      \node[coordinate, medium dot, pin=-45:{$x_{k+1}$}] at (axis cs:\Cx,0) {};
-                                     %                                      \end{axis}
-                                     %                                      \end{graficaTikz}
-                                     %                                      \caption{Interpretación geométrica del método de la secante}
-                                     %                                      \label{fig:secante-interpretacion-geometrica}
-                                     %                                      \end{figure}
-                                     %                                      El método de la secante es una variante del método de Newton en el que
-                                     %                                      se evita el cálculo de $f'$ utilizando la siguiente idea: dadas dos
-                                     %                                      aproximaciones $x_{k-1}$ y $x_k$, se construye una nueva aproximación
-                                     %                                      $x_{k+1}$ como la abscisa de la intersección del eje $y=0$ con la
-                                     %                                      recta secante a la curva $y=f(x)$ que pasa por los puntos
-                                     %                                      $(x_{k-1},f(x_{k-1}))$ y $(x_k,f(x_k))$. Como esta recta secante viene
-                                     %                                      dada por
-                                     %                                      $$
-                                     %                                      y-f(x_k) = \frac{f(x_{k})-f(x_{k-1})}{x_k-x_{k-1}}(x-x_k),
-                                     %                                      $$
-                                     %                                      tomando $y=0$ y $x=x_{k+1}$ tenemos la formulación del \resaltar{método de la secante}:
-                                     %                                      \begin{equation}
-                                     %                                      \tag{$M_{\text{S}}$}
-                                     %                                      \left\{
-                                     %                                      \begin{array}{l}
-                                     %                                      \text{Dados } x_0,x_1\in [a,b], \\ \noalign{\medskip}
-          %           \text{calcular } x_{k+1} = x_k - f(x_k)
-          %           \dfrac{x_k-x_{k-1}}{f(x_k)-f(x_{k-1})},
-          %           \quad \forall k\ge 1.
+          %           \text{Dado } x_0\in [a,b], \\ \noalign{\medskip}
+          %           \text{calcular } x_{k+1} = x_k - \dfrac{f(x_k)}{f'(x_k)} , \quad \forall k\ge 0.
           %         \end{array}
           %           \right.
-          %           \label{eq:MetSecante}
+          %           \label{eq:MetNewton}
           %           \end{equation}
-
+          %           Obsérvese que para que el método de Newton esté bien definido debe ser
+          %           $f'(x_k)\neq 0$ para todo $k$, por lo que impondremos la siguiente
+          %           restricción: $f'(x)\neq 0$ para todo $x\in [a,b]$. Es un método cuya
+          %           implementación es sencilla (véase el
+          %           algoritmo~\ref{alg:metodo-newton}) siempre y cuando sea conocida la
+          %           derivada de la función $f$.
           %           \begin{algorithm}  \begin{python}
-          %           def secante(f, x0, x1, tol, max_iters):
+          %           def newton(f, df, x0, tol, max_iters):
           %           iter = 0
           %           while iter < max_iters:
-          %           x2 = x1 - f(x1)* (x1-x0)/(f(x1)-f(x0))
-          %           if abs(x2-x1) < tol:
-          %           return x2
+          %           x1 = x0 - f(x0)/df(x0)
+          %           if abs(x1-x0) < tol:
+          %           return x1
           %           else:
           %           x0 = x1
-          %           x1 = x2
           %           iter = iter + 1
-          %           print "Fallo de convergencia en el método de la secante!"
+          %           print "Fallo de convergencia en el método de Newton!"
           %           \end{python}
-          %           \caption{Método de la secante}
-          %           \label{alg:metodo-secante}
+          %           \caption{Método de Newton}
+          %           \label{alg:metodo-newton}
           %           \end{algorithm}
-          %           El método de la secante, formulado en el
-          %           algoritmo~\ref{alg:metodo-secante}, puede ser también deducido a
-          %           partir del método de Newton, a través de la siguiente aproximación:
-          %           \begin{equation*}
-          %           f'(x_k) \approx  \frac{f(x_k)-f(x_{k-1})}{x_k-x_{k-1}}.
-          %           \end{equation*}
-          %           Se trata de un método de dos pasos (para el cálculo de $x_{k+1}$ se
-          %           utilizan dos estimaciones previas, $x_k$ y $x_{k-1}$) que tiene orden
-          %           de convergencia superlineal. Concretamente, se puede demostrar%
-          %           \footnote{\textsf{Bibliografía}: Kincaid, D., Cheney, W., Análisis
-          %           Numérico. \textit{Las matemáticas del cálculo
-          %           científico}. Addison-Wesley-Iberoamericana 1994.}  que el método
-          %           de la secante tiene orden $\phi$, donde
-          %           $$
-          %           \phi=\frac{1 + \sqrt 5}{2} \approx 1.62
-          %           $$
+          %           Además de su interpretación geométrica, existen otras formas de
+          %           introducir el método de Newton:
+          %           \begin{enumerate}
+          %           \item Mediante el \textbf{desarrollo de Taylor} de $f$: dado $x_n\in [a,b]$,
+          %           \begin{align*}
+          %           f(x)&=f(x_n) + f'(x_n)(x-x_n) + \frac 12 f''(\xi_n)(x-x_n)^2, \quad
+                            %                             \text{con $\xi_n$ entre $x$ y $x_n$}.
+                            %           \\
+          %           \intertext{En particular, para $x=\cero$,}
+          %           0=f(\cero)&=f(x_n) + f'(x_n)(\cero-x_n) + \frac 12 f''(\xi_n)(\cero-x_n)^2.
+                                  %         \end{align*}
+                                  %                                   Suponiendo que $x_n$ sea ``una buena aproximación'' de $\cero$ el
+                                  %                                   término $|\cero-x_n|$ es ``pequeño'', luego $(\cero-x_n)^2$ es
+                                  %                                   ``mucho más pequeño'' y puede eliminarse el último sumando de la
+                                  %                                   ecuación anterior, de donde
+                                  %                                   \begin{equation*}
+                                  %                                   0 \approx f(x_n) + f'(x_n)(\cero-x_n), \quad \text{es decir} \quad
+                                  %                                   \cero \approx x_n - \frac{f(x_n)}{f'(x_n)},
+                                  %                                   \end{equation*}
+                                  %                                   lo cual justifica que la elección de $x_{n+1}$ dada
+                                  %                                   en~(\ref{eq:MetNewton}) es una aproximación de $\cero$.
+                                  %                                   \item Como una técnica de \textbf{punto fijo} en la que se impone
+                                  %                                   orden al menos cuadrático. % La idea es reescribir~(\ref{eq:raiz})
+                                  %   %                                   en la forma~(\ref{eq:punto-fijo}).
+                                  %                                   Para ello observamos que dada $h:[a,b]\to\Rset$ tal que $h(x)\neq 0$
+                                  %                                   para toda $x\in[a,b]$,
+                                  %                                   \begin{align*}
+                                  %                                   x \text{ es solución de~(\ref{eq:raiz})} \ \Leftrightarrow\ & h(x)f(x)=0
+                                                                                                                                    %                                                                                                                                     \ \Leftrightarrow\ x-h(x)f(x)=x \\
+          %           \ \Leftrightarrow\ & x \text{ es solución de~(\ref{eq:punto-fijo}) para }
+                                           %                                            g(x)=x-h(x)f(x).
+                                           %         \end{align*}
+                                           %                                            La idea del método de Newton es elegir $h$ de forma que
+                                           %                                            $g'(\cero)=0$, lo que (asumiendo las hipótesis del teorema del punto
+                                           %                                            fijo y la regularidad necesaria para la
+                                           %                                            observación~\ref{rk:MAS.orden.p}) implicaría que el
+                                           %                                            método~(\ref{eq:MAS}) tiene orden al menos dos. Por definición de
+                                           %                                            $g$,
+                                           %                                            $$
+                                           %                                            0 = g'(\cero) = 1-h'(\cero)f(\cero)-h(\cero)f'(\cero)
+                                           %                                            $$
+                                           %                                            y como $f(\cero)=0$ nos queda
+                                           %                                            $$
+                                           %                                            0 = 1-h(\cero)f'(\cero).
+                                           %                                            $$
+                                           %                                            Es decir, la mejor elección es $h(x)=1/f'(x)$, con lo que
+                                           %                                            $g(x)=x-f(x)/f'(x)$. El método de Newton no es más
+                                           %                                            que un método de punto fijo~(\ref{eq:MAS}) aplicado a esta función.
+                                           %                                            \end{enumerate}
+
+                                           %                                            Esta última justificación de~(\ref{eq:MetNewton}) en términos de un
+                                           %                                            método de punto fijo nos permitiría, en principio, aplicar toda la
+                                           %                                            artillería desarrollada en la
+                                           %                                            sección~\ref{sec:metodos-de-punto-fijo}. El inconveniente es que, de
+                                           %                                            cara a la existencia y unicidad de solución, el Teorema de punto fijo
+                                           %                                            impone condiciones que no son fáciles de verificar.  El siguiente
+                                           %                                            resultado ofrece condiciones suficientes más apropiadas, de tipo
+                                           %                                            global (en todo el intervalo).
+
+                                           %                                            \begin{theorem}[Convergencia global del método de Newton]
+                                           %                                            Sea $f\in C^2([a,b])$ para la que se verifican las siguientes
+                                           %                                            hipótesis:
+                                           %                                            \begin{enumerate}[label=($N_{\arabic*}$)]
+                                           %                                            \item $f(a)f(b)<0$.
+                                           %                                            \label{item:Newton.H1}
+                                           %                                            \item  $f'(x)\neq 0$, para todo $x \in [a,b]$.
+                                           %                                            \label{item:Newton.H2}
+                                           %                                            \item
+                                           %                                            El signo de $f''$ no cambia en $[a,b]$ (o sea,
+                                           %                                            $f''(x)\ge 0 \ \forall x\in [a,b]$ o $f''(x)\le 0 \ \forall x\in [a,b]$).
+                                           %                                            \label{item:Newton.H3}
+                                           %                                            \item
+                                           %                                            $\max\left\{ \dfrac{|f(a)|}{|f'(a)|}, \dfrac{|f(b)|}{|f'(b)|}
+                                           %                                            \right\} \le b-a.$
+                                           %                                            \label{item:Newton:H4}
+                                           %                                            \end{enumerate}
+                                           %                                            Entonces:
+                                           %                                            \begin{enumerate}
+                                           %                                            \item $f$ tiene una única raíz, $\alpha$, en $[a,b]$.
+                                           %                                            \item (\ref{eq:MetNewton}) está bien definido (es decir, para todo
+                                           %                                            $x_0\in [a,b]$ se tiene que $\{x_k\} \subset [a,b]$).
+                                           %                                            \item (\ref{eq:MetNewton}) es convergente (para cualquier
+                                           %                                            inicialización $x_0\in [a,b]$) y $\lim x_k = \cero$.
+                                           %                                            \item El orden de (\ref{eq:MetNewton}) es, al menos, cuadrático. En
+                                           %                                            concreto, para todo $k\ge 0$,
+                                           %                                            \begin{equation}
+                                           %                                            |x_{x+1} - \cero| \le \frac {M''}{2m'} |x_k-\alpha|^2,
+                                           %                                            \label{eq:Newton.orden.2}
+                                           %                                          \end{equation}
+                                           %                                          donde definimos $m':=\min_{x\in[a,b]} |f'(x)|$ y $M'':=\max_{x\in[a,b]}|f''(x)|$.
+                                           %                                        \end{enumerate}
+                                           %                                        \label{thm:Newton.convergencia.global}
+                                           %                                      \end{theorem}
+
+                                           %                                      \begin{proof}
+                                           %                                        Como $f'$ es continua y la hipótesis~\ref{item:Newton.H2} especifica
+                                           %                                        que $f'(x) \neq 0$, tendremos que $f'(x)>0$ o $f'(x)<0$ en $[a,b]$.
+                                           %                                        Además, según la hipótesis~\ref{item:Newton.H3}, $f''(x)\ge 0$ o
+                                           %                                        $f''(x)\le 0$ en $[a,b]$. En esta demostración supondremos que
+                                           %                                        \begin{equation}
+                                           %                                          f'(x)>0 \quad \text{y}\quad f''(x)\le 0
+                                           %                                          \label{eq:f'>0.f''<=0}
+                                           %                                        \end{equation}
+                                           %                                        (es decir, $f$ es creciente y convexa, como en la
+                                           %                                        figura~\ref{fig:newton-interpretacion-geometrica}). Para las otras
+                                           %                                        tres combinaciones posibles ($f'>0$ y $f''\ge 0$, $f'<0$ y $f''\ge 0$,
+                                           %                                        $f'<0$ y $f''\le 0$) la demostración es similar a la actual.
+                                           %                                        En el caso~\eqref{eq:f'>0.f''<=0}, el hecho de que $f$ sea creciente implica que
+                                           %                                        \begin{equation*}
+                                           %                                          f(a)<0 \quad\text{y}\quad f(b)>0.
+                                           %                                        \end{equation*}
+                                           %                                        Y en este caso, como además $f'$ es decreciente (pues $f''\le 0$), la
+                                           %                                        hipótesis~\ref{item:Newton:H4} significa que:
+                                           %                                        \begin{equation}
+                                           %                                          \frac{f(b)}{f'(b)} \le b-a.
+                                           %                                          \label{eq:Newton:H4.simplificada}
+                                           %                                        \end{equation}
+                                           %                                        A continuación, probaremos consecutivamente los cuatro puntos del
+                                           %                                        teorema.
+
+                                           %                                        \punto{1} % --------------------------------------------------
+                                           %                                        Es evidente que existe al menos una raíz, $\cero$, pues la
+                                           %                                        hipótesis~\ref{item:Newton.H1} implica que podemos aplicar el
+                                           %                                        Teorema de Bolzano en $[a,b]$. Más aún, como $f'(x)>0$, la raíz es única (véase el
+                                           %                                        Corolario~\ref{cor:tema1:exist+unic}).
+
+                                           %                                        \punto{2} % --------------------------------------------------
+                                           %                                        El método de Newton es un
+                                           %                                        método~(\ref{eq:MAS}), $x_{k+1}=g(x_k)$, para la siguiente función:
+                                           %                                        \begin{equation*}
+                                           %                                          g(x)=x-\frac{f(x)}{f'(x)}.
+                                           %                                        \end{equation*}
+                                           %                                        Para que este tipo de métodos estén bien definidos (o sea
+                                           %                                        $\{x_k\}\subset [a,b]$) es suficiente que $g([a,b])\subset [a,b]$.
+                                           %   %                                        Veremos, en concreto, que
+                                           %   %                                        \begin{equation}
+                                           %   %                                          g([a,b])\subset [a,\cero]\subset [a,b].
+                                           %   %                                          \label{eq:3}
+                                           %   %                                        \end{equation}
+                                           %                                        Para ello, estudiamos el crecimiento de $g$.
+                                           %                                        Como $f\in C^2([a,b])$ y $f'(x)\neq 0$ en
+                                           %                                        $[a,b]$, deducimos que $g\in C^1([a,b])$ y
+                                           %                                        \begin{equation}
+                                           %                                          g'(x)
+                                           %                                          = 1-\frac{\left(f'(x)\right)^2-f(x)f''(x)}{\left(f'(x)\right)^2}
+                                           %                                          = \frac{f(x)f''(x)}{\left(f'(x)\right)^2}.
+                                           %                                          \label{eq:Newton.g'(x)}
+                                           %                                        \end{equation}
+                                           %                                        Debido a que $f''(x)\le 0$, el signo de $g'(x)$ depende sólo del
+                                           %                                        signo de $f(x)$. Así
+                                           %                                        \begin{itemize}%[label=\emph{\roman*)}]
+                                           %                                        \item Si $x\in [a,\cero]$, $g'(x)\ge 0$, es decir $g$ es creciente en
+                                           %                                          $[a,\cero]$.
+                                           %                                        \item Si $x\in [\cero,b]$, $g'(x)\le 0$, esto es, $g$ es decreciente
+                                           %                                          en $[\cero,b]$.
+                                           %                                        \end{itemize}
+
+                                           %                                        Por lo tanto, $\max_{x\in [a,b]} g(x)=g(\alpha)$, lo que implica que
+                                           %                                        para todo
+                                           %                                        $x\in [a,b]$ se tiene
+                                           %                                        $$
+                                           %                                        g(x)\le g(\alpha)=\alpha \le b.
+                                           %                                        $$
+                                           %                                        Veamos que también $g(x)\ge a$ en $[a,b]$ y así concluimos que
+                                           %                                        $g([a,b]) \subset [a,b]$, más en concreto
+                                           %                                        \begin{equation}
+                                           %                                          g([a,b])\subset [a,\alpha] \subset [a,b].\label{eq:2}
+                                           %                                        \end{equation}
+
+                                           %                                        \begin{itemize}
+                                           %                                        \item Si $x\in [a,\cero]$, como $g$ es creciente en este intervalo,
+                                           %                                          $$g(x)\ge  g(a) = a-f(a)/f'(a) > a.$$
+                                           %                                        \item Si $x\in [\cero,b]$ no basta usar que $g$ es
+                                           %                                          decreciente en el intervalo: necesitamos además la
+                                           %                                          hipótesis~\ref{item:Newton:H4} que, como vimos, se escribe
+                                           %                                          como~(\ref{eq:Newton:H4.simplificada}). Así
+                                           %                                          $$g(x) \ge g(b)=b-f(b)/f'(b) \ge b-(b-a)=a.$$
+                                           %                                        \end{itemize}
+                                           %                                        Así hemos visto que se verifica~\eqref{eq:2}.
+
+                                           %                                        \punto{3} % --------------------------------------------------
+                                           %                                        Veremos que la sucesión $\{x_k\}$ es convergente y su límite es
+                                           %                                        $\alpha$ a través del siguiente razonamiento: \textit{(a)} $\{x_k\}$
+                                           %                                        está acotada superiormente, \textit{(b)} $\{x_k\}$ es creciente (a
+                                           %                                        partir del segundo término), luego existe $\lim x_k=\overline\cero$
+                                           %                                        y \textit{(c)} $\overline\cero$ coincide con $\cero$.
+                                           %                                        \begin{enumerate}[label=\emph{(\alph*)}]
+                                           %                                        \item Para cualquier $x_0\in[a,b]$, consideremos la sucesión
+                                           %                                          $\{x_k\}$ definida por~\eqref{eq:MetNewton}. Para cualquier $k\ge
+                                           %                                          0$, $x_{k+1}=g(x_{k})$ y como $g([a,b])\subset [a,\cero]$
+                                           %                                          (según vimos en~\eqref{eq:2}) tenemos que
+                                           %                                          $x_{k+1}\in [a,\alpha]$.
+                                           %                                        \item Para ver que la sucesión es creciente a partir del segundo
+                                           %                                          término basta darse cuenta de que $f(x_k)\le 0$ para todo $k\ge 1$
+                                           %                                          (no necesariamente para el primer término, $k=0$), pues $x_k=g(x_{k-1})\in
+                                           %                                          [a,\alpha]$. Por tanto
+                                           %                                          $$
+                                           %                                          x_{k+1}=g(x_k)=x_k - \frac{f(x_k)}{f'(x_k)} \ge x_k.
+                                           %                                          $$
+                                           %                                        \item Sea entonces $\overline\alpha = \lim x_k$. Tomando límite en cada
+                                           %                                          término de la igualdad
+                                           %                                          \begin{equation*}
+                                           %                                            x_{k+1}=x_k- \frac{f(x_k)}{f'(x_k)}
+                                           %       %                                          \end{equation*}
+                                           %                                          \quad\text{ llegamos a }\quad
+                                           %       %                                          \begin{equation*}
+                                           %                                            \overline\cero = \overline\cero -
+                                           %                                            \frac{f(\overline\cero)}{f'(\overline\cero)},
+                                           %                                          \end{equation*}
+                                           %                                          por lo que $f(\overline\cero)=0$. Luego $\overline\cero=\cero$ (la
+                                           %                                          raíz de $f$ es única).
+                                           %                                        \end{enumerate}
+
+                                           %                                        \punto{4} % --------------------------------------------------
+                                           %                                        Para estudiar el orden de convergencia, aunque $g'(\cero)=0$ (debido
+                                           %                                        a~\eqref{eq:Newton.g'(x)}), no podemos aplicar la
+                                           %                                        observación~\ref{rk:MAS.orden.p} debido a que, en principio, $g$ no
+                                           %                                        está en las hipótesis del Teorema~\ref{thm:punto-fijo-Banach} (de
+                                           %                                        punto fijo) y $g\not\in C^2([a,b])$. Pero sí podemos contar con
+                                           %                                        $f\in C^2([a,b])$, por lo que tenemos siguiente desarrollo de
+                                           %                                        Taylor:
+                                           %                                        \begin{equation*}
+                                           %                                          0 = f(\cero)=f(x_k)+f'(x_k)(\cero-x_k)+\frac12 f''(\theta_k)(\cero-x_k)^2,
+                                           %                                          \quad\forall k\ge 0.
+                                           %                                        \end{equation*}
+                                           %                                        Por otra parte, por construcción de $x_{k+1}$ en~\eqref{eq:MetNewton},
+                                           %                                        \begin{equation*}
+                                           %                                          0=f(x_k)+f'(x_k)(x_{k+1}-x_k).
+                                           %                                        \end{equation*}
+                                           %                                        Restando ambas expresiones,
+                                           %                                        \begin{equation*}
+                                           %                                          f'(x_k)(\cero-x_{k+1}) + \frac12 f''(\theta_k)(\cero-x_k)^2 = 0.
+                                           %                                        \end{equation*}
+                                           %                                        Y despejando $\cero-x_{k+1}$ y tomando valor absoluto
+                                           %                                        deducimos~\eqref{eq:Newton.orden.2}, lo que finaliza la demostración.
+                                           %                                      \end{proof}
+
+                                           %                                      \begin{remark}~
+                                           %                                        \label{rk:4}
+                                           %                                        \begin{enumerate}
+                                           %                                        \item Además de la estimación \textit{a
+                                           %                                          priori}~\eqref{eq:Newton.orden.2}, se tiene la siguiente
+                                           %                                          estimación \textit{a posteriori}%
+                                           %                                          \footnote{No desarrollaremos la demostración, baste decir que se basa
+                                           %                                          en un desarrollo de Taylor de orden $2$ entre $x_k$ y
+                                           %                                          $x_{k+1}$}:
+                                           %                                          \begin{equation}
+                                           %                                            |x_{k+1}-\alpha| \le \frac{M''}{2m'}|x_{k+1}-x_k|.
+                                           %                                            \label{eq:newton.estimac.a.posteriori}
+                                           %                                          \end{equation}
+                                           %                                          Gracias a ella, si en el algoritmo de Newton realizamos
+                                           %                                          iteraciones hasta que $|x_{k+1}-x_k|$ suficientemente sea pequeño,
+                                           %                                          tenemos garantizada una buena aproximación de la solución
+                                           %                                          exacta. Por ejemplo, dado $\varepsilon>0$, si hacemos que
+                                           %                                          $$
+                                           %                                          |x_{k+1}-x_k| < \frac{2m'}{M''} \varepsilon
+                                           %                                          \quad\text{entonces}\quad
+                                           %                                          |x_{k+1}-\cero| \le \frac{M''}{2m'}|x_{k+1}-x_k|<\varepsilon.
+                                           %                                          $$
+                                           %                                        \item En la demostración del Teorema anterior hemos probado que la
+                                           %                                          sucesión $\{x_k\}$ es monótona a partir del primer segundo
+                                           %                                          término, $x_1$. En concreto, en el caso estudiado en la
+                                           %                                          demostración ($f'>0$ y $f''\le 0$) hemos visto que la sucesión es
+                                           %                                          monótona creciente. Se deja como ejercicio al lector el discutir
+                                           %                                          el crecimiento/decrecimiento en los otros tres casos posibles.
+                                           %                                        \item La hipótesis~\ref{item:Newton:H4} es necesaria para (como
+                                           %                                          hemos visto en la demostración) garantizar que el método de Newton
+                                           %                                          está bien definido en el sentido de los métodos de punto fijo (es
+                                           %                                          decir, $g([a,b]\subset [a,b]$). En realidad, es sólo $x_1$ (en la
+                                           %                                          primera iteración) el punto que podría quedar fuera de $[a,b]$
+                                           %                                          pues, como hemos visto, el resto de la sucesión converge
+                                           %                                          monótonamente hacia $\cero$.
+
+                                           %                                          El siguiente resultado proporciona una condición suficiente (pero
+                                           %                                          no necesaria, ver ejercicio 5) muy útil para evitar la
+                                           %                                          hipótesis~\ref{item:Newton:H4}:
+                                           %                                        \end{enumerate}
+                                           %                                      \end{remark}
+
+                                           %                                      \begin{corollary}[Regla de Fourier]
+                                           %                                        Sea $f \in C^2([a,b])$ una función que satisface las
+                                           %                                        hipótesis~\ref{item:Newton.H1}--\ref{item:Newton.H3} del
+                                           %                                        Teorema~\ref{thm:Newton.convergencia.global}. Si elegimos $x_0=a$
+                                           %                                        o $x_0=b$ de forma que se verifique
+                                           %                                        \begin{equation}
+                                           %                                          \label{eq:4}
+                                           %                                          f(x_0) f''(x_0) > 0,
+                                           %                                        \end{equation}
+                                           %                                        entonces $f$ tiene una única raíz $\alpha$ en $[a,b]$ y la
+                                           %                                        sucesión $\{x_k\}$ definida por~\eqref{eq:MetNewton} está bien
+                                           %                                        definida, converge monótonamente hacia $\cero$ y se verifican las
+                                           %                                        acotaciones~\eqref{eq:Newton.orden.2}
+                                           %                                        y~\eqref{eq:newton.estimac.a.posteriori}.
+                                           %                                        \label{cor:regla.fourier}
+                                           %                                      \end{corollary}
+                                           %                                      \begin{proof}
+                                           %                                        Consideremos de nuevo $f'>0$ y $f''<0$ en $[a,b]$ (los otros tres
+                                           %                                        casos son similares).  Como hemos visto en la demostración del
+                                           %                                        Teorema~\ref{thm:Newton.convergencia.global}, las
+                                           %                                        hipótesis~\ref{item:Newton.H1}--\ref{item:Newton.H3} implican que
+                                           %                                        existe una sola raíz de $f$, $\alpha$.
+
+                                           %                                        En el caso $f'>0$ y $f''<0$ tenemos que $f(a)<0$ y por tanto
+                                           %                                        elegimos $x_0=a$ para que se verifique~\eqref{eq:4}.  Razonando
+                                           %                                        como en el Teorema anterior para la función de punto fijo, $g$,
+                                           %                                        tenemos que:
+                                           %                                        \begin{itemize}
+                                           %                                        \item $g$ es creciente en $[a,\alpha]$ y decreciente en
+                                           %                                          $[\alpha,b]$,
+                                           %                                        \item $g(x)\in [a,\alpha]$ para todo $x\in [a,\alpha]$ (en
+                                           %                                          principio, $g(x)\not\in [a,\alpha]$ si $x\in[\alpha,b]$ porque
+                                           %                                          no se verifica la hipótesis~\ref{item:Newton:H4}).
+                                           %                                        \end{itemize}
+                                           %                                        En el caso actual, $x_0=a$ luego $x_0\in [a,\alpha]$ y
+                                           %                                        también $x_{k+1}=g(x_k)\in [a,\alpha]$ para todo $k\ge 0$, así
+                                           %                                        la sucesión $\{x_k\}_{k\ge 0}$ está bien definida y
+                                           %                                        acotada. Razonando como en el Teorema anterior, toda la sucesión es
+                                           %                                        creciente y converge hacia $\cero$. La
+                                           %                                        estimación~\eqref{eq:Newton.orden.2} se puede demostrar
+                                           %                                        exactamente igual que antes
+                                           %                                        y~\eqref{eq:newton.estimac.a.posteriori} se deja sin demostrar,
+                                           %                                        como en la observación~\ref{rk:4}.
+                                           %                                      \end{proof}
+
+                                           %                                      \begin{example}
+                                           %                                        Consideremos la siguiente ecuación:
+                                           %                                        $$f(x)=2\log(x)-x+1=0.$$
+                                           %                                        \begin{figure}
+                                           %                                          \label{fig:tema1:ejemplo-separ-soluc-1}
+                                           %                                          \begin{graficaTikz}[width=20em, height=13em]
+                                           %                                            \begin{axis}[\axisXYmiddle]
+                                           %         %                                              Draw a curve
+                                           %                                              \addplot[domain=0.6:4, blue, ultra thick, samples=40] {2*ln(x)-(x-1)};
+                                           %                                              \node[coordinate, medium dot, pin=-80:{$\cero_1$}] at (axis cs:1,0) {};
+                                           %                                              \def\Bx{3.5128}
+                                           %                                              \node[coordinate, medium dot, pin=-100:{$\cero_2$}] at (axis
+                                           %                                              cs:\Bx,0) {};
+                                           %         %                                              \legend {$f(x)$}
+                                           %                                            \end{axis}
+                                           %                                          \end{graficaTikz}
+                                           %                                          \caption{Gráfica en la que se muestran los dos ceros de $f(x)=2\log(x)-x+1$}
+                                           %                                          \label{fig:2log.x.-x+1}
+                                           %                                        \end{figure}
+                                           %                                        La función, cuya gráfica se representa en la
+                                           %                                        figura~\ref{fig:2log.x.-x+1}, es continua y derivable en su dominio,
+                                           %                                        $(0,+\infty)$. Su derivada, $f'(x)=(2-x)/x$, está bien definida en
+                                           %                                        $(0,+\infty)$ y tiene un único cero, $x=2$ (siendo $f'>0$ en $(0,2)$
+                                           %                                        y $f'<0$ en $(2,+\infty)$). Por lo tanto, $f$ tiene a lo sumo dos
+                                           %                                        ceros, separados por $x=2$, tal y como sugiere la gráfica. El
+                                           %                                        primero de estos ceros es, evidentemente, $\cero_1=1$ (pues
+                                           %                                        $f(1)=0$) y el segundo, $\cero_2$, parece estar entorno a
+                                           %                                        $x=3.5$. Gracias al teorema de Bolzano podemos asegurar que está
+                                           %                                        localizado en $[3,4]$, pues $f(3)=0.197...>0$ y $f(4)=-0.227...<0$.
+
+                                           %                                        Utilizaremos el método de Newton para calcular $\cero_2$,
+                                           %                                        comprobando previamente que en el intervalo $[3,4]$ se verifican las
+                                           %                                        hipótesis de la regla de Fourier
+                                           %                                        (corolario~\ref{cor:regla.fourier}).
+                                           %                                        \begin{itemize}
+                                           %                                        \item $f\in C^2([3,4])$, en concreto $f'(x)=(2-x)/x$, $f''(x)=-2/x^2$..
+                                           %                                        \item Se verifican~\ref{item:Newton.H1}, es decir $f(3)f(4)<0$,
+                                           %                                          \ref{item:Newton.H2}, de hecho $f'<0$ en $[3,4]$,
+                                           %                                          y~\ref{item:Newton.H3}, en concreto $f''<0$ en $[3,4]$.
+                                           %                                        \item Si elegimos $x_0=4$, tenemos $f(x_0)f''(x_0)>0$.
+                                           %                                        \end{itemize}
+                                           %                                        Así tenemos asegurada la convergencia monótona de $\{x_k\}$ hacia
+                                           %                                        $\cero_2$, a partir de $x_0=4$ (en este caso, de forma decreciente).
+
+                                           %                                        Con la ayuda de una calculadora o un ordenador es fácil realizar
+                                           %                                        algunas iteraciones del método de Newton. Por ejemplo, utilizando la
+                                           %                                        implementación que aparece en el programa~\ref{pro:metodo-newton},
+                                           %                                        se obtiene el siguiente resultado (en el que conseguimos
+                                           %                                        $|x_{k+1}-x_k|<10^{-6}$ en tan solo 4 iteraciones):
+                                           %                                        \pythonexternal{tema1/src/newton-test1.py}
+                                           %                                        \begin{pythonoutput}
+                                           %                                          \pythonexternal[backgroundcolor=\color{white},title={Resultado}]{tema1/src/newton-test1.out}
+                                           %                                        \end{pythonoutput}
+                                           %                                        \begin{program}
+                                           %                                          \widepythonexternal{tema1/src/newton.py}
+                                           %                                          \label{pro:metodo-newton}
+                                           %                                          \caption{Una implementación en lenguaje Python del método de
+                                           %                                          Newton}
+                                           %                                        \end{program}
+
+                                           %                                        En este caso, tenemos (debido a que $f'$ es creciente y $f''$
+                                           %                                        decreciente en $[3,4]$):
+                                           %                                        \begin{equation*}
+                                           %                                          \left.
+                                           %                                            \begin{array}{ll}
+                                           %                                            M''&:=\displaystyle\max_{x\in[3,4]}|f''(x)|=|f''(3)|=2/9
+                                           %                                            \\\noalign{\medskip}
+                        %                         m'&:=\displaystyle\min_{x\in[3,4]} |f'(x)|=|f'(3)|=1/3
+                        %                       \end{array}
+                        %                     \right\} \ \Rightarrow \
+                        %                     \frac{M''}{2m'} = 3.
+                        %                   \end{equation*}
+                        %                   La estimación a
+                        %                   posteriori~\eqref{eq:newton.estimac.a.posteriori} nos permite acotar el
+                        %                   error absoluto para tolerancia $10^{-6}$,
+                        %                   \begin{align*}
+                        %                     |x_{4}-\cero|&\le \frac{M''}{2m'} |x_4-x_3| \le 3\cdot 10^{-6},
+                        %                     \\
+                        %                         \intertext{o incluso afinar más, usando el resultado del programa anterior,}
+                        %                         |x_{4}-\cero|&\le \frac{M''}{2m'} |x_4-x_3| \le 3 \cdot 2.28588
+                        %                         \cdot 10^{-7}
+                        %                         = 6.85764 \cdot 10^{-7}.
+                        %                       \end{align*}
+                        %                     \end{example}
+
+                        %                     \section{Los métodos de la secante y de regula falsi}
+                        %                     \label{sec:secante-y-regula-falsi}
+
+                        %                     \subsection{Método de la secante}
+                        %                     \label{sec:metodo-secante}
+
+                        %                     El método de Newton tiene como inconveniente la necesidad del cálculo
+                        %                     de la derivada y la evaluación de $f'(x)$ en cada iteración, lo cual
+                        %                     no podría no ser posible o bien requerir un esfuerzo de cálculo
+                        %                     prohibitivo. Por ejemplo la función $f$ podría venir dada por una
+                        %                     tabla de valores sobre un número discreto de puntos, o bien dada por
+                        %                     un programa de ordenador para el que no pudiera contemplarse la
+                        %                     derivada.
+
+                        %                     \begin{figure}
+                        %                       \begin{graficaTikz}[width=25em, height=16em]
+                        %                         \def\Ax{0.6} \def\Ay{1.35}
+                        %                         \def\Bx{0.3} \def\By{0.41}
+                        %                         \def\Cx{0.166}
+                        %                         \begin{axis}[\axisXYmiddle,
+                        %                           restrict y to domain=-0.6:1.9,
+                        %                           legend pos = outer north east, legend cell align=left,
+                        %                           ticks=none]
+                        %                           \legend {$y=f(x)$};
+                        %       %                           Draw a curve
+                        %                           \addplot[domain=-0.1:1.15, blue, ultra thick, samples=40]
+                        %                           {x+x^2+3*x^4};
+                        %       %                           Secant
+                        %                           \addplot[domain=-0.2:1.15, gray, thick]
+                        %                           {\Ay+(x-\Ax)*(\Ay-\By)/(\Ax-\Bx)};
+                        %       %                           Points
+                        %                           \node[coordinate, medium dot, pin=-45:{$x_{k-1}$}]  at (axis cs:\Ax,0) {};
+                        %                           \node[coordinate, medium dot]  at (axis cs:\Ax,\Ay) {};
+                        %                           \addplot[dashed] coordinates {(\Ax,0) (\Ax,\Ay)};
+
+                        %                           \node[coordinate, medium dot, pin=-45:{$x_k$}]  at (axis cs:\Bx,0) {};
+                        %                           \node[coordinate, medium dot]  at (axis cs:\Bx,\By) {};
+                        %                           \addplot[dashed] coordinates {(\Bx,0) (\Bx,\By)};
+
+                        %                           \node[coordinate, medium dot, pin=-45:{$x_{k+1}$}] at (axis cs:\Cx,0) {};
+                        %                         \end{axis}
+                        %                       \end{graficaTikz}
+                        %                       \caption{Interpretación geométrica del método de la secante}
+                        %                       \label{fig:secante-interpretacion-geometrica}
+                        %                     \end{figure}
+                        %                     El método de la secante es una variante del método de Newton en el que
+                        %                     se evita el cálculo de $f'$ utilizando la siguiente idea: dadas dos
+                        %                     aproximaciones $x_{k-1}$ y $x_k$, se construye una nueva aproximación
+                        %                     $x_{k+1}$ como la abscisa de la intersección del eje $y=0$ con la
+                        %                     recta secante a la curva $y=f(x)$ que pasa por los puntos
+                        %                     $(x_{k-1},f(x_{k-1}))$ y $(x_k,f(x_k))$. Como esta recta secante viene
+                        %                     dada por
+                        %                     $$
+                        %                     y-f(x_k) = \frac{f(x_{k})-f(x_{k-1})}{x_k-x_{k-1}}(x-x_k),
+                        %                     $$
+                        %                     tomando $y=0$ y $x=x_{k+1}$ tenemos la formulación del \resaltar{método de la secante}:
+                        %                     \begin{equation}
+                        %                       \tag{$M_{\text{S}}$}
+                        %                       \left\{
+                        %                         \begin{array}{l}
+                        %                           \text{Dados } x_0,x_1\in [a,b], \\ \noalign{\medskip}
+                        %                         \text{calcular } x_{k+1} = x_k - f(x_k)
+                        %                         \dfrac{x_k-x_{k-1}}{f(x_k)-f(x_{k-1})},
+                        %                         \quad \forall k\ge 1.
+                        %                       \end{array}
+                        %                         \right.
+                        %                         \label{eq:MetSecante}
+                        %                         \end{equation}
+
+                        %                         \begin{algorithm}  \begin{python}
+                        %                         def secante(f, x0, x1, tol, max_iters):
+                        %                         iter = 0
+                        %                         while iter < max_iters:
+                        %                         x2 = x1 - f(x1)* (x1-x0)/(f(x1)-f(x0))
+                        %                         if abs(x2-x1) < tol:
+                        %                         return x2
+                        %                         else:
+                        %                         x0 = x1
+                        %                         x1 = x2
+                        %                         iter = iter + 1
+                        %                         print "Fallo de convergencia en el método de la secante!"
+                        %                         \end{python}
+                        %                         \caption{Método de la secante}
+                        %                         \label{alg:metodo-secante}
+                        %                         \end{algorithm}
+                        %                         El método de la secante, formulado en el
+                        %                         algoritmo~\ref{alg:metodo-secante}, puede ser también deducido a
+                        %                         partir del método de Newton, a través de la siguiente aproximación:
+                        %                         \begin{equation*}
+                        %                         f'(x_k) \approx  \frac{f(x_k)-f(x_{k-1})}{x_k-x_{k-1}}.
+                        %                         \end{equation*}
+                        %                         Se trata de un método de dos pasos (para el cálculo de $x_{k+1}$ se
+                        %                         utilizan dos estimaciones previas, $x_k$ y $x_{k-1}$) que tiene orden
+                        %                         de convergencia superlineal. Concretamente, se puede demostrar%
+                        %                         \footnote{\textsf{Bibliografía}: Kincaid, D., Cheney, W., Análisis
+                        %                         Numérico. \textit{Las matemáticas del cálculo
+                        %                         científico}. Addison-Wesley-Iberoamericana 1994.}  que el método
+                        %                         de la secante tiene orden $\phi$, donde
+                        %                         $$
+                        %                         \phi=\frac{1 + \sqrt 5}{2} \approx 1.62
+                        %                         $$
           %           es el número de oro. Aunque el orden de convergencia sea menor que en
           %           el método de Newton, el método de bisección tiene la ventaja adicional
           %           de necesitar una sola evaluación de $f$ en cada iteración (siempre y

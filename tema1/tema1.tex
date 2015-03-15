@@ -153,6 +153,7 @@ bastará determinar el orden en un sentido más débil:
     \label{eq:orden-convergencia-al-menos-p}
     e_{k+1} \le C e_k^p \quad \forall k\ge k_0.
   \end{equation}
+  \label{def:orden-convergencia-al-menos-p}
 \end{definition}
 
 % \begin{remark}
@@ -475,21 +476,20 @@ pseudocódigo%
 \footnote{En realidad, el pseudocódigo que se utilizará en
   este manual constituirá código conforme a Python 2.x} en el
 Algoritmo~\ref{alg:metodo-biseccion}.
-\begin{algorithm}
-  \begin{python}
-    def biseccion(f, a, b, tol, max_iters):
-    iter = 0
-    while b-a >= tol and iter < max_iters:
+\begin{algorithm} \begin{python}
+def biseccion(f, a, b, tol, max_iters):
+  iter = 0
+  while b-a >= tol and iter < max_iters:
     c = (a+b)/2.0
     if f(c)==0:
-    return c
+      return c
     else:
-    if f(a)*f(c) < 0:
-    b=c
-    else:
-    a=c
+      if f(a)*f(c) < 0:
+        b=c
+      else:
+        a=c
     iter = iter + 1
-    return c
+  return c
   \end{python}
   \caption{Método de bisección}
   \label{alg:metodo-biseccion}
@@ -892,7 +892,7 @@ de aquellas proposiciones.
 
 La acotación~(\ref{eq:pto-fijo:cota-a-priori}) llama
 \textit{estimación a priori}, mientras que
-a~(\ref{eq:pto-fijo:cota-a-posteriori}) se la conoce como
+las acotaciones del tipo~(\ref{eq:pto-fijo:cota-a-posteriori}) conocen como
 \textit{estimación a posteriori} del error.
 
 \begin{proof}~\par
@@ -959,7 +959,7 @@ def punto_fijo(g, x0, tol, max_iters):
     iter = iter + 1
   print "Fallo de convergencia en el método de punto fijo!"
 \end{python}
-\caption{Método de punto fijo (o aproximaciones sucesivas)}
+\caption{Método de punto fijo (o de las aproximaciones sucesivas)}
 \label{alg:metodo-punto_fijo}
 \end{algorithm}
 
@@ -973,19 +973,7 @@ def punto_fijo(g, x0, tol, max_iters):
   tolerancia prefijada, entonces
   $|x_{k+1}-\alpha|<\epsilon=\delta\cdot\lambda/(1-\lambda)$). Véase al
   algoritmo~\ref{alg:metodo-punto_fijo}.
-
-  % aproximaciones sucesivas se ha enunciado
-  % en el algoritmo. Dada una tolerancia $\epsilon$, el algoritmo
-  % realiza iteraciones hasta que se verifica el test de parada
-  % $|x_{k+1}-x_k|<\epsilon$. Si $g$ es coerciva, este test de parada
-  % está bien formulado, pues implica $|\cero-x_k|<\epsilon$ (ejercicio:
-  % demostrar lo anterior, usando la desigualdad triangular y la
-  % coercividad de $g$). En efecto, usando la desigualdad triangular,
-  % \begin{align*}
-      %       |\cero-x_k| \le |\cero-x_{k+1}|+|x_{k+1}-x_k|
-      %       = |g(\cero)-g(x_k)| + |x_{k+1}-x_k|
-      %       \le \lambda|\cero-x_k| + |x_{k+1}-x_k|
-      %     \end{align*}
+  \label{rk:pto-fijo:estimacion-error}
 \end{remark}
 
 \begin{example}
@@ -1019,77 +1007,137 @@ def punto_fijo(g, x0, tol, max_iters):
     hipótesis del Teorema de punto fijo). En este caso, una primera
     elección, válida para el Teorema de Bolzano es:
     \begin{itemize}
-    \item $[a_1,b_1]=[-\pi/2, 0]$, pues $f(-\pi/2)=-1-\pi^2+1<0$ y
-      $f(0)=1>0$,
-    \item $[a_2,b_2]=[0, \pi/2]$, pues $f(0)=1>0$ y $f(\pi/2)= 1-\pi^2+1<0$
+    \item $[a_1,b_1]=[0, \pi/2]$, pues $f(0)=1>0$ y $f(\pi/2)= 1-\pi^2+1<0$
+    \item $[a_l,b_2]=[-\pi/2, 0]$, pues $f(-\pi/2)=-1-\pi^2+1<0$ y
+      $f(0)>0$,
     \end{itemize}
-    El problema es que la función de punto fijo $g_1$ que definiremos
-    más abajo no es derivable en $x=-\pi/2$. Por ello, restringiremos
-    este intervalo, definiéndolo tal y como sigue:
-    \begin{itemize}
-    \item $[a_1,b_1]=[-\pi/4, 0]$. Seguimos estando en las hipótesis
-      del Teorema de Bolzano, pues $f(-\pi/4)=
-      -\sqrt{2}/2-\pi^2+1=--9.5767...<0$ y $f(0)=1>0$,
-    \end{itemize}
+    % El problema es que la función de punto fijo $g_1$ que definiremos
+    % más abajo no es derivable en $x=-\pi/2$. Por ello, restringiremos
+    % este intervalo, definiéndolo tal y como sigue:
+    % \begin{itemize}
+    % \item $[a_1,b_1]=[-\pi/4, 0]$. Seguimos estando en las hipótesis
+    %   del Teorema de Bolzano, pues $f(-\pi/4)=
+    %   -\sqrt{2}/2-\pi^2+1=--9.5767...<0$ y $f(0)=1>0$,
+    % \end{itemize}
   \end{enumerate}
 
-  \textsf{Segunda etapa}: intentamos reescribir, en cada uno de
-  estos intervalos, el problema en términos de un esquema de punto
-  fijo que esté en las hipótesis del teorema~\ref{thm:punto-fijo-Banach}. La
-  posibilidad más sencilla a partir de $\sen(x)-4x^2+1=0$ es despejar
-  $x=\pm \frac 12 \sqrt{1+\sen(x)}$.
+  \textsf{Segunda etapa}: intentamos reescribir, en cada uno de estos
+  intervalos, el problema en términos de un esquema de punto fijo que
+  esté en las hipótesis del teorema~\ref{thm:punto-fijo-Banach}. Para
+  ello, podemos proceder de muchas formas, por ejemplo tomar
+  $g(x)=f(x)+x$ o bien intentar despejar $x $ en la ecuación,
+  $\sen(x)-4x^2+1=0$. En este caso, optamos por esta última
+  posibilidad, llegando a $x=\pm \frac 12 \sqrt{1+\sen(x)}$.
   \begin{itemize}
-  \item En $[a_1,b_1]=[-\pi/4, 0]$, como $x<0$, definiremos el
+  \item En $[a_1,b_1]=[0, \pi/2]$, definiremos el
     problema de punto fijo
     $$
-    x=g_1(x)=-\dfrac 12 \sqrt{1+\sen(x)}.
+    x=g_1(x)=+\dfrac 12 \sqrt{1+\sen(x)}.
     $$
     La función $g_1$ está bien definida (pues $1+\sen(x)\ge 0$) y es
     continua en todo $\Rset$. Veamos que está en las hipótesis del
     teorema de punto fijo. En primer lugar,
-    $$
-    g_1'(x)=\frac{-\cos(x)}{4\sqrt{1+\sen(x)}},
-    $$
-    que está bien definida para todo $x\in[-\pi/4, 0]$, ya que
-    $\sen(x)>-1$ en este intervalo. Además:
+    \begin{equation}
+      g_1'(x)=\frac{\cos(x)}{4\sqrt{1+\sen(x)}},
+      \label{eq:6}
+    \end{equation}
+    que está bien definida para todo $x\in[0, \pi/2]$, ya que
+    $\sen(x)\ge 0$ en este intervalo. Además:
     \begin{enumerate}
-    \item $g_1([a_1,b_1])\subset [a_1,b_1]$: En efecto, $g_1$ es
-      decreciente en $[-\pi/4,0]$ (pues $\cos(x)\ge 0$ si $x\in
-      [-\pi/4, 0]$ y por tanto $g_1'(x)\le 0$ en este intervalo).
-      Como
-      \begin{align*}
-        g_1(-\pi/4)&= -\frac12 \sqrt{1+\sen(-\pi/4)}=-0.270...\in
-                     [-\pi/4,0]=[-0.785...,0],
-        \\
-        g_1(0)&=-1/2 \in [-\pi/4,0],
-      \end{align*}
-      se tiene que $g([-\pi/4,0])\subset
-      [g(0),g(-\pi/4)] \subset [-\pi/4,0]$.
-    \item Veamos que $g_1$ es contractiva en $[a_1,b_1]$, para lo que es
-      suficiente que $|g'(x)|<1$ en $[a_1,b_1]=[-\pi/4,0]$ (según la
-      proposición~\ref{pro:1} y a la observación~\ref{rk:3}).  Como
-      $\sen(x)$ es creciente en $[-\pi/4,0]$, en este intervalo se
-      verifica que
-      $$4\sqrt{1+\sen(x)}\ge 4\sqrt{1+\sen(-\pi/4)}=2.164... >1,$$
+    \item $g_1([0,\pi/2])\subset [0,\pi/2]$:
+      \begin{itemize}
+      \item $g_1(0)=1/2 \in [0, \pi/2],$
+      \item $g_1(\pi/2)= \frac12 \sqrt{1+\sen(\pi/2)}=\frac{\sqrt 2}2 \in
+        [0, \pi/2]$ (pues $\sqrt 2 < 2 < \pi$)
+
+      \item $g_1$ es monótona (en concreto, creciente) en $[0,\pi/2]$:
+        En efecto, como $\cos(x)\ge 0$ si $x\in
+        [0, \pi/2]$, $g_1'(x)\ge 0$ en este intervalo (ver~(\ref{eq:6})).
+      \end{itemize}
+      Por lo tanto,
+      $g([0, \pi/2]) \subset [0, \pi/2]$.
+    \item Veamos que $g_1$ es contractiva en $[0,\pi/2]$, para lo que
+      es suficiente que
+      $$|g'(x)|<1 \forall x\in [0, \pi/2]$$
+      (ver la
+      observación~\ref{rk:3}). Como $\sen(x)$ es creciente en
+      $[0, \pi/2]$, en este intervalo se verifica que
+      $$4\sqrt{1+\sen(x)}\ge 4\sqrt{1+\sen(0)}=4,$$
       así
       $$
       \left|g'(x)\right| = \frac{|\cos{x}|}{4\sqrt{1+\sen(x)}} \le
-      \frac{1}{4\sqrt{\sen(x)+1}} < 1.
+      \frac{1}{4\sqrt{\sen(x)+1}} \le \frac 1 4 < 1.
       $$
+      En concreto, como constante de contractividad podemos escoger
+      $$\lambda=\frac 1 4.$$
     \end{enumerate}
-  \item En $[a_2,b_2]=[0,\pi/2]$ podemos proceder de forma similar para
-    $g_2(x)=+\frac 12 \sqrt{1+\sen(x)}$, obteniendo que
-    $g_2([0,\pi/2])\subset[0,\pi/2]$ y $g_2$ es contractiva, por lo que
-    $g_2$ está en las hipótesis del Teorema del punto fijo en
-    $[a_2,b_2]$. El desarrollo de este apartado se deja como ejercicio
-    al lector.
+  % \item En $[a_1,b_1]=[-\pi/4, 0]$, como $x<0$, definiremos el
+  %   problema de punto fijo
+  %   $$
+  %   x=g_1(x)=-\dfrac 12 \sqrt{1+\sen(x)}.
+  %   $$
+  %   La función $g_1$ está bien definida (pues $1+\sen(x)\ge 0$) y es
+  %   continua en todo $\Rset$. Veamos que está en las hipótesis del
+  %   teorema de punto fijo. En primer lugar,
+  %   $$
+  %   g_1'(x)=\frac{-\cos(x)}{4\sqrt{1+\sen(x)}},
+  %   $$
+  %   que está bien definida para todo $x\in[-\pi/4, 0]$, ya que
+  %   $\sen(x)>-1$ en este intervalo. Además:
+  %   \begin{enumerate}
+  %   \item $g_1([a_1,b_1])\subset [a_1,b_1]$: En efecto, $g_1$ es
+  %     decreciente en $[-\pi/4,0]$ (pues $\cos(x)\ge 0$ si $x\in
+  %     [-\pi/4, 0]$ y por tanto $g_1'(x)\le 0$ en este intervalo).
+  %     Como
+  %     \begin{align*}
+  %       g_1(-\pi/4)&= -\frac12 \sqrt{1+\sen(-\pi/4)}=-0.270...\in
+  %                    [-\pi/4,0]=[-0.785...,0],
+  %       \\
+  %       g_1(0)&=-1/2 \in [-\pi/4,0],
+  %     \end{align*}
+  %     se tiene que $g([-\pi/4,0])\subset
+  %     [g(0),g(-\pi/4)] \subset [-\pi/4,0]$.
+  %   \item Veamos que $g_1$ es contractiva en $[a_1,b_1]$, para lo que es
+  %     suficiente que $|g'(x)|<1$ en $[a_1,b_1]=[-\pi/4,0]$ (según la
+  %     proposición~\ref{pro:1} y a la observación~\ref{rk:3}).  Como
+  %     $\sen(x)$ es creciente en $[-\pi/4,0]$, en este intervalo se
+  %     verifica que
+  %     $$4\sqrt{1+\sen(x)}\ge 4\sqrt{1+\sen(-\pi/4)}=2.164... >1,$$
+  %     así
+  %     $$
+  %     \left|g'(x)\right| = \frac{|\cos{x}|}{4\sqrt{1+\sen(x)}} \le
+  %     \frac{1}{4\sqrt{\sen(x)+1}} < 1.
+  %     $$
+  %   \end{enumerate}
+  \item En $[a_2,b_2]=[-\pi/2,0]$ podemos proceder de forma similar,
+    tomando $$g_2(x)=-\frac 12 \sqrt{1+\sen(x)}$$
+    (necesitamos el signo
+    negativo porque queremos que $g([-\pi/2,0])\subset\Rset^{-}$).
+
+    Pero en el intervalo $[-\pi/2,0]$ tenemos una dificultad
+    adicional, que aparecerá al considerar la derivada en este
+    intervalo:
+    $$
+      g_2'(x)=\frac{-\cos(x)}{4\sqrt{1+\sen(x)}},
+    $$
+    En efecto, como $\sen(-\pi/2)=-1$, el denominador se hace cero en
+    $[-\pi/2,0]$, por lo tanto la derivada no está bien definida.
+
+    Este problema se resuelve fácilmente: basta considerar cualquier
+    intervalo cuyo extremo izquierdo sea mayor que $-\pi/2$. Por
+    ejemplo, redefinimos el intervalo como
+    $$[a_2,b_2]=[-\pi/4,0].$$
+    Procediendo como antes, demostraríamos que
+    $g_2([-\pi/4,0])\subset[-\pi/4,0]$ y $g_2$ es contractiva en este
+    intervalo, por lo que $g_2$ está en las hipótesis del Teorema del
+    punto fijo en $[a_2,b_2]$. El desarrollo de este apartado se deja
+    como ejercicio al lector.
   \end{itemize}
   La \textsf{tercera y última etapa} consistiría en
   aplicar~(\ref{eq:MAS}) para aproximar las soluciones en cada uno de
-  los dos intervalos. Por ejemplo, para la implementación mostrada en
-  el programa~\ref{pro:metodo-puntofijo} del
-  Algoritmo~\ref{alg:metodo-punto_fijo} aplicada a $g_2$ se obtiene,
-  partiendo de $x_0=1$, el siguiente resultado:
+  los dos intervalos. Por ejemplo, el siguiente código muestra el
+  resultado de aplicar el programa~\ref{pro:metodo-puntofijo}
+  a la función $g_1$ anterior (partiendo de $x_0=1$):
   \pythonexternal{tema1/src/puntofijo-test1.py}
   \begin{pythonoutput}
     \pythonexternal[backgroundcolor=\color{white},title={Resultado}]{tema1/src/puntofijo-test1.out}
@@ -1101,22 +1149,41 @@ def punto_fijo(g, x0, tol, max_iters):
       aproximaciones sucesivas para el cálculo un punto fijo $x=g(x)$}
     \label{pro:metodo-puntofijo}
   \end{program}
+
+  Si tenemos en cuenta que, como vimos anteriormente, podemos tomar
+  $\lambda=1/4$ como constante de contractividad, podemos usar la
+  estimación a posteriori para acotar el error. En efecto, tomando
+  $k=6$ en la primera desigualdad
+  de~(\ref{eq:pto-fijo:cota-a-posteriori}) y usando el hecho que
+  $$
+  |x_{6}-x_{5}| \simeq 6.12623522578 \cdot 10^{-7},
+  $$
+  llegamos a que el error para la aproximación $x_6=1.40962396703$ verifica:
+  $$
+  |x_6-\cero| \le \frac{\cteContract}{1-\cteContract}
+  |x_6-x_{5}|
+  \simeq \frac{1}{3}\; 6.12623522578 \cdot 10^{-7}.
+  $$
+  Por último: utilizando las estimaciones a
+  posterior~(\ref{eq:pto-fijo:cota-a-posteriori}) podríamos responder,
+  realizando una sola iteración, a la siguiente pregunta: ¿cuántas
+  iteraciones son necesarias para garantizar que el error sea menor que
+  $10^{-15}$? El desarrollo de la respuesta queda como ejercicio
+  propuesto.
 \end{example}
 
 
 \begin{remark}[Orden uno de~(\ref{eq:MAS})]
-  En las hipótesis del Teorema~\ref{thm:punto-fijo-Banach} los
-  métodos de punto fijo tienen \resaltar{orden de convergencia (al
-    menos) uno}.  En efecto, si $g$ verifica estas hipótesis,
-  siguiendo la demostración anterior tenemos la cadena de)
-  desigualdades~(\ref{eq:1}). Si nos fijamos en la primera
-  desigualdad,
+  En las hipótesis del Teorema~\ref{thm:punto-fijo-Banach} los métodos
+  de punto fijo tienen \resaltar{orden de convergencia (al menos)
+    uno}. En efecto, razonando de manera similar a la demostración del
+  teorema anterior:
   $$
-  |x_k-\cero|\le\cteContract |x_{k-1}-\cero|,
+  |x_{k+1}-\cero|=|g(x_{k})-g(\cero)|\le\cteContract |x_{k}-\cero|.
   $$
-  por tanto se verifica la condición
-  (\ref{eq:orden-convergencia-al-menos-p}) para orden $p=1$ (con
-  constante $C=\lambda<1$).
+  Y según la definición~\ref{def:orden-convergencia-al-menos-p}, esta
+  desigualdad significa que el método de punto fijo tiene orden (al
+  menos) $p=1$ (con constante $\lambda<1$).
 \end{remark}
 \begin{remark}[Orden $p$ de~(\ref{eq:MAS})]
   Para hipótesis más restrictivas sobre $g$ se puede llegar a
@@ -1128,7 +1195,7 @@ def punto_fijo(g, x0, tol, max_iters):
   \end{extension}
   \begin{equation*}
     g'(\cero)=g''(\cero)=\cdots=g^{p-1)}(\cero)=0, \quad
-    g^p)(\cero)\neq 0,
+    g^{p)}(\cero)\neq 0,
   \end{equation*}
   entonces~(\ref{eq:MAS}) tiene orden exactamente $p$.
   \begin{extension}
@@ -1156,7 +1223,7 @@ solamente se utilizan hipótesis locales sobre la derivada de $g$.
   \item Existe una constante de contractividad $\lambda\in [0,1)$ (que
     depende de $\rho$ y $|g'(\cero)|$) para la que se verifican las
     estimaciones a priori~(\ref{eq:pto-fijo:cota-a-priori}) y a
-    posteriori\ref{eq:pto-fijo:cota-a-posteriori}) en
+    posteriori(\ref{eq:pto-fijo:cota-a-posteriori}) en
     $[x_0-\rho,x_0+\rho]$.
   \end{enumerate}
 \end{theorem}

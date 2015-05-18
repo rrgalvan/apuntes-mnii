@@ -304,431 +304,450 @@ ecuaciones diferenciales que nos resultarán de gran utilidad.
   \renewcommand{\tt}{t}
 \end{example}
 
-% \section{El método de Euler}
+\section{El método de Euler}
 
-% A partir de ahora, nuestro objetivo será la descripción, análisis e
-% implementación de distintos métodos numéricos para la aproximación de
-% la solución de~\eqref{eq:pvi}. Estos métodos partirán con la
-% definición de una partición del intervalo $[\ta,\tb]$, formada por
-% $N+1$ puntos:
-% \begin{equation*}
-%   \ta=\tt_0 < \tt_1 < \cdots < \tt_N=\tb.
-% \end{equation*}
-% Por simplicidad, supondremos que la partición es uniforme, es decir,
-% \begin{equation*}
-%   \text{ si } h=\frac{b-a}{N}, \quad \text{entonces} \quad
-%   \tt_n=\ta+n\cdot h,\quad \forall n=0\dots,N
-% \end{equation*}
-% (en particular, $\tt_0=a$ y $\tt_N=b$). A continuación procedemos como
-% sigue:
+A partir de ahora, nuestro objetivo será la descripción, análisis e
+implementación de distintos métodos numéricos para la aproximación de
+la solución de~\eqref{eq:pvi}. Estos métodos partirán con la
+definición de una partición del intervalo $[\ta,\tb]$, formada por
+$N+1$ puntos:
+\begin{equation*}
+  \ta=\tt_0 < \tt_1 < \cdots < \tt_N=\tb.
+\end{equation*}
+Por simplicidad, supondremos que la partición es uniforme, es decir,
+\begin{equation*}
+  \text{ si } h=\frac{b-a}{N}, \quad \text{entonces} \quad
+  \tt_n=\ta+n\cdot h,\quad \forall n=0\dots,N
+\end{equation*}
+(en particular, $\tt_0=a$ y $\tt_N=b$). A continuación procedemos como
+sigue:
+\begin{enumerate}
+\item Usamos el dato inicial $y_a$ para arrancar el método numérico,
+  definiendo $y_0=y_a$ (más generalmente, $y_0\approx y_a$)
+\item Seguidamente definimos una sucesión de forma que $y_{n+1}$ se
+  calcula a partir de $y_n$ (y posiblemente de $y_{n-1}$, ...,
+  $y_{n-k}$ para algún $k\ge 1$), con el fin de que
+  $y_n\approx\sol(\tn)$.
+\end{enumerate}
+Nuestro objetivo será que el método sea \textit{convergente}, en el
+sentido de que la solución aproximada $\{\yn\}_n$ ``converja a la
+solución exacta'' $\{\sol(\tn)\}_n$ cuando $h\to 0$. Íntimamente
+relacionados con la convergencia están los conceptos de
+``\textit{estabilidad}'' y ``\textit{consistencia}'', que estudiaremos
+más adelante.
 % \begin{enumerate}
-% \item Usamos el dato inicial $y_a$ para arrancar el método numérico,
-%   definiendo $y_0=y_a$ (más generalmente, $y_0\approx y_a$)
-% \item Seguidamente definimos una sucesión de forma que $y_{n+1}$ se
-%   calcula a partir de $y_n$ (y posiblemente de $y_{n-1}$, ...,
-%   $y_{n-k}$ para algún $k\ge 1$), con el fin de que
-%   $y_n\approx\sol(\tn)$.
+% \item El método es \textit{consistente}, si la solución exacta
+%   $\{\sol(\tn)\}_n$ ``verifica aproximadamente'' el esquema
+%   numérico
+% \item El método es \textit{estable} si ``responde continuamente'' a
+%   perturbaciones en los datos iniciales.
 % \end{enumerate}
-% Nuestro objetivo será que el método sea \textit{convergente}, en el
-% sentido de que la solución aproximada $\{\yn\}_n$ ``converja a la
-% solución exacta'' $\{\sol(\tn)\}_n$ cuando $h\to 0$. Íntimamente
-% relacionados con la convergencia están los conceptos de
-% ``\textit{estabilidad}'' y ``\textit{consistencia}'', que estudiaremos
-% más adelante.
-% % \begin{enumerate}
-% % \item El método es \textit{consistente}, si la solución exacta
-% %   $\{\sol(\tn)\}_n$ ``verifica aproximadamente'' el esquema
-% %   numérico
-% % \item El método es \textit{estable} si ``responde continuamente'' a
-% %   perturbaciones en los datos iniciales.
-% % \end{enumerate}
-% % Más adelante distinguiremos entre métodos de un paso, en los que
-% % para calcular $y_{n+1}$ utilizamos solamente de $y_n$ y métodos
-% % multipaso, en los que  $y_{n+1}$ depende de los datos en varias etapas
-% % anteriores ($y_{n}$, $y_{n-1}$, ..., $y_{n-k}$ para algún $k\ge 1$.)
+% Más adelante distinguiremos entre métodos de un paso, en los que
+% para calcular $y_{n+1}$ utilizamos solamente de $y_n$ y métodos
+% multipaso, en los que  $y_{n+1}$ depende de los datos en varias etapas
+% anteriores ($y_{n}$, $y_{n-1}$, ..., $y_{n-k}$ para algún $k\ge 1$.)
 
-% El método más sencillo es el de Euler (más precisamente, el método
-% de Euler explícito):
-% \begin{equation}
-%   \tag{EU}
-% \label{eq:metodo-euler}
-% \left\{
-% \begin{aligned}
-%   &y_0 = \ycero, \\
-%   &y_{n+1} = \yn + h f(\tn, \yn), \quad n=0,\dots,N-1.
-% \end{aligned}
-% \right.
-% \end{equation}
+El método más sencillo es el de Euler (más precisamente, el método
+de Euler explícito):
+\begin{equation}
+  \tag{EU}
+  \label{eq:metodo-euler}
+  \left\{
+    \begin{aligned}
+      &y_0 = \ycero, \\
+      &y_{n+1} = \yn + h f(\tn, \yn), \quad n=0,\dots,N-1.
+    \end{aligned}
+  \right.
+\end{equation}
 
-% Este método admite varias interpretaciones:
+Este método admite varias interpretaciones:
 
-% \subsection*{Interpretaciones del método de Euler}
+\subsection*{Interpretaciones del método de Euler}
 
-% \subsubsection*{Interpretación geométrica}
-% En la ecuación $y(\tt)'=f(\tt,y(\tt))$ se puede interpretar que
-% $f(\tt,y(\tt))$ marca la pendiente (la derivada) de la solución,
-% $\sol(\tt)$ en cada instante $\tt\in [\ta,\tb]$.
+\subsubsection*{Interpretación geométrica}
+En la ecuación $y(\tt)'=f(\tt,y(\tt))$ se puede interpretar que
+$f(\tt,y(\tt))$ marca la pendiente (la derivada) de la solución,
+$\sol(\tt)$ en cada instante $\tt\in [\ta,\tb]$.
 
-% \begin{center}
-%   \begin{graficaTikz}[width=23em, height=17em]
-%     \begin{axis}[ \axisXYmiddle, xtick=\empty, ytick=\empty, legend
-%       pos = north east, xlabel=$t$ ]
-%       % Draw a curve
-%       \addplot[domain=1.3:3.3, blue, ultra thick] {20+x*x*x*x};
-%       \addplot[domain=1.5:3.1, red, thick] {36+32*(x-2)};
-%       % Plot a label at curve root
-%       \node[coordinate, medium dot,
-%             pin={[fill=blue!10!white]120:{\scriptsize $\sol(\tn)$}}] at
-%             (axis cs:2,36) {};
-%       \node[coordinate, medium dot, blue,
-%             pin={[fill=blue!10!white]120:{\scriptsize $\sol(\tt_{n+1})$}}] at
-%             (axis cs:2.7,73.144) {};
-%       % \node[coordinate, medium dot, blue, pin=100:{\scriptsize
-%       %   $\sol(\tt_{n+1})$}] at (axis cs:2.7,73.144) {};
-%       \addplot[dashed] coordinates {(2,7) (2,36)};
-%       \addplot[dashed] coordinates {(2.7,7) (2.7,58.4)};
-%       \node[coordinate, medium dot, pin=-30:{$y_{n}$}] at
-%       (axis cs:2,36) {};
-%       \node[coordinate, medium dot, pin=-30:{$y_{n+1}$}] at
-%       (axis cs:2.7,58.4) {};
-%       % Draw the name of curve
-%       \legend {$y(t)$};
-%     \end{axis}
-%   \end{graficaTikz}
-% \end{center}
+\begin{center}
+  \begin{graficaTikz}[width=23em, height=17em]
+    \begin{axis}[ \axisXYmiddle, xtick=\empty, ytick=\empty, legend
+      pos = north east, xlabel=$t$ ]
+      % Draw a curve
+      \addplot[domain=1.3:3.3, blue, ultra thick] {20+x*x*x*x};
+      \addplot[domain=1.5:3.1, red, thick] {36+32*(x-2)};
+      % Plot a label at curve root
+      \node[coordinate, medium dot,
+      pin={[fill=blue!10!white]120:{\scriptsize $\sol(\tn)$}}] at
+      (axis cs:2,36) {};
+      \node[coordinate, medium dot, blue,
+      pin={[fill=blue!10!white]120:{\scriptsize $\sol(\tt_{n+1})$}}] at
+      (axis cs:2.7,73.144) {};
+      % \node[coordinate, medium dot, blue, pin=100:{\scriptsize
+      % $\sol(\tt_{n+1})$}] at (axis cs:2.7,73.144) {};
+      \addplot[dashed] coordinates {(2,7) (2,36)};
+      \addplot[dashed] coordinates {(2.7,7) (2.7,58.4)};
+      \node[coordinate, medium dot, pin=-30:{$y_{n}$}] at
+      (axis cs:2,36) {};
+      \node[coordinate, medium dot, pin=-30:{$y_{n+1}$}] at
+      (axis cs:2.7,58.4) {};
+      % Draw the name of curve
+      \legend {$y(t)$};
+    \end{axis}
+  \end{graficaTikz}
+\end{center}
 
-% Luego, suponiendo que $\yn$ es una buena aproximación de
-% $\sol(\tn)$ (por simplificar, $\yn=\sol(\tn)$):
-% \begin{enumerate}
-% \item Calculamos la recta, $r$, que pasa por $(\tn,\yn)$ y tiene pendiente
-%   $f(\tt_n, \yn)$:
-%   $$
-%   r(\tt) = \yn +  f(\tt_n, \yn) (\tt-\tt_n).
-%   $$
-% \item Calculamos $y_{n+1}$ como la ordenada de esta recta en
-%   $\tt=\tt_{n+1}$ es decir:
-%   $$
-%   y_{n+1} = r(\tt_{n+1}) =
-%   \yn +  f(\tt_n, \yn) (\tt_{n+1}-\tt_n) = \yn +  f(\tt_n, \yn) \cdot h.
-%   $$
-% \end{enumerate}
-% Así obtenemos el método~\eqref{eq:metodo-euler}.
+Luego, suponiendo que $\yn$ es una buena aproximación de
+$\sol(\tn)$ (por simplificar, $\yn=\sol(\tn)$):
+\begin{enumerate}
+\item Calculamos la recta, $r$, que pasa por $(\tn,\yn)$ y tiene pendiente
+  $f(\tt_n, \yn)$:
+  $$
+  r(\tt) = \yn +  f(\tt_n, \yn) (\tt-\tt_n).
+  $$
+\item Calculamos $y_{n+1}$ como la ordenada de esta recta en
+  $\tt=\tt_{n+1}$ es decir:
+  $$
+  y_{n+1} = r(\tt_{n+1}) =
+  \yn +  f(\tt_n, \yn) (\tt_{n+1}-\tt_n) = \yn +  f(\tt_n, \yn) \cdot h.
+  $$
+\end{enumerate}
+Así obtenemos el método~\eqref{eq:metodo-euler}.
 
-% \subsubsection*{Desarrollo de Taylor}
+\subsubsection*{Desarrollo de Taylor}
 
-% Suponiendo que $\sol(t)$ (la solución exacta de~(\ref{eq:pvi})) es de
-% $C^2([\ta,\tb])$, podemos hacer su desarrollo de Taylor en $\tn$:
-% \begin{equation*}
-%   \sol(\tnn)=\sol(\tn+h) = \sol(\tn) + h\sol'(\tn) + \frac{h^2}{2} y''(\xi),
-% \end{equation*}
-% donde $\xi\in(\tn,\tnn)$. Como $\sol''$ está acotada, el último
-% término (el resto) será despreciable cuando $h$ es suficientemente
-% pequeño (pues contiene el factor $h^2$):
-% \begin{align}
-%   \label{eq:euler.taylor.1}
-%   \sol(\tnn)&\approx \sol(\tn) + h\sol'(\tn),
-%   \intertext{es decir,}
-%   \notag
-%   \sol(\tnn)&\approx \sol(\tn) + h f(\tn,y(\tn)),
-%   \intertext{y aproximando $\sol(\tn)\approx \yn$, $\sol(\tnn)\approx\ynn$:}
-%   \notag
-%   \ynn &\approx \yn + h f(\tn,\tn).
-% \end{align}
+Suponiendo que $\sol(t)$ (la solución exacta de~(\ref{eq:pvi})) es de
+$C^2([\ta,\tb])$, podemos hacer su desarrollo de Taylor en $\tn$:
+\begin{equation*}
+  \sol(\tnn)=\sol(\tn+h) = \sol(\tn) + h\sol'(\tn) + \frac{h^2}{2} y''(\xi),
+\end{equation*}
+donde $\xi\in(\tn,\tnn)$. Como $\sol''$ está acotada, el último
+término (el resto) será despreciable cuando $h$ es suficientemente
+pequeño (pues contiene el factor $h^2$):
+\begin{align}
+  \label{eq:euler.taylor.1}
+  \sol(\tnn)&\approx \sol(\tn) + h\sol'(\tn),
+              \intertext{es decir,}
+              \notag
+              \sol(\tnn)&\approx \sol(\tn) + h f(\tn,y(\tn)),
+                          \intertext{y aproximando $\sol(\tn)\approx \yn$, $\sol(\tnn)\approx\ynn$:}
+                          \notag
+                          \ynn &\approx \yn + h f(\tn,\tn).
+\end{align}
 
-% \paragraph{Notación.}
-% Para cualquier sucesión $\{y_n\}_n$, se utilizará la
-% siguiente notación (derivada discreta de $\ynn$):
-% \begin{equation}
-%   \label{eq:derivada-discreta}
-%   \ddt\ynn = \frac{\ynn-\yn}{h}.
-% \end{equation}
-% Así el método de Euler se puede escribir como
-% \begin{equation*}
-%   \ddt\ynn = f(\tn,\yn).
-% \end{equation*}
+\paragraph{Notación.}
+Para cualquier sucesión $\{y_n\}_n$, se utilizará la siguiente
+notación para el cociente incremental (derivada discreta o diferencia
+finita retrógrada de $\ynn$):
+\begin{equation}
+  \label{eq:derivada-discreta}
+  \ddt\ynn = \frac{\ynn-\yn}{h}.
+\end{equation}
+Así el método de Euler se puede escribir como
+\begin{equation*}
+  \ddt\ynn = f(\tn,\yn).
+\end{equation*}
 
-% Utilizando diferentes formulaciones de la derivada discreta, se podrían
-% haber expuesto ahora algunas variantes del método de Euler, pero éstas
-% serán introducidas a través de fórmulas de integración.
+Utilizando diferentes formulaciones de la derivada discreta, se podrían
+haber expuesto ahora algunas variantes del método de Euler, pero éstas
+serán introducidas a través de fórmulas de integración.
 
-% \subsubsection*{Integración numérica}
-% La solución exacta de~(\ref{eq:pvi}) puede escribirse de la siguiente
-% forma (formulación integral de la solución de~(\ref{eq:pvi})):
-% \begin{equation*}
-%   \sol(t) = \sol(\ta) + \int_\ta^t f(s,\sol(s))\, ds.
-% \end{equation*}
-% Tomando $a=\tn$, $t=\tnn$:
-% \begin{equation*}
-%   \sol(\tnn) = \sol(\tn) + \int_\tn^\tnn f(s,\sol(s))\, ds.
-% \end{equation*}
-% Para obtener el método de Euler implícito aproximamos la última
-% integral mediante la siguiente fórmula de cuadratura (regla
-% rectangular izquierda):
-% \begin{equation*}
-%   \int_a^b g(s)\,ds \approx hg(a), \quad \text{ con $h=b-a$}.
-% \end{equation*}
-% Aplicándola en el intervalo $[\tn,\tnn]$ para la formulación integral
-% anterior,
-% \begin{equation*}
-%   \ynn =  \yn + h f(\tn,\yn),
-% \end{equation*}
-% con $\yn\approx\sol(\tn)$, $\ynn\approx\sol(\tnn)$.
+\subsubsection*{Integración numérica}
+La solución exacta de~(\ref{eq:pvi}) puede escribirse de la siguiente
+forma (formulación integral de la solución de~(\ref{eq:pvi})):
+\begin{equation*}
+  \sol(t) = \sol(\ta) + \int_\ta^t f(s,\sol(s))\, ds.
+\end{equation*}
+La formulación anterior sigue siendo válida si sustituimos $a$ por cualquier otro punto de $[a,b]$. En particular, para
+$a=\tn$ y< $t=\tnn$:
+\begin{equation}
+  \label{eq:tema4.5}
+  \sol(\tnn) = \sol(\tn) + \int_\tn^\tnn f(s,\sol(s))\, ds.
+\end{equation}
+Para obtener el método de Euler implícito aproximamos la última
+integral mediante la siguiente fórmula de cuadratura (regla
+rectangular izquierda):
+\begin{equation*}
+  \int_a^b g(s)\,ds \approx hg(a), \quad \text{ con $h=b-a$}.
+\end{equation*}
+Aplicándola en el intervalo $[\tn,\tnn]$ para la formulación integral
+anterior,
+\begin{equation*}
+  \ynn =  \yn + h f(\tn,\yn),
+\end{equation*}
+con $\yn\approx\sol(\tn)$, $\ynn\approx\sol(\tnn)$.
 
-% \subsubsection*{Algunas variantes del método de Euler.}
+\subsubsection*{Algunas variantes del método de Euler.}
 
-% Utilizando otras fórmulas de cuadratura, se obtienen métodos numéricos
-% distintos al de Euler explícito. Por ejemplo:
-% \begin{enumerate}
-% \item Aproximando $\int_\tn^\tnn f(s,\sol(s))\, ds$ por la regla
-%   rectangular derecha,
-%   \begin{equation*}
-%     \int_a^b g(s)\,ds \approx hg(b)
-%   \end{equation*}
-%   se obtiene el \textit{Método de Euler implícito} (implícito debido a
-%   que $\ynn$ no puede calcularse explícitamente, pues aparece en el
-%   segundo miembro)
-%   \begin{equation}
-%     \label{eq:euler-implicito}
-%     \tag{EI}
-%     \left\{
-%     \begin{aligned}
-%       &y_0=\ycero,\\ &\ynn = \yn + h f(\tn,\ynn).
-%     \end{aligned}
-%     \right.
-%   \end{equation}
-% \item Aproximando $\int_\tn^\tnn f(s,\sol(s))\, ds$ por la regla del
-%   punto medio (que tiene orden mayor que las reglas rectangular
-%   derecha e izquierda):
-%   \begin{equation*}
-%     \ynn = \yn + h \; f(\tt_{n+1/2},\sol(\tt_{n+1/2})).
-%   \end{equation*}
-%   \begin{enumerate}
-%   \item Si aproximamos seguidamente $\sol(\tt_{n+1/2})$ por
-%     $\frac12\big(\sol(\tn)+\sol(\tnn)\big)$, se tiene el siguiente
-%     método implícito, conocido como método de \textit{Crank-Nicolson}
-%     (primera versión):
-%     \begin{equation}
-%     \label{eq:crank-nicolson-1}
-%       \tag{CN$_1$}
-%       \left\{
-%         \begin{aligned}
-%           &y_0=\ycero,\\
-%           &\ynn = \yn + h \; f\big(\tt_{n+1/2},\; \frac{\yn+\ynn}{2}\big).
-%         \end{aligned}
-%       \right.
-%     \end{equation}
-%   \item Si aproximamos $\sol(\tt_{n+1/2})$ por
-%     $\sol(\tn)+\frac{h}{2}f(\tn,\sol(\tn))$ se llega al método
-%     explícito conocido como de \textit{Euler--Cauchy}, del
-%     \textit{punto medio} o \textit{Euler modificado}:
-%     \begin{equation}
-%       \label{eq:euler-cauchy}
-%       \tag{EC}
-%       \left\{
-%         \begin{aligned}
-%           &y_0=\ycero,\\
-%           &\ynn = \yn + h \; f\big(\tt_{n+1/2},\;
-%           \yn+\frac{h}{2}f(\tn,\yn) \big).
-%         \end{aligned}
-%       \right.
-%     \end{equation}
-%   \end{enumerate}
-% \item Si aproximamos $\int_\tn^\tnn f(s,\sol(s))\, ds$ por la regla
-%   del trapecio se llega al siguiente método (segunda variante del
-%   método de Crank-Nicolson):
-%   \begin{equation}
-%     \label{eq:crank-nicolson-2}
-%     \tag{CN$_2$}
-%     \left\{
-%       \begin{aligned}
-%         &y_0=\ycero,\\
-%         &\ynn = \yn + \frac h2 \; \big\{f(\tn,\;\sol(\tn))+f(\tnn,\;\sol(\tnn))\big\}.
-%       \end{aligned}
-%       \right.
-%     \end{equation}
-%     Si además aproximamos $\sol(\tnn)$ por
-%     $\sol(\tn)+hf(\tn,\sol(\tn))$ se llega al método explícito
-%     conocido como de \textit{Euler mejorado} (o \textit{método de Heunn}):
-%     \begin{equation}
-%       \label{eq:euler-mejorado}
-%       \tag{EM}
-%       \left\{
-%         \begin{aligned}
-%           &y_0=\ycero,\\
-%           &\ynn = \yn + h \; f\big(\tnn,\;
-%           \yn+h f(\tn,\yn) \big).
-%         \end{aligned}
-%       \right.
-%     \end{equation}
-% \end{enumerate}
-% Estas variantes del método de Euler se pueden escribir en una notación
-% algo más sencilla (y más cercana a la ecuación diferencial original),
-% utilizando la derivada discreta definida
-% en~\eqref{eq:derivada-discreta}. Por ejemplo, el método de Euler
-% implícito~\eqref{eq:euler-implicito} se sintetiza en:
-% \begin{equation*}
-%   y_0=\ycero,\quad \ddt\ynn = f(\tnn,\ynn).
-% \end{equation*}
+Utilizando otras fórmulas de cuadratura, para aproximar la integral
+$$\int_\tn^\tnn f(s,\sol(s))\, ds$$ en~(\ref{eq:tema4.5}),<
+se obtienen métodos numéricos
+distintos al de Euler explícito. Por ejemplo:
+\begin{enumerate}
+\item Aproximando $\int_\tn^\tnn f(s,\sol(s))\, ds$ por la regla
+  rectangular derecha,
+  \begin{equation*}
+    \int_a^b g(s)\,ds \approx hg(b)
+  \end{equation*}
+  se obtiene el \textit{Método de Euler implícito}:
+  \begin{equation}
+    \label{eq:euler-implicito}
+    \tag{EI}
+    \left\{
+      \begin{aligned}
+        &y_0=\ycero,\\ &\ynn = \yn + h f(\tn,\ynn).
+      \end{aligned}
+    \right.
+  \end{equation}
+  El método anterior se dice \textit{implícito} porque, en general,
+  $\ynn$ no puede calcularse explícitamente, pues aparece en el
+  segundo miembro. Sin embargo, este tipo de métodos tienen buenas
+  propiedades desde el punto de vista de la estabilidad y existen
+  casos particulares muy interesantes (por ejemplo, el caso $f$ es
+  lineal) en el que los métodos implícitos son muy usados.
+
+\item Aproximando $\int_\tn^\tnn f(s,\sol(s))\, ds$ por la regla del
+  punto medio (que tiene orden mayor que las reglas rectangular
+  derecha e izquierda):
+  \begin{equation*}
+    \ynn = \yn + h \; f(\tt_{n+1/2},\sol(\tt_{n+1/2})).
+  \end{equation*}
+  \begin{enumerate}
+  \item Si aproximamos seguidamente $\sol(\tt_{n+1/2})$ por
+    $\frac12\big(\sol(\tn)+\sol(\tnn)\big)$, se tiene el siguiente
+    método implícito, conocido como método de \textit{Crank-Nicolson}
+    (primera versión):
+    \begin{equation}
+      \label{eq:crank-nicolson-1}
+      \tag{CN$_1$}
+      \left\{
+        \begin{aligned}
+          &y_0=\ycero,\\
+          &\ynn = \yn + h \; f\big(\tt_{n+1/2},\; \frac{\yn+\ynn}{2}\big).
+        \end{aligned}
+      \right.
+    \end{equation}
+  \item El método anterior es implícito y por tanto (en general) no
+    puede aplicarse directamente. Pero si aproximamos $\sol(\tt_{n+1/2})$
+    por $\sol(\tn)+\frac{h}{2}f(\tn,\sol(\tn))$ se llega al método
+    explícito conocido como de \textit{Euler--Cauchy}, del
+    \textit{punto medio} o \textit{Euler modificado}:
+    \begin{equation}
+      \label{eq:euler-cauchy}
+      \tag{EC}
+      \left\{
+        \begin{aligned}
+          &y_0=\ycero,\\
+          &\ynn = \yn + h \; f\big(\tt_{n+1/2},\;
+          \yn+\frac{h}{2}f(\tn,\yn) \big).
+        \end{aligned}
+      \right.
+    \end{equation}
+  \end{enumerate}
+\item Si aproximamos $\int_\tn^\tnn f(s,\sol(s))\, ds$ por la regla
+  del trapecio se llega al siguiente método implícito (segunda
+  variante del método de Crank-Nicolson):
+  \begin{equation}
+    \label{eq:crank-nicolson-2}
+    \tag{CN$_2$}
+    \left\{
+      \begin{aligned}
+        &y_0=\ycero,\\
+        &\ynn = \yn + \frac h2 \; \big\{f(\tn,y_n))+f(\tnn,y_{n+1})\big\}.
+      \end{aligned}
+    \right.
+  \end{equation}
+  Si además aproximamos $\sol(\tnn)$ por
+  $\sol(\tn)+hf(\tn,\sol(\tn))$ se llega al método explícito
+  conocido como de \textit{Euler mejorado} (o \textit{método de Heunn}):
+  \begin{equation}
+    \label{eq:euler-mejorado}
+    \tag{EM}
+    \left\{
+      \begin{aligned}
+        &y_0=\ycero,\\
+        &\ynn = \yn + \frac{h}{2} \; \left\{ f(t_n,y_n) + f\big(\tnn,\;
+        \yn+h f(\tn,\yn) \big)  \right\}.
+      \end{aligned}
+    \right.
+  \end{equation}
+\end{enumerate}
+Estos métodos numéricos se pueden escribir en una notación
+algo más sencilla (y más cercana a la ecuación diferencial original),
+utilizando la derivada discreta definida
+en~\eqref{eq:derivada-discreta}. Por ejemplo, el método de Euler
+implícito~\eqref{eq:euler-implicito} se sintetiza en:
+\begin{equation*}
+  y_0=\ycero,\quad \ddt\ynn = f(\tnn,\ynn).
+\end{equation*}
 
 
-% \section{Error y convergencia en el método de Euler}
-% \label{sec:error-y-convergencia-euler}
-% En esta sección comprobaremos que el método de Euler es convergente,
-% es decir el error entre la solución exacta y la solución aproximada
-% converge a cero (en un sentido que, más adelante, definiremos con
-% precisión).
+\section{Error y convergencia en el método de Euler}
+\label{sec:error-y-convergencia-euler}
+En esta sección nos centraremos en el método de Euler (explícito), que
+será usado como modelo para ilustrar la teoría de métodos numéricos
+para la resolución de~(\ref{eq:pvi}).
 
-% En los métodos numéricos para la resolución de~(\ref{eq:pvi}), el
-% estudio de la convergencia se puede desglosar en el análisis de dos
-% conceptos: \textit{consitencia} y \textit{estabilidad}. Los
-% estudiaremos a continuación.
+En concreto, demostraremos que el método de Euler es convergente, es
+decir el error entre la solución exacta y la solución aproximada
+converge a cero (en un sentido que, más adelante, definiremos con
+precisión). Para ello veremos que estudio de la convergencia se puede
+desglosar en el análisis de dos conceptos: \textit{consitencia} y
+\textit{estabilidad}, que estudiamos a continuación.
 
-% \subsection{Consistencia del método de Euler}
-% \label{sec:consistencia-euler}
+\subsection{Consistencia del método de Euler}
+\label{sec:consistencia-euler}
 
-% La idea de consistencia de un método numérico está relacionada con el
-% grado en el que la solución exacta verifica este método.
+En lo que sigue supondremos existencia y unicidad de solución
+$y\in C^1([a,b])$ del problema de valor inicial~(\ref{eq:pvi}).
+Consideremos el método de Euler (en una partición $\{t_n\}_{n=0}^N$ de
+$[a,b]$, donde $N\in\Nset$ y $h=(b-a)/N$), que usando el cociente
+incremental (derivada discreta) definido
+en~(\ref{eq:derivada-discreta}) se escribe como:
+hallar $\{y_{n}\}_{n=0}^N$ como solución de: $y_0=y_a$,
+\begin{equation}
+  \label{eq:tema4.4}
+  \ddt \ynn := \frac{\ynn-\yn}{h} = f(\tn,\yn),
+\end{equation}
+para cada $n=0,...,N-1$.
 
-% En lo que sigue supondremos existencia y unicidad de solución $y\in
-% C^1([a,b])$ del problema de valor inicial~(\ref{eq:pvi}).
-% Consideremos el método de Euler (en una partición $\{t_n\}_{n=0}^N$ de
-% $[a,b]$, donde $N\in\Nset$ y $h=(b-a)/N$), que usando la definición
-% derivada discreta~(\ref{eq:derivada-discreta}) se escribe como: hallar
-% $\{y_n\}_{n=0}^N$ solución de:
-% \begin{align*}
-%   \ddt \ynn &= \frac{\ynn-\yn}{h} = f(\tn,\yn), \intertext{para cada
-%     $n=0,...,N-1$ y partiendo de $y_0=\ycero$. Como $\yn\approx
-%     y(\tn)$, la expresión anterior sólo se verifica de forma
-%     aproximada al sustituir $\yn$ por $y(\tn)$:}  \ddt y(\tnn) &=
-%   \frac{y(\tnn)-y(\tn)}{h} \approx f(\tn,y(\tn)).
-% \end{align*}
-% \begin{definition}[Consistencia en $\tn$ del método de Euler]
-%   \label{def:error-consistencia-euler}
-%   Se define el error de consistencia del método de Euler en el
-%   instante $\tn$ como
-%   \begin{equation}
-%     \label{eq:consistencia-euler}
-%    \errCons_n = \ddt y(\tnn)-f(\tn,y(\tn)).
-%   \end{equation}
-% \end{definition}
-% Obviamente, para un problema de valor inicial, el error de
-% consistencia dependerá de la talla, $h$, en la discretización del
-% intervalo $[a,b]$. Es decir, $\errCons_n=\errCons_n(h)$.
-% %  \begin{remark}
-% %   Como $y(t)$ es la solución exacta, $y'(\tn)=f(\tn,y(\tn))$, así
-% %   podemos en el método de Euler podemos escribir:
-% %   \begin{align*}
-% %     \ddt y(\tnn) &\approx y'(\tn).
-% %   \end{align*}
-% % \end{remark}
-
-% \begin{definition}[Consistencia de un método numérico para~(\ref{eq:pvi})]
-%   \label{def:consitencia-metodo-pvi}
-%   Dado un método numérico para~(\ref{eq:pvi}), se define el error de consistencia
-%   como:
-%   \begin{equation*}
-%     \errCons = \errCons(h) = (\errCons_0, \errCons_1,...,\errCons_{N-1}).
-%   \end{equation*}
-%   Decimos que un método es consistente si
-%   \begin{equation*}
-%     \lim_{h\to 0} ||\errCons(h)||_\infty = 0.
-%   \end{equation*}
-%   Decimos que un método numérico para~(\ref{eq:pvi}) tiene orden de
-%   consistencia $p$ si existen $C, h_0>0$ tales que
-%   \begin{equation*}
-%     ||\errCons(h)||_\infty \le C\, h^p, \quad \forall h<h_0.
-%   \end{equation*}
-% \end{definition}
-
-% \begin{theorem}
-%   \label{thm:consistencia-euler}
-%   Si $y\in C^2([\ta,\tb])$, entonces el método de Euler es
-%   consistente. Más aún, se verifica
-%   \begin{equation*}
-%     ||\errCons(h)||_\infty \le \frac{h}{2} ||y''||_\infty,
-%   \end{equation*}
-%   por tanto el  orden de consistencia del método de Euler es igual a uno.
-% \end{theorem}
-
-% \begin{proof}
-%   Mediante un desarrollo de Taylor de la solución
-%   exacta:
+La idea de consistencia de un método numérico está relacionada con el
+grado en el que la solución exacta verifica este método. Es decir,
+denotemos por $y(t)$ a la solución exacta del~(\ref{eq:pvi}) y, en la
+ecuación~(\ref{eq:tema4.4}), sustituyamos  respectivamente
+$\yn$, $\ynn$ por $y(\tn)$, $y(\tnn)$. Entonces esta ecuación no tiene por qué verificarse exactamente, simplemente tendremos
+\begin{equation*}
+  \ddt y(\tnn) :=
+  \frac{y(\tnn)-y(\tn)}{h} \approx f(\tn,y(\tn)).
+\end{equation*}
+Y de hecho, como $f(\tn,y(\tn))=y'(\tn)$, esperamos que esta aproximación ``mejore'' cuando $h\to 0$.
+\begin{definition}[Consistencia en $\tn$ del método de Euler]
+  \label{def:error-consistencia-euler}
+  Se define el error de consistencia del método de Euler en el
+  instante $\tn$ como
+  \begin{equation}
+    \label{eq:consistencia-euler}
+    \errCons_n = \ddt y(\tnn)-f(\tn,y(\tn)).
+  \end{equation}
+\end{definition}
+Obviamente, para un problema de valor inicial, el error de
+consistencia dependerá de la talla, $h$, en la discretización del
+intervalo $[a,b]$. Es decir, $\errCons_n=\errCons_n(h)$.
+%  \begin{remark}
+%   Como $y(t)$ es la solución exacta, $y'(\tn)=f(\tn,y(\tn))$, así
+%   podemos en el método de Euler podemos escribir:
 %   \begin{align*}
-%     y(\tnn)=y(\tn+h) &= y(\tn) + h y'(\tn) + \frac{h^2}{2} y''(\xi),
-%     \\ &= y(\tn) + h f(\tn,y(\tn)) + \frac{h^2}{2} y''(\xi),
-%     \quad \text{con $\xi$ entre $\tn$ y $\tnn$,}
-%   \intertext{por lo que}
-%     \frac{y(\tnn)-y(\tn)}{h} &- f(\tn,y(\tn)) = \frac{h}{2} y''(\xi),
-%     \quad\text{$\xi$ entre $\tn$ y $\tnn$.}
+%     \ddt y(\tnn) &\approx y'(\tn).
 %   \end{align*}
-%   Y entonces para todo $n=0,...,N-1$:
-%   \begin{equation*}
-%   |\errCons_n| \le \frac{h}{2} \max_{t\in[\ta,\tb]} |y''(t)|.
-% \end{equation*}
-% \end{proof}
+% \end{remark}
 
-% \subsection{Estabilidad del método de Euler}
-% \label{sec:estabilidad-euler}
-% En general, la solución exacta de~(\ref{eq:pvi}) no verifica la regla
-% de recurrencia del método de Euler~(\ref{eq:metodo-euler}). En su
-% lugar, la ecuación de consistencia~(\ref{eq:consistencia-euler})
-% nos indica que la solución exacta verifica el siguiente esquema
-% recursivo (que se puede entender como una pequeña perturbación del
-% método de Euler):
-% \begin{align}
-%   \notag
-%     \ddt y(\tnn)&=f(\tn,y(\tn))+\errCons_n,
-%     \intertext{o equivalentemente}
-%     \label{eq:tema4:7}
-%     y(\tnn)&=y(\tn)+ h f(\tn,y(\tn))+ h\,\errCons_n,
-% \end{align}
-% donde $\errCons_n$ es el error de consistencia en el instante
-% $t_n$.
+\begin{definition}[Consistencia de un método numérico para~(\ref{eq:pvi})]
+  \label{def:consitencia-metodo-pvi}
+  Dado un método numérico para~(\ref{eq:pvi}), se define el error de consistencia
+  como:
+  \begin{equation*}
+    \errCons = \errCons(h) = (\errCons_0, \errCons_1,...,\errCons_{N-1}).
+  \end{equation*}
+  Decimos que un método es consistente si
+  \begin{equation*}
+    \lim_{h\to 0} ||\errCons(h)||_\infty = 0.
+  \end{equation*}
+  Decimos que un método numérico para~(\ref{eq:pvi}) tiene orden de
+  consistencia $p$ si existen $C, h_0>0$ tales que
+  \begin{equation*}
+    ||\errCons(h)||_\infty \le C\, h^p, \quad \forall h<h_0.
+  \end{equation*}
+\end{definition}
 
-% En esta sección estudiemos el modo en que pequeñas perturbaciones
-% de~(\ref{eq:metodo-euler}) afectan a su solución, contemplando incluso
-% el caso en el que se produce una pequeña perturbación del dato en el
-% instante inicial. Planteamos por tanto el siguiente esquema
-% perturbado:
-% \begin{equation}\left\{
-% \begin{aligned}
-%   &z_0 = \ycero + \mu_0 \\
-%   &\ddt \znn = f(\tn,\zn) + \delta_n,\quad n=0,...,N-1.
-% \end{aligned}\right.
-% \label{eq:metodo-euler-perturbado}
-% \end{equation}
-% Este esquema se escribe, de forma equivalente, como
-% \begin{equation}
-%   \label{eq:tema4:6}
-%   \znn = \zn + h f(\tn,\zn) + h \delta_n,\quad n=0,...,N-1.
-% \end{equation}
+\begin{theorem}
+  \label{thm:consistencia-euler}
+  Si la solución de~(\pageref{eq:pvi}) es $y\in C^2([\ta,\tb])$
+  entonces el método de Euler es consistente. Más aún, se verifica
+  \begin{equation*}
+    ||\errCons(h)||_\infty \le \frac{h}{2} ||y''||_\infty,
+  \end{equation*}
+  por tanto el  orden de consistencia del método de Euler es igual a uno.
+\end{theorem}
 
-% \begin{definition}
-%   \label{def:estabilidad}
-%   El método de Euler se dirá estable (para un problema de valor inicial
-%   dado) si para todo $\varepsilon>0$ existe $\delta>0$ tal que, siempre
-%   que $|\mu_0|<\delta$ y $||\delta_n||_\infty<\delta$:
-%   \begin{equation*}
-%     ||\zn - \yn||_\infty<\varepsilon,
-%   \end{equation*}
-%   donde $\zn$ e $\yn$ son, respectivamente, las soluciones
-%   de~(\ref{eq:metodo-euler}) y de~(\ref{eq:metodo-euler-perturbado}).
-% \end{definition}
+\begin{proof}
+  Mediante un desarrollo de Taylor de la solución
+  exacta:
+  \begin{align*}
+    y(\tnn)=y(\tn+h) &= y(\tn) + h y'(\tn) + \frac{h^2}{2} y''(\xi),
+    \\ &= y(\tn) + h f(\tn,y(\tn)) + \frac{h^2}{2} y''(\xi),
+    \quad \text{con $\xi$ entre $\tn$ y $\tnn$,}
+  \intertext{por lo que}
+    \frac{y(\tnn)-y(\tn)}{h} &- f(\tn,y(\tn)) = \frac{h}{2} y''(\xi),
+    \quad\text{$\xi$ entre $\tn$ y $\tnn$.}
+  \end{align*}
+  Y entonces para todo $n=0,...,N-1$:
+  \begin{equation*}
+  |\errCons_n| \le \frac{h}{2} \max_{t\in[\ta,\tb]} |y''(t)|.
+\end{equation*}
+\end{proof}
 
-% \begin{theorem}
-%   \label{thm:estabilidad-euler}
-%   Si $f$ es \globLipschitz (con constante $L$), entonces el método de
-%   Euler es estable. Más aún, se verifica la siguiente estimación de
-%   estabilidad:
-%   \begin{equation*}
-%     ||\zn - \yn||_\infty \le C_1|\mu_0| + C_2 ||\delta_n||_\infty,
-%   \end{equation*}
-%   donde
-%   \begin{equation}
-%     \label{eq:euler-ctes-estimacion-estabilidad}
-%     C_1=e^{(b-a)L}, \qquad C_2=\frac{e^{(b-a)L}-1}{L}.
-%   \end{equation}
-% \end{theorem}
+\subsection{Estabilidad del método de Euler}
+\label{sec:estabilidad-euler}
+En general, la solución exacta de~(\ref{eq:pvi}) no verifica la regla
+de recurrencia del método de Euler~(\ref{eq:metodo-euler}). En su
+lugar, la ecuación de consistencia~(\ref{eq:consistencia-euler})
+nos indica que la solución exacta verifica el siguiente esquema
+recursivo (que se puede entender como una pequeña perturbación del
+método de Euler):
+\begin{align}
+  \notag
+    \ddt y(\tnn)&=f(\tn,y(\tn))+\errCons_n,
+    \intertext{o equivalentemente}
+    \label{eq:tema4:7}
+    y(\tnn)&=y(\tn)+ h f(\tn,y(\tn))+ h\,\errCons_n,
+\end{align}
+donde $\errCons_n$ es el error de consistencia en el instante
+$t_n$.
+
+En esta sección estudiemos el modo en que pequeñas perturbaciones
+de~(\ref{eq:metodo-euler}) afectan a su solución, contemplando incluso
+el caso en el que se produce una pequeña perturbación del dato en el
+instante inicial. Planteamos por tanto el siguiente esquema
+perturbado:
+\begin{equation}\left\{
+\begin{aligned}
+  &z_0 = \ycero + \mu_0 \\
+  &\ddt \znn = f(\tn,\zn) + \delta_n,\quad n=0,...,N-1.
+\end{aligned}\right.
+\label{eq:metodo-euler-perturbado}
+\end{equation}
+Este esquema se escribe, de forma equivalente, como
+\begin{equation}
+  \label{eq:tema4:6}
+  \znn = \zn + h f(\tn,\zn) + h \delta_n,\quad n=0,...,N-1.
+\end{equation}
+
+\begin{definition}
+  \label{def:estabilidad}
+  El método de Euler se dirá estable (para un problema de valor inicial
+  dado) si para todo $\varepsilon>0$ existe $\delta>0$ tal que, siempre
+  que $|\mu_0|<\delta$ y $||\delta_n||_\infty<\delta$:
+  \begin{equation*}
+    ||\zn - \yn||_\infty<\varepsilon,
+  \end{equation*}
+  donde $\zn$ e $\yn$ son, respectivamente, las soluciones
+  de~(\ref{eq:metodo-euler}) y de~(\ref{eq:metodo-euler-perturbado}).
+\end{definition}
+
+\begin{theorem}
+  \label{thm:estabilidad-euler}
+  Si $f$ es \globLipschitz (con constante $L$), entonces el método de
+  Euler es estable. Más aún, se verifica la siguiente estimación de
+  estabilidad:
+  \begin{equation*}
+    ||\zn - \yn||_\infty \le C_1|\mu_0| + C_2 ||\delta_n||_\infty,
+  \end{equation*}
+  donde
+  \begin{equation}
+    \label{eq:euler-ctes-estimacion-estabilidad}
+    C_1=e^{(b-a)L}, \qquad C_2=\frac{e^{(b-a)L}-1}{L}.
+  \end{equation}
+\end{theorem}
 
 % \begin{proof}
 %   Este teorema es consecuencia del siguiente resultado

@@ -623,11 +623,11 @@ $\yn$, $\ynn$ por $y(\tn)$, $y(\tnn)$. Entonces esta ecuación no tiene por qué
 Y de hecho, como $f(\tn,y(\tn))=y'(\tn)$, esperamos que esta aproximación ``mejore'' cuando $h\to 0$.
 \begin{definition}[Consistencia en $\tn$ del método de Euler]
   \label{def:error-consistencia-euler}
-  Se define el error de consistencia del método de Euler en el
-  instante $\tn$ como
+  Para cada $n\ge 0$, se define el error de consistencia del método de
+  Euler en el instante $\tn$ como
   \begin{equation}
     \label{eq:consistencia-euler}
-    \errCons_n = \ddt y(\tnn)-f(\tn,y(\tn)).
+    \errCons_{n} = \ddt y(\tnn)-f(\tn,y(\tn)).
   \end{equation}
 \end{definition}
 Obviamente, para un problema de valor inicial, el error de
@@ -688,50 +688,57 @@ intervalo $[a,b]$. Es decir, $\errCons_n=\errCons_n(h)$.
 
 \subsection{Estabilidad del método de Euler}
 \label{sec:estabilidad-euler}
-En general, la solución exacta de~(\ref{eq:pvi}) no verifica la regla
-de recurrencia del método de Euler~(\ref{eq:metodo-euler}). En su
-lugar, la ecuación de consistencia~(\ref{eq:consistencia-euler})
-nos indica que la solución exacta verifica el siguiente esquema
-recursivo (que se puede entender como una pequeña perturbación del
-método de Euler):
+% En general, la solución exacta de~(\ref{eq:pvi}) no verifica la regla
+% de recurrencia del método de Euler~(\ref{eq:metodo-euler}). En su
+% lugar,
+En la definición de consistencia, la
+ecuación~(\ref{eq:consistencia-euler}) nos indica que, para cada $h>0$,
+el conjunto $\{y(\tn)\}_{n=0}^{N-1}$ definido por soluciones
+exactas de~(\ref{eq:pvi}) verifica el siguiente esquema recursivo:
 \begin{align}
   \notag
     \ddt y(\tnn)&=f(\tn,y(\tn))+\errCons_n,
-    \intertext{o equivalentemente}
+    \intertext{o equivalentemente,}
     \label{eq:tema4:7}
     y(\tnn)&=y(\tn)+ h f(\tn,y(\tn))+ h\,\errCons_n,
 \end{align}
-donde $\errCons_n$ es el error de consistencia en el instante
-$t_n$.
+lo que se puede entender como una pequeña perturbación del método de
+Euler. Utilizaremos este hecho para estudiar la diferencia entre
+la solución que proporciona el método de Euler y las soluciones exactas.
 
-En esta sección estudiemos el modo en que pequeñas perturbaciones
-de~(\ref{eq:metodo-euler}) afectan a su solución, contemplando incluso
+Así, a continuación estudiaremos el modo en que pequeñas perturbaciones
+del método de Euler afectan a su solución, contemplando incluso
 el caso en el que se produce una pequeña perturbación del dato en el
-instante inicial. Planteamos por tanto el siguiente esquema
+instante inicial. Por tanto, planteamos el siguiente esquema
 perturbado:
 \begin{equation}\left\{
 \begin{aligned}
   &z_0 = \ycero + \mu_0 \\
-  &\ddt \znn = f(\tn,\zn) + \delta_n,\quad n=0,...,N-1.
+  &\ddt \znn = f(\tn,\zn) + \delta_n,\quad n=0,...,N-1
 \end{aligned}\right.
 \label{eq:metodo-euler-perturbado}
 \end{equation}
-Este esquema se escribe, de forma equivalente, como
+o, equivalentemente,
 \begin{equation}
-  \label{eq:tema4:6}
-  \znn = \zn + h f(\tn,\zn) + h \delta_n,\quad n=0,...,N-1.
+\left\{
+\begin{aligned}
+  &z_0 = \ycero + \mu_0 \\
+  &\znn = \zn + h f(\tn,\zn) + h \delta_n,\quad n=0,...,N-1.
+\end{aligned}
+\right.
+\label{eq:tema4:6}
 \end{equation}
 
 \begin{definition}
   \label{def:estabilidad}
-  El método de Euler se dirá estable (para un problema de valor inicial
-  dado) si para todo $\varepsilon>0$ existe $\delta>0$ tal que, siempre
-  que $|\mu_0|<\delta$ y $||\delta_n||_\infty<\delta$:
+  El método de Euler para un problema diferencial~(\ref{eq:pvi}) se
+  dirá estable si para todo $\varepsilon>0$ existe $\delta>0$ tal que,
+  siempre que $|\mu_0|<\delta$ y $||\delta_n||_\infty<\delta$:
   \begin{equation*}
     ||\zn - \yn||_\infty<\varepsilon,
   \end{equation*}
   donde $\zn$ e $\yn$ son, respectivamente, las soluciones
-  de~(\ref{eq:metodo-euler}) y de~(\ref{eq:metodo-euler-perturbado}).
+  de~(\ref{eq:metodo-euler}) y de~(\ref{eq:tema4:6}).
 \end{definition}
 
 \begin{theorem}
@@ -749,148 +756,149 @@ Este esquema se escribe, de forma equivalente, como
   \end{equation}
 \end{theorem}
 
-% \begin{proof}
-%   Este teorema es consecuencia del siguiente resultado
-%   técnico (cuya demostración, basada en la suma parcial de una
-%   progresión geométrica adecuada, omitiremos por brevedad):
-%   \begin{quote}
-%     \begin{lemma}
-%       \label{lem:2}
-%       Sean $\{a_n\}_{n\ge 0}$ y $\{b_n\}_{n\ge 0}$ dos sucesiones de
-%       números reales no negativos y $\Lambda>0$ tales que:
-%       \begin{align*}
-%         a_{n+1} &\le (1+h\Lambda)a_n + h b_n, \quad \forall n\ge 0.
-%         \intertext{Entonces} a_n &\le e^{nh\Lambda}a_0 +
-%         \frac{e^{nh\Lambda}-1}{\Lambda}\,\max_{0\le k \le n-1}|b_k|,
-%         \quad \forall n\ge 0.
-%       \end{align*}
-%     \end{lemma}
-%   \end{quote}
-%   Para  acotar $z_n-y_n$, restaremos las
-%   expresiones de $\znn$ en~(\ref{eq:tema4:6}) y de $\ynn$
-%   en~(\ref{eq:metodo-euler}):
-%   \begin{align*}
-%     |\znn-\ynn| &\le |\zn-\yn| + h|f(\tn,\zn)-f(\tn,\yn)| + h |\delta_n|
-%     \\
-%                 &\le |\zn-\yn| + hL |\zn-\yn| + h |\delta_n|
-%                 \\
-%                 &=(1+hL)|\zn-\yn| + h |\delta_n|,
-%   \end{align*}
-%   donde se ha usado el carácter \lipschitz de $f$.
-%   Aplicando el lema anterior para las sucesiones $a_n=z_n-y_n$ y $b_n=|\delta_n|$:
-%   \begin{align*}
-%     |z_n-y_n| &\le e^{nhL}\mu_0 +
-%     \frac{e^{nhL}-1}{L}\,||\delta_n||_\infty
-%     \\
-%     &\le e^{(b-a)L}\mu_0 +
-%     \frac{e^{(b-a)L}-1}{L}\,||\delta_n||_\infty,
-%   \end{align*}
-%   donde en la última igualdad se usó que (como $\tn = a + nh$): $nh=\tn-a\le (b-a)$.
-% \end{proof}
+\begin{proof}
+  Este teorema es consecuencia del siguiente resultado
+  técnico (cuya demostración, basada en la suma parcial de una
+  progresión geométrica adecuada, omitiremos por brevedad):
+  \begin{quote}
+    \begin{lemma}
+      \label{lem:2}
+      Sean $\{a_n\}_{n\ge 0}$ y $\{b_n\}_{n\ge 0}$ dos sucesiones de
+      números reales no negativos y $\Lambda>0$ tales que:
+      \begin{align*}
+        a_{n+1} &\le (1+h\Lambda)a_n + h b_n, \quad \forall n\ge 0.
+        \intertext{Entonces} a_n &\le e^{nh\Lambda}a_0 +
+        \frac{e^{nh\Lambda}-1}{\Lambda}\,\max_{0\le k \le n-1}|b_k|,
+        \quad \forall n\ge 0.
+      \end{align*}
+    \end{lemma}
+  \end{quote}
+  Para  acotar $z_n-y_n$, restaremos las
+  expresiones de $\znn$ en~(\ref{eq:tema4:6}) y de $\ynn$
+  en~(\ref{eq:metodo-euler}):
+  \begin{align*}
+    |\znn-\ynn| &\le |\zn-\yn| + h|f(\tn,\zn)-f(\tn,\yn)| + h |\delta_n|
+    \\
+                &\le |\zn-\yn| + hL |\zn-\yn| + h |\delta_n|
+                \\
+                &=(1+hL)|\zn-\yn| + h |\delta_n|,
+  \end{align*}
+  donde se ha usado el carácter \lipschitz de $f$.
+  Aplicando el lema anterior para las sucesiones $a_n=z_n-y_n$ y $b_n=|\delta_n|$:
+  \begin{align*}
+    |z_n-y_n| &\le e^{nhL}\mu_0 +
+    \frac{e^{nhL}-1}{L}\,||\delta_n||_\infty
+    \\
+    &\le e^{(b-a)L}\mu_0 +
+    \frac{e^{(b-a)L}-1}{L}\,||\delta_n||_\infty,
+  \end{align*}
+  donde en la última igualdad se usó que (como $\tn = a + nh$)
+  $nh=\tn-a\le (b-a)$.
+\end{proof}
 
-% \subsection{Convergencia del método de Euler}
-% \label{sec:convergencia-euler}
+\subsection{Convergencia del método de Euler}
+\label{sec:convergencia-euler}
 
-% Utilizando los resultados de consistencia y estabilidad anteriores, es
-% fácil demostrar la convergencia del método de Euler hacia la solución
-% exacta, en el sentido que definiremos a continuación.
+Utilizando los resultados de consistencia y estabilidad anteriores, es
+fácil demostrar la convergencia del método de Euler hacia la solución
+exacta, en el sentido que definiremos a continuación.
 
-% \begin{definition}
-%   \label{def:error-discretizacion-pvi}
-%   Dado un método numérico para~(\ref{eq:pvi}), se llama error de
-%   discretización en el instante $\tn$ a la diferencia
-%   \begin{equation*}
-%     e_n = y(\tn)-\yn.
-%   \end{equation*}
-%   Por supuesto, $e_n=e_n(h)$, es decir, el error de discretización
-%   depende del paso $h$. Se llama error de discretización (global) al
-%   vector
-%   \begin{equation*}
-%     E = E(h) = (e_0,e_1,...,e_n).
-%   \end{equation*}
-% \end{definition}
-% \begin{definition}
-%   \label{def:convergencia-euler}
-%   Dado un problema de valor inicial, decimos que el método de Euler es
-%   convergente si (siempre que $\lim_{h\to 0} |e_0|=0$) se verifica:
-%   \begin{equation*}
-%     \lim_{h\to 0} ||E(h)||_\infty = 0.
-%   \end{equation*}
-%   Precisando más, diremos que el orden de convergencia es (al menos)
-%   $p$ si existen $C, C_0, h_0>0$ tales que
-%   \begin{equation*}
-%     ||E(h)||_\infty \le C h^p \quad \forall h<h_0,
-%   \end{equation*}
-%   siempre que el método parta de una condición inicial $y_0$ en la que
-%   $|e_0|\le C_0 h^p$.
-% \end{definition}
+\begin{definition}
+  \label{def:error-discretizacion-pvi}
+  Dado un método numérico para~(\ref{eq:pvi}), se llama error de
+  discretización en el instante $\tn$ a la diferencia
+  \begin{equation*}
+    e_n = y(\tn)-\yn.
+  \end{equation*}
+  Por supuesto, $e_n=e_n(h)$, es decir, el error de discretización
+  depende del paso $h$. Se llama error de discretización (global) al
+  vector
+  \begin{equation*}
+    E = E(h) = (e_0,e_1,...,e_n).
+  \end{equation*}
+\end{definition}
+\begin{definition}
+  \label{def:convergencia-euler}
+  Dado un problema de valor inicial, decimos que el método de Euler es
+  convergente si (siempre que $\lim_{h\to 0} |e_0|=0$) se verifica:
+  \begin{equation*}
+    \lim_{h\to 0} ||E(h)||_\infty = 0.
+  \end{equation*}
+  Precisando más, diremos que el orden de convergencia es (al menos)
+  $p$ si existen $C, C_0, h_0>0$ tales que
+  \begin{equation*}
+    ||E(h)||_\infty \le C h^p \quad \forall h<h_0,
+  \end{equation*}
+  siempre que el método parta de una condición inicial $y_0$ en la que
+  $|e_0|\le C_0 h^p$.
+\end{definition}
 
-% La clave para determinar la convergencia y el orden del método de
-% Euler está en el siguiente teorema, que es una consecuencia del
-% Teorema~\ref{thm:estabilidad-euler} (estabilidad del método de Euler).
-% \begin{theorem}
-%   \label{thm:euler:estimacion-error-discretizacion}
-%   Supongamos que $f$ es \globLipschitz. Entonces se verifica la
-%   siguiente estimación del error de discretización:
-%   \begin{equation}
-%     \label{eq:estimacion-discretizacion}
-%     ||E||_\infty \le C_1 |e_0| + C_2 ||\errCons||_\infty,
-%   \end{equation}
-%   donde $C_1$ y $C_2$ vienen dadas
-%   en~(\ref{eq:euler-ctes-estimacion-estabilidad}).
-% \end{theorem}
-% \begin{proof}
-%   Consideremos la sucesión de soluciones exactas $z_n=y(\tn)$. Según
-%   comprobamos en la sección~\ref{sec:estabilidad-euler}, esta sucesión
-%   es solución del esquema recursivo~(\ref{eq:tema4:7}), en el que la
-%   perturbación en el instante $\tn$ viene dada por
-%   $\delta_n=\errCons_n$ (el error de consistencia en el instante
-%   $\tn$), mientras que la (eventual) perturbación inicial es
-%   $\mu=y(a)-y_0=e_0$.
+La clave para determinar la convergencia y el orden del método de
+Euler está en el siguiente teorema, que es una consecuencia del
+Teorema~\ref{thm:estabilidad-euler} (estabilidad del método de Euler).
+\begin{theorem}
+  \label{thm:euler:estimacion-error-discretizacion}
+  Supongamos que $f$ es \globLipschitz. Entonces se verifica la
+  siguiente estimación del error de discretización:
+  \begin{equation}
+    \label{eq:estimacion-discretizacion}
+    ||E||_\infty \le C_1 |e_0| + C_2 ||\errCons||_\infty,
+  \end{equation}
+  donde $C_1$ y $C_2$ vienen dadas
+  en~(\ref{eq:euler-ctes-estimacion-estabilidad}).
+\end{theorem}
+\begin{proof}
+  Consideremos la sucesión de soluciones exactas $z_n=y(\tn)$. Según
+  comprobamos en la sección~\ref{sec:estabilidad-euler}, esta sucesión
+  es solución del esquema recursivo~(\ref{eq:tema4:7}), en el que la
+  perturbación en el instante $\tn$ viene dada por
+  $\delta_n=\errCons_n$ (el error de consistencia en el instante
+  $\tn$), mientras que la (eventual) perturbación inicial es
+  $\mu=y(a)-y_0=e_0$.
 
-%   Por tanto, si aplicamos el Teorema~\ref{thm:estabilidad-euler} para
-%   esta sucesión, tenemos que
-%   $$
-%   ||E_n|| = ||\zn - \yn||_\infty \le C_1|\mu_0| + C_2
-%   ||\delta_n||_\infty  = C_1|e_0| + C_2 ||\errCons||_\infty.
-%   $$
-% \end{proof}
+  Por tanto, si aplicamos el Teorema~\ref{thm:estabilidad-euler} para
+  esta sucesión, tenemos que
+  $$
+  ||E_n|| = ||\zn - \yn||_\infty \le C_1|\mu_0| + C_2
+  ||\delta_n||_\infty  = C_1|e_0| + C_2 ||\errCons||_\infty.
+  $$
+\end{proof}
 
-% Para terminar, la convergencia del método de Euler se puede obtener
-% como un simple corolario de la consistencia y de la estimación de
-% estabilidad dada en el teorema anterior:
+Para terminar, la convergencia del método de Euler se puede obtener
+como un simple corolario de la consistencia y de la estimación de
+estabilidad dada en el teorema anterior:
 
-% \begin{corollary}[Convergencia y orden del método de Euler]
-%   \label{cor:euler:convergencia-y-orden}
-%   Si $f$ es \globLipschitz y además $y\in C^2([\ta,\tb])$, entonces el método de Euler es
-%   convergente y tiene orden 1. En concreto, si $|e_0|\le C_0 h$ (para
-%   alguna constante $C_0\ge 0$), entonces:
-%   \begin{equation}
-%     \label{eq:tema4:9}
-%     ||E||_\infty \le C_0 C_1 \, h + C_2 ||y''||_\infty \frac h2,
-%   \end{equation}
-% \end{corollary}
+\begin{corollary}[Convergencia y orden del método de Euler]
+  \label{cor:euler:convergencia-y-orden}
+  Si $f$ es \globLipschitz y además $y\in C^2([\ta,\tb])$, entonces el método de Euler es
+  convergente y tiene orden 1. En concreto, si $|e_0|\le C_0 h$ (para
+  alguna constante $C_0\ge 0$), entonces:
+  \begin{equation}
+    \label{eq:tema4:9}
+    ||E||_\infty \le C_0 C_1 \, h + C_2 ||y''||_\infty \frac h2,
+  \end{equation}
+\end{corollary}
 
-% \begin{proof}
-%   Bajo estas condiciones, el teorema de
-%   consistencia~\ref{thm:consistencia-euler} nos garantiza que
-%   $||\errCons||_\infty \le \frac h2 ||y''||_\infty$. Aplicando el
-%   la estimación~(\ref{eq:estimacion-discretizacion}) llegamos
-%   directamente a~(\ref{eq:tema4:9}) (si $|e_0|\le C_0 h$).
-% \end{proof}
+\begin{proof}
+  Bajo estas condiciones, el teorema de
+  consistencia~\ref{thm:consistencia-euler} nos garantiza que
+  $||\errCons||_\infty \le \frac h2 ||y''||_\infty$. Aplicando el la
+  estimación~(\ref{eq:estimacion-discretizacion}) junto a
+  $|e_0|\le C_0 h$ llegamos directamente a~(\ref{eq:tema4:9}).
+\end{proof}
 
-% \begin{remark}
-%   \label{rk:8}
-%   En la practica, es habitual que no exista ninguna perturbación
-%   inicial, es decir que tengamos exactamente que $y_0=y(a)$, por lo
-%   que $e_0=0$ y podemos suponer $C_0=0$. Por lo tanto, la
-%   desigualdad~(\ref{eq:tema4:9}) suele adquirir una expresión más
-%   sencilla:
-%     \begin{equation}
-%     \label{eq:tema4:9}
-%     ||E||_\infty \le C_2 ||y''||_\infty \frac h2.
-%   \end{equation}
-% \end{remark}
+\begin{remark}
+  \label{rk:8}
+  En la practica, es habitual que no exista ninguna perturbación
+  inicial, es decir que tengamos exactamente que $y_0=y(a)$, por lo
+  que $e_0=0$ y podemos suponer $C_0=0$. Por lo tanto, la
+  desigualdad~(\ref{eq:tema4:9}) suele adquirir una expresión más
+  sencilla:
+    \begin{equation}
+    \label{eq:tema4:9}
+    ||E||_\infty \le C_2 ||y''||_\infty \frac h2.
+  \end{equation}
+\end{remark}
 
 % \section{Error y convergencia en métodos generales de un paso}
 % \label{sec:convergencia-metodos-1paso}

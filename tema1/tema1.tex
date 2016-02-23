@@ -482,6 +482,251 @@ resultados anteriores:
   localizado en $(0,\pi/2)$, tal que $2x=\cos(x)$.
 \end{example}
 
+\section{El método de bisección}
+\label{sec:tema1:bisecc}
+
+Comenzamos presentando el método más sencillo, basado en el teorema de
+Bolzano. Para ello, supongamos que $f$ es una función continua en
+$[a,b]$ tal que $f(a)f(b)<0$, por tanto existe algún cero
+de $f$ en $(a,b)$, al que llamaremos $\alpha$.
+
+Por simplicidad, supondremos que $\alpha$ es el único cero de $f$ en
+$(a,b)$; en otro caso podríamos separar los ceros en subintervalos,
+véase la sección~\ref{sec:tema1:exist-y-unic}. Aunque veremos que este
+método sigue siendo válido aunque no haya unicidad de solución
+(observación~\ref{rk:tema1:unicidad-bisecc}).
+
+La idea del método de bisección es dividir por la mitad el intervalo y
+considerar los dos subintervalos resultantes, para seleccionar aquel
+en el que $f$ cambia de signo (y que contiene a la raíz, según el
+teorema de Bolzano). Con más detalle: el método consiste en construir
+una sucesión de intervalos,
+\begin{equation}
+  \label{eq:tema1:bisecc:0}
+  [a,b]=[a_0,b_0] \supset [a_1,b_1] \supset [a_2,b_2] \cdots \supset
+  [a_n,b_n] \supset \cdots
+\end{equation}
+definida a partir de sus puntos medios, $c_n=(a_n+b_n)/2$, tal y como sigue:
+\begin{itemize}
+\item Como inicialización, tomamos $a_0=a$ y $b_0=b$ y calculamos
+  $c_0=(a_0+b_0)/2$.
+\item En cada etapa $k\ge 1$, construimos un intervalo $[a_k,b_k]$ a
+  partir del anterior, $[a_{k-1}, b_{k-1}]$, de la siguiente forma:
+  \begin{enumerate}
+  \item Calculamos el punto medio del intervalo anterior,
+    $c_{k-1}=(a_{k-1}+b_{k-1})/2$. Si $f(c_{k-1})=0$ hemos terminado
+    ($c_{k-1}$ es el cero de $f$).
+  \item En otro caso definimos $a_k$ y $b_k$ de forma que $f$ cambie de
+    signo en $[a_k,b_k]$:
+    \begin{enumerate}
+    \item Si $f(a_{k-1})f(c_{k-1})<0$, elegimos $[a_k,b_k]=[a_{k-1}, c_{k-1}]$.
+    \item Si $f(c_{k-1})f(b_{k-1})<0$, elegimos $[a_k,b_k]=[c_{k-1}, b_{k-1}]$.
+    \end{enumerate}
+  \item A continuación, pasamos a la siguiente etapa (incrementamos
+    $k$).
+  \end{enumerate}
+\end{itemize}
+
+En la práctica, es muy improbable que $f(c_k)=0$ y deben establecerse
+condiciones para evitar bucles infinitos. Puede verse una
+implementación del método de bisección en forma de
+pseudocódigo%
+\footnote{En realidad, el pseudocódigo que se utilizará en
+  este manual constituirá código conforme a Python 2.x} en el
+Algoritmo~\ref{alg:metodo-biseccion}.
+\begin{algorithm} \begin{python}
+def biseccion(f, a, b, tol, max_iters):
+  iter = 0
+  while b-a >= tol and iter < max_iters:
+    c = (a+b)/2.0
+    if f(c)==0:
+      break
+    else:
+      if f(a)*f(c) < 0:
+      b=c
+    else:
+      a=c
+    iter = iter + 1
+  return c
+\end{python}
+\caption{Método de bisección}
+  \label{alg:metodo-biseccion}
+\end{algorithm}
+
+\begin{example}
+  Aplicaremos el método de bisección a la función $f(x)=x^3-9x+3$ en el intervalo
+  $[0,1]$, donde sabemos que existe un único cero (según vimos en el
+  ejemplo~\ref{ex:tema1:separ-soluc-1}). El método consiste en los
+  siguientes pasos (resumidos en el cuadro~\ref{tab:tema1:bisecc}):
+
+  \begin{itemize}
+  \item Empezamos seleccionando $[a_0,b_0]=[0,1]$.
+  \item En la primera etapa, $k=1$, calculamos
+    $c_0=(1+0)/2=0.5$  y
+    $f(c_0)=f(1/2)=-11/8=-1.375$. Como $f(a_0)=f(0)=3$, elegimos
+    $[a_1,b_1]=[a_0,c_0]=[0,0.5]$.
+  \item Repetimos el proceso para $k=2,3,...$, obteniendo los resultados que se
+    muestran en el cuadro~\ref{tab:tema1:bisecc}.
+  \end{itemize}
+
+\end{example}
+\begin{table}
+  \centering
+  \rule{0.99\linewidth}{1.6pt}
+  \begin{equation*}
+    \begin{array}{l<{\quad}rrrrr}%{>{$}r<{$}>{$}r<{$}>{$}r<{$}>{$}r<{$}>{$}r<{$}}
+      k &  [a_k,b_k] & c_k & f(a_k) & f(b_k) & f(c_k)
+      \\ \toprule%\mbox{}% \mbox{} for avoiding bug with "["
+      0 & [0,1]  &  0.5 & 3 & -5 & -1.375
+      \\ \noalign{\smallskip}
+      1 &  [0,0.5] &  0.25 & 3 & -1.375 & 0.76
+      \\ \smallskip
+      2 & [0.25,0.5] & 0.375 & 0.76 & -1.375 & -0.32
+      \\ \smallskip
+      3& [0.25,0.375] & 0.3125 & 0.76 & -0.32 & 0.21
+      \\
+      \hfill \vdots \hfill~ & \hfill \vdots \hfill~ &
+                                                      \hfill \vdots \hfill~ & \hfill \vdots \hfill~ &
+                                                                                                      \hfill \vdots \hfill~ & \hfill \vdots \hfill~
+    \end{array}
+  \end{equation*}
+  \rule{0.99\linewidth}{1.5pt}
+  \caption{Método de bisección para $f(x)=x^3-9x-3$ en $[0,1]$.}
+  \label{tab:tema1:bisecc}
+\end{table}
+
+Como se puede observar en el ejemplo anterior, el método de bisección
+genera una sucesión de intervalos $[a_k,b_k]$ que
+contienen la solución de~\eqref{eq:raiz} (pues, por construcción,
+$f(a_k)f(b_k)<0$). Además, el tamaño $b_k-a_k$ converge a cero (puesto
+que, en cada paso, el tamaño se divide por dos), de hecho:
+\begin{equation}
+  \label{eq:tema1:bisec:1}
+  b_k-a_k = \frac{b-a}{2^k} \quad \forall k=0,1,2,...
+\end{equation}
+
+Así, se tiene el siguiente resultado:
+\begin{theorem}
+  \label{thm:tema1:bisecc}
+  Sea $f$ una función continua en $[a,b]$ tal que $f(a)f(b)<0$.
+  \begin{enumerate}
+  \item La sucesión $\{c_k\}_{k=0}^\infty$ (definida por los puntos
+    medios de los intervalos en el método de bisección) es convergente
+    y su límite, $\cero$, es un cero de $f$ en $(a,b)$.
+  \item De hecho, se verifica la siguiente cota del error:
+    \begin{equation}
+      \label{eq:tema1:bisecc:2}
+      |c_k-\cero| < \frac{b-a}{2^{k+1}}.
+    \end{equation}
+  \end{enumerate}
+\end{theorem}
+
+\begin{proof}
+  Los intervalos $[a_k,b_k]$ generados por el método de bisección
+  verifican~\eqref{eq:tema1:bisecc:0} y $f(a_k)f(b_k)<0$, por lo tanto
+  todos ellos contienen algún cero. Es decir, existe un cero,
+  $\cero\in [a_k,b_k]$, para todo $k$.
+
+  Por definición del método de bisección, en la iteración $k+1$ se
+  tiene que $c_k=a_{k+1}$ o $c_k=b_{k+1}$ y que
+  $\cero \in (a_{k+1},b_{k+1})$. Teniendo esto en cuenta,
+  $$|c_k-\cero|<|b_{k+1}-a_{k+1}|.$$
+  Aplicando ahora~(\ref{eq:tema1:bisec:1}), tenemos que
+  $|b_{k+1}-a_{k+1}|<(b-a)/2^{k+1}$, de donde
+  deduce~\eqref{eq:tema1:bisecc:2}. Y, a su vez,
+  \eqref{eq:tema1:bisecc:2} implica que $c_k$ converge a $\cero$.
+\end{proof}
+
+\begin{remark}[Ventajas e inconvenientes del método de bisección]
+  \label{rk:tema1:unicidad-bisecc}
+  ~
+  \begin{itemize}
+  \item El teorema~\ref{thm:tema1:bisecc} es válido incluso si $f$
+    tiene \textbf{varios ceros} en $[a,b]$, es decir el método de
+    bisección tiene la importante propiedad de que siempre converge
+    hacia una solución, independientemente de que ésta sea única, y
+    sin más hipótesis sobre $f$ que su continuidad.
+  \item Sin embargo, tiene el inconveniente de que su
+    \textbf{velocidad de convergencia} es lenta. En concreto, se puede
+    demostrar que el método no alcanza el orden $1$, en general
+    (aunque sí en algunos casos particulares) necesitando por tanto
+    muchas más iteraciones que otros métodos que veremos más tarde.
+    Este resultado no es inmediato, se pueden consultar los detalles
+    en la bibliografía.
+
+    De hecho, la sucesión que genera el método no garantiza siquiera
+    que el error se reduzca en todas las iteraciones (podría ocurrir
+    que, en una iteración concreta, $c_k$ es muy cercano a $\alpha$
+    pero $c_{k+1}$, el punto medio del nuevo intervalo, se aleja de
+    $\alpha$).
+
+
+  \item A pesar de que el método no tiene un orden de convergencia
+    óptimo (y de hecho no podemos esperar la convergencia en una sola
+    iteración, ni siquiera en el caso en el que $f$ sea lineal),
+    también tiene sus \textbf{ventajas}. El método de bisección no utiliza
+    ningún tipo de información acerca de la función y, solamente es
+    requiere la evaluación de $f$. En la práctica, es un método
+    sencillo y muy útil como ``método de arranque'' (con el que
+    realizar iteraciones previas antes de pasar a otros métodos de
+    mayor orden), o como base para métodos más eficientes.
+  \end{itemize}
+\end{remark}
+
+\begin{remark}
+  \label{rk:tema1:bisecc:iteraciones}
+  La desigualdad~\eqref{eq:tema1:bisecc:2} nos garantiza que, para $n$
+  suficiente grande, podemos aproximar un cero de $f$ con un error tan
+  pequeño como deseemos. Y, de hecho, dada una tolerancia
+  $\varepsilon$, para que $|c_k-\alpha|<\varepsilon$, es suficiente
+  hallar $k$ de forma que el segundo miembro
+  de~(\ref{eq:tema1:bisecc:2}) sea menor que $\varepsilon$, es decir,
+  realizar iteraciones hasta que $(b-a)/2^{k+1} < \varepsilon$.
+
+  Para ello, planteamos la igualdad $(b-a)/2^{k+1} = \varepsilon$ y, despejando $k$, obtenemos:
+  \begin{equation*}
+    k=\log_2\left(\frac{b-a}{\varepsilon}\right)-1.
+  \end{equation*}
+  Como, en general, el resultado de la operación no es un número
+  entero, el número de iteraciones que realizaremos, $k_0$, será igual
+  al primer entero mayor o igual a la expresión anterior.
+\end{remark}
+
+\begin{test}[Función ``bisección'']
+  El programa~\ref{pro:metodo-biseccion} muestra una implementación
+  del método de bisección, utilizando el lenguaje de programación
+  \textit{Python}, en la que se mejora el
+  Algoritmo~\ref{alg:metodo-biseccion} (minimizando el número de
+  llamadas a $f$). Concretamente, la función
+  \pythoninline{biseccion(f, a, b)} calcula una solución
+  de~\eqref{eq:raiz} en un intervalo $(a,b)$. A través de parámetros
+  opcionales se puede determinar una tolerancia, $\varepsilon$, de
+  forma que el ciclo de iteraciones se detenga cuando
+  $b_k-a_k<\varepsilon$. La igualdad~(\ref{eq:tema1:bisec:1})
+  garantiza que así sera para $k$ suficientemente grande (dado
+  concretamente en la
+  observación~\ref{rk:tema1:bisecc:iteraciones}). Adicionalmente, la
+  función permite fijar el número máximo de iteraciones permitidas y
+  seleccionar si se actuará de forma silenciosa o bien con
+  verbosidad al mostrar los resultados.
+
+  Por ejemplo, el siguiente código \textit{Python} aproxima un cero de
+  la función $f(x)$ introducida en el
+  ejemplo~\ref{ex:tema1:separ-soluc-1}
+  con tolerancia $10^{-2}$:
+  \pythonexternal{tema1/src/biseccion-test1.py}
+  \begin{pythonoutput}
+    \pythonexternal[backgroundcolor=\color{white},title={Resultado}]{tema1/src/biseccion-test1.out}
+  \end{pythonoutput}
+\end{test}
+
+
+\begin{program}
+  \widepythonexternal{tema1/src/biseccion.py}
+  \caption{Una implementación del método de bisección}
+  \label{pro:metodo-biseccion}
+\end{program}
+
 %%% Local Variables:
 %%% mode: latex
 %%% TeX-master: "../tema1.tex"

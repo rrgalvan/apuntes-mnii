@@ -170,40 +170,37 @@ orden en un sentido más débil.
 
 En concreto, es fácil comprobar que si una sucesión tiene orden de
 convergencia exactamente igual a $p$, entonces existen una constante a
-la que también llamaremos $C>0$ y $k_0\in\Nset$ tales que
+la que también llamaremos $C>0$ y $k_0\in\Nset$ tales que el error en
+la etapa $k+1$ está acotado por el error en la etapa anterior de la
+siguiente forma:
 \begin{equation}
   \label{eq:orden-convergencia-al-menos-p}
-  e_{k+1} \le C e_k^p \quad \forall k\ge k_0.
+  e_{k+1} \le C e_k^p, \quad \forall k\ge k_0.
 \end{equation}
 
 \begin{definition}
   Diremos que un método iterativo (definido por una sucesión $\{x_k\}$
-  tal que $\lim x_k=\alpha$) tiene \resaltar{orden de convergencia
-    mayor o igual a} $p\ge 1$ si existen una constante $C>0$ y un
-  número entero $k_0>0$ para los que se
+  tal que $\lim x_k=\alpha$) tiene \resaltar{orden de convergencia}
+  (al menos) $p\ge 1$ si existen una constante $C>0$ y un número
+  entero $k_0>0$ para los que se
   verifica~(\ref{eq:orden-convergencia-al-menos-p})
   \label{def:orden-convergencia-al-menos-p}
 \end{definition}
 
 
-Algunas propiedades (cuya demostración se deja como ejercicio):
-\begin{itemize}
-\item Las definiciones anteriores son consistentes en el sentido de
-  que una sucesión que converja con orden exactamente igual a $p$ (es
-  decir, verifica~(\ref{eq:orden-convergencia})) convergerá también
-  con mayor o igual a $p$ (es decir,
-  verifica~(\ref{eq:orden-convergencia-al-menos-p}).
-\item Un método iterativo de orden exactamente $p$ es de orden mayor o
-  igual a $q$, para todo $1\le q < p$ ($C<1$ si $q=1$).
-\item La convergencia con orden mayor o igual a $p$ no implica la
-  convergencia con un orden exactamente igual a $p$.
-\item Análogamente a la
-  observación~\ref{rk:interpretacion-orden-convergencia}, la
-  desigualdad~(\ref{eq:orden-convergencia-al-menos-p}) garantiza que
-  en un esquema de orden (al menos) $p$ tiene lugar el decrecimiento del
-  error absoluto en términos de su potencia $p$ (o del factor
-  $C<1$ si $p=1$).
-\end{itemize}
+\begin{remark}
+  Algunas propiedades:
+  \begin{enumerate}
+  \item Como se ha comentado, toda sucesión de orden exactamente igual
+    a $p$ (es decir, que verifique~(\ref{eq:orden-convergencia}))
+    también verifica~(\ref{eq:orden-convergencia-al-menos-p}), es
+    decir, tiene orden $p$.
+  \item De hecho, se verifica la siguiente propiedad: si un método
+    iterativo es de orden exactamente $p$, entonces es de orden $q$,
+    para todo $1\le q \le p$. La demostración de esta propiedad se
+    deja como ejercicio.
+  \end{enumerate}
+\end{remark}
 
 
 
@@ -279,18 +276,19 @@ asegurarnos de que esta solución es única\footnote{Por ejemplo,
   converjan a una solución.}.
 
 Con frecuencia, el proceso previo para determinar los ceros de una
-función consistirá en localizar intervalos en los que podamos
+función consiste en localizar intervalos en los que podamos
 garantizar la existencia de una única solución (proceso que recibe el
 nombre de \textit{separación de ceros o de soluciones}). Los
 siguientes resultados nos proporcionan unas herramientas muy útiles
 para ello.
 
-También nos resultará de utilidad, como primera aproximación, la
-representación gráfica de la función, aunque \textit{en ningún caso
-  debemos confiar exclusivamente en las gráficas generadas por
-  programas informáticos}: éstas deben estar respaldadas por un
-análisis numérico que garantice la existencia y unicidad de solución.
+Como primera aproximación, para localizar los ceros puede resultar
+útil la representación gráfica de la función, aunque \textit{en
+  ningún caso debemos confiar exclusivamente en las gráficas generadas
+  por programas informáticos}: éstas deben estar respaldadas por un
+análisis que garantice la existencia y unicidad de solución.
 
+En general, este análisis se apoya en siguientes teoremas:
 \begin{theorem}[Bolzano]
   \label{thm:bolzano}
   Sea $f:[a,b]\subset \Rset\to\Rset$ una función continua en el
@@ -305,11 +303,8 @@ análisis numérico que garantice la existencia y unicidad de solución.
   Entonces existe al menos un valor $c \in (a, b)$ tal que $f'(c) = 0$.
 \end{theorem}
 
-% \begin{remark}[Sobre unicidad en los teoremas de Bolzano y Rolle]
-%   \label{rk:tema1:unicidad-bolzano-rolle}
-Estos teoremas son bien conocidos en el ámbito del análisis
-matemático. El teorema de Bolzano proporciona existencia de solución,
-pero no unicidad (es decir, una función continua con distinto signo en
+El teorema de Bolzano proporciona existencia de solución,
+pero no unicidad (una función continua con distinto signo en
 $a$ y en $b$ podría tener muchos ceros en $(a,b)$). El teorema de
 Rolle puede ser utilizado para obtener el siguiente resultado de
 unicidad:

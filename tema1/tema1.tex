@@ -529,29 +529,10 @@ definida a partir de sus puntos medios, $c_n=(a_n+b_n)/2$, tal y como sigue:
 
 En la práctica, es muy improbable que $f(c_k)=0$ y deben establecerse
 condiciones para evitar bucles infinitos. Puede verse una
-implementación del método de bisección en forma de
-pseudocódigo%
-\footnote{En realidad, el pseudocódigo que se utilizará en
-  este manual constituirá código conforme a Python 2.x} en el
-Algoritmo~\ref{alg:metodo-biseccion}.
-\begin{algorithm} \begin{python}
-def biseccion(f, a, b, tol, max_iters):
-  iter = 0
-  while b-a >= tol and iter < max_iters:
-    c = (a+b)/2.0
-    if f(c)==0:
-      break
-    else:
-      if f(a)*f(c) < 0:
-      b=c
-    else:
-      a=c
-    iter = iter + 1
-  return c
-\end{python}
-\caption{Método de bisección}
-  \label{alg:metodo-biseccion}
-\end{algorithm}
+implementación\footnote{Con el fin que las
+  implementaciones de los algoritmos sean sencillas, se utilizará el
+  lenguaje Python 3.} de bisección en el
+Programa~\ref{pro:metodo-biseccion}.
 
 \begin{example}
   Aplicaremos el método de bisección a la función $f(x)=x^3-9x+3$ en el intervalo
@@ -574,16 +555,16 @@ def biseccion(f, a, b, tol, max_iters):
   \centering
   \rule{0.99\linewidth}{1.6pt}
   \begin{equation*}
-    \begin{array}{l<{\quad}rrrrr}%{>{$}r<{$}>{$}r<{$}>{$}r<{$}>{$}r<{$}>{$}r<{$}}
-      k &  [a_k,b_k] & c_k & f(a_k) & f(b_k) & f(c_k)
+    \begin{array}{l<{\quad}rrrrrr}%{>{$}r<{$}>{$}r<{$}>{$}r<{$}>{$}r<{$}>{$}r<{$}}
+      k &  a_k & b_k & c_k & f(a_k) & f(b_k) & f(c_k)
       \\ \toprule%\mbox{}% \mbox{} for avoiding bug with "["
-      0 & [0,1]  &  0.5 & 3 & -5 & -1.375
+      0 & 0 &1  &  0.5 & 3 & -5 & -1.375
       \\ \noalign{\smallskip}
-      1 &  [0,0.5] &  0.25 & 3 & -1.375 & 0.76
+      1 &  0& 0.5 &  0.25 & 3 & -1.375 & 0.76
       \\ \smallskip
-      2 & [0.25,0.5] & 0.375 & 0.76 & -1.375 & -0.32
+      2 & 0.25 & 0.5 & 0.375 & 0.76 & -1.375 & -0.32
       \\ \smallskip
-      3& [0.25,0.375] & 0.3125 & 0.76 & -0.32 & 0.21
+      3& 0.25 & 0.375 & 0.3125 & 0.76 & -0.32 & 0.21
       \\
       \hfill \vdots \hfill~ & \hfill \vdots \hfill~ &
                                                       \hfill \vdots \hfill~ & \hfill \vdots \hfill~ &
@@ -624,8 +605,7 @@ Así, se tiene el siguiente resultado:
 \begin{proof}
   Los intervalos $[a_k,b_k]$ generados por el método de bisección
   verifican~\eqref{eq:tema1:bisecc:0} y $f(a_k)f(b_k)<0$, por lo tanto
-  todos ellos contienen algún cero. Es decir, existe un cero,
-  $\cero\in [a_k,b_k]$, para todo $k$.
+  todos ellos contienen algún cero $\alpha$.
 
   Por definición del método de bisección, en la iteración $k+1$ se
   tiene que $c_k=a_{k+1}$ o $c_k=b_{k+1}$ y que
@@ -642,34 +622,35 @@ Así, se tiene el siguiente resultado:
   ~
   \begin{itemize}
   \item El teorema~\ref{thm:tema1:bisecc} es válido incluso si $f$
-    tiene \textbf{varios ceros} en $[a,b]$, es decir el método de
-    bisección tiene la importante propiedad de que siempre converge
-    hacia una solución, independientemente de que ésta sea única, y
-    sin más hipótesis sobre $f$ que su continuidad.
-  \item Sin embargo, tiene el inconveniente de que su
-    \textbf{velocidad de convergencia} es lenta. En concreto, se puede
-    demostrar que el método no alcanza el orden $1$, en general
-    (aunque sí en algunos casos particulares) necesitando por tanto
+    tiene \emph{varios ceros} en $[a,b]$. Esto significa una
+    \textbf{ventaja} del método de bisección frente a otras
+    alternativas: siempre converge hacia una solución,
+    independientemente de que ésta sea única, y sin más hipótesis
+    sobre $f$ que su continuidad.
+
+    De hecho, el método de bisección no utiliza ningún tipo de
+    información acerca de la función y, solamente requiere la
+    evaluación de $f$ en los puntos medios de los intervalos. En la
+    práctica, es un método sencillo que puede ser útil como ``método
+    de arranque'' (con el que realizar iteraciones previas antes de
+    pasar a otros métodos de mayor orden), o como base para métodos
+    más eficientes.
+
+  \item Sin embargo, tiene como \textbf{inconveniente} su lenta
+    \textbf{velocidad de convergencia}. En concreto, se puede
+    demostrar que el método no alcanza el orden $1$ en general
+    (aunque sí en algunos casos particulares), necesitando por tanto
     muchas más iteraciones que otros métodos que veremos más tarde.
     Este resultado no es inmediato, se pueden consultar los detalles
     en la bibliografía.
 
     De hecho, la sucesión que genera el método no garantiza siquiera
     que el error se reduzca en todas las iteraciones (podría ocurrir
-    que, en una iteración concreta, $c_k$ es muy cercano a $\alpha$
-    pero $c_{k+1}$, el punto medio del nuevo intervalo, se aleja de
+    que, en una iteración concreta, $c_k$ sea muy cercano a $\alpha$
+    pero $c_{k+1}$, el punto medio del nuevo intervalo, se aleje de
     $\alpha$).
 
 
-  \item A pesar de que el método no tiene un orden de convergencia
-    óptimo (y de hecho no podemos esperar la convergencia en una sola
-    iteración, ni siquiera en el caso en el que $f$ sea lineal),
-    también tiene sus \textbf{ventajas}. El método de bisección no utiliza
-    ningún tipo de información acerca de la función y, solamente es
-    requiere la evaluación de $f$. En la práctica, es un método
-    sencillo y muy útil como ``método de arranque'' (con el que
-    realizar iteraciones previas antes de pasar a otros métodos de
-    mayor orden), o como base para métodos más eficientes.
   \end{itemize}
 \end{remark}
 
@@ -694,10 +675,7 @@ Así, se tiene el siguiente resultado:
 
 \begin{test}[Función ``bisección'']
   El programa~\ref{pro:metodo-biseccion} muestra una implementación
-  del método de bisección, utilizando el lenguaje de programación
-  \textit{Python}, en la que se mejora el
-  Algoritmo~\ref{alg:metodo-biseccion} (minimizando el número de
-  llamadas a $f$). Concretamente, la función
+  del método de bisección. Concretamente, la función
   \pythoninline{biseccion(f, a, b)} calcula una solución
   de~\eqref{eq:raiz} en un intervalo $(a,b)$. A través de parámetros
   opcionales se puede determinar una tolerancia, $\varepsilon$, de
@@ -726,6 +704,585 @@ Así, se tiene el siguiente resultado:
   \caption{Una implementación del método de bisección}
   \label{pro:metodo-biseccion}
 \end{program}
+
+\section{Los métodos de punto fijo}
+\label{sec:metodos-de-punto-fijo}
+
+En este capítulo introducimos un tipo de métodos que son definidos a
+partir de una reformulación de~(\ref{eq:raiz}). Se trata de los
+métodos de punto fijo o de aproximaciones sucesivas.
+Llamamos \resaltar{punto fijo} de una función continua
+$g:I\subset\Rset\to\Rset$ a una solución del siguiente  problema:
+\begin{equation}
+  \tag{$P_{\text{PF}}$}
+  \text{Hallar $\cero\in I$ tal que} \quad \cero=g(\cero).
+  \label{eq:punto-fijo}
+\end{equation}
+
+Geométricamente, una solución de la ecuación $x=g(x)$ se corresponde
+con la abscisa correspondiente a un punto de corte entre la gráfica de
+la función $y=g(x)$ y la recta $y=x$ (ver
+figura~\ref{fig:ejemplo-punto-fijo-1}).
+
+\begin{example}
+  La función $g(x)=2-x^2$ tiene dos puntos fijos en $x=1$ y
+  $x=-2$, pues $g(1)=2-1=1$ y $g(-2)=2-4=-2$. No tiene más puntos
+  fijos en $\Rset$, pues éstos son raíces de $g(x)-x$, que en este
+  caso es un polinomio de grado dos. En la
+  figura~\ref{fig:ejemplo-punto-fijo-1} se representan geométricamente
+  esta función y sus dos puntos fijos.
+\end{example}
+
+\begin{figure}
+  \begin{graficaTikz}[width=18em, height=15em]
+    \begin{axis}[\axisXYmiddle,
+      % legend style = {anchor=north west, pos = north east}]
+      legend pos = outer north east, legend cell align=left]
+      % Draw a curve
+      \addplot[domain=-2.4:2.4, blue, ultra thick, samples=40] {2-x^2};
+      \addplot[domain=-2.5:2.5, gray, ultra thick, samples=40] {x};
+      % Plot a label at curve root
+      \node[coordinate, medium dot, pin=0:{\scriptsize$(1,1)$}]
+      at (axis cs:1,1) {};
+      \node[coordinate, medium dot, pin=-45:{\scriptsize$(-2,-2)$}]
+      at (axis cs:-2,-2) {};
+      \legend {$y=g(x)$,$y=x$};
+    \end{axis}
+  \end{graficaTikz}
+  \caption{Puntos fijos de $g(x)=2-x^2$}
+  \label{fig:ejemplo-punto-fijo-1}
+\end{figure}
+
+Si $\cero$ es una solución de un problema de punto fijo, entonces
+$\cero$ es solución de un problema de cálculo de raíces del
+tipo~(\ref{eq:raiz}) para $f(x)=x-g(x)$. Recíprocamente un problema de
+cálculo de raíces puede ser transformado en un problema del
+tipo~(\ref{eq:punto-fijo}) de numerosas formas, por ejemplo
+escribiendo $g(x)=x-f(x)$ o empleando otro tipo de manipulaciones
+algebraicas (véase el ejemplo~\ref{ex:punto-fijo-1}). Algunas de estas
+transformaciones en ecuaciones de tipo punto fijo pueden dar lugar a
+potentes técnicas iterativas.
+
+A continuación, estudiamos resultados de existencia y unicidad de
+punto fijo.
+
+\begin{proposition}[Existencia de solución de~(\ref{eq:punto-fijo})]
+  \label{pro:existencia-punto-fijo}
+  Sea $g:[a,b]\to\Rset$ una función continua en $[a,b]$ y supongamos
+  que
+  \begin{equation}
+    g([a,b])\subset [a,b].
+    \label{eq:g[a,b].subset.[a,b]}
+  \end{equation}
+  Entonces existe al menos un punto fijo de $g$ en $[a,b]$.
+\end{proposition}
+\begin{proof}
+  Debido a la hipótesis~(\ref{eq:g[a,b].subset.[a,b]}),
+  \begin{extension}
+    La hipótesis~(\ref{eq:g[a,b].subset.[a,b]}) se puede debilitar, en
+    concreto es suficiente que $g(x)$ verifique
+    $$(g(a)-a)(g(b)-b)\le 0$$.
+  \end{extension}
+  $g(a)\ge a$ y
+  $g(b)\le b$, por lo tanto podemos aplicar el teorema de Bolzano
+  (teorema~\ref{thm:bolzano}) a la función $f(x)=x-g(x)$ en $[a,b]$.
+\end{proof}
+
+\subsection*{Funciones contractivas}
+
+Para estudiar la unicidad de solución de~(\ref{eq:punto-fijo}),
+introduciremos la siguiente definición:
+
+\begin{definition}
+  Una función $g$ continua en $[a,b]$ se dice \resaltar{contractiva} en
+  $[a,b]$ si existe $\cteContract\in[0,1)$ tal que
+  \begin{equation*}
+    |g(x)-g(y)| \le \cteContract |x-y|, \quad \forall x,y \in [a,b].
+    \label{eq:contractividad}
+  \end{equation*}
+  A $\cteContract$ se le llama constante de contractividad de $g$ en $[a,b]$.
+  \label{def:funcion.contractiva}
+\end{definition}
+
+\begin{example}
+  La función $g(x)=(x^2-1)/3$ es contractiva en $[-1,1]$, pues
+  $$
+  |g(x)-g(y)|=\left|\frac{x^2-y^2}{3}\right| = \frac{|x+y|}{3}|x-y| \le
+  \cteContract |x-y|,
+  $$
+  para $\cteContract=\max \big\{ \frac{|x+y|}{3}\ /\ x,y\in [-1,1]
+  \big\} =\frac23 <1$.
+\end{example}
+
+\begin{remark}[Algunas propiedades de las funciones contractivas]~
+  \begin{itemize}
+  \item Puesto que $\cteContract<1$, toda función contractiva, $g$, <<contrae las
+    distancias>> en el sentido de que $|g(x)-g(y)|<|x-y|$ para todo
+    $x,y\in [a,b]$.
+  \item Toda función contractiva en $[a,b]$ es
+    uniformemente continua en ese mismo intervalo (es decir, para
+    todo $\varepsilon>0$ existe $\delta>0$ tal que $|x-y|<\delta
+    \Rightarrow |f(x)-f(y)|<\varepsilon$).
+  \end{itemize}
+\end{remark}
+
+\begin{proposition}[Condición suficiente de contractividad]
+  \label{pro:1}
+  Supongamos que $g\in C^0([a,b])$ y derivable en $(a,b)$, tal que
+  \begin{equation}
+    \cteContract=\sup_{x\in(a,b)} |g'(x)|<1.
+    \label{eq:L=sup|g'|<1}
+  \end{equation}
+  Entonces $g$ es contractiva en $[a,b]$ y $\cteContract$ es una
+  constante de contractividad para $g$.
+\end{proposition}
+\begin{proof}
+  Sean $x,y\in [a,b]$, por ejemplo $x<y$. Aplicando el teorema del
+  valor medio en $[x,y]$, deducimos que existe $c\in (x,y)$ tal que
+  \begin{equation*}
+    |g(x)-g(y)|=|g'(c)(x-y)| \le \cteContract |x-y|,
+  \end{equation*}
+  donde $\cteContract$ viene dada por~(\ref{eq:L=sup|g'|<1}).
+\end{proof}
+
+\begin{remark}
+  Si $g'$ es continua en $[a,b]$, es suficiente
+  para~(\ref{eq:L=sup|g'|<1}) que $g'(x)<1$ para todo $x\in[a,b]$.
+  La demostración: $\sup_{x\in(a,b)}|g'(x)| \le \sup_{x\in[a,b]}
+  |g'(x)|$ y, debido al teorema de Weierstrass, $g'$ alcanza su máximo
+  en algún punto $c\in [a,b]$.
+  \label{rk:3}
+\end{remark}
+Es sencillo demostrar que las funciones contractivas no pueden tener
+más de un punto fijo:
+
+\begin{proposition}[Unicidad de solución de~(\ref{eq:punto-fijo})]
+  \label{pro:unicidad-punto-fijo}
+  Sea $g:[a,b]\to\Rset$ una función \emph{contractiva} en
+  $[a,b]$. Entonces $g$ posee, a lo sumo, un punto fijo en $[a,b]$.
+\end{proposition}
+
+\begin{proof}
+  Si suponemos que $g$ tiene dos puntos fijos, $\cero_1$ y
+  $\cero_2$, llegamos inmediatamente a una contradicción:
+  $$
+  |\cero_1-\cero_2| = |g(\cero_1)-g(\cero_2)| \le \cteContract |\cero_1 -
+  \cero_2| < |\cero_1-\cero_2|,$$
+  donde $\cteContract<1$ es la constante de contractividad de $g$.
+\end{proof}
+
+\subsection*{Métodos de punto fijo}
+
+Los problemas de punto fijo~(\ref{eq:punto-fijo}) dan lugar al
+siguiente tipo de esquemas recursivos, conocidos como métodos de
+aproximaciones sucesivas (o simplemente, \resaltar{métodos de punto
+  fijo}):
+\begin{equation}
+  \tag{$M_{\text{AS}}$}
+  \left\{
+    \begin{array}{l}
+      \text{Dado } x_0\in [a,b], \\
+      \text{calcular } x_{k+1}=g(x_k), \quad \forall k\ge 0.
+    \end{array}
+  \right.
+  \label{eq:MAS}
+\end{equation}
+Véase que para que el método esté \textit{bien definido} es necesario
+que $x_k$ se encuentre en el dominio de $g$ para todo $k$.
+El siguiente teorema resume los resultados de existencia y unicidad
+enunciados en las Proposiciones~\ref{pro:existencia-punto-fijo}
+y~\ref{pro:unicidad-punto-fijo}, a la vez que garantiza el buen
+planteamiento y la convergencia de~(\ref{eq:MAS}) bajo las hipótesis
+de aquellas proposiciones.
+
+\begin{theorem}[Teorema del punto fijo de Banach]
+  \label{thm:punto-fijo-Banach}
+  Sea $g:[a,b]\to\Rset$ tal que $g([a,b]) \subset [a,b]$ y supongamos
+  que $g$ es contractiva en $[a,b]$ con constante de contractividad
+  $\cteContract\in [0,1)$. Entonces:
+  \begin{enumerate}
+  \item
+    \label{item:punto-fijo-Banach:1}
+    La función $g$ tiene un \textsf{único punto fijo}, $\cero$, en
+    $[a,b]$.
+  \item
+    \label{item:punto-fijo-Banach:2}
+    Para todo $x_0\in [a,b]$, el método~(\ref{eq:MAS}) está bien
+    definido y es \textsf{convergente} hacia $\alpha$.
+  \item En cada etapa de~(\ref{eq:MAS}) se tienen las siguientes
+    \textsf{estimaciones} del error absoluto:
+    \label{item:punto-fijo-Banach:3}
+    \begin{align}
+      \label{eq:pto-fijo:cota-a-priori}
+      |x_k-\cero| &\le \cteContract^k |x_0-\cero|,
+      \\
+      \label{eq:pto-fijo:cota-a-posteriori}
+      |x_k-\cero| &\le \frac{\cteContract}{1-\cteContract}
+                    |x_k-x_{k-1}| \le \dots \le
+                    \frac{\cteContract^k}{1-\cteContract}
+                    |x_1-x_0|.
+    \end{align}
+  \end{enumerate}
+\end{theorem}
+
+La acotación~(\ref{eq:pto-fijo:cota-a-priori}) llama
+\textit{estimación a priori}, mientras que
+las acotaciones del tipo~(\ref{eq:pto-fijo:cota-a-posteriori}) conocen como
+\textit{estimación a posteriori} del error.
+
+\begin{proof}~\par
+  El punto~\ref{item:punto-fijo-Banach:1} resulta
+  directamente de las Proposiciones~\ref{pro:existencia-punto-fijo}
+  y~\ref{pro:unicidad-punto-fijo}. Respecto al
+  punto~\ref{item:punto-fijo-Banach:2}, para cualquier $x_0\in [a,b]$,
+  el método iterativo está bien definido, ya que para $k>1$,
+  $x_{k}=g(x_{k-1})$ y $g([a,b])\subset [a,b]$. Acerca de la
+  convergencia, dado $x_0\in [a,b]$ podemos aplicar repetidamente la
+  función $g$ obteniendo:
+  \begin{equation}
+    \begin{aligned}
+      |x_k-\cero| = &|g(x_{k-1})-g(\cero)| \le \cteContract
+      |x_{k-1}-\cero| = \\
+      = \cteContract &|g(x_{k-2})-g(\cero)| \le \cteContract^2
+      |x_{k-2}-\cero| \le \cdots \le \cteContract^k |x_0-\cero|.
+    \end{aligned}\label{eq:1}
+  \end{equation}
+  Así se tiene la estimación a
+  priori~(\ref{eq:pto-fijo:cota-a-priori}) y, como
+  $\lambda<1$, podemos concluir que $x_k\to\cero$.
+  %
+  La demostración la estimación~(\ref{eq:pto-fijo:cota-a-posteriori})
+  es algo más técnica y se relega a una nota a pie de página\footnote{
+    Para probar~(\ref{eq:pto-fijo:cota-a-posteriori}) comenzamos con
+    un razonamiento análogo al anterior. Utilizando que $g$ es
+    contractiva (y que $x_k\in [a,b]$ para todo $k\ge 0$) tenemos que
+    para todo $n \ge 0$:
+    \begin{equation*}
+      |x_{n+1}-x_{n}| =
+      |g(x_{n})-g(x_{n-1})|\le\cteContract|x_{n}-x_{n-1}| \le \cdots \le \cteContract^n|x_1-x_0|.
+    \end{equation*}
+    Sean $k,n\in\Nset$, con $n>k$. Lo anterior junto a la
+    desigualdad triangular implican:
+    \begin{align*}
+      |x_n-x_k| &\le |x_n-x_{n-1}| + |x_{n-1}-x_{n-2}| + \cdots +
+                  |x_{k+2}-x_{k+1}| + |x_{k+1}-x_{k}|
+      \\
+                &\le \left(\cteContract^{n-k} + \cteContract^{n-k+1} +\cdots+
+                  \cteContract^{2} + \cteContract \right) |x_k-x_{k-1}|
+      \\
+                &=\left(\frac{\cteContract-\cteContract^{n-k+1}}{1-\cteContract}\right)
+                  |x_{k}-x_{k-1}|.
+    \end{align*}
+    Tomando $n\to+\infty$ en los dos miembros de la desigualdad
+    anterior, $x_n\to\alpha$ y $\lambda^{n-k+1}\to 0$, así:
+    $$
+    |x_k-\cero| \le \frac{\cteContract}{1-\cteContract}
+    |x_{k}-x_{k-1}|.
+    $$
+    Y aplicando reiteradamente la contractividad, se obtienen las
+    demás desigualdades de~(\ref{eq:pto-fijo:cota-a-posteriori}).
+  }.
+\end{proof}
+
+\begin{algorithm} \begin{python}
+    def punto_fijo(g, x0, tol, max_iters):
+    iter = 0
+    while iter < max_iters:
+    x1 = g(x0)
+    if abs(x1-x0) < tol: return x1
+    x0 = x1
+    iter = iter + 1
+    print "Fallo de convergencia en el método de punto fijo!"
+  \end{python}
+  \caption{Método de punto fijo (o de las aproximaciones sucesivas)}
+  \label{alg:metodo-punto_fijo}
+\end{algorithm}
+
+\begin{remark}
+  En la práctica, la estimación a
+  posteriori~(\ref{eq:pto-fijo:cota-a-posteriori}) garantiza la
+  acotación del error de truncamiento, de forma que éste se hará
+  pequeño siempre que realicemos iteraciones de~(\ref{eq:MAS}) hasta
+  que el error entre dos iteraciones consecutivas sea pequeño (en
+  concreto, si $|x_{k+1}-x_k|<\delta$, donde $\delta$ es una
+  tolerancia prefijada, entonces
+  $|x_{k+1}-\alpha|<\epsilon=\delta\cdot\lambda/(1-\lambda)$). Véase al
+  algoritmo~\ref{alg:metodo-punto_fijo}.
+  \label{rk:pto-fijo:estimacion-error}
+\end{remark}
+
+\begin{example}
+  Nos proponemos el formular en términos de problemas de punto fijo el
+  cálculo de todos los ceros de $f(x)=\sen(x)-4x^2+1$.
+
+
+  \textsf{Primera etapa:} Determinar cuántos ceros son y en qué
+  intervalos se encuentran. Como $f$ es continua y derivable en todo
+  $\Rset$, utilizaremos el algoritmo de separación de ceros enunciado
+  en la observación~\ref{rk:tema1:separac-ceros}.
+  \begin{enumerate}
+  \item Debemos primero localizar los ceros de la primera
+    derivada, planteando $f'(x)=\cos(x)-8x=0$, problema cuya solución
+    no es inmediata.
+  \item Aun así, aprovecharemos que $f'(x)$ es a su vez continua y
+    derivable, con $f''(x)=-\sin(x)-8$. Como $f''(x)<0$ para todo
+    $x\in\Rset$, el corolario~\ref{cor:tema1:exist+unic} (aplicado a
+    $f'$) implica que $f'$ tiene un único cero en $\Rset$.
+  \item Usando de nuevo el
+    corolario~\ref{cor:tema1:exist+unic}, aplicado en esta ocasión a
+    $f$, concluimos que $f$ tiene exactamente dos ceros en $\Rset$
+    (separados por el cero de $f'$).
+  \item Por último, el teorema de Bolzano nos permitirá determinar dos
+    intervalos $[a_1,b_1]$ y $[a_2,b_2]$ que contengan estos dos
+    ceros. Podemos proceder al análisis de las regiones donde $f$ es
+    positiva y negativa, o bien utilizar un programa de ordenador para
+    representar la gráfica como ayuda. En cualquier caso, tendremos
+    que probar con distintos intervalos hasta encontrar aquellos en
+    los que se verifique el Teorema de Bolzano (y más adelante, las
+    hipótesis del Teorema de punto fijo). En este caso, una primera
+    elección, válida para el Teorema de Bolzano es:
+    \begin{itemize}
+    \item $[a_1,b_1]=[0, \pi/2]$, pues $f(0)=1>0$ y $f(\pi/2)= 1-\pi^2+1<0$
+    \item $[a_l,b_2]=[-\pi/2, 0]$, pues $f(-\pi/2)=-1-\pi^2+1<0$ y
+      $f(0)>0$,
+    \end{itemize}
+    % El problema es que la función de punto fijo $g_1$ que definiremos
+    % más abajo no es derivable en $x=-\pi/2$. Por ello, restringiremos
+    % este intervalo, definiéndolo tal y como sigue:
+    % \begin{itemize}
+    % \item $[a_1,b_1]=[-\pi/4, 0]$. Seguimos estando en las hipótesis
+    %   del Teorema de Bolzano, pues $f(-\pi/4)=
+    %   -\sqrt{2}/2-\pi^2+1=--9.5767...<0$ y $f(0)=1>0$,
+    % \end{itemize}
+  \end{enumerate}
+
+  \textsf{Segunda etapa}: intentamos reescribir, en cada uno de estos
+  intervalos, el problema en términos de un esquema de punto fijo que
+  esté en las hipótesis del teorema~\ref{thm:punto-fijo-Banach}. Para
+  ello, podemos proceder de muchas formas, por ejemplo tomar
+  $g(x)=f(x)+x$ o bien intentar despejar $x $ en la ecuación,
+  $\sen(x)-4x^2+1=0$. En este caso, optamos por esta última
+  posibilidad, llegando a $x=\pm \frac 12 \sqrt{1+\sen(x)}$.
+  \begin{itemize}
+  \item En $[a_1,b_1]=[0, \pi/2]$, definiremos el
+    problema de punto fijo
+    $$
+    x=g_1(x)=+\dfrac 12 \sqrt{1+\sen(x)}.
+    $$
+    La función $g_1$ está bien definida (pues $1+\sen(x)\ge 0$) y es
+    continua en todo $\Rset$. Veamos que está en las hipótesis del
+    teorema de punto fijo. En primer lugar,
+    \begin{equation}
+      g_1'(x)=\frac{\cos(x)}{4\sqrt{1+\sen(x)}},
+      \label{eq:6}
+    \end{equation}
+    que está bien definida para todo $x\in[0, \pi/2]$, ya que
+    $\sen(x)\ge 0$ en este intervalo. Además:
+    \begin{enumerate}
+    \item $g_1([0,\pi/2])\subset [0,\pi/2]$:
+      \begin{itemize}
+      \item $g_1(0)=1/2 \in [0, \pi/2],$
+      \item $g_1(\pi/2)= \frac12 \sqrt{1+\sen(\pi/2)}=\frac{\sqrt 2}2 \in
+        [0, \pi/2]$ (pues $\sqrt 2 < 2 < \pi$)
+
+      \item $g_1$ es monótona (en concreto, creciente) en $[0,\pi/2]$:
+        En efecto, como $\cos(x)\ge 0$ si $x\in
+        [0, \pi/2]$, $g_1'(x)\ge 0$ en este intervalo (ver~(\ref{eq:6})).
+      \end{itemize}
+      Por lo tanto,
+      $g([0, \pi/2]) \subset [0, \pi/2]$.
+    \item Veamos que $g_1$ es contractiva en $[0,\pi/2]$, para lo que
+      es suficiente que
+      $$|g'(x)|<1 \forall x\in [0, \pi/2]$$
+      (ver la
+      observación~\ref{rk:3}). Como $\sen(x)$ es creciente en
+      $[0, \pi/2]$, en este intervalo se verifica que
+      $$4\sqrt{1+\sen(x)}\ge 4\sqrt{1+\sen(0)}=4,$$
+      así
+      $$
+      \left|g'(x)\right| = \frac{|\cos{x}|}{4\sqrt{1+\sen(x)}} \le
+      \frac{1}{4\sqrt{\sen(x)+1}} \le \frac 1 4 < 1.
+      $$
+      En concreto, como constante de contractividad podemos escoger
+      $$\lambda=\frac 1 4.$$
+    \end{enumerate}
+    % \item En $[a_1,b_1]=[-\pi/4, 0]$, como $x<0$, definiremos el
+    %   problema de punto fijo
+    %   $$
+    %   x=g_1(x)=-\dfrac 12 \sqrt{1+\sen(x)}.
+    %   $$
+    %   La función $g_1$ está bien definida (pues $1+\sen(x)\ge 0$) y es
+    %   continua en todo $\Rset$. Veamos que está en las hipótesis del
+    %   teorema de punto fijo. En primer lugar,
+    %   $$
+    %   g_1'(x)=\frac{-\cos(x)}{4\sqrt{1+\sen(x)}},
+    %   $$
+    %   que está bien definida para todo $x\in[-\pi/4, 0]$, ya que
+    %   $\sen(x)>-1$ en este intervalo. Además:
+    %   \begin{enumerate}
+    %   \item $g_1([a_1,b_1])\subset [a_1,b_1]$: En efecto, $g_1$ es
+    %     decreciente en $[-\pi/4,0]$ (pues $\cos(x)\ge 0$ si $x\in
+    %     [-\pi/4, 0]$ y por tanto $g_1'(x)\le 0$ en este intervalo).
+    %     Como
+    %     \begin{align*}
+    %       g_1(-\pi/4)&= -\frac12 \sqrt{1+\sen(-\pi/4)}=-0.270...\in
+    %       [-\pi/4,0]=[-0.785...,0],
+    %       \\
+    %       g_1(0)&=-1/2 \in [-\pi/4,0],
+    %     \end{align*}
+    %     se tiene que $g([-\pi/4,0])\subset
+    %     [g(0),g(-\pi/4)] \subset [-\pi/4,0]$.
+    %   \item Veamos que $g_1$ es contractiva en $[a_1,b_1]$, para lo que es
+    %     suficiente que $|g'(x)|<1$ en $[a_1,b_1]=[-\pi/4,0]$ (según la
+    %     proposición~\ref{pro:1} y a la observación~\ref{rk:3}).  Como
+    %     $\sen(x)$ es creciente en $[-\pi/4,0]$, en este intervalo se
+    %     verifica que
+    %     $$4\sqrt{1+\sen(x)}\ge 4\sqrt{1+\sen(-\pi/4)}=2.164... >1,$$
+    %     así
+    %     $$
+    %     \left|g'(x)\right| = \frac{|\cos{x}|}{4\sqrt{1+\sen(x)}} \le
+    %     \frac{1}{4\sqrt{\sen(x)+1}} < 1.
+    %     $$
+    %   \end{enumerate}
+  \item En $[a_2,b_2]=[-\pi/2,0]$ podemos proceder de forma similar,
+    tomando $$g_2(x)=-\frac 12 \sqrt{1+\sen(x)}$$
+    (necesitamos el signo
+    negativo porque queremos que $g([-\pi/2,0])\subset\Rset^{-}$).
+
+    Pero en el intervalo $[-\pi/2,0]$ tenemos una dificultad
+    adicional, que aparecerá al considerar la derivada en este
+    intervalo:
+    $$
+    g_2'(x)=\frac{-\cos(x)}{4\sqrt{1+\sen(x)}},
+    $$
+    En efecto, como $\sen(-\pi/2)=-1$, el denominador se hace cero en
+    $[-\pi/2,0]$, por lo tanto la derivada no está bien definida.
+
+    Este problema se resuelve fácilmente: basta considerar cualquier
+    intervalo cuyo extremo izquierdo sea mayor que $-\pi/2$. Por
+    ejemplo, redefinimos el intervalo como
+    $$[a_2,b_2]=[-\pi/4,0].$$
+    Procediendo como antes, demostraríamos que
+    $g_2([-\pi/4,0])\subset[-\pi/4,0]$ y $g_2$ es contractiva en este
+    intervalo, por lo que $g_2$ está en las hipótesis del Teorema del
+    punto fijo en $[a_2,b_2]$. El desarrollo de este apartado se deja
+    como ejercicio al lector.
+  \end{itemize}
+  La \textsf{tercera y última etapa} consistiría en
+  aplicar~(\ref{eq:MAS}) para aproximar las soluciones en cada uno de
+  los dos intervalos. Por ejemplo, el siguiente código muestra el
+  resultado de aplicar el programa~\ref{pro:metodo-puntofijo}
+  a la función $g_1$ anterior (partiendo de $x_0=1$):
+  \pythonexternal{tema1/src/puntofijo-test1.py}
+  \begin{pythonoutput}
+    \pythonexternal[backgroundcolor=\color{white},title={Resultado}]{tema1/src/puntofijo-test1.out}
+  \end{pythonoutput}
+  \label{ex:punto-fijo-1}
+  \begin{program}
+    \widepythonexternal{tema1/src/puntofijo.py}
+    \caption{Una implementación en lenguaje Python del método de
+      aproximaciones sucesivas para el cálculo un punto fijo $x=g(x)$}
+    \label{pro:metodo-puntofijo}
+  \end{program}
+
+  Si tenemos en cuenta que, como vimos anteriormente, podemos tomar
+  $\lambda=1/4$ como constante de contractividad, podemos usar la
+  estimación a posteriori para acotar el error. En efecto, tomando
+  $k=6$ en la primera desigualdad
+  de~(\ref{eq:pto-fijo:cota-a-posteriori}) y usando el hecho que
+  $$
+  |x_{6}-x_{5}| \simeq 6.12623522578 \cdot 10^{-7},
+  $$
+  llegamos a que el error para la aproximación $x_6=1.40962396703$ verifica:
+  $$
+  |x_6-\cero| \le \frac{\cteContract}{1-\cteContract}
+  |x_6-x_{5}|
+  \simeq \frac{1}{3}\; 6.12623522578 \cdot 10^{-7}.
+  $$
+  Por último: utilizando las estimaciones a
+  posterior~(\ref{eq:pto-fijo:cota-a-posteriori}) podríamos responder,
+  realizando una sola iteración, a la siguiente pregunta: ¿cuántas
+  iteraciones son necesarias para garantizar que el error sea menor que
+  $10^{-15}$? El desarrollo de la respuesta queda como ejercicio
+  propuesto.
+\end{example}
+
+
+\begin{remark}[Orden uno de~(\ref{eq:MAS})]
+  En las hipótesis del Teorema~\ref{thm:punto-fijo-Banach} los métodos
+  de punto fijo tienen \resaltar{orden de convergencia (al menos)
+    uno}. En efecto, razonando de manera similar a la demostración del
+  teorema anterior:
+  $$
+  |x_{k+1}-\cero|=|g(x_{k})-g(\cero)|\le\cteContract |x_{k}-\cero|.
+  $$
+  Y según la definición~\ref{def:orden-convergencia-al-menos-p}, esta
+  desigualdad significa que el método de punto fijo tiene orden (al
+  menos) $p=1$ (con constante $\lambda<1$).
+\end{remark}
+\begin{remark}[Orden $p$ de~(\ref{eq:MAS})]
+  Para hipótesis más restrictivas sobre $g$ se puede llegar a
+  \resaltar{orden mayor que uno}. En concreto, se puede demostrar
+  que si~(\ref{eq:MAS}) converge a un punto fijo, $\cero$, y si
+  $g\in C^p([a,b])$ siendo $p \ge 1$ un entero, con
+  \begin{extension}
+    (En el caso $p=1$ es necesario exigir $g'(\cero)<1$).
+  \end{extension}
+  \begin{equation*}
+    g'(\cero)=g''(\cero)=\cdots=g^{p-1)}(\cero)=0, \quad
+    g^{p)}(\cero)\neq 0,
+  \end{equation*}
+  entonces~(\ref{eq:MAS}) tiene orden exactamente $p$.
+  \begin{extension}
+    (Siempre que no ocurra que $x_k=\alpha\ \forall k\ge k_0$).
+  \end{extension}
+  La demostración se basa en un desarrollo de Taylor de $g$ hasta
+  orden $p$.
+  \label{rk:MAS.orden.p}
+\end{remark}
+%     % \subsection{Ejemplos}
+Para terminar, mostramos un resultado que garantiza la convergencia
+de~(\ref{eq:MAS}) hacia un punto fijo conocido, sin utilizar hipótesis
+globales sobre el intervalo. En concreto, en el siguiente teorema
+solamente se utilizan hipótesis locales sobre la derivada de $g$.
+
+\begin{theorem}[Convergencia local de los métodos de punto fijo]
+  \label{thm:punto-fijo-convergencia-local}
+  Sea $\cero$ un punto fijo de una función $g$. Supongamos que existe
+  $\delta>0$ tal que $g\in C^1(\cero-\delta,\cero+\delta)$ y que
+  $|g'(\cero)|<1$. Entonces:
+  \begin{enumerate}
+  \item Existe $\rho\in (0,\delta)$ tal que método de punto
+    fijo~(\ref{eq:MAS}) está bien definido y converge hacia $\cero$
+    (para cualquier inicialización $x_0 \in [x_0-\rho,x_0+\rho]$).
+  \item Existe una constante de contractividad $\lambda\in [0,1)$ (que
+    depende de $\rho$ y $|g'(\cero)|$) para la que se verifican las
+    estimaciones a priori~(\ref{eq:pto-fijo:cota-a-priori}) y a
+    posteriori(\ref{eq:pto-fijo:cota-a-posteriori}) en
+    $[x_0-\rho,x_0+\rho]$.
+  \end{enumerate}
+\end{theorem}
+\begin{proof}
+  Simplemente tenemos que aplicar el
+  teorema~\ref{thm:punto-fijo-Banach} (Teorema del punto fijo) en un
+  intervalo adecuado $[x_0-\rho,x_0+\rho]$. En concreto, como
+  $g'(\cero)<1$ y $g \in C^1(\cero-\delta,\cero+\delta)$, podemos
+  asegurar que para algún $\rho\in(0,\delta)$,
+  $$
+  |g'(x)|<1 \quad \forall x\in [\cero-\rho, \cero+\rho],
+  $$
+  luego $g$ es contractiva en $[\cero-\rho, \cero+\rho]$ (debido a
+  la proposición~\ref{pro:1} y a la observación~\ref{rk:3}), con
+  constante $\lambda<1$.
+
+  Además es fácil ver que $g([\cero-\rho, \cero+\rho]) \subset
+  [\cero-\rho, \cero+\rho]$, pues si $x\in[\cero-\rho, \cero+\rho]$
+  se tiene $ |x-\cero|<\rho$ y por tanto
+  $$
+  |g(x)-\cero| = |g(x)-g(\cero)| \le \lambda |x-\cero|< \rho
+  \Rightarrow g(x)\in [\cero-\rho, \cero+\rho].
+  $$
+\end{proof}
 
 %%% Local Variables:
 %%% mode: latex

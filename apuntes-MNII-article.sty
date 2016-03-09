@@ -69,7 +69,7 @@ marginparwidth=3.5cm
   roundcorner = 10}
 \mdfdefinestyle{propositionstyle}{%
   linecolor=gray,
-  backgroundcolor = blue!2!white}
+  backgroundcolor = blue!3!green!50!red!2!white}
 
 \RequirePackage{amsthm}
 \theoremstyle{plain} % italic, extra space above and below
@@ -133,7 +133,7 @@ plainpages=false % To avoid bug with \frontmatter et al
 \newcounter{problem}
 
 \newenvironment{EjerciciosResueltos}
-{\section{Ejercicios Resueltos}%
+{\subsection{Ejercicios Resueltos}%
   \newcommand{\problema}{%
     \stepcounter{problem}%
     \paragraph{Ejercicio \theproblem.}}%
@@ -142,7 +142,7 @@ plainpages=false % To avoid bug with \frontmatter et al
 {}
 
 \newenvironment{EjerciciosPropuestos}
-{\section{Ejercicios Propuestos}\newcommand{\problema}{\item}\begin{enumerate}}
+{\subsection{Ejercicios Propuestos}\newcommand{\problema}{\item}\begin{enumerate}}
   {\end{enumerate}}
 
 % Captions: changing the font size

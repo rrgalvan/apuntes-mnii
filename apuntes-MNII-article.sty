@@ -10,6 +10,7 @@
 \setlength{\headsep}{1.4cm}
 \setlength{\footskip}{0.9cm}
 \RequirePackage{marginnote}
+\RequirePackage{wasysym} % For \Circle
 \usepackage[
 %% Configuración en a4 on márgenes anchos
 hmargin={2.9cm,3.9cm}, vmargin={3.9cm,3.4cm},
@@ -97,12 +98,12 @@ marginparwidth=3.5cm
 \newtheorem{RemarkWithQed}[theorem]{Observación}
 \newenvironment{remark}
 {\RemarkWithQed}
-{\qed\endRemarkWithQed}
+{~\hfill$\lozenge$\endRemarkWithQed}
 % And also examples
 \newtheorem{ExampleWithQed}[theorem]{Ejemplo} % Default: append \qed
 \newenvironment{example}
 {\ExampleWithQed}
-{\qed\endExampleWithQed}
+{\mbox{}~\hfill$\Circle$\endExampleWithQed}
 
 \newcommand{\resaltar}[1]{\textbf{#1}}
 

@@ -297,14 +297,16 @@ de mayor orden.
   f.c. $I_n(f)$ de orden $\ge n$.
 
   \punto{2} Veamos que esta única f.c. de orden $\ge n$ coincide con
-  la f.c.t.i. correspondiente a $\{x_i\}_{i=0}^n$. Para ello, basta
+  la f.c.t.i. correspondiente. Por unicidad, basta
   comprobar que la f.c.t.i. definida sobre nodos $\{x_i\}_{i=0}^n$
-  tiene orden al menos $n$.
-  Pero esto es evidente: sea $I_n(f)=\int_a^b p_n(x)\, dx$ donde $p_n$
-  interpola a $f$ en los nodos $\{x_i\}_{i=0}^n$. Si $f(x)=p(x)$ es un
-  polinomio de grado $\le n$, entonces su polinomio de interpolación
-  de Lagrange es $p_n(x)=p(x)$ (por unicidad), por tanto
-  $E_n(p)=\int_a^b p(x)\,dx - \int_a^b p_n(x)\,dx =0$.
+  tiene orden al menos $n$, es decir verifica $E_n(p)=0$ para todo
+  polinomio $p$ de grado $n$.
+
+  Pero esto es evidente: $p(x)$ es un polinomio de grado $\le n$,
+  entonces su polinomio de interpolación de Lagrange es $p_n(x)=p(x)$
+  (por unicidad).  Y por ser la fórmula de tipo interpolatorio,
+  $I_n(p)=\int_a^b p(x)\,dx$, luego
+  $$E_n(p)=\int_a^b p(x)\,dx - \int_a^b p_n(x)\,dx =0.$$
 \end{proof}
 
 \begin{remark}
@@ -392,261 +394,261 @@ nos indica cuál es exactamente la velocidad de convergencia:
   E_n(f)&=O(h^{n+2}),
   %
           \intertext{donde estamos usando la notación, para toda función $g(x)$,}
-          \label{eq:def.O(h^m)}
+          \label{eq:def.O(hm)}
           %
           \ g(h)=O(h^m) \quad&\Longleftrightarrow\quad\lim_{h\to 0} \frac{g(h)}{h^m}=C
                                \qquad \text{($C\in \Rset$ constante)}.
 \end{align}
 
-Por este motivo, en la práctica se suelen utilizar f.c. compuestas, en
+Por este motivo, en la práctica se suelen utilizar f.c.\ compuestas, en
 las que dividimos $[a,b]$ en subintervalos de integración de modo que
 $h\to 0$.
 
-% \section{Fórmulas de Newton-Côtes}
-% \label{sec:formulas-de-newton}
+\section{Fórmulas de Newton-Côtes}
+\label{sec:formulas-de-newton}
 
-% \begin{definition}
-%   \label{def:1}
-%   Se denomina fórmula de cuadratura de Newton-Côtes (abreviadamente
-%   N-C) a toda aquella f.c.t.i cuyos nodos se encuentran
-%   uniformemente espaciados (es decir, $x_{i}-x_{i-1}=h$ para todo
-%   $i=1,\dots,n$, para $h\in\Rset$ dado). Distinguimos dos tipos:
-%   \begin{itemize}
-%   \item Fórmulas cerradas: aquellas en las que
-%     \begin{align*}
-%       x_0=a, \quad x_n=b, \quad x_i=x_0 + i h,
-%       \quad
-%       \text{con }  h=\frac{b-a}{n}.
-%     \end{align*}
-%   \item Fórmulas abiertas: aquellas en las que
-%     \begin{align*}
-%       x_0=a+h, \quad x_n=b- h, \quad x_i=x_0 + i h,
-%       \quad
-%       \text{con }  h=\frac{b-a}{n+2}.
-%     \end{align*}
-%   \end{itemize}
-% \end{definition}
+\begin{definition}
+  \label{def:1}
+  Se denomina fórmula de cuadratura de Newton-Côtes (abreviadamente
+  N-C) a toda aquella f.c.t.i cuyos nodos se encuentran
+  uniformemente espaciados (es decir, $x_{i}-x_{i-1}=h$ para todo
+  $i=1,\dots,n$, para $h\in\Rset$ dado). Distinguimos dos tipos:
+  \begin{itemize}
+  \item Fórmulas cerradas: aquellas en las que
+    \begin{align*}
+      &h=\frac{b-a}{n}, \\
+      &x_0=a, \quad x_n=b, \quad x_i=x_0 + i h.
+    \end{align*}
+  \item Fórmulas abiertas: aquellas en las que
+    \begin{align*}
+      &h=\frac{b-a}{n+2}, \\
+      &x_0=a+h, \quad x_n=b- h, \quad x_i=x_0 + i h.
+    \end{align*}
+  \end{itemize}
+\end{definition}
 
-% \begin{theorem}
-%   \label{thm:error.formulas-nc}
-%   Sea $I_n$ una f.c.t.i. sobre $n+1$ puntos equiespaciados en
-%   $[a,b]$. Supongamos que $f\in C^k([a,b])$, donde $k=n+2$ si $n$ es par
-%   y $k=n+1$ si $n$ es impar. Entonces, existe $\xi\in(a,b)$ tal que
-%   \begin{equation}
-%     \label{eq:error-formulas-nc}
-%     E_n(f)=\int_a^bf(x)\,dx - I_n(f)
-%     = \gamma_n \frac{h^{k+1}}{k!}f^{k)}(\xi),
-%   \end{equation}
-%   siendo:
-%   \begin{itemize}
-%   \item Si $I_n$ es una fórmula cerrada: $h=(b-a)/n$ y
-%     \begin{align*}
-%       \text{ si $n$ es par }
-%       \gamma_n=\int_0^n t \Pi_n(t) dt,
-%       \quad \text{si $n$ es impar }
-%       \gamma_n=\int_0^n \Pi_n(t) dt.
-%     \end{align*}
-%   \item Si $I_n$ es una fórmula abierta: $h=(b-a)/(n+2)$ y
-%     \begin{align*}
-%       \text{si $n$ es par }
-%       \gamma_n=\int_{-1}^{n+1} t \Pi_n(t) dt,
-%       \quad \text{si $n$ es impar }
-%       \gamma_n=\int_{-1}^{n+1} \Pi_n(t) dt.
-%     \end{align*}
-%   \end{itemize}
-%   En lo anterior se ha usado la notación:
-%   $\Pi_n(t)=(t)=t(t-1)(t-2)\cdots (t-n)$.
-% \end{theorem}
+\begin{theorem}
+  \label{thm:error.formulas-nc}
+  Sea $I_n$ una f.c.t.i. sobre $n+1$ puntos equiespaciados en
+  $[a,b]$. Supongamos que $f\in C^k([a,b])$, donde $k=n+2$ si $n$ es par
+  y $k=n+1$ si $n$ es impar. Entonces, existe $\xi\in(a,b)$ tal que
+  \begin{equation}
+    \label{eq:error-formulas-nc}
+    E_n(f)=\int_a^bf(x)\,dx - I_n(f)
+    = \gamma_n \frac{h^{k+1}}{k!}f^{k)}(\xi).
+  \end{equation}
+  Los coeficientes $h$ y $\gamma_n$ están definidos como:
+  \begin{itemize}
+  \item Si $I_n$ es una fórmula cerrada: $h=(b-a)/n$ y
+    \begin{align*}
+      \text{ si $n$ es par }
+      \gamma_n=\int_0^n t \Pi_n(t) dt,
+      \quad \text{si $n$ es impar }
+      \gamma_n=\int_0^n \Pi_n(t) dt.
+    \end{align*}
+  \item Si $I_n$ es una fórmula abierta: $h=(b-a)/(n+2)$ y
+    \begin{align*}
+      \text{si $n$ es par }
+      \gamma_n=\int_{-1}^{n+1} t \Pi_n(t) dt,
+      \quad \text{si $n$ es impar }
+      \gamma_n=\int_{-1}^{n+1} \Pi_n(t) dt.
+    \end{align*}
+  \end{itemize}
+  En lo anterior se ha usado la notación:
+  $\Pi_n(t)=(t)=t(t-1)(t-2)\cdots (t-n)$.
+\end{theorem}
 
-% La demostración del teorema anterior puede encontrarse en la
-% bibliografía (véase [Isaacson \& Keller]).%   En adelante, escribiremos
-% % $h$ en vez de $\widehat h$ siempre y cuando no haya posibilidad de
-% % confusión.
+La demostración puede encontrarse en la
+bibliografía (véase [Isaacson \& Keller]).%   En adelante, escribiremos
+% $h$ en vez de $\widehat h$ siempre y cuando no haya posibilidad de
+% confusión.
 
-% \begin{remark}~
-%   \label{rk:7}
-%   \begin{enumerate}
-%   \item Las constantes $\gamma_n$ no dependen del intervalo $[a,b]$ ni
-%     de $f$, de forma que pueden calcularse una sola vez para poder
-%     utilizarse cuando sea necesario.
-%   \item Según la expresión~(\ref{eq:error-formulas-nc}), el error de
-%     una fórmula de Newton-Côtes es cero para polinomios de grado menor
-%     o igual a $k-1$, debido a que $f^{k)}(x)\equiv 0$ si
-%     $f\in\Pol_{k-1}[x]$. Como $k=n+2$ ó $n+1$ tenemos:
-%     \begin{enumerate}
-%     \item Si $n$ es \textit{par}, las fórmulas de N--C son de
-%       orden $n+1$ (un grado superior a lo esperado).
-%     \item Si $n$ es \textit{impar}, las fórmulas de N--C son de
-%       orden $n$.
-%     \end{enumerate}
-%   \item Fijado un número de puntos, las fórmulas de N-C abiertas y
-%     cerradas tienen el mismo orden, pues aparece el mismo grado de
-%     derivación en la expresión de
-%     error~(\ref{eq:error-formulas-nc}). Pero no hay que olvidar que el
-%     valor de $h$ difiere entre fórmulas abiertas y cerradas. Así:
-%     \begin{itemize}
-%     \item Fijado un número de puntos, $n+1$, en un intervalo,
-%       $[a,b]$, el paso $h$ será más pequeño en las fórmulas de N-C
-%       abiertas, lo que supone una ventaja (aunque las constantes
-%       $\gamma_n$ pueden ser mayores en valor absoluto).
-%     \item Sin embargo, si en vez del número de puntos fijamos un paso
-%       $h$ en un intervalo de integración $[a,b]$, la fórmula de N-C
-%       cerrada contendrá un número mayor de puntos (los dos extremos
-%       del intervalo) y por tanto será exacta para polinomios de mayor
-%       orden. Por ejemplo, si fijamos $h=(b-a)/2$, Entonces:
-%       \begin{enumerate}
-%       \item La fórmula cerrada contiene los puntos $x_0=a$, $x_1=a+h$,
-%         $x_2=b$. Así $n=2$ (de hecho ésta es la fórmula de Simpson, de
-%         orden $3$).
-%       \item La fórmula abierta contiene solamente el punto $x_0=a+h$.
-%         Así $n=0$ (fórmula del punto medio, de orden $1$).
-%       \end{enumerate}
-%     \end{itemize}
+\begin{remark}~
+  \label{rk:7}
+  \begin{enumerate}
+  \item Las constantes $\gamma_n$ no dependen del intervalo $[a,b]$ ni
+    de $f$, de forma que pueden calcularse una sola vez para
+    utilizarse cuando sea necesario.
+  \item Utilizando la expresión del error~(\ref{eq:error-formulas-nc})
+    podemos deducir\footnote{Según~(\ref{eq:error-formulas-nc}), el
+      error de una fórmula de Newton-Côtes es cero para polinomios de
+      grado $i\le k-1$, pues $f^{k)}\equiv 0$ siempre que
+      $f\in\Pol_{i}[x]$ con $i\le k-1$.} que las fórmulas de
+    Newton-Côtes tienen orden $k-1$. Por tanto:
+    \begin{enumerate}
+    \item Si $n$ es \textit{impar}, las fórmulas de N--C son de
+      orden $k-1 = n$.
+    \item Si $n$ es \textit{par}, las fórmulas de N--C son de
+      orden $k-1 = n+1$ (un grado superior a lo esperado).
+    \end{enumerate}
+  % \item Fijado un número de puntos, las fórmulas de N-C abiertas y
+  %   cerradas tienen el mismo orden, pues aparece el mismo grado de
+  %   derivación en la expresión de
+  %   error~(\ref{eq:error-formulas-nc}). Pero no hay que olvidar que el
+  %   valor de $h$ difiere entre fórmulas abiertas y cerradas. Así:
+  %   \begin{itemize}
+  %   \item Fijado un número de puntos, $n+1$, en un intervalo,
+  %     $[a,b]$, el paso $h$ será más pequeño en las fórmulas de N-C
+  %     abiertas, lo que supone una ventaja (aunque las constantes
+  %     $\gamma_n$ pueden ser mayores en valor absoluto).
+  %   \item Sin embargo, si en vez del número de puntos fijamos un paso
+  %     $h$ en un intervalo de integración $[a,b]$, la fórmula de N-C
+  %     cerrada contendrá un número mayor de puntos (los dos extremos
+  %     del intervalo) y por tanto será exacta para polinomios de mayor
+  %     orden. Por ejemplo, si fijamos $h=(b-a)/2$, Entonces:
+  %     \begin{enumerate}
+  %     \item La fórmula cerrada contiene los puntos $x_0=a$, $x_1=a+h$,
+  %       $x_2=b$. Así $n=2$ (de hecho ésta es la fórmula de Simpson, de
+  %       orden $3$).
+  %     \item La fórmula abierta contiene solamente el punto $x_0=a+h$.
+  %       Así $n=0$ (fórmula del punto medio, de orden $1$).
+  %    \end{enumerate}
+  % \end{itemize}
 
-%     % Fijemos un paso $h=(b-a)/p$, con cierto $p\in\Nset$. Entonces éste
-%     % se corresponde con una fórmula cerrada de $n=p+1$ puntos o con una
-%     % fórmula abierta de $n=p-1$ puntos. Así, en la expresión del error:
-%     % \begin{enumerate}
-%     % \item En las fórmulas \emph{abiertas}:\par
-%     %   \begin{tabular}{rl}
-%     %     Si $p$ es par, entonces $n$ es impar y: &$k=n+1=p$
-%     %     \\
-%     %     Si $p$ es impar, entonces $n$ es par y: &$k=n+2=p+1$
-%     %   \end{tabular}
-%     % \item En las fórmulas \emph{cerradas}:\par
-%     %   \begin{tabular}{rl}
-%     %     Si $p$ es par, entonces $n$ es impar y: &$k=n+1=p+2$
-%     %     \\
-%     %     Si $p$ es impar, entonces $n$ es par y: &$k=n+2=p+3$
-%     %   \end{tabular}
-%     % \end{enumerate}
-%     % Como conclusión: fijado un mismo paso $h$, en todos los casos
-%     % \emph{el orden de las fórmulas cerradas es superior en dos
-%     % unidades al de las fórmulas abiertas}.
-%   \end{enumerate}
-% \end{remark}
-% \begin{example}[Fórmulas de cuadratura abiertas]
-%   \label{ex:fc-NC-abiertas}
-%   Consideremos $n+1$ puntos en un intervalo cualquiera,
-%   $[a,b]=[x_{0},x_{n}]$ y $f_k=f(x_k)$, $k=0,\dots,n$. Un simple
-%   cálculo nos permite calcular los pesos de la f.c. (bien sea mediante
-%   integración de las funciones base de Lagrange, como en los
-%   ejemplos~\ref{ex:formula-pto-medio-interpol}
-%   y~\ref{ex:formula-trapecio-interpol} o bien usando el método de los
-%   coeficiente indeterminados, como en el
-%   ejemplo~\ref{ex:coef-indetermin:formula-trapecios-abierta}) y las
-%   constantes $\gamma_n$ anteriores para $n=1,2,3,...$.
+    % Fijemos un paso $h=(b-a)/p$, con cierto $p\in\Nset$. Entonces éste
+    % se corresponde con una fórmula cerrada de $n=p+1$ puntos o con una
+    % fórmula abierta de $n=p-1$ puntos. Así, en la expresión del error:
+    % \begin{enumerate}
+    % \item En las fórmulas \emph{abiertas}:\par
+    %   \begin{tabular}{rl}
+    %     Si $p$ es par, entonces $n$ es impar y: &$k=n+1=p$
+    %     \\
+    %     Si $p$ es impar, entonces $n$ es par y: &$k=n+2=p+1$
+    %   \end{tabular}
+    % \item En las fórmulas \emph{cerradas}:\par
+    %   \begin{tabular}{rl}
+    %     Si $p$ es par, entonces $n$ es impar y: &$k=n+1=p+2$
+    %     \\
+    %     Si $p$ es impar, entonces $n$ es par y: &$k=n+2=p+3$
+    %   \end{tabular}
+    % \end{enumerate}
+    % Como conclusión: fijado un mismo paso $h$, en todos los casos
+    % \emph{el orden de las fórmulas cerradas es superior en dos
+    % unidades al de las fórmulas abiertas}.
+  \end{enumerate}
+\end{remark}
+\begin{example}[Fórmulas de cuadratura abiertas]
+  \label{ex:fc-NC-abiertas}
+  Consideremos $n+1$ puntos en un intervalo cualquiera,
+  $[a,b]=[x_{0},x_{n}]$ y $f_k=f(x_k)$, $k=0,\dots,n$. Un simple
+  cálculo nos permite calcular los pesos de la f.c. (bien sea mediante
+  integración de las funciones base de Lagrange, como en los
+  ejemplos~\ref{ex:formula-pto-medio-interpol}
+  y~\ref{ex:formula-trapecio-interpol} o bien usando el método de los
+  coeficiente indeterminados, como en el
+  ejemplo~\ref{ex:coef-indetermin:formula-trapecios-abierta}) y las
+  constantes $\gamma_n$ anteriores para $n=1,2,3,...$.
 
-%   Por ejemplo, para $n=1$, tendremos $[a,b]=[x_0,x_1]$. La f.c.t.i
-%   asociada es la fórmula de los trapecios (ver
-%   ejemplo~\ref{ex:formula-trapecio-interpol}):
-%   \begin{equation*}
-%     I_1(f) = \frac{b-a}{2}(f(a)+f(b))
-%     = \int_{x_0}^{x_1} \frac{h}{2}(f_0+f_1)
-%   \end{equation*}
-%   y el error viene dado por~(\ref{eq:error-formulas-nc}). En este
-%   caso, como $n$ es impar, $k=n+1=2$ y así
-%   \begin{equation*}
-%     E_n(f)=\gamma_1 h^{3}\frac{f^{2)}(\xi)}{2}=\frac{-h^3}{12} f^{2)}(\xi),
-%   \end{equation*}
-%   donde se ha usado que, según el Teorema~\ref{thm:error.formulas-nc},
-%   para una f.c. cerrada con $n=1$:
-%   \begin{equation*}
-%     \gamma_1 = \int_0^1 \Pi_1(t)\,dt = \int_0^1 t(t-1) = \frac{-1}{6}.
-%   \end{equation*}
+  Por ejemplo, para $n=1$, tendremos $[a,b]=[x_0,x_1]$. La f.c.t.i
+  asociada es la fórmula de los trapecios (ver
+  ejemplo~\ref{ex:formula-trapecio-interpol}):
+  \begin{equation*}
+    I_1(f) = \frac{b-a}{2}(f(a)+f(b))
+    = \frac{h}{2}(f_0+f_1)
+  \end{equation*}
+  y el error viene dado por~(\ref{eq:error-formulas-nc}). En este
+  caso, como $n$ es impar, $k=n+1=2$ y así
+  \begin{equation*}
+    E_n(f)=\gamma_1 h^{3}\frac{f^{2)}(\xi)}{2}=\frac{-h^3}{12} f^{2)}(\xi),
+  \end{equation*}
+  donde se ha usado la definición de $\gamma_1$ para fórmulas cerradas
+  y $n$ impar:
+  \begin{equation*}
+    \gamma_1 = \int_0^1 \Pi_1(t)\,dt = \int_0^1 t(t-1) = \frac{-1}{6}.
+  \end{equation*}
 
-%   Despejando $\int_a^b f(x)\,dx$ en~(\ref{eq:error-formulas-nc}) se
-%   puede condensar lo anterior en:
-%   \begin{equation*}
-%     \int_a^b f(x)\,dx = \int_{x_0}^{x_1} f(x)\,dx =
-%     \int_{x_0}^{x_1} \frac{h}{2}(f_0+f_1) - \frac{h^3}{12} f^{2)}(\xi).
-%   \end{equation*}
+  Despejando $\int_a^b f(x)\,dx$ en~(\ref{eq:error-formulas-nc}) se
+  puede condensar lo anterior en:
+  \begin{equation*}
+    \int_a^b f(x)\,dx = \int_{x_0}^{x_1} f(x)\,dx =
+    \frac{h}{2}(f_0+f_1) - \frac{h^3}{12} f^{2)}(\xi).
+  \end{equation*}
 
-%   Procediendo análogamente para $n=2,3,4,5$, se tiene las
-%   siguiente tabla de fórmulas de cuadratura de N--C cerradas:
-%   \begin{center}
-%     \includegraphics[width=0.95\linewidth]{tema3/formulas-nc-cerradas}
-%   \end{center}
-% \end{example}
+  Procediendo análogamente para $n=2,3,4,5$, se tiene las
+  siguiente tabla de fórmulas de cuadratura de N--C cerradas:
+  \begin{center}
+    \includegraphics[width=0.95\linewidth]{tema3/formulas-nc-cerradas}
+  \end{center}
+\end{example}
 
-% \begin{example}[Fórmulas de cuadratura abiertas]
-%   \label{ex:fc-NC-abiertas}
-%   Sean $x_0,x_1,\cdots,x_n$ los $n+1$ puntos interiores al intervalo
-%   $[a,b]$ en una f.c. de N--C abierta. Denotemos ahora $x_{-1}=a$,
-%   $x_{n+1}=b$ y $f_k=f(x_k)$, $k=0,\dots,n$. Procediendo como antes
-%   se tienen las siguientes fórmulas junto con las expresiones de error
-%   asociadas:
-%   \begin{center}
-%     \includegraphics[width=0.95\linewidth]{tema3/formulas-nc-abiertas}
-%   \end{center}
-%   Se recomienda, como ejercicio, comprobar estas fórmulas para algunos
-%   valores de $n$.
-% \end{example}
+\begin{example}[Fórmulas de cuadratura abiertas]
+  \label{ex:fc-NC-abiertas}
+  Sean $x_0,x_1,\cdots,x_n$ los $n+1$ puntos interiores al intervalo
+  $[a,b]$ en una f.c. de N--C abierta. Denotemos ahora $x_{-1}=a$,
+  $x_{n+1}=b$ y $f_k=f(x_k)$, $k=0,\dots,n$. Procediendo como antes
+  se tienen las siguientes fórmulas junto con las expresiones de error
+  asociadas:
+  \begin{center}
+    \includegraphics[width=0.95\linewidth]{tema3/formulas-nc-abiertas}
+  \end{center}
+  Se recomienda, como ejercicio, comprobar estas fórmulas para algunos
+  valores de $n$.
+\end{example}
 
-% \section{Fórmulas de cuadratura compuestas}
-% \label{sec:fc-compuestas}
+\section{Fórmulas de cuadratura compuestas}
+\label{sec:fc-compuestas}
 
-% A medida que aumenta el número de nodos en las f.c. de N-C, el número
-% de operaciones necesarias para el cálculo de los pesos comienza a ser
-% demasiado costoso. Y, lo que es más importante, no podemos asegurar
-% que, cuando $n\to\infty$, la aproximación $I_n(f)$ converja hacia la
-% integral de $f$ (de forma similar a lo que ocurre al
-% aumentar el grado en el polinomio de interpolación de Lagrange). Por
-% esta razón, en la práctica se usan fórmulas de cuadratura
-% compuestas (o integración a trozos).
+A medida que aumenta el número de nodos en las f.c. de N-C, el número
+de operaciones necesarias para el cálculo de los pesos comienza a ser
+demasiado costoso. Y, lo que es más importante, no podemos asegurar
+que, cuando $n\to\infty$, la aproximación $I_n(f)$ converja hacia la
+integral de $f$ (de forma similar a lo que ocurre al
+aumentar el grado en el polinomio de interpolación de Lagrange). Por
+esta razón, en la práctica se usan fórmulas de cuadratura
+compuestas (o integración a trozos).
 
-% Las fórmulas compuestas se definen de la siguiente forma: sea una
-% partición del intervalo $[a,b]$, $a=\ox_0<\ox_1<...<\ox_N=b$, que por
-% simplicidad supondremos uniforme (con $N+1$ puntos
-% equiespaciados).  Descomponemos
-% la integral global de $f$ como suma de integrales en cada subintervalo
-% $[\ox_{i-1},\ox_i]$:
-% \begin{equation*}
-%   \int_a^b f(x)\,dx = \sum_{i=1}^N \int_{\ox_{i-1}}^{\ox_i}f(x)\,dx.
-% \end{equation*}
-% A continuación aplicamos, en cada uno de estos subintervalos, una
-% fórmula de cuadratura sobre $n+1$ puntos, con $n\in\Nset$ fijo (en la
-% práctica se suelen usar fórmulas sencillas, en concreto fórmulas de
-% N--C con $n=0$, $1$ o $2$). Así, podemos aproximar la integral de $f$
-% haciendo que $H\to 0$, donde $H=(b-a)/N$ es la longitud de
-% los subintervalos.
+Las fórmulas compuestas se definen de la siguiente forma: sea una
+partición del intervalo $[a,b]$, $a=\ox_0<\ox_1<...<\ox_N=b$, que por
+simplicidad supondremos uniforme (con $N+1$ puntos
+equiespaciados).  Descomponemos
+la integral global de $f$ como suma de integrales en cada subintervalo
+$[\ox_{i-1},\ox_i]$:
+\begin{equation*}
+  \int_a^b f(x)\,dx = \sum_{i=1}^N \int_{\ox_{i-1}}^{\ox_i}f(x)\,dx.
+\end{equation*}
+A continuación aplicamos, en cada uno de estos subintervalos, una
+fórmula de cuadratura sobre $n+1$ puntos, con $n\in\Nset$ fijo (en la
+práctica se suelen usar fórmulas sencillas, en concreto fórmulas de
+N--C con $n=0$, $1$ o $2$). Así, podemos aproximar la integral de $f$
+haciendo que $H\to 0$, donde $H=(b-a)/N$ es la longitud de
+los subintervalos.
 
-% Con más detalle: en el subintervalo $[\ox_{i-1},\ox_i]$ elegimos $n+1$
-% puntos equiespaciados, $\ox_0^{(i)}<\ox_1^{(i)}<\cdots<\ox_n^{(i)}$, y
-% consideramos una f.c:
-% \begin{align}
-%   \label{eq:fc.compuesta.en.un.intervalo}
-%   I_n^i(f)&=\sum_{j=0}^n \omega_j^{(i)}f(x_j^{(i)}),
-% \intertext{en la que el error viene dado (por definición) como:}
-%   E_n^i(f)&=\int_{\ox_{i-1}}^{\ox_i} f(x)\,dx -  I_n^i(f).
-%   \label{eq:fc.compuesta.error.subintervalos}
-% \end{align}
-% \begin{definition}
-%   Una fórmula de cuadratura compuesta se define como la suma de las
-%   f.c. en cada uno de los subintervalos de integración:
-%   \begin{equation*}
-%     I_N(f)=\sum_{i=1}^N I_n^i(f)  =\sum_{i=1}^N \sum_{j=0}^n \omega_j^{(i)}f(x_j^{(i)}).
-%   \end{equation*}
-%   \label{def:fc.compuesta}
-% \end{definition}
-% \subsection*{Expresión del error en fórmulas compuestas}
-% Si definimos el error de cuadratura en una fórmula compuesta como la
-% diferencia entre la integral $\int_a^b f(x)\,dx$ y su aproximación
-% $I_N(f)$, es fácil ver que este error coincide con la suma de los
-% errores en los $N$ subintervalos $[\ox_{i-1},\ox_i]$:
-% \begin{alignat*}{2}
-%   E_N(f)&= \int_a^b f(x)\,dx - I_N(f)
-%   &\quad \text{(definición del error de integración)}
-%   \\
-%   &= \sum_{i=1}^N \int_{\ox_{i-1}}^{\ox_i} f(x)\,dx -
-%   \sum_{i=1}^NI_n^i(f)
-%   &\text{(definición de una f.c. compuesta)}
-%   \\
-%   &= \sum_{i=1}^N\left(
-%     \int_{\ox_{i-1}}^{\ox_i} f(x)\,dx -  I_n^i(f) \right)
-%   =\sum_{i=1}^N E_n^i(f)
-%   &\text{(def. error en subintervalos~(\ref{eq:fc.compuesta.error.subintervalos}))}.
-% \end{alignat*}
+Con más detalle: en el subintervalo $[\ox_{i-1},\ox_i]$ elegimos $n+1$
+puntos equiespaciados, $\ox_0^{(i)}<\ox_1^{(i)}<\cdots<\ox_n^{(i)}$, y
+consideramos una f.c:
+\begin{align}
+  \label{eq:fc.compuesta.en.un.intervalo}
+  I_n^i(f)&=\sum_{j=0}^n \omega_j^{(i)}f(x_j^{(i)}),
+\intertext{en la que el error viene dado (por definición) como:}
+  E_n^i(f)&=\int_{\ox_{i-1}}^{\ox_i} f(x)\,dx -  I_n^i(f).
+  \label{eq:fc.compuesta.error.subintervalos}
+\end{align}
+\begin{definition}
+  Una fórmula de cuadratura compuesta se define como la suma de las
+  f.c. en cada uno de los subintervalos de integración:
+  \begin{equation*}
+    I_N(f)=\sum_{i=1}^N I_n^i(f)  =\sum_{i=1}^N \sum_{j=0}^n \omega_j^{(i)}f(x_j^{(i)}).
+  \end{equation*}
+  \label{def:fc.compuesta}
+\end{definition}
+\subsection*{Expresión del error en fórmulas compuestas}
+Si definimos el error de cuadratura en una fórmula compuesta como la
+diferencia entre la integral $\int_a^b f(x)\,dx$ y su aproximación
+$I_N(f)$, es fácil ver que este error coincide con la suma de los
+errores en los $N$ subintervalos $[\ox_{i-1},\ox_i]$:
+\begin{alignat*}{2}
+  E_N(f)&= \int_a^b f(x)\,dx - I_N(f)
+  &\quad \text{(definición del error de integración)}
+  \\
+  &= \sum_{i=1}^N \int_{\ox_{i-1}}^{\ox_i} f(x)\,dx -
+  \sum_{i=1}^NI_n^i(f)
+  &\text{(definición de una f.c. compuesta)}
+  \\
+  &= \sum_{i=1}^N\left(
+    \int_{\ox_{i-1}}^{\ox_i} f(x)\,dx -  I_n^i(f) \right)
+  =\sum_{i=1}^N E_n^i(f)
+  &\text{(def. error en subintervalos~(\ref{eq:fc.compuesta.error.subintervalos}))}.
+\end{alignat*}
 
 % Si acotamos los errores $E_n^i(f)$ que aparecen en el sumatorio
 % anterior utilizando la cota genérica del error de
@@ -760,7 +762,7 @@ $h\to 0$.
 %   \begin{equation*}
 %       E_N(f)=O(H^{k}), \quad \text{cuando } H\to 0,
 %   \end{equation*}
-%   donde, donde $O(H^m)$ se define en~(\ref{eq:def.O(h^m)}) y, si la
+%   donde, donde $O(H^m)$ se define en~(\ref{eq:def.O(hm)}) y, si la
 %   fórmula de N-C es elegida inteligentemente ($n$ par), $k=n+2$.
 %   Obsérvese que el error en una fórmula compuesta se rebaja un orden
 %   respecto a~(\ref{eq:error-formulas-nc}) (asimilando $H =

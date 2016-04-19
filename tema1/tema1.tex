@@ -68,7 +68,7 @@ respecto a la solución exacta sea tan pequeño como deseemos.
 
 Como veremos, no existe <<\textit{el mejor método}>> para el cálculo
 de ceros de funciones: algunos son más rápidos, otros requieren una
-buena estimación inicial de la raíz, o regularidad en la función... En
+buena estimación inicial de la raíz, o regularidad en la función\dots En
 general, un buen método será \emph{muy general} (es decir, podrá
 utilizarse para un rango de funciones muy amplio) y a la vez
 \emph{poco costoso} (exigirá pocos recursos de ordenador hacer pequeño
@@ -546,7 +546,7 @@ Programa~\ref{pro:metodo-biseccion}.
     $c_0=(1+0)/2=0.5$  y
     $f(c_0)=f(1/2)=-11/8=-1.375$. Como $f(a_0)=f(0)=3$, elegimos
     $[a_1,b_1]=[a_0,c_0]=[0,0.5]$.
-  \item Repetimos el proceso para $k=2,3,...$, obteniendo los resultados que se
+  \item Repetimos el proceso para $k=2,3,\dots$, obteniendo los resultados que se
     muestran en el cuadro~\ref{tab:tema1:bisecc}.
   \end{itemize}
 
@@ -583,7 +583,7 @@ $f(a_k)f(b_k)<0$). Además, el tamaño $b_k-a_k$ converge a cero (puesto
 que, en cada paso, el tamaño se divide por dos), de hecho:
 \begin{equation}
   \label{eq:tema1:bisec:1}
-  b_k-a_k = \frac{b-a}{2^k} \quad \forall k=0,1,2,...
+  b_k-a_k = \frac{b-a}{2^k} \quad \forall k=0,1,2,\dots
 \end{equation}
 
 Así, se tiene el siguiente resultado:
@@ -1058,7 +1058,7 @@ las acotación del tipo~(\ref{eq:pto-fijo:cota-a-posteriori}) conoce como
     % \begin{itemize}
     % \item $[a_1,b_1]=[-\pi/4, 0]$. Seguimos estando en las hipótesis
     %   del Teorema de Bolzano, pues $f(-\pi/4)=
-    %   -\sqrt{2}/2-\pi^2+1=--9.5767...<0$ y $f(0)=1>0$,
+    %   -\sqrt{2}/2-\pi^2+1=--9.5767\dots<0$ y $f(0)=1>0$,
     % \end{itemize}
   \end{enumerate}
 
@@ -1131,8 +1131,8 @@ las acotación del tipo~(\ref{eq:pto-fijo:cota-a-posteriori}) conoce como
     %     [-\pi/4, 0]$ y por tanto $g_1'(x)\le 0$ en este intervalo).
     %     Como
     %     \begin{align*}
-            %             g_1(-\pi/4)&= -\frac12 \sqrt{1+\sen(-\pi/4)}=-0.270...\in
-                                       %                                        [-\pi/4,0]=[-0.785...,0],
+            %             g_1(-\pi/4)&= -\frac12 \sqrt{1+\sen(-\pi/4)}=-0.270\dots\in
+                                       %                                        [-\pi/4,0]=[-0.785\dots,0],
                                        %             \\
             %             g_1(0)&=-1/2 \in [-\pi/4,0],
                                   %           \end{align*}
@@ -1143,7 +1143,7 @@ las acotación del tipo~(\ref{eq:pto-fijo:cota-a-posteriori}) conoce como
                                   %                                   proposición~\ref{pro:1} y a la observación~\ref{rk:3}).  Como
                                   %                                   $\sen(x)$ es creciente en $[-\pi/4,0]$, en este intervalo se
                                   %                                   verifica que
-                                  %                                   $$4\sqrt{1+\sen(x)}\ge 4\sqrt{1+\sen(-\pi/4)}=2.164... >1,$$
+                                  %                                   $$4\sqrt{1+\sen(x)}\ge 4\sqrt{1+\sen(-\pi/4)}=2.164\dots >1,$$
                                   %                                   así
                                   %                                   $$
                                   %                                   \left|g'(x)\right| = \frac{|\cos{x}|}{4\sqrt{1+\sen(x)}} \le

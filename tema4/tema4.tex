@@ -325,7 +325,7 @@ sigue:
 \item Usamos el dato inicial $y_a$ para arrancar el método numérico,
   definiendo $y_0=y_a$ (más generalmente, $y_0\approx y_a$)
 \item Seguidamente definimos una sucesión de forma que $y_{n+1}$ se
-  calcula a partir de $y_n$ (y posiblemente de $y_{n-1}$, ...,
+  calcula a partir de $y_n$ (y posiblemente de $y_{n-1}$, \dots,
   $y_{n-k}$ para algún $k\ge 1$), con el fin de que
   $y_n\approx\sol(\tn)$.
 \end{enumerate}
@@ -345,7 +345,7 @@ más adelante.
 % Más adelante distinguiremos entre métodos de un paso, en los que
 % para calcular $y_{n+1}$ utilizamos solamente de $y_n$ y métodos
 % multipaso, en los que  $y_{n+1}$ depende de los datos en varias etapas
-% anteriores ($y_{n}$, $y_{n-1}$, ..., $y_{n-k}$ para algún $k\ge 1$.)
+% anteriores ($y_{n}$, $y_{n-1}$, \dots, $y_{n-k}$ para algún $k\ge 1$.)
 
 El método más sencillo es el de Euler (más precisamente, el método
 de Euler explícito):
@@ -609,7 +609,7 @@ hallar $\{y_{n}\}_{n=0}^N$ como solución de: $y_0=y_a$,
   \label{eq:tema4.4}
   \ddt \ynn := \frac{\ynn-\yn}{h} = f(\tn,\yn),
 \end{equation}
-para cada $n=0,...,N-1$.
+para cada $n=0,\dots,N-1$.
 
 La idea de consistencia de un método numérico está relacionada con el
 grado en el que la solución exacta verifica este método. Es decir,
@@ -646,7 +646,7 @@ intervalo $[a,b]$. Es decir, $\errCons_n=\errCons_n(h)$.
   Dado un método numérico para~(\ref{eq:pvi}), se define el error de consistencia
   como:
   \begin{equation*}
-    \errCons = \errCons(h) = (\errCons_0, \errCons_1,...,\errCons_{N-1}).
+    \errCons = \errCons(h) = (\errCons_0, \errCons_1,\dots,\errCons_{N-1}).
   \end{equation*}
   Decimos que un método es consistente si
   \begin{equation*}
@@ -680,7 +680,7 @@ intervalo $[a,b]$. Es decir, $\errCons_n=\errCons_n(h)$.
     \frac{y(\tnn)-y(\tn)}{h} &- f(\tn,y(\tn)) = \frac{h}{2} y''(\xi),
     \quad\text{$\xi$ entre $\tn$ y $\tnn$.}
   \end{align*}
-  Y entonces para todo $n=0,...,N-1$:
+  Y entonces para todo $n=0,\dots,N-1$:
   \begin{equation*}
   |\errCons_n| \le \frac{h}{2} \max_{t\in[\ta,\tb]} |y''(t)|.
 \end{equation*}
@@ -714,7 +714,7 @@ perturbado:
 \begin{equation}\left\{
 \begin{aligned}
   &z_0 = \ycero + \mu_0 \\
-  &\ddt \znn = f(\tn,\zn) + \delta_n,\quad n=0,...,N-1
+  &\ddt \znn = f(\tn,\zn) + \delta_n,\quad n=0,\dots,N-1
 \end{aligned}\right.
 \label{eq:metodo-euler-perturbado}
 \end{equation}
@@ -723,7 +723,7 @@ o, equivalentemente,
 \left\{
 \begin{aligned}
   &z_0 = \ycero + \mu_0 \\
-  &\znn = \zn + h f(\tn,\zn) + h \delta_n,\quad n=0,...,N-1.
+  &\znn = \zn + h f(\tn,\zn) + h \delta_n,\quad n=0,\dots,N-1.
 \end{aligned}
 \right.
 \label{eq:tema4:6}
@@ -814,7 +814,7 @@ exacta, en el sentido que definiremos a continuación.
   depende del paso $h$. Se llama error de discretización (global) al
   vector
   \begin{equation*}
-    E = E(h) = (e_0,e_1,...,e_n).
+    E = E(h) = (e_0,e_1,\dots,e_n).
   \end{equation*}
 \end{definition}
 \begin{definition}
@@ -942,7 +942,7 @@ estabilidad dada en el teorema anterior:
 %   El método es consistente si
 %   $$
 %   \lim_{h\to 0} ||{\cal E}||_\infty  = 0, \quad \text{donde } {\cal
-%     E}=({\cal E}_0,...,{\cal E}_N).
+%     E}=({\cal E}_0,\dots,{\cal E}_N).
 %   $$
 % \end{definition}
 
@@ -1127,7 +1127,7 @@ estabilidad dada en el teorema anterior:
 %                       \begin{aligned}
 %                         & c_i\in [0,1], \text{ con } c_1=1,
 %                         \\ &d_{i} \text{ combinación
-%                           lineal de } k_1,...,k_{i-1}.
+%                           lineal de } k_1,\dots,k_{i-1}.
 %                       \end{aligned}
 %                              \right.
 % \end{align}
@@ -1181,7 +1181,7 @@ estabilidad dada en el teorema anterior:
 %   \begin{align}
 %     \label{eq:metodo-multipaso}
 %     \ddt y_{n+k}=&\sum_{j=0}^k \beta_j f(t_{n+j},y_{n+j}), \quad
-%     n=0,...,N-k, \intertext{donde $\ddt y_{n+k}$ es un aproximación
+%     n=0,\dots,N-k, \intertext{donde $\ddt y_{n+k}$ es un aproximación
 %       de $y'(t_{n+k})$ usando un cociente incremental con $k$ pasos:}
 %     \ddt
 %     \label{eq:cociente-incremental-multipaso}
@@ -1202,10 +1202,10 @@ estabilidad dada en el teorema anterior:
 % Puesto que en un método de $k$ pasos del
 % tipo~(\ref{eq:metodo-multipaso}) se necesitan $k$ aproximaciones
 % previas para calcular $y_{n+k}$, en la primera iteración ($n=0$) es
-% necesario disponer de $k$ valores de arranque, $y_0$, $y_1$, ...,
+% necesario disponer de $k$ valores de arranque, $y_0$, $y_1$, \dots,
 % $y_{k-1}$ (que determinarán $y_k$). Pero en~(\ref{eq:pvi}) sólo
 % contamos con un dato inicial, $\ycero$, de forma que necesitaremos
-% usar algún método numérico para aproximar $y_1$, $y_2$, ...,
+% usar algún método numérico para aproximar $y_1$, $y_2$, \dots,
 % $y_{k-1}$. Habitualmente se usarán métodos de un paso, con especial
 % cuidado en que el orden de estos métodos sea (al menos) igual al
 % del método multipaso (pues, de otra forma, perderíamos calidad en la
@@ -1247,7 +1247,7 @@ estabilidad dada en el teorema anterior:
 % \begin{equation*}
 %   y(t^*)-y(t) = \int_{t}^{t^*} f(x,y(x))\, dx.
 % \end{equation*}
-% Para cada $n=0,...,N-k$, elegimos $t=x_{n+k-1}$ y $t^*=x_{n+k}$ y
+% Para cada $n=0,\dots,N-k$, elegimos $t=x_{n+k-1}$ y $t^*=x_{n+k}$ y
 % denotando $y_{n+j}\approx y(t_{n+j})$ a las aproximaciones que
 % deseamos calcular,  ponemos en práctica la siguiente idea:
 %   % realizar, en esta formulación integral las siguiente
@@ -1309,7 +1309,7 @@ estabilidad dada en el teorema anterior:
 %     y_{n+2}-y_{n+1} = \frac{h}{2} \big[
 %     3f(t_{n+1},y_{n+1}) - f(t_{n},y_{n}) \big],
 %   \end{equation}
-%   de donde, para cada $n=0,...,N-2$ podemos obtener explícitamente el
+%   de donde, para cada $n=0,\dots,N-2$ podemos obtener explícitamente el
 %   valor $y_{n+2}$.
 
 %   El valor $y_0$ se puede obtener a partir del dato inicial $\ycero$,

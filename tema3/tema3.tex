@@ -142,7 +142,7 @@ sentido escribiremos
 
 \begin{example}
   \label{ex:formula-simpson}
-  La \resaltar{fórmula de Simpson} es la siguiente f.c.
+  La \resaltar{fórmula de Simpson} es la siguiente f.c.\
   de tres puntos ($n=2$):
   \begin{equation}
     I_2(f)= \frac{b-a}{6}\left[f(a)+4f
@@ -239,7 +239,7 @@ $\{x_i\}_{i=0}^n$. Por lo tanto,
   interpolatorio. La demostración se deja como ejercicio.
 \end{example}
 
-La siguiente proposición afirma que las f.c.t.i. son óptimas, en el
+La siguiente proposición afirma que las f.c.t.i.\ son óptimas, en el
 sentido de que, fijado un soporte de integración, éstas son las f.c.
 de mayor orden.
 \begin{proposition}
@@ -248,7 +248,7 @@ de mayor orden.
   \begin{enumerate}
   \item Sobre estos nodos existe una única f.c.\ con orden $\ge
     n$.
-  \item Esta f.c.\ coincide con la f.c.t.i. correspondiente a
+  \item Esta f.c.\ coincide con la f.c.t.i.\ correspondiente a
     $\{x_i\}_{i=0}^n$.
   \end{enumerate}
 \end{proposition}
@@ -297,8 +297,8 @@ de mayor orden.
   f.c.\ $I_n(f)$ de orden $\ge n$.
 
   \punto{2} Veamos que esta única f.c.\ de orden $\ge n$ coincide con
-  la f.c.t.i. correspondiente. Por unicidad, basta
-  comprobar que la f.c.t.i. definida sobre nodos $\{x_i\}_{i=0}^n$
+  la f.c.t.i.\ correspondiente. Por unicidad, basta
+  comprobar que la f.c.t.i.\ definida sobre nodos $\{x_i\}_{i=0}^n$
   tiene orden al menos $n$, es decir verifica $E_n(p)=0$ para todo
   polinomio $p$ de grado $n$.
 
@@ -322,7 +322,7 @@ matriz asociada, la matriz de Vandermonde, está mal condicionada
 \begin{example}
   \label{ex:coef-indetermin:formula-trapecios-abierta}
   Utilizaremos el método de los coeficientes indeterminados para
-  calcular los pesos de la f.c.t.i. en $[a,b]$ para los nodos
+  calcular los pesos de la f.c.t.i.\ en $[a,b]$ para los nodos
   $x_0=a+h$ y $x_1=a+2h$, con $h=\frac{b-a}{3}$.
 
   Para $n=1$, obtenemos el siguiente sistema:
@@ -350,7 +350,7 @@ matriz asociada, la matriz de Vandermonde, está mal condicionada
 
 \subsection*{Cota del error en fórmulas de tipo interpolatorio}
 
-Sea $I_n(f)$ una f.c.t.i. sobre $n+1$ puntos y sea $p_n$ el polinomio
+Sea $I_n(f)$ una f.c.t.i.\ sobre $n+1$ puntos y sea $p_n$ el polinomio
 de Lagrange asociado.  Utilizando la expresión de error de
 interpolación del polinomio de Lagrange podemos razonar como sigue:
 
@@ -429,7 +429,7 @@ $h\to 0$.
 
 \begin{theorem}
   \label{thm:error.formulas-nc}
-  Sea $I_n$ una f.c.t.i. sobre $n+1$ puntos equiespaciados en
+  Sea $I_n$ una f.c.t.i.\ sobre $n+1$ puntos equiespaciados en
   $[a,b]$. Supongamos que $f\in C^k([a,b])$, donde $k=n+2$ si $n$ es par
   y $k=n+1$ si $n$ es impar. Entonces, existe $\xi\in(a,b)$ tal que
   \begin{equation}
@@ -840,7 +840,7 @@ resultado:
   $[\ox_{i-1},\ox_i]$, es fácil relacionar $h$ con $H$. En concreto:
   \begin{align*}
     \intertext{\quad $\bullet$ Si la f.c.\ N--C es \emph{cerrada}:
-      $h=(\ox_i-\ox_{i-1})/n=H/n$. Sustituyendo en~(\ref{eq:fc.8}):}
+      $h=(\ox_i-\ox_{i-1})/n=H/n$. Sustituyendo en~(\ref{eq:3}):}
     E_N(f) &= \gamma_n \, (b-a)\, \frac{H^{k}}{n^k\,k!} \,
     f^{k)}(\xi).
     \intertext{\quad $\bullet$ Si la
@@ -940,7 +940,7 @@ concreto, planteamos el siguiente problema:
   \begin{aligned}
     &\text{Elegir el soporte $S=\{x_0<x_1<\dots<x_n\}\subset [a,b]$}
     \\
-    &\text{tal que la f.c.t.i. asociada sea de orden máximo.}
+    &\text{tal que la f.c.t.i.\ asociada sea de orden máximo.}
   \end{aligned}
 \right\}
 \end{equation}
@@ -953,9 +953,8 @@ concreto, planteamos el siguiente problema:
 \subsection*{Aproximación heurística}
 Para resolver el problema anterior, intentemos razonar como en la
 demostración de la proposición~\ref{pro:existencia.fcti} (en la que se
-determinaron de forma óptima los coeficientes $\omega_i=\int_a^b
-L_i(x)\, dx$ como solución de un sistema lineal de ecuaciones con
-matriz de Vandermonde).
+determinaron de forma óptima los coeficientes $\omega_i$ como solución
+de un sistema lineal de ecuaciones con matriz de Vandermonde).
 
 
 Una f.c.\ dada, $I_n(f)=\sum_{i=0}^n \omega_i f(x_i)$, tiene orden
@@ -976,18 +975,19 @@ formado por $2n+2$ ecuaciones, es decir, debe ser $m=2n+1$.
 
 Esto significa que podemos aspirar a que las fórmulas de cuadratura de
 Gauss tengan orden $2n+1$. Los nodos y los pesos se pueden obtener
-resolviendo un sistema de ecuaciones. Pero, en este caso, el
-inconveniente es que este sistema de ecuaciones no es lineal por lo
-que, salvo en casos sencillos, no será posible probar la
-existencia y unicidad de solución ni recurrir una estrategia simple
-para calcular los nodos de integración.
+resolviendo un sistema de ecuaciones. El inconveniente es que, en este
+caso, se trata de un sistema de ecuaciones no lineales por lo que,
+salvo en casos sencillos, no será posible probar la existencia y
+unicidad de solución ni recurrir una estrategia simple para calcular
+los nodos de integración.
 
 
 \begin{example}
-  Dado el intervalo $[a,b]=[-1,1]$, buscamos dos puntos $x_0,x_1\in
-  [a,b]$ y dos pesos $\omega_i\in\Rset$ tales que la f.c.\ asociada sea
-  de orden máximo, $2n+1=3$. Para ello, imponemos que esta f.c.\ sea exacta
-  para los polinomios $x^i$, $i=0,\dots,3$:
+  Dado el intervalo $[a,b]=[-1,1]$, buscamos dos puntos
+  $x_0,x_1\in [a,b]$, $x_0\neq x_1$, y dos pesos $\omega_i\in\Rset$
+  tales que la f.c.\ asociada sea de orden máximo, $2n+1=3$. Para
+  ello, imponemos que esta f.c.\ sea exacta para los polinomios $x^i$,
+  $i=0,\dots,3$:
   \begin{alignat*}{3}
     E_n(x^0)&=\int_{-1}^1 x^0\, dx - I_n(x^0)\ =\ 0 \ \Leftrightarrow
     \quad & 2 &= \omega_0+\omega_1,\\
@@ -1015,14 +1015,34 @@ para calcular los nodos de integración.
 \end{example}
 
 \subsection*{Polinomios ortogonales}
-En fórmulas de cuadratura de Gauss, en vez de la resolución de los
-sistemas no lineales descritos anteriormente, calcularán los nodos
-óptimos como raíces de unas familias de polinomios conocidos como
+Para obtener los nodos asociados a fórmulas de cuadratura de Gauss, en
+vez de la resolución de los sistemas no lineales descritos
+anteriormente, se utiliza la estrategia que se describe a
+continuación, basada en la identificación de los nodos de integración
+con las raíces de unas familias de polinomios conocidos como
 polinomios ortogonales.
 
 Debido a las características de esta asignatura no podemos entrar en
-detalles pero, como orientación, se muestran los siguientes resultados
-sobre existencia y unicidad de fórmulas de cuadratura de Gauss:
+detalles. Nos limitamos a recapitular los resultados fundamentales
+sobre existencia y unicidad de fórmulas de cuadratura de Gauss, así
+como de caracterización de los nodos de cuadratura.
+
+% \begin{definition}[Espacio $L^2(a,b)$]
+%   Dado un intervalo $[a,b]\subset\Rset$, definimos
+%   $$
+%   L^2(a,b) = \big\{ f:[a,b] \to \Rset \text{ medibles }
+%   \ /\ \int_a^b |f(x)|^2 dx < +\infty \big\}.
+%   $$
+% \end{definition}
+
+
+% \begin{proposition}[Cauchy-Schwartz]
+%   Sean $f,g \in L^2([a,b])$. Entonces el producto $fg$ es integrable y
+%   $$
+%   \int_a^b f(x)g(x) dx \le \big(\int_a^b |f(x)|^2
+%   dx\big)^{1/2}\big(\int_a^b |g(x)|^2 dx\big)^{1/2}.
+%   $$
+% \end{proposition}
 
 \begin{definition}
   \label{def:pol-orgotonales}
@@ -1030,21 +1050,22 @@ sobre existencia y unicidad de fórmulas de cuadratura de Gauss:
   polinomios de grado menor o igual que $n$.
 
   \begin{enumerate}
-    \item Dos polinomios, $p,q\in\Pol_n[x]$, se dicen ortogonales si
+  \item Dos polinomios, $p,q\in\Pol_n[x]$, se dicen ortogonales (en
+    $L^2(a,b)$) si
       \begin{equation*}
-      \int_a^b p(x)q(x) dx = 0.
+      (p,q)_{L^2(a,b)} := \int_a^b p(x)q(x) dx = 0.
     \end{equation*}
   \item Una base $\{\phi_0,\phi_1,\dots,\phi_n\}$ de $\Pol_n[x]$ se
-    dice ortogonal en $[a,b]$ si todos sus elementos son ortogonales
+    dice ortogonal en $L^2(a,b)$ si todos sus elementos son ortogonales
     dos a dos, es decir
     \begin{equation*}
-      \int_a^b \phi_i(x) \phi_j(x)\, dx = 0 \quad \text{si } i\neq j.
+      (\phi_i,\phi_j)_{L^2(a,b)} = \int_a^b \phi_i(x) \phi_j(x)\, dx = 0 \quad \text{si } i\neq j.
     \end{equation*}
   \item
     Una base se dice ortonormal cuando es ortogonal y además los
     polinomios son unitarios, en el siguiente sentido:
     \begin{equation*}
-      \int_a^b (\phi_i(x))^2 \,dx = 1.
+      \|\phi_i\|_{L^2(a,b)} := \left(\int_a^b (\phi_i(x))^2 \,dx\right)^{1/2} = 1.
     \end{equation*}
   \end{enumerate}
 \end{definition}
@@ -1058,7 +1079,7 @@ sobre existencia y unicidad de fórmulas de cuadratura de Gauss:
   Sea $\{\phi_0,\phi_1,\dots,\phi_n\}$ una base ortonormal de
   $\Pol_n[x]$ tal que el grado de cada $\phi_k$ es igual a $k$
   ($k=0,\dots,n$).  Entonces cada polinomio $\phi_k$ tiene exactamente
-  $k$ raíces reales simples en $(a,b)$.
+  $k$ raíces reales \emph{simples} en $(a,b)$.
 \end{proposition}
 
 \begin{theorem}~
@@ -1077,6 +1098,29 @@ sobre existencia y unicidad de fórmulas de cuadratura de Gauss:
 
 Para la demostración de los resultados anteriores, véase el libro de
 [Guillén-Dubova] en bibliografía.
+La construcción de fórmulas de cuadratura de Gauss se basa en la
+teoría anterior. En concreto, dado un intervalo $[a,b]$ y dado $n\in\Nset$:
+\begin{enumerate}
+\item Construir una base ortonormal,
+  $\{\phi_0,\phi_1,\dots,\phi_{n+1}\}$, de $\Pol_{n+1}[x]$.
+\item Hallar las $n+1$ raíces, $x_0,\dots,x_n$, de $\phi_{n+1}$.
+\item Calcular los $n+1$ pesos $\omega_0,\dots,\omega_n$ para que la
+  fórmula sea de tipo interpolatorio.
+\end{enumerate}
+Esto nos garantiza que fórmula resultante
+$I_n(f)=\sum_{i=0}^n w_i f(x_i)$ es de Gauss y por tanto que su orden
+es $2n+1$.
+
+Lo anterior tiene un inconveniente: la construcción de bases
+ortonormales en intervalos arbitrarios $[a,b]$ y el posterior cálculo
+de sus raíces es un proceso complicado. Por ello, se suele evitar el
+cálculo de f.c.\ de Gauss en intervalos arbitrarios. En su lugar, se
+utilizan intervalos de referencia, por ejemplo $[-1,1]$ o $[0,1]$, en
+las que los polinomios ortogonales han sido ampliamente estudiados y
+cuyos ceros (así como los pesos asociados) han sido ya calculados y
+tabulados. Dada una f.c.\ en un intervalo de referencia, por ejemplo
+$[-1,1]$, podemos calcular la integral en cualquier otro intervalo,
+$[a,b]$, mediante un simple cambio de variables.
 
 % % % \begin{proposition}
 % % %   Dadas dos bases ortogonales de $\Pol_n[k]$,
@@ -1228,8 +1272,7 @@ Para la demostración de los resultados anteriores, véase el libro de
 
 \end{document}
 
-% ===============
-=======
+% =============== =======
 
 \begin{problemas}
   \begin{problema}

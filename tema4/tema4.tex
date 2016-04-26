@@ -14,7 +14,8 @@
 \newcommand{\zn}{{z_n}}
 \newcommand{\znn}{{z_{n+1}}}
 \newcommand{\ycero}{{y_a}}
-\newcommand{\sol}{\varphi}
+% \newcommand{\sol}{\varphi}
+\newcommand{\sol}{y}
 \newcommand{\lipschitz}{$y$--Lipschitz\xspace}
 \newcommand{\locLipschitz}{localmente \lipschitz}
 \newcommand{\globLipschitz}{\lipschitz}
@@ -23,10 +24,8 @@
 \newcommand{\AB}{Adams--Bashforth\xspace}
 \newcommand{\AM}{Adams--Moulton\xspace}
 
-\chapter[Problemas de valor inicial para EDO]
-{Problemas de valor inicial para ecuaciones diferenciales de primer
-  orden%
-  \footnote{\licenseInfo}}
+
+\section{Introducción}
 
 Son muy numerosos los problemas (con orígenes diversos como la física,
 química, biología o economía) que se formulan matemáticamente en
@@ -53,25 +52,27 @@ forma:
 \end{equation}
 donde la función (continua) $f:[\ta,\tb]\times\Rset\to\Rset$ y el
 estado inicial $\ycero\in\Rset$ son datos conocidos. En el próximo
-tema se estudia el caso general, donde
+tema se estudiará el caso general, donde
 $f:[\ta,\tb]\times\Rset^n\to\Rset^n$ e $\ycero\in\Rset^n$, con
-$n\in\Nset$. En numerosos problemas de la ciencia y la ingeniería, la
-variable $\tt$ representa el tiempo aunque no siempre es necesario que
-sea así. Con frecuencia hablaremos de $\tt$ como la <<variable
-temporal>>).
+$n\in\Nset$. Se ha optado por denotar $t\in [a,b]$ a la variable
+independiente.  En numerosos problemas de la ciencia y la ingeniería,
+esta variable representa el tiempo y, aunque no siempre es
+sea así, en muchas ocasiones puede ser conveniente
+hablar de $\tt$ como la <<variable temporal>>).
 
 \begin{definition}
+  \label{def:sol-pvi}
   Llamamos solución de~\eqref{eq:pvi} a toda función $\sol\in
   C^1([\ta,\tb])$ tal que $\sol'(\tt)=f(\tt,\sol(\tt))$ para todo
   $\tt\in[\ta,\tb]$ y además $\sol(\ta)=\ycero$.\label{def:3}
 \end{definition}
 
 Obsérvese que, según esta definición, el concepto de solución tiene un
-sentido global (en todo el intervalo $[a,b]$), no local (en un entorno
+sentido global (en todo el intervalo $[a,b]$), y no local (en un entorno
 de $\ta$). Como paso previo a la resolución numérica
 de~\eqref{eq:pvi}, deberemos garantizar que este problema está bien
-planteado, es decir asegurar la existencia y unicidad de solución en
-el sentido anterior.
+planteado, es decir asegurar la existencia y unicidad de solución
+de~(\ref{eq:pvi}), en el sentido de la definición~\ref{def:sol-pvi}.
 
 \section{Resultados teóricos preliminares}
 \label{sec:tema4:resultados-teoricos}
@@ -82,7 +83,7 @@ resultados relacionados con la existencia y unicidad de solución
 de~(\ref{eq:pvi}), que resultarán útiles para garantizar existencia de
 solución en los problemas que aparecerán en las siguientes secciones.
 La clave en estos resultados será el analizar si la función $f(x,y)$
-es verifica la condición de Lipschitz que se define a continuación:
+verifica la condición de Lipschitz que se define a continuación:
 
 \begin{definition}
   \label{def:lipschitz}
@@ -109,81 +110,86 @@ Fijaremos la siguiente
 respecto a $y$, es decir $\dy f(\tt,y) = \frac{\partial f}{\partial
   \yy}(\tt,y)$. Para el resto de las variables se usarán notaciones
 similares.
-\begin{remark}
   En la práctica, para estudiar si una función es (local o
-  globalmente) Lipschitz se suelen usar las siguientes condiciones
-  suficientes:
-  \begin{enumerate}
-  \item Si $\dy f$ es continua en $[\ta,\tb]\times\Rset$, entonces $f$
-    es \locLipschitz.
-  \item Si además $\dy f$ está acotada en
-    $[\ta,\tb]\times\Rset$, entonces $f$ es uniformemente
-    \globLipschitz.
-  \end{enumerate}
-  Comprobaremos la segunda de estas afirmaciones (la primera se
-  demuestra de forma análoga, usando que $\dy f$ está acotada
-  en todo compacto $K\subset\Rset)$.
-  Si $\dy f$ es continua en $[\ta,\tb]\times\Rset$, entonces en cada
-  <<instante>> $t\in[\ta,\tb]$ la función
+  globalmente) Lipschitz se suelen usar las siguientes condiciones:
+  \begin{proposition}~
+    \begin{enumerate}
+    \item Si $\dy f$ es continua en $[\ta,\tb]\times\Rset$, entonces
+      $f$ es \locLipschitz.
+    \item Si $\dy f$ es continua y además está acotada en
+      $[\ta,\tb]\times\Rset$, entonces $f$ es uniformemente
+      \globLipschitz.
+    \item Recíprocamente, si $\dy f$ es continua y $f$ es
+      uniformemente \globLipschitz, entonces $\dy f$ está acotada en
+      $[\ta,\tb]\times\Rset$.
+    \end{enumerate}
+  \end{proposition}
+  \begin{proof}
+    Tan solo comprobaremos la segunda de estas afirmaciones. El resto
+    de ellas se deja como ejercicio\footnote{Indicación: primera
+      afirmación se demuestra de forma análoga (usando que $\dy f$
+      está acotada en todo compacto $K\subset\Rset$) mientras que la
+      tercera se basa en la definición de derivada parcial, que se
+      puede acotar usando la condición de Lipschtiz.}.
+
+    Supongamos $\dy f$ es
+    continua en $[\ta,\tb]\times\Rset$. Entonces en cada <<instante>>
+    $t\in[\ta,\tb]$ la función
   $$\dy f(t,\cdot):\Rset \to \Rset$$
   es continua. Aplicando el teorema del valor medio, se tiene que
   dados $y$, $z\in\Rset$ existe $y^*$ entre $y$ y $z$ tal que
   \begin{equation*}
     |f(\tt,y)-f(\tt,z)| = |\dy f(\tt,y^*) \cdot (y-z)|.
   \end{equation*}
-  Como además  $\dy f$ está acotada, existe $L>0$ tal que $|\dy
-  f(\tt,y)|\le L$ para todo $(\tt,y)\in [\ta,\tb]\times\Rset$ y
+  Como además $\dy f$ está acotada, existe $L>0$ tal que
+  $|\dy f(\tt,y)|\le L$ para todo $(\tt,y)\in [\ta,\tb]\times\Rset$ y
   entonces
   \begin{equation*}
     |f(\tt,y) - f(\tt,z)| \le L |y-z|.
   \end{equation*}
-\end{remark}
+\end{proof}
 
-% \begin{example}
-%   La función $$f(x,y)=y^2$$ es \locLipschitz en cualquier intervalo
-%   $[\ta,\tb]$, pues su derivada parcial $\dy f(x,y)=2y$ es continua. Sin
-%   embargo, esta función no está acotada cuando $y\in\Rset$, por lo que
-%   no tenemos garantías de que $f(x,y)$ sea uniformemente \globLipschitz.
+\begin{example}
+  La función $$f(x,y)=y^2$$ es \locLipschitz en cualquier intervalo
+  $[\ta,\tb]$, pues su derivada parcial $\dy f(x,y)=2y$ es continua. Sin
+  embargo, esta función no está acotada cuando $y\in\Rset$, por lo que
+  no tenemos garantías de que $f(x,y)$ sea uniformemente \globLipschitz.
 
-%   Veamos que realmente $f(x,y)$ no es a uniformemente \globLipschitz,
-%   comprobando que para cualquier constate $L>0$, podemos encontrar dos
-%   valores, $y_L$, $z_L\in\Rset$ de forma que
-%   \begin{equation*}
-%   |f(\tt,y_L)-f(\tt,z_L)| >  L  |y_L-z_L|.
-%  \end{equation*}
-%  Por ejemplo, dada $L>0$ podemos tomar $y_L=L$ y $z_L=0$, así el
-%  primer miembro es
-%  \begin{align*}
-%    |f(\tt,y_L)-f(\tt,z_L)|&=|L+0|\cdot |L-0|=4L^2,
-%    \intertext{mientras que el segundo miembro resulta}
-%    L|y_L-z_L|&=2L^2<4L^2.
-%  \end{align*}
-% \end{example}
+  Veamos que realmente $f(x,y)$ no es uniformemente \globLipschitz,
+  comprobando que para cualquier constate $L>0$, podemos encontrar dos
+  valores, $y_L$, $z_L\in\Rset$ de forma que
+  \begin{equation*}
+  |f(\tt,y_L)-f(\tt,z_L)| >  L  |y_L-z_L|.
+ \end{equation*}
+ En concreto, dada $L>0$ tomamos $y_L=L$ y $z_L=0$. Así
+ \begin{align*}
+   L|y_L-z_L|&=2L^2
+   \intertext{y evaluando $|f(\tt,y_L) - f(\tt,z_L)|$ tenemos que, para todo $\tt\in[a,b]$:}
+   |f(\tt,y_L)-f(\tt,z_L)|&=|L+0|\cdot |L-0|=4L^2 > 2L^2 =  L|y_L-z_L|.
+ \end{align*}
+\end{example}
 
-Los siguientes teoremas constituyen los resultados teóricos
-fundamentales de existencia y unicidad para problemas de Cauchy. El
-primero utiliza hipótesis más débiles (\locLipschitz), aunque sin
-alcanzar directamente la existencia y unicidad de solución global en
-todo $[a,b]$. El Teorema~\ref{thm:existencia-unif-lipschitz} garantiza
-la existencia y unicidad de solución de~\eqref{eq:pvi} en $[a,b]$,
-aunque a costa de imponer una hipótesis muy fuerte (Lipschitz
-uniforme), que reduce considerablemente el rango de problemas
-diferenciales abarcados.
+
+A continuación se resumen los resultados teóricos fundamentales de
+existencia y unicidad para problemas de Cauchy. El primero utiliza
+hipótesis más débiles (\locLipschitz), aunque sin alcanzar
+directamente la existencia y unicidad de solución global en todo
+$[a,b]$. El Teorema~\ref{thm:existencia-unif-lipschitz} garantiza la
+existencia y unicidad de solución de~\eqref{eq:pvi} en $[a,b]$, aunque
+a costa de imponer una hipótesis muy fuerte (Lipschitz uniforme), que
+reduce considerablemente el rango de problemas diferenciales
+abarcados.
 \begin{theorem}
   \label{thm:existencia-loc-lipschitz}
   Sea $f$ continua en $[\ta,\tb]\times\Rset$ y \locLipschitz. Entonces, para
   cualquier inicialización $\ycero\in\Rset$:
   \begin{enumerate}
   \item Existe una única solución local (definida sólo en
-    $[\ta,\ta+\varepsilon]$ para algún $\varepsilon>0$) y existe una
-    única solución maximal\footnote{Una solución maximal es una
-      solución local, $\sol$, de~\eqref{eq:pvi} que
-      \begin{itemize}
-      \item O bien está definida en todo $[a,b]$ (por tanto es una
-        solución global de~\eqref{eq:pvi}).
-      \item O bien está definida en $[\ta,c)\subset[\ta,\tb]$, para
-        algún $c\in(\ta,\tb)$, y no es prolongable a $\tt>c$.
-      \end{itemize}}
+    $[\ta,\ta+\varepsilon]$ para algún $\varepsilon>0$)
+  \item Existe una única solución maximal\footnote{Una solución
+      maximal es una solución local de~(\ref{eq:pvi}), definida en
+      $[\ta,\ta+\varepsilon]$, que no es prolongable a ningún
+      intervalo $[\ta,c]$ (con $c>\ta+\varepsilon$).}
     de~\eqref{eq:pvi}.
   \item Además: si esta solución maximal $\sol(\tt)$ no está definida en todo
     $[\ta,\tb]$ es porque explota en tiempo finito (es decir existe
@@ -191,12 +197,12 @@ diferenciales abarcados.
   \end{enumerate}
 \end{theorem}
 
-\begin{theorem}[Picard]
+\begin{theorem}%[Picard]
   \label{thm:existencia-unif-lipschitz}
-  Sea $f$ continua en $C^0([\ta,\tb]\times\Rset)$ y (globalmente) \globLipschitz.
+  Sea $f$ continua en $[\ta,\tb]\times\Rset$ y (globalmente) \globLipschitz.
   Entonces, para cualquier inicialización $\ycero\in\Rset$, existe una
-  única solución de~\eqref{eq:pvi}, que está definida en todo el
-  intervalo $[\ta,\tb]$.% Además, para todo $\tt\in[\ta,\tb]$
+  única solución maximal de~\eqref{eq:pvi} (definida en todo el
+  intervalo $[\ta,\tb]$).% Además, para todo $\tt\in[\ta,\tb]$
   % se tiene la siguiente desigualdad:
   % \begin{equation*}
   %   |y(\tt)-y(\ta)| \le (\tb-\ta) \Big( \max_{\tt\in[\ta,\tb]}
@@ -204,27 +210,32 @@ diferenciales abarcados.
   % \end{equation*}
 \end{theorem}
 
+
 En lo que sigue, estudiaremos el análisis numérico de problemas
 diferenciales en los que, en principio, la función $f(\tt,y)$ es tan
-solo \locLipschitz. Luego el estudio de la existencia de
-solución en $[\ta,\tb]$ no será una tarea inmediata. Usando el
-Teorema~\ref{thm:existencia-loc-lipschitz}, intentaremos demostrar que
-la solución maximal del problema~(\ref{eq:pvi}) está acotada en
-$[\ta,\tb]$ y por tanto no explota en tiempo finito en este intervalo,
-garantizando así existencia y unicidad de solución en $[\ta,\tb]$ (ver
-en el ejemplo~\ref{ex:existencia-unicidad-loc-lipschitz}). Con este
-propósito, recordamos ahora algunas propiedades interesantes de las
-ecuaciones diferenciales que nos resultarán de gran utilidad.
+solo \locLipschitz. Por tanto el estudio de la existencia de solución
+en $[\ta,\tb]$ no será una tarea inmediata. La técnica usual será
+demostrar que la solución maximal del problema~(\ref{eq:pvi}) está
+acotada en $[\ta,\tb]$ y por tanto no explota en tiempo finito. Así,
+el Teorema~\ref{thm:existencia-loc-lipschitz} garantizará que la
+solución maximal está definida en todo $[\ta,\tb]$ (ver en el
+ejemplo~\ref{ex:existencia-unicidad-loc-lipschitz}).
 
-\begin{proposition}[Algunas propiedades de las soluciones de~(\ref{eq:pvi})]
+Pero demostrar que la solución maximal del problema~(\ref{eq:pvi})
+está acotada en $[\ta,\tb]$ no es fácil. Por tanto, introducimos aquí
+algunas propiedades interesantes de las ecuaciones diferenciales que
+nos pueden resultarán de utilidad para este propósito. Para su
+demostración, consultar la bibliografía.
+
+\begin{proposition}[Comparación de soluciones de~(\ref{eq:pvi})]
 \label{pro:propiedades-pvi}
   Bajo las hipótesis del teorema~\ref{thm:existencia-loc-lipschitz}
   ($f$ \locLipschitz):
   \begin{enumerate}
-  \item Sean $\sol_1(\tt)$ y $\sol_2(\tt)$ las soluciones de dos
-    problemas del tipo~\eqref{eq:pvi} para la \textbf{misma ecuación
-    diferencial} $y'=f(\tt,y)$ pero con \textbf{distintas condiciones
-    iniciales}, es decir:
+  \item Sean $\sol_1(\tt)$, $\sol_2(\tt)$ las respectivas soluciones
+    de dos problemas del tipo~\eqref{eq:pvi} para la \textbf{misma
+      ecuación diferencial} $y'=f(\tt,y)$ pero con \textbf{distintas
+      condiciones iniciales}, es decir:
     $$\sol_1(\ta)<\sol_2(\ta)$$
     Entonces las gráficas de $\sol_1$ e $\sol_2$ no se cortan en
     ningún punto. En concreto, si $\sol_1$ y $\sol_2$ están
@@ -235,10 +246,10 @@ ecuaciones diferenciales que nos resultarán de gran utilidad.
       \cap I_2.
     \end{equation*}
 
-  \item Sean $\sol_1(\tt)$ y $\sol_2(\tt)$ las soluciones de dos
+  \item Sean $\sol_1(\tt)$, $\sol_2(\tt)$ las soluciones de dos
     problemas del tipo~\eqref{eq:pvi} con la \textbf{misma condición
       inicial} pero con \textbf{ecuaciones diferenciales distintas},
-    $y'=f_1(\tt,y)$ $y'=f_2(\tt,y)$. Si
+    $y'=f_1(\tt,y)$, $y'=f_2(\tt,y)$. Si
     $$
     f_1(\tt,y) \le f_2(\tt,y) \quad \forall \tt\in[\ta,\tb], \quad
     \forall y\in\Rset,
@@ -264,14 +275,14 @@ ecuaciones diferenciales que nos resultarán de gran utilidad.
       \end{aligned}
     \right.
   \end{equation*}
-  En primer lugar, $f(x,y)=-y^2+2y\,\cos \tt$ y $\dy f(t,y)=-2y+2\cos
-  t$ son continuas en $[0,2]\times\Rset$, luego $f$ es \locLipschitz,
-  por lo que (según el teorema~\ref{thm:existencia-loc-lipschitz})
-  existe una única solución maximal, a la que denominaremos
-  $\sol(\tt)$, definida en $I=[0,2]$ o bien en $I=[0,c)$ con
-  $c<2$. Pero esta última posibilidad no se verifica, pues entonces
-  $\sol(\tt)$ explotaría en $c$, pero veremos a continuación que
-  $\sol(\tt)$ está acotada:
+  En primer lugar, $f(x,y)=-y^2+2y\,\cos \tt$ y
+  $\dy f(t,y)=-2y+2\cos t$ son continuas en $[0,2]\times\Rset$, luego
+  $f$ es \locLipschitz, por lo que (según el
+  teorema~\ref{thm:existencia-loc-lipschitz}) existe una única
+  solución maximal, a la que denominaremos $\sol(\tt)$ definida bien
+  en todo $I=[0,2]$ o bien en $I=[0,c)$ con $c<2$. Pero esta última
+  posibilidad no se verifica, pues entonces $\sol(\tt)$ debería
+  en $c$. Y esto no ocurre porque $\sol(\tt)$ está acotada:
   \begin{enumerate}
   \item Sea $\sol_1$ la solución del problema de valor inicial para la
     misma ecuación diferencial pero para la condición inicial
@@ -303,6 +314,7 @@ ecuaciones diferenciales que nos resultarán de gran utilidad.
   \end{enumerate}
   \renewcommand{\tt}{t}
 \end{example}
+
 
 \section{El método de Euler}
 
@@ -476,6 +488,10 @@ anterior,
   \ynn =  \yn + h f(\tn,\yn),
 \end{equation*}
 con $\yn\approx\sol(\tn)$, $\ynn\approx\sol(\tnn)$.
+
+%======================================================================
+\end{document}
+%======================================================================
 
 \subsubsection*{Algunas variantes del método de Euler.}
 
@@ -1364,7 +1380,8 @@ estabilidad dada en el teorema anterior:
 %   Así obtenemos un método explícito que saca partida a las
 %   características de los esquemas de \AB y AM.
 %   \end{example}
+
 %%% Local Variables:
 %%% mode: latex
-%%% TeX-master: "../apuntes-MNII.tex"
+%%% TeX-master: "../tema4.tex"
 %%% End:

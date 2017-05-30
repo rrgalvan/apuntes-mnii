@@ -1,0 +1,106 @@
+\renewcommand{\tt}{t}
+\newcommand{\yy}{y}
+\newcommand{\yn}{{\yy_n}}
+\newcommand{\ynn}{{\yy_{n+1}}}
+\newcommand{\ta}{a}
+\newcommand{\tb}{b}
+\newcommand{\tn}{{\tt_n}}
+\newcommand{\tnn}{{\tt_{n+1}}}
+\newcommand{\zn}{{z_n}}
+\newcommand{\znn}{{z_{n+1}}}
+\newcommand{\ycero}{{y_a}}
+% \newcommand{\sol}{\varphi}
+\newcommand{\sol}{y}
+\newcommand{\lipschitz}{$y$--Lipschitz\xspace}
+\newcommand{\locLipschitz}{localmente \lipschitz}
+\newcommand{\globLipschitz}{\lipschitz}
+\newcommand{\errCons}{{\cal E}}
+\newcommand{\RK}{Runge--Kutta\xspace}
+\newcommand{\AB}{Adams--Bashforth\xspace}
+\newcommand{\AM}{Adams--Moulton\xspace}
+
+En este tema comprobaremos cómo los métodos numéricos que han sido
+utilizados para la resolución numérica de problemas de valor inicial
+para ecuaciones diferenciales ordinarias pueden ser fácilmente
+extendidos al caso de sistemas de ecuaciones diferenciales. En
+particular, esto dará lugar a algoritmos para resolver numéricamente
+problemas de valor inicial para ecuaciones diferenciales de orden
+mayor que uno.
+
+Por simplicidad, nos restringimos a sistemas de dos ecuaciones y a
+ecuaciones diferenciales de orden dos, aunque todos los resultados son
+generalizables a cualquier número de ecuaciones y a cualquier orden.
+
+\section{Problemas de valor inicial para sistemas de ecuaciones de
+  primer orden}
+\label{sec:sistemas-ecuaciones-dif}
+
+Consideremos el problema de valores iniciales para $t\in [a,b]$:
+\begin{align*}
+  &x' = f(t, x, y), \\
+  &y' = g(t, x, y), \\
+  &y(a) = y_a, \quad z(a)=z_a
+\end{align*}
+
+Una solución de este sistema consistirá en un par de funciones $x(t)$,
+$y(t)$ de clase $C^1([a,b])$ que verifican las ecuaciones anteriores
+para todo $t\in[a,b]$.
+Como en los temas anteriores, tendríamos que empezar planteando
+condiciones sobre las funciones $f$ y $g$ que nos garanticen la
+existencia y unicidad de solución del problema anterior. Sin embargo,
+no entraremos en detalles: basta decir que los resultados de
+existencia y unicidad son similares a los estudiados en el tema
+anterior (basados en la condición de Lipschitz para las funciones $f$
+y $g$).
+
+Admitiendo, por tanto, el buen planteamiento del problema anterior,
+pasamos directamente al estudio de métodos numéricos para la
+aproximación de la solución.
+Definimos una partición del intervalo $[\ta,\tb]$, formada por
+$N+1$ puntos:
+\begin{equation*}
+  \ta=\tt_0 < \tt_1 < \cdots < \tt_N=\tb,
+\end{equation*}
+que por simplicidad, supondremos uniforme, es decir,
+$\tt_n=\ta+n\cdot h$ para todo $n=0\dots,N$, donde $h=(b-a)/N$.
+Queremos calcular dos conjuntos de números $x_n$, $y_n$, con
+$n=0,\dots,N$ de forma que
+$$
+x_n \approx x(\tn), \quad y_n \approx y(\tn).
+$$
+
+Como en el tema anterior, si utilizamos las aproximaciones
+\begin{align*}
+  x'(\tn)\approx \frac{x(\tnn)-x(\tn)}{t_{n+1}-t_n} \approx \frac{x_{n+1}-x_n}h,
+  \\
+  y'(\tn)\approx \frac{y(\tnn)-y(\tn)}{t_{n+1}-t_n} \approx \frac{y_{n+1}-y_n}h,
+\end{align*}
+llegamos al método de \textbf{Euler explícito}: partiendo $x_0=x_a$, $y_0=y_a$,
+\begin{align*}
+  x_{n+1} = x_n + h f(\tn,x_n,y_n),
+  \\
+  y_{n+1} = y_n + h g(\tn,x_n,y_n).
+\end{align*}
+
+El resto de los métodos numéricos estudiados se pueden generalizar con facilidad a sistemas de ecuaciones. Por ejemplo, el método de \textbf{Euler-Cauchy}:
+\begin{align*}
+  x_{n+1} = x_n + h
+  f\big(t_{n+1/2},\; x_n+\frac h2 f(\tn,x_n,y_n),\; y_n+\frac h2 g(\tn,x_n,y_n) \big),
+  \\\noalign{\medskip}
+  y_{n+1} = y_n + h
+  g\big(t_{n+1/2},\; x_n+\frac h2 f(\tn,x_n,y_n),\; y_n+\frac h2 g(\tn,x_n,y_n) \big),
+\end{align*}
+
+Método de \textbf{Euler mejorado} (o método de \textbf{Heunn}): ejercicio.
+% \begin{align*}
+%   x_{n+1} = x_n + \frac h2
+%   f\big(t_{n+1/2},\; x_n+\frac h2 f(\tn,x_n,y_n),\; y_n+\frac h2 g(\tn,x_n,y_n) \big),
+%   \\\noalign{\medskip}
+%   y_{n+1} = y_n + \frac h2
+%   g\big(t_{n+1/2},\; x_n+\frac h2 f(\tn,x_n,y_n),\; y_n+\frac h2 g(\tn,x_n,y_n) \big).
+% \end{align*}
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "../tema5.tex"
+%%% End:

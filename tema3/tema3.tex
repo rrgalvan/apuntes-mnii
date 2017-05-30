@@ -11,7 +11,7 @@ ingeniería, economía,\dots). En concreto, dada una función
 $f:[a,b]\subset\Rset\to\Rset$, se trata de aproximar numéricamente su
 integral definida en $[a,b]$,
 \begin{equation*}
-  \int_a^bf(x)\,dx.
+  \int_a^b f(x)\,dx.
 \end{equation*}
 
 La necesidad de la aproximación numérica de integrales definidas
@@ -999,11 +999,10 @@ los nodos de integración.
     \quad &0 &=
     \omega_0x_0^3+\omega_1x_1^3.
   \end{alignat*}
-  De la segunda y la cuarta ecuaciones deducimos que $w_0^2=w_1^2$,
-  por tanto $\omega_0=\omega_1=1$ o $\omega_0=1, \omega_1=-1$.  Pero
-  teniendo en cuenta la primera ecuación, la única posibilidad es
-  $\omega_0=\omega_1=1$. Entonces, según la segunda y la tercera
-  ecuación, $x_0=\frac{1}{\sqrt 3}$, $x_1=-\frac{1}{\sqrt 3}$.
+  De la segunda y la cuarta ecuaciones deducimos que $x_0^2=x_1^2$.  Y
+  teniendo en cuenta la primera ecuación (como $x_0<x_1$) debe ser
+  $x_0=-1/{\sqrt 3}$, $x_1={\sqrt 3}$. Entonces, es fácil llegar a
+  $w_0=w_1=1$ (por ejemplo, usando las dos primeras ecuaciones).
 
   Por lo tanto, la fórmula de cuadratura de Gauss con dos puntos en el
   intervalo $[-1,1]$ (de orden $2n+1=3$) se puede expresar de la

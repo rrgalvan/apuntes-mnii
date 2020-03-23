@@ -478,16 +478,19 @@ haber expuesto ahora algunas variantes del método de Euler, pero éstas
 serán introducidas a través de fórmulas de integración.
 
 \subsubsection*{Integración numérica}
-La solución exacta de~(\ref{eq:pvi}) puede escribirse de la siguiente
-forma (formulación integral de la solución de~(\ref{eq:pvi})):
-\begin{equation*}
-  \sol(t) = \sol(\ta) + \int_\ta^t f(s,\sol(s))\, ds.
-\end{equation*}
-La formulación anterior sigue siendo válida si sustituimos $a$ por cualquier otro punto de $[a,b]$. En particular, para
-$a=\tn$ y $t=\tnn$:
+La solución exacta de~(\ref{eq:pvi}) verifica $\sol'(t) = f(t, g(t))$,
+$t\in [a,b]$. Puesto que $\sol\in C^1([a,b])$ y $f\in C([a,b])$,
+podemos integrar la igualdad anterior en $[t_n,t_{n+1}] \subset [a,b]$
+obteniendo la siguiente expresión integral:
+% forma (formulación integral de la solución de~(\ref{eq:pvi})):
+% \begin{equation*}
+%   \sol(t) = \sol(\ta) + \int_\ta^t f(s,\sol(s))\, ds.
+% \end{equation*}
+% La formulación anterior sigue siendo válida si sustituimos $a$ por cualquier otro punto de $[a,b]$. En particular, para
+% $a=\tn$ y $t=\tnn$:
 \begin{equation}
   \label{eq:tema4.5}
-  \sol(\tnn) = \sol(\tn) + \int_\tn^\tnn f(s,\sol(s))\, ds.
+  \sol(\tnn) = \sol(\tn) + \int_\tn^\tnn f(t,\sol(t))\, dt.
 \end{equation}
 Para obtener el método de Euler implícito aproximamos la última
 integral mediante la siguiente fórmula de cuadratura (regla
@@ -681,12 +684,16 @@ A esta expresión la llamaremos error de consistencia en el instante $\tn$:
   \end{equation}
 \end{definition}
 \begin{remark}
-  Teniendo en cuenta la identidad~(\ref{eq:tema4.4}), es evidente que se verifica:
-  $$\errCons_{n} = \ddt \sol(\tnn)-\ddt\ynn.$$
+  Obviamente, para un problema de valor inicial, el error de
+  consistencia dependerá de la talla, $h$, en la discretización del
+  intervalo $[a,b]$. Es decir, $\errCons_n=\errCons_n(h)$.
+  Es evidente que se verifica:
+  $$\errCons_{n} = \errCons_{n}(h) = \ddt \sol(\tnn)-\sol'(\tnn).$$
+  Es de esperar que cuando $h\to 0$, el cociente incremental tienda a
+  la derivada y así el error de consistencia tienda a cero. Este hecho
+  se formalizará en la demostración del
+  Teorema~\ref{thm:consistencia-euler}.
 \end{remark}
-Obviamente, para un problema de valor inicial, el error de
-consistencia dependerá de la talla, $h$, en la discretización del
-intervalo $[a,b]$. Es decir, $\errCons_n=\errCons_n(h)$.
 %  \begin{remark}
 %   Como $\sol(t)$ es la solución exacta, $\sol'(\tn)=f(\tn,\sol(\tn))$, así
 %   podemos en el método de Euler podemos escribir:
@@ -812,14 +819,16 @@ o, equivalentemente,
 \end{theorem}
 
 \begin{proof}
-  Este teorema es consecuencia del siguiente resultado
-  técnico (cuya demostración, basada en la suma parcial de cierta
-  progresión geométrica, omitiremos por brevedad):
+  Este teorema es consecuencia del siguiente resultado (cuya
+  demostración, basada en la suma parcial de cierta progresión
+  geométrica, será omitida por brevedad, véase [Doubova-Guillén] en la
+  bibliografía) que nos permite reducir, escribiendo en términos del
+  valor inicial, una acotación recursiva:
   \begin{quote}
     \begin{lemma}
       \label{lem:2}
       Sean $\{a_n\}_{n\ge 0}$ y $\{b_n\}_{n\ge 0}$ dos sucesiones de
-      números reales no negativos y $\Lambda>0$ tales que:
+      números reales no negativos y sea $\Lambda>0$ de forma que:
       \begin{align*}
         a_{n+1} &\le (1+h\Lambda)a_n + h b_n, \quad \forall n\ge 0.
         \intertext{Entonces} a_n &\le e^{nh\Lambda}a_0 +
@@ -957,7 +966,7 @@ estabilidad dada en el teorema anterior:
 
 \begin{remark}
   Los resultados anteriores se pueden generalizar al esquema de Euler Implícito. Véase
-  Véase [Dubova-Guillén] en la bibliografía.
+  Véase [Doubova-Guillén] en la bibliografía.
 \end{remark}
 
 \section{Error y convergencia en métodos generales de un paso}
@@ -1029,7 +1038,7 @@ parciales:
   \emph Si $f\in C^n([\ta,\tb]\times\Rset)$, entonces la solución
   maximal, $\sol(x)$, de~(\ref{eq:pvi}) verifica $\sol\in
   C^{n+1}([\ta,\tb]\times\Rset)$ y además $$g^{n+1)}(t)=\Dtotal n f(t,
-  \sol(t))$$.
+  \sol(t)).$$
 \end{quotation}
 
 \begin{theorem}[Consistencia]~

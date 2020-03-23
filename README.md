@@ -2,4 +2,4 @@ Estos son los apuntes de la asignatura *Métodos Numéricos II* del Grado en Mat
 
 Fueron creados para las clases en el curso 2013/14 y serán actualizados en los cursos siguientes.
 
-[cc-by-sa]: cc-by-sa.png
+![cc-by-sa](cc-by-sa.png)

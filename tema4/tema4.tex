@@ -1,8 +1,3 @@
-% *#06#
-%
-% imei
-% 359 778 047 841 331
-%
 \renewcommand{\tt}{t}
 \newcommand{\yy}{y}
 \newcommand{\yn}{{\yy_n}}
@@ -591,7 +586,7 @@ distintos al de Euler explícito. Por ejemplo:
   \end{equation}
   Si además aproximamos $\sol(\tnn)$ por
   $\sol(\tn)+hf(\tn,\sol(\tn))$ se llega al método explícito
-  conocido como de \textit{Euler mejorado} (o \textit{método de Heunn}):
+  conocido como \textit{método de Heun} (o de \textit{Euler mejorado}):
   \begin{equation}
     \label{eq:euler-mejorado}
     \tag{EM}
@@ -685,14 +680,19 @@ A esta expresión la llamaremos error de consistencia en el instante $\tn$:
 \end{definition}
 \begin{remark}
   Obviamente, para un problema de valor inicial, el error de
-  consistencia dependerá de la talla, $h$, en la discretización del
-  intervalo $[a,b]$. Es decir, $\errCons_n=\errCons_n(h)$.
-  Es evidente que se verifica:
+  consistencia dependerá de $h$, es decir $\errCons_n=\errCons_n(h)$.
+  Además, puesto que $\sol$ es solución exacta de la EDO la
+  ecuación~(\ref{eq:consistencia-euler}) se puede escribir como
   $$\errCons_{n} = \errCons_{n}(h) = \ddt \sol(\tnn)-\sol'(\tnn).$$
-  Es de esperar que cuando $h\to 0$, el cociente incremental tienda a
-  la derivada y así el error de consistencia tienda a cero. Este hecho
-  se formalizará en la demostración del
-  Teorema~\ref{thm:consistencia-euler}.
+  Es decir, el error de discretización se puede interpretar como la
+  diferencia entre la derivada discreta de la sucesión de soluciones
+  exactas y la derivada de la solución exacta en $t_n$.  Es de esperar
+  que cuando $h\to 0$, el cociente incremental $\ddt \sol(\tnn)$
+  tienda a la derivada y así el error de consistencia tienda a
+  cero. Este hecho se formalizará en la demostración del
+  Teorema~\ref{thm:consistencia-euler}, conde veremos que
+  efectivamente esta convergencia se verifica de forma uniforme cuando
+  $h\to 0$.
 \end{remark}
 %  \begin{remark}
 %   Como $\sol(t)$ es la solución exacta, $\sol'(\tn)=f(\tn,\sol(\tn))$, así
@@ -1436,6 +1436,138 @@ deseamos calcular,  ponemos en práctica la siguiente idea:
   Así obtenemos un método explícito que saca partida a las
   características de los esquemas de \AB y AM.
   \end{example}
+
+  % ---------------------------
+  \begin{EjerciciosPropuestos}
+    %--------------------------
+
+    \begin{problema}
+      Consideremos el problema de valor inicial $y'=\cos(t+y)$ en
+      $[0,\pi]$, $y(0)=1$. Calcular\footnote{Comprobar que
+        $|\partial_y f(t,y)|\le 1$ y por tanto se puede tomar la
+        constante de Lipschitz $L=1$.} el paso, $h$, necesario para que
+        la aproximación de este problema mediante el método de Euler
+        (explícito) tenga un error de discretización menor que
+        $10^{-5}$.
+    \end{problema}
+
+    \begin{problema}
+      \begin{enumerate}
+      \item Demostrar el siguiente lema técnico\footnote{Idea: desarrollar la
+        sucesión recursiva, acotar todos los $b_n$ por $\max_n|b_n|$ y calcular
+        la suma de la serie geométrica correspondiente.}: sean dos sucesiones de
+        números reales no negativos, $\{a_n\}_{n\ge 0}$ y
+        $\{b_n\}_{n\ge 0}$ y sea $K>0$ para los que se verifica la
+        siguiente relación recursiva:
+        $$
+        a_{n+1} \le K a_n + b_n.
+        $$
+        Entonces:
+        \begin{equation*}
+         a_n \le K^n a_0 + \frac{K^n-1}{K-1}\max_n|b_n|.
+        \end{equation*}
+
+      \item Utilizar el resultado anterior para demostrar\footnote{Idea: usar que $1+x\le e^x$ para todo $x\ge 0$.} el Lema~\ref{lem:2}.
+      \end{enumerate}
+    \end{problema}
+
+  \begin{problema}
+    Consideremos el método de Euler Implícito definido
+    en~(\ref{eq:euler-implicito}) para un problema de valor
+    inicial~(\ref{eq:pvi}) dado por una función
+    $f\in C([a,b]\times\Rset)$ globalmente Lispschitziana (respecto
+    a su segunda variable, $y$). Sea $h>0$ tal que se verifica la
+    condición $hL<1$ (donde $L$ es la constante de Lipschtiz para
+    $f$).
+    \begin{enumerate}
+    \item Demostrar que, en estas condiciones, el método de Euler
+      implícito está bien definido, es decir, para cada $n\in\{0,\dots,N-1\}$
+      existe una única $\ynn$ solución
+      de~(\ref{eq:euler-implicito})\footnote{Idea: demostrar la
+        contractividad de una función adecuada.}.
+    \item Para este método define el error de consistencia $\errCons(h)=(\errCons_0,\dots,\errCons_{N-1})$, donde
+      \begin{equation*}
+        \label{eq:consistencia-euler-impl}
+        \errCons_{n} = \ddt \sol(\tnn)-f(\tnn,\sol(\tnn)).
+      \end{equation*}
+      Demostrar que el método de Euler Implícito es consistente con
+      orden de consistencia igual a uno. Y en concreto\footnote{Idea:
+        adaptar la demostración del
+        Teorema~\ref{thm:consistencia-euler}.}:
+      $$
+      \|\errCons(h)\|_{\infty} \le \frac h 2  \|g''\|_{\infty}.
+      $$
+
+    \item Definir el concepto de estabilidad aplicado al método de
+      Euler Implícito y demostrar que este método es
+      estable\footnote{Intentar escribir de forma recursiva el error
+        respecto a una sucesión perturbada de tal forma que se pueda
+        aplicar el Lema~\ref{lem:2}.}.
+
+      \item Utilizado lo anterior, demostrar que el método de Euler
+        implícito es convergente con orden 1.
+    \end{enumerate}
+
+  \end{problema}
+
+  \begin{problema}
+    Demostrar que para toda función $g\in C^3([a,b])$ existe una
+    constante $C$ (independiente de $h$) para la que se verifican las
+    siguientes desigualdades\footnote{Solución: para~(\ref{eq:ejer.4}) aproximar
+      $g(t_{n})$ y $g(t_{n+1})$ mediante desarrollos de Taylor en
+      $t_{n+1/2}$. Para~(\ref{eq:ejer.3}), aproximar $g(t_n)$ y
+      $g(t_{n+1})$ mediante desarrollos en $t_{n+1}$ y $t_n$ y
+      restar.}:
+    \begin{align}
+      \label{eq:ejer.3}
+      \Big| \ddt g(t_{n+1}) &- \frac{g'(t_{n})+ g'(t_{n+1})}2 \Big| \le C h^2,
+      \\
+      \Big| \ddt g(t_{n+1}) &- g'(t_{n+1/2}) \Big| \le C h^2,
+      \label{eq:ejer.4}
+    \end{align}
+    donde se usó la notación usual, $t_n, t_{n+1}\in [a,b]$,
+    $h=t_{n+1}-t_n$, $t_{n+1/2}=t_{n}+h/2$.  \textit{Observación: las
+      desigualdades anteriores pueden interpretarse de la siguiente
+      forma: $\ddt g(t_{n+1})$ es una aproximación de orden 2 de $g'$
+      en el punto medio.}
+  \end{problema}
+
+  \begin{problema}
+    Consideremos el método de Crank-Nicolson definido en~(\ref{eq:crank-nicolson-2})
+    \begin{enumerate}
+    \item Justificar la siguiente definición error de consistencia (en
+      el instante $t_{n+1}$ para este método:
+      \begin{equation*}
+        \errCons_n = \ddt g(t_{n+1}) - \frac 12 \big( f(t_n, g(t_n)) + f(t_{n+1},g(t_{n+1}))\big),
+      \end{equation*}
+      donde $g(\cdot)$ denota a la solución exacta del PVI.
+    \item Demostrar que, si la solución exacta, $g$, verifica
+      $g\in C^3([a,b])$, el método anterior es consistente, con orden
+      de consistencia igual a dos.
+    \end{enumerate}
+  \end{problema}
+
+  \begin{problema}
+    Consideremos el método de Euler-Cauchy~(\ref{eq:euler-mejorado})
+    \begin{enumerate}
+    \item Introducir el concepto de error de consistencia para este método.
+    \item Demostrar que si la solución exacta $g$ es de clase
+      $C^3([a,b])$, entonces el método tiene orden de consistencia 2.
+    \item Comprobar que, si $f$ es \globLipschitz, entonces el método
+      de Euler-Cauchy es estable\footnote{Comprobar que la función
+        $\Phi$ que define al método de Euler-Cauchy como método de un
+        paso es Lipschitziana.}
+    \item Definir el error de discretización para este método y
+      concluir que el esquema es convergente y su error de
+      discretización tiene orden dos.
+    \end{enumerate}
+  \end{problema}
+  % \begin{problema}
+  %   Demostrar que si la solución exacta $g$ del problema de valor
+  %   inicial~(\ref{eq:pvi}) verifica $g\in C^3([a,b])$, entonces el
+  %   método de Heun es consistente
+  % \end{problema}
+\end{EjerciciosPropuestos}
 
 %%% Local Variables:
 %%% mode: latex

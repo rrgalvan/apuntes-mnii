@@ -91,14 +91,18 @@ El resto de los métodos numéricos estudiados se pueden generalizar con facilid
   g\big(t_{n+1/2},\; x_n+\frac h2 f(\tn,x_n,y_n),\; y_n+\frac h2 g(\tn,x_n,y_n) \big),
 \end{align*}
 
-Método de \textbf{Euler mejorado} (o método de \textbf{Heunn}): ejercicio.
-% \begin{align*}
-%   x_{n+1} = x_n + \frac h2
-%   f\big(t_{n+1/2},\; x_n+\frac h2 f(\tn,x_n,y_n),\; y_n+\frac h2 g(\tn,x_n,y_n) \big),
-%   \\\noalign{\medskip}
-%   y_{n+1} = y_n + \frac h2
-%   g\big(t_{n+1/2},\; x_n+\frac h2 f(\tn,x_n,y_n),\; y_n+\frac h2 g(\tn,x_n,y_n) \big).
-% \end{align*}
+Método de \textbf{Euler mejorado} (o método de \textbf{Heun}):
+\begin{align*}
+  x_{n+1} = x_n + \frac h2
+  \Big[ f\big(t_{n},\; x_n,\; y_n)+
+  f\big(t_{n+1},\; x_n+ h f(\tn,x_n,y_n),\; y_n+ h g(\tn,x_n,y_n) \big)
+  \Big],
+  \\\noalign{\medskip}
+  y_{n+1} = y_n + \frac h2
+  \Big[ g\big(t_{n},\; x_n,\; y_n)+
+  g\big(t_{n+1},\; x_n+ h f(\tn,x_n,y_n),\; y_n+ h g(\tn,x_n,y_n) \big)
+  \Big].
+\end{align*}
 
 %%% Local Variables:
 %%% mode: latex

@@ -453,53 +453,99 @@ de $[a,b]$:
 \end{theorem}
 
 \begin{proof}
-  Si $x=x_i$ para algún $i=0,\dots,n$,
-  entonces~(\ref{eq:expresion-error-interpol}) es evidente (ambos
-  miembros de la igualdad se anulan).
+  % Si $x=x_i$ para algún $i=0,\dots,n$,
+  % entonces~(\ref{eq:expresion-error-interpol}) es evidente (ambos
+  % miembros de la igualdad se anulan).
 
-  \etapa{Etapa 1.}
+  % \etapa{Etapa 1.}
   %%%%%%%%%%%%%%%%
-  Fijemos, en lo que sigue, $x\in[a,b]$ tal que
-  $x\neq x_i$ para todo $i=0,\dots,n$. Para cada $t\in[a,b]$ consideramos
+  En primer lugar, si $x=x_i$ para algún $i=0,\dots,n$, entonces tanto
+  $f(x)-p_n(x)$ como $w_S(x)$ son cero, por tanto la
+  igualdad~(\ref{eq:expresion-error-interpol}) se tiene trivialmente,
+  para cualquier $\xi_x\in(a,b)$.
+
+  Fijemos pues $x\in [a,b]$ y supongamos que $x$ no coincide con
+  ninguno de los $x_i$. Tenemos que comprobar que
+  el error de interpolación, $f(x)-p_n(x)$, se puede escribir de la
+  forma $\lambda\, w_S(x)$,
+  esto es $$f(x)-p_n(x)-\lambda\, w_s(x)=0$$
+  y que es posible escribir
+  $\lambda=\frac{f^{n+1)}(\xi_x)}{(n+1)!}$ para algún
+  $\xi_x\in (a,b)$.
+
+  Para ello, consideramos la función
   \begin{equation}
-    \omega_S(t)=(t-x_0)(t-x_1)\dots (t-x_n),
-    \label{eq:w_S:3}
-  \end{equation}
-  y definimos la siguiente función auxiliar:
-  \begin{equation}
-    \phi_{\lambda_x}(t)=f(t)-p_n(t)-\lambda_x\, \omega_S(t), \quad \forall t\in[a,b],
+    \phi_{\lambda}(t)=f(t)-p_n(t)-\lambda\, \omega_S(t), \quad \forall t\in[a,b],
     \label{eq:interpol:2}
   \end{equation}
-  donde $\lambda_x$ se calcula de forma que $\phi_{\lambda_x}(x)=0$ (para el $x$
-  previamente fijado), es decir,
+  Si pretendemos que $\phi_\lambda(x)=0$, basta tomar
   $$
-  \lambda_x = \frac{f(x)-p_n(x)}{\omega_S(x)}.
+  \lambda = \frac{f(x)-p_n(x)}{\omega_S(x)},
   $$
-  Así, $\phi_{\lambda_x}$ se anula en $n+2$ puntos (en $x$ y en cada
-  $x_i$).
-  \etapa{Etapa 2.}
-  %%%%%%%%%%%%%%%%
-  Si conseguimos ver que existe $\xi_x\in (a,b)$ tal que
-  $\phi_{\lambda_x}^{n+1)}(\xi_x)=0$, entonces se
-  tiene~(\ref{eq:expresion-error-interpol}), pues derivando $n+1$
-  veces en~(\ref{eq:interpol:2}) y sustituyendo $t=\xi_x$:
-  \begin{align*}
-    0=\phi_{\lambda_x}^{n+1)}(\xi_x)&=f^{n+1)}(\xi_x)-p_n^{n+1)}(\xi_x)-\lambda_x\cdot\omega_S^{n+1)}(\xi_x)
-    \\
-                        &=f^{n+1)}(\xi_x)- \frac{f(x)-p_n(x)}{\omega_S(x)}\cdot (n+1)!,
-  \end{align*}
-  de donde podemos despejar $f(x)-p_n(x)$ para
-  obtener~(\ref{eq:expresion-error-interpol}).
+  siendo el denominador distinto de cero porque $\omega_S$ sólo se anula en los $x_i$.
+  De esta forma, $x$ es un cero de $\phi_\lambda$. Pero esta función
+  tiene $n+1$ ceros más: $x_0,\dots,x_n$. En total la función
+  $\phi_\lambda$ tiene $n+2$ ceros.
 
-  Para comprobar que existe $\xi_x\in (a,b)$ tal que
-  $\phi_{\lambda_x}^{n+1)}(\xi_x)=0$, basta utilizar repetidas veces
-  el teorema de Rolle. En efecto, como
-  $\phi_{\lambda_x}\in C^{n+1}([a,b])$ y se anula en $n+2$ puntos
-  distintos, por el Teorema de Rolle tenemos que
-  $\phi_{\lambda_x}'(x)$ se anula en $n+1$ puntos distintos de
-  $(a,b)$. Aplicando sucesivamente el Teorema de Rolle, llegamos a que
-  $\phi_{\lambda_x}^{n+1)}\in C^0([a,b])$ y se anula (al menos) en un
-  punto, $\xi_x\in (a,b)$.
+  Por tanto, como consecuencia del teorema de Rolle, su derivada,
+  $\phi'_\lambda$ tiene $n+1$ ceros, $\phi''_\lambda$ tiene $n$ ceros,
+  etc. Y finalmente la función $\phi^{n+1}$ tiene al menos un cero, $\xi_x\in(a,b)$.
+
+  Pero podemos calcular esta derivada:
+  $$\phi_\lambda^{n+1}(t) = f^{n+1}(t)-0 - \lambda (n+1)!,$$
+  pues $p_n$ es un polinomio de grado $n$ y $w_S(t)=(t-x_0)\cdots(t-x_n)$ se puede escribir
+  como $t^{n+1}$ mas términos de menor grado. Así,
+  $$
+  0 = \phi_\lambda^{n+1}(\xi_x) = f^{n+1}(\xi_x)- \lambda (n+1)!,
+  $$
+  luego
+  $$
+  \lambda = \frac{f^{n+1}(\xi_x)}{(n+1)!}.
+  $$
+
+  % \bigskip\noindent\hrulefill
+
+  % Fijemos, en lo que sigue, $x\in[a,b]$ tal que
+  % $x\neq x_i$ para todo $i=0,\dots,n$. Para cada $t\in[a,b]$ consideramos
+  % \begin{equation}
+  %   \omega_S(t)=(t-x_0)(t-x_1)\dots (t-x_n),
+  %   \label{eq:w_S:3}
+  % \end{equation}
+  % y definimos la siguiente función auxiliar:
+  % \begin{equation}
+  %   \phi_{\lambda_x}(t)=f(t)-p_n(t)-\lambda_x\, \omega_S(t), \quad \forall t\in[a,b],
+  %   \label{eq:interpol:2}
+  % \end{equation}
+  % donde $\lambda_x$ se calcula de forma que $\phi_{\lambda_x}(x)=0$ (para el $x$
+  % previamente fijado), es decir,
+  % $$
+  % \lambda_x = \frac{f(x)-p_n(x)}{\omega_S(x)}.
+  % $$
+  % Así, $\phi_{\lambda_x}$ se anula en $n+2$ puntos (en $x$ y en cada
+  % $x_i$).
+  % \etapa{Etapa 2.}
+  % %%%%%%%%%%%%%%%%
+  % Si conseguimos ver que existe $\xi_x\in (a,b)$ tal que
+  % $\phi_{\lambda_x}^{n+1)}(\xi_x)=0$, entonces se
+  % tiene~(\ref{eq:expresion-error-interpol}), pues derivando $n+1$
+  % veces en~(\ref{eq:interpol:2}) y sustituyendo $t=\xi_x$:
+  % \begin{align*}
+  %   0=\phi_{\lambda_x}^{n+1)}(\xi_x)&=f^{n+1)}(\xi_x)-p_n^{n+1)}(\xi_x)-\lambda_x\cdot\omega_S^{n+1)}(\xi_x)
+  %   \\
+  %                       &=f^{n+1)}(\xi_x)- \frac{f(x)-p_n(x)}{\omega_S(x)}\cdot (n+1)!,
+  % \end{align*}
+  % de donde podemos despejar $f(x)-p_n(x)$ para
+  % obtener~(\ref{eq:expresion-error-interpol}).
+
+  % Para comprobar que existe $\xi_x\in (a,b)$ tal que
+  % $\phi_{\lambda_x}^{n+1)}(\xi_x)=0$, basta utilizar repetidas veces
+  % el teorema de Rolle. En efecto, como
+  % $\phi_{\lambda_x}\in C^{n+1}([a,b])$ y se anula en $n+2$ puntos
+  % distintos, por el Teorema de Rolle tenemos que
+  % $\phi_{\lambda_x}'(x)$ se anula en $n+1$ puntos distintos de
+  % $(a,b)$. Aplicando sucesivamente el Teorema de Rolle, llegamos a que
+  % $\phi_{\lambda_x}^{n+1)}\in C^0([a,b])$ y se anula (al menos) en un
+  % punto, $\xi_x\in (a,b)$.
 \end{proof}
 
 \begin{remark}[Cota uniforme del error]

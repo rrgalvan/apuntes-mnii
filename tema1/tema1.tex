@@ -506,28 +506,28 @@ una sucesión de intervalos,
   [a,b]=[a_0,b_0] \supset [a_1,b_1] \supset [a_2,b_2] \cdots \supset
   [a_n,b_n] \supset \cdots
 \end{equation}
-definida a partir de sus puntos medios, $c_n=(a_n+b_n)/2$, tal y como sigue:
+definida a partir de sus puntos medios, $x_n=(a_n+b_n)/2$, tal y como sigue:
 \begin{itemize}
 \item Como inicialización, tomamos $a_0=a$ y $b_0=b$ y calculamos
-  $c_0=(a_0+b_0)/2$.
+  $x_0=(a_0+b_0)/2$.
 \item En cada etapa $k\ge 1$, construimos un intervalo $[a_k,b_k]$ a
   partir del anterior, $[a_{k-1}, b_{k-1}]$, de la siguiente forma:
   \begin{enumerate}
   \item Calculamos el punto medio del intervalo anterior,
-    $c_{k-1}=(a_{k-1}+b_{k-1})/2$. Si $f(c_{k-1})=0$ hemos terminado
-    ($c_{k-1}$ es el cero de $f$).
+    $x_{k-1}=(a_{k-1}+b_{k-1})/2$. Si $f(x_{k-1})=0$ hemos terminado
+    ($x_{k-1}$ es el cero de $f$).
   \item En otro caso definimos $a_k$ y $b_k$ de forma que $f$ cambie de
     signo en $[a_k,b_k]$:
     \begin{enumerate}
-    \item Si $f(a_{k-1})f(c_{k-1})<0$, elegimos $[a_k,b_k]=[a_{k-1}, c_{k-1}]$.
-    \item Si $f(c_{k-1})f(b_{k-1})<0$, elegimos $[a_k,b_k]=[c_{k-1}, b_{k-1}]$.
+    \item Si $f(a_{k-1})f(x_{k-1})<0$, elegimos $[a_k,b_k]=[a_{k-1}, x_{k-1}]$.
+    \item Si $f(x_{k-1})f(b_{k-1})<0$, elegimos $[a_k,b_k]=[x_{k-1}, b_{k-1}]$.
     \end{enumerate}
   \item A continuación, pasamos a la siguiente etapa (incrementamos
     $k$).
   \end{enumerate}
 \end{itemize}
 
-En la práctica, es muy improbable que $f(c_k)=0$ y deben establecerse
+En la práctica, es muy improbable que $f(x_k)=0$ y deben establecerse
 condiciones para evitar bucles infinitos. Puede verse una
 implementación\footnote{Con el fin que las
   implementaciones de los algoritmos sean sencillas, se utilizará el
@@ -543,9 +543,9 @@ Programa~\ref{pro:metodo-biseccion}.
   \begin{itemize}
   \item Empezamos seleccionando $[a_0,b_0]=[0,1]$.
   \item En la primera etapa, $k=1$, calculamos
-    $c_0=(1+0)/2=0.5$  y
-    $f(c_0)=f(1/2)=-11/8=-1.375$. Como $f(a_0)=f(0)=3$, elegimos
-    $[a_1,b_1]=[a_0,c_0]=[0,0.5]$.
+    $x_0=(1+0)/2=0.5$  y
+    $f(x_0)=f(1/2)=-11/8=-1.375$. Como $f(a_0)=f(0)=3$, elegimos
+    $[a_1,b_1]=[a_0,x_0]=[0,0.5]$.
   \item Repetimos el proceso para $k=2,3,\dots$, obteniendo los resultados que se
     muestran en el cuadro~\ref{tab:tema1:bisecc}.
   \end{itemize}
@@ -556,7 +556,7 @@ Programa~\ref{pro:metodo-biseccion}.
   \rule{0.99\linewidth}{1.6pt}
   \begin{equation*}
     \begin{array}{l<{\quad}rrrrrr}%{>{$}r<{$}>{$}r<{$}>{$}r<{$}>{$}r<{$}>{$}r<{$}}
-      k &  a_k & b_k & c_k & f(a_k) & f(b_k) & f(c_k)
+      k &  a_k & b_k & x_k & f(a_k) & f(b_k) & f(x_k)
       \\ \toprule%\mbox{}% \mbox{} for avoiding bug with "["
       0 & 0 &1  &  0.5 & 3 & -5 & -1.375
       \\ \noalign{\smallskip}
@@ -591,13 +591,13 @@ Así, se tiene el siguiente resultado:
   \label{thm:tema1:bisecc}
   Sea $f$ una función continua en $[a,b]$ tal que $f(a)f(b)<0$.
   \begin{enumerate}
-  \item La sucesión $\{c_k\}_{k=0}^\infty$ (definida por los puntos
+  \item La sucesión $\{x_k\}_{k=0}^\infty$ (definida por los puntos
     medios de los intervalos en el método de bisección) es convergente
     y su límite, $\cero$, es un cero de $f$ en $(a,b)$.
   \item De hecho, se verifica la siguiente cota del error:
     \begin{equation}
       \label{eq:tema1:bisecc:2}
-      |c_k-\cero| < \frac{b-a}{2^{k+1}}.
+      |x_k-\cero| < \frac{b-a}{2^{k}}.
     \end{equation}
   \end{enumerate}
 \end{theorem}
@@ -605,17 +605,28 @@ Así, se tiene el siguiente resultado:
 \begin{proof}
   Los intervalos $[a_k,b_k]$ generados por el método de bisección
   verifican~\eqref{eq:tema1:bisecc:0} y $f(a_k)f(b_k)<0$, por lo tanto
-  todos ellos contienen algún cero $\alpha$.
-
-  Por definición del método de bisección, en la iteración $k+1$ se
-  tiene que $c_k=a_{k+1}$ o $c_k=b_{k+1}$ y que
-  $\cero \in (a_{k+1},b_{k+1})$. Teniendo esto en cuenta,
-  $$|c_k-\cero|<|b_{k+1}-a_{k+1}|.$$
-  Aplicando ahora~(\ref{eq:tema1:bisec:1}), tenemos que
-  $|b_{k+1}-a_{k+1}|<(b-a)/2^{k+1}$, de donde
-  deduce~\eqref{eq:tema1:bisecc:2}. Y, a su vez,
-  \eqref{eq:tema1:bisecc:2} implica que $c_k$ converge a $\cero$.
+  todos ellos contienen algún cero $\alpha$. Y la sucesión $\{x_k\}$
+  verifica~(\ref{eq:tema1:bisecc:2}). Teniendo en cuenta que
+  $x_k,\cero\in [a_k,b_k]$,
+  $$
+  |x_k-\cero|\le |b_{k}-a_{k}| \le \frac{b-a}{2^{k}}.
+  $$
+  En particular, $x_k\to \alpha$ cuando $k\to +\infty$.
 \end{proof}
+
+\begin{remark}
+  La estimación de error~(\ref{eq:tema1:bisecc:2}) puede mejorarse: de hecho se verifica
+    \begin{equation}
+      \label{eq:tema1:bisecc:3}
+      |x_k-\cero| \le \frac{b-a}{2^{k+1}}.
+    \end{equation}
+  En efecto, por definición del método de bisección, en la iteración $k+1$ se
+  tiene que $x_k=a_{k+1}$ o $x_k=b_{k+1}$ y que
+  $\cero \in (a_{k+1},b_{k+1})$. Teniendo esto en cuenta,
+  $$
+  |x_k-\cero|\le |b_{k+1}-a_{k+1}| \le \frac{b-a}{2^{k+1}}.
+  $$
+\end{remark}
 
 \begin{remark}[Ventajas e inconvenientes del método de bisección]
   \label{rk:tema1:unicidad-bisecc}
@@ -646,8 +657,8 @@ Así, se tiene el siguiente resultado:
 
     De hecho, la sucesión que genera el método no garantiza siquiera
     que el error se reduzca en todas las iteraciones (podría ocurrir
-    que, en una iteración concreta, $c_k$ sea muy cercano a $\alpha$
-    pero $c_{k+1}$, el punto medio del nuevo intervalo, se aleje de
+    que, en una iteración concreta, $x_k$ sea muy cercano a $\alpha$
+    pero $x_{k+1}$, el punto medio del nuevo intervalo, se aleje de
     $\alpha$).
 
 
@@ -656,12 +667,12 @@ Así, se tiene el siguiente resultado:
 
 \begin{remark}
   \label{rk:tema1:bisecc:iteraciones}
-  La desigualdad~\eqref{eq:tema1:bisecc:2} nos garantiza que, para $n$
+  La desigualdad~\eqref{eq:tema1:bisecc:2}, o mejor ~\eqref{eq:tema1:bisecc:3},  nos garantiza que, para $n$
   suficiente grande, podemos aproximar un cero de $f$ con un error tan
   pequeño como deseemos. Y, de hecho, dada una tolerancia
-  $\varepsilon$, para que $|c_k-\alpha|<\varepsilon$, es suficiente
+  $\varepsilon$, para que $|x_k-\alpha|<\varepsilon$, es suficiente
   hallar $k$ de forma que el segundo miembro
-  de~(\ref{eq:tema1:bisecc:2}) sea menor que $\varepsilon$, es decir,
+  de~(\ref{eq:tema1:bisecc:3}) sea menor que $\varepsilon$, es decir,
   realizar iteraciones hasta que $(b-a)/2^{k+1} < \varepsilon$.
 
   Para ello, planteamos la igualdad $(b-a)/2^{k+1} = \varepsilon$ y, despejando $k$, obtenemos:

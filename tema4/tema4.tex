@@ -10,7 +10,7 @@
 \newcommand{\znn}{{z_{n+1}}}
 \newcommand{\ycero}{{y_a}}
 % \newcommand{\sol}{\varphi}
-\newcommand{\sol}{g}
+\newcommand{\sol}{y}
 \newcommand{\lipschitz}{$y$--Lipschitz\xspace}
 \newcommand{\locLipschitz}{localmente \lipschitz}
 \newcommand{\globLipschitz}{\lipschitz}
@@ -62,8 +62,8 @@ hablar de $\tt$ como la <<variable temporal>>).
   $\tt\in[\ta,\tb]$ y además $\sol(\ta)=\ycero$.\label{def:3}
 \end{definition}
 
-Nota: con frecuencia, denotaremos por $y(t)$ o $y(x)$ a la solución (como
-  en numerosos recursos bibliográficos).
+% Nota: con frecuencia, denotaremos por $y(t)$ o $y(x)$ a la solución (como
+%   en numerosos recursos bibliográficos).
 
 Obsérvese que, según esta definición, el concepto de solución tiene un
 sentido global (en todo el intervalo $[a,b]$), y no local (en un entorno
@@ -473,7 +473,7 @@ haber expuesto ahora algunas variantes del método de Euler, pero éstas
 serán introducidas a través de fórmulas de integración.
 
 \subsubsection*{Integración numérica}
-La solución exacta de~(\ref{eq:pvi}) verifica $\sol'(t) = f(t, g(t))$,
+La solución exacta de~(\ref{eq:pvi}) verifica $\sol'(t) = f(t, \sol(t))$,
 $t\in [a,b]$. Puesto que $\sol\in C^1([a,b])$ y $f\in C([a,b])$,
 podemos integrar la igualdad anterior en $[t_n,t_{n+1}] \subset [a,b]$
 obteniendo la siguiente expresión integral:
@@ -491,7 +491,7 @@ Para obtener el método de Euler implícito aproximamos la última
 integral mediante la siguiente fórmula de cuadratura (regla
 rectangular izquierda):
 \begin{equation*}
-  \int_a^b g(s)\,ds \approx hg(a), \quad \text{ con $h=b-a$}.
+  \int_a^b \sol(s)\,ds \approx h\sol(a), \quad \text{ con $h=b-a$}.
 \end{equation*}
 Aplicándola en el intervalo $[\tn,\tnn]$ para la formulación integral
 anterior,
@@ -514,7 +514,7 @@ distintos al de Euler explícito. Por ejemplo:
 \item Aproximando $\int_\tn^\tnn f(s,\sol(s))\, ds$ por la regla
   rectangular derecha, definida como
   \begin{equation*}
-    \int_a^b g(s)\,ds \approx hg(b),
+    \int_a^b \sol(s)\,ds \approx h\sol(b),
   \end{equation*}
   se obtiene el \textit{Método de Euler implícito}:
   \begin{equation}
@@ -1514,21 +1514,21 @@ deseamos calcular,  ponemos en práctica la siguiente idea:
     Demostrar que para toda función $g\in C^3([a,b])$ existe una
     constante $C$ (independiente de $h$) para la que se verifican las
     siguientes desigualdades\footnote{Solución: para~(\ref{eq:ejer.4}) aproximar
-      $g(t_{n})$ y $g(t_{n+1})$ mediante desarrollos de Taylor en
-      $t_{n+1/2}$. Para~(\ref{eq:ejer.3}), aproximar $g(t_n)$ y
-      $g(t_{n+1})$ mediante desarrollos en $t_{n+1}$ y $t_n$ y
+      $\sol(t_{n})$ y $\sol(t_{n+1})$ mediante desarrollos de Taylor en
+      $t_{n+1/2}$. Para~(\ref{eq:ejer.3}), aproximar $\sol(t_n)$ y
+      $\sol(t_{n+1})$ mediante desarrollos en $t_{n+1}$ y $t_n$ y
       restar.}:
     \begin{align}
       \label{eq:ejer.3}
-      \Big| \ddt g(t_{n+1}) &- \frac{g'(t_{n})+ g'(t_{n+1})}2 \Big| \le C h^2,
+      \Big| \ddt \sol(t_{n+1}) &- \frac{g'(t_{n})+ g'(t_{n+1})}2 \Big| \le C h^2,
       \\
-      \Big| \ddt g(t_{n+1}) &- g'(t_{n+1/2}) \Big| \le C h^2,
+      \Big| \ddt \sol(t_{n+1}) &- g'(t_{n+1/2}) \Big| \le C h^2,
       \label{eq:ejer.4}
     \end{align}
     donde se usó la notación usual, $t_n, t_{n+1}\in [a,b]$,
     $h=t_{n+1}-t_n$, $t_{n+1/2}=t_{n}+h/2$.  \textit{Observación: las
       desigualdades anteriores pueden interpretarse de la siguiente
-      forma: $\ddt g(t_{n+1})$ es una aproximación de orden 2 de $g'$
+      forma: $\ddt \sol(t_{n+1})$ es una aproximación de orden 2 de $g'$
       en el punto medio.}
   \end{problema}
 
@@ -1538,9 +1538,9 @@ deseamos calcular,  ponemos en práctica la siguiente idea:
     \item Justificar la siguiente definición error de consistencia (en
       el instante $t_{n+1}$ para este método:
       \begin{equation*}
-        \errCons_n = \ddt g(t_{n+1}) - \frac 12 \big( f(t_n, g(t_n)) + f(t_{n+1},g(t_{n+1}))\big),
+        \errCons_n = \ddt \sol(t_{n+1}) - \frac 12 \big( f(t_n, \sol(t_n)) + f(t_{n+1},\sol(t_{n+1}))\big),
       \end{equation*}
-      donde $g(\cdot)$ denota a la solución exacta del PVI.
+      donde $\sol(\cdot)$ denota a la solución exacta del PVI.
     \item Demostrar que, si la solución exacta, $g$, verifica
       $g\in C^3([a,b])$, el método anterior es consistente, con orden
       de consistencia igual a dos.
